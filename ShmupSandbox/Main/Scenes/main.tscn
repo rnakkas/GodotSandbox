@@ -1,21 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://betfkrygq2ejo"]
+[gd_scene load_steps=4 format=3 uid="uid://betfkrygq2ejo"]
 
 [ext_resource type="PackedScene" uid="uid://ck20r21lsokw1" path="res://ShmupSandbox/Player/Scenes/player_ship.tscn" id="1_c17wt"]
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="2_aucld"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aucld"]
+size = Vector2(748, 87)
+
 [node name="Main" type="Node2D"]
 
 [node name="PlayerShip" parent="." instance=ExtResource("1_c17wt")]
-position = Vector2(472, 294)
+position = Vector2(341, 865)
 
 [node name="Camera2D" type="Camera2D" parent="PlayerShip"]
 zoom = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
+limit_right = 720
+limit_bottom = 1280
 position_smoothing_enabled = true
 
 [node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(205, 284)
+position = Vector2(-13, 654.5)
+scale = Vector2(1, 10.6016)
 texture = ExtResource("2_aucld")
 
 [node name="Icon2" type="Sprite2D" parent="."]
-position = Vector2(714, 352)
+position = Vector2(714, 645)
+scale = Vector2(1, 10.6094)
 texture = ExtResource("2_aucld")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Icon3" type="Sprite2D" parent="Area2D"]
+position = Vector2(365.5, 34.5)
+scale = Vector2(6.00781, 0.632813)
+texture = ExtResource("2_aucld")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(364, 33.5)
+shape = SubResource("RectangleShape2D_aucld")

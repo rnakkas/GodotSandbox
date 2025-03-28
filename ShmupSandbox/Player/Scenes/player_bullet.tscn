@@ -1,0 +1,110 @@
+[gd_scene load_steps=15 format=3 uid="uid://k2akwdsnkyda"]
+
+[ext_resource type="Texture2D" uid="uid://0uiw6fd5nr31" path="res://ShmupSandbox/Assets/Player/spaceship-001-spritesheet-001.png" id="1_bk2fx"]
+[ext_resource type="Script" uid="uid://dmwv3jrlakeyp" path="res://ShmupSandbox/Player/Scripts/player_bullet.gd" id="1_whoyt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_whoyt"]
+atlas = ExtResource("1_bk2fx")
+region = Rect2(0, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dkjwp"]
+atlas = ExtResource("1_bk2fx")
+region = Rect2(16, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onk7t"]
+atlas = ExtResource("1_bk2fx")
+region = Rect2(32, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wr6iu"]
+atlas = ExtResource("1_bk2fx")
+region = Rect2(48, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxxth"]
+atlas = ExtResource("1_bk2fx")
+region = Rect2(64, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bk2fx"]
+atlas = ExtResource("1_bk2fx")
+region = Rect2(0, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eymk2"]
+atlas = ExtResource("1_bk2fx")
+region = Rect2(16, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87slm"]
+atlas = ExtResource("1_bk2fx")
+region = Rect2(32, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58yh3"]
+atlas = ExtResource("1_bk2fx")
+region = Rect2(48, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3584"]
+atlas = ExtResource("1_bk2fx")
+region = Rect2(64, 80, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eymk2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whoyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dkjwp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onk7t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wr6iu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxxth")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bk2fx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eymk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87slm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_58yh3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3584")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"hit",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bk2fx"]
+size = Vector2(5, 14)
+
+[node name="player_bullet" type="Area2D"]
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("1_whoyt")
+
+[node name="bullet_sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_eymk2")
+animation = &"fly"
+autoplay = "fly"
+frame = 3
+frame_progress = 0.50622
+
+[node name="bullet_collider" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_bk2fx")
+debug_color = Color(0.585341, 0.548007, 0.119147, 0.42)
