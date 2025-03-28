@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://betfkrygq2ejo"]
+
+[ext_resource type="PackedScene" uid="uid://ck20r21lsokw1" path="res://ShmupSandbox/Player/Scenes/player_ship.tscn" id="1_c17wt"]
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="2_aucld"]
+
+[node name="Main" type="Node2D"]
+
+[node name="PlayerShip" parent="." instance=ExtResource("1_c17wt")]
+position = Vector2(472, 294)
+
+[node name="Camera2D" type="Camera2D" parent="PlayerShip"]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(205, 284)
+texture = ExtResource("2_aucld")
+
+[node name="Icon2" type="Sprite2D" parent="."]
+position = Vector2(714, 352)
+texture = ExtResource("2_aucld")
