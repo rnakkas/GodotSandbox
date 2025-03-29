@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0ndt0kisoyg3"]
+
+[ext_resource type="PackedScene" uid="uid://ck20r21lsokw1" path="res://ShmupSandbox/Player/Scenes/player_ship.tscn" id="1_cxqyk"]
+[ext_resource type="Script" uid="uid://cj0ffr545wyhi" path="res://ShmupSandbox/Main/Scripts/game.gd" id="1_f5mi8"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_f5mi8")
+
+[node name="PlayerShip" parent="." instance=ExtResource("1_cxqyk")]
+unique_name_in_owner = true
+position = Vector2(255, 369)
+
+[node name="Camera2D" type="Camera2D" parent="PlayerShip"]
+limit_left = 0
+limit_top = 0
+limit_right = 540
+limit_bottom = 960
+
+[node name="PlayerProjectiles" type="Node2D" parent="."]
+
+[connection signal="player_shooting" from="PlayerShip" to="." method="_on_player_ship_player_shooting"]
