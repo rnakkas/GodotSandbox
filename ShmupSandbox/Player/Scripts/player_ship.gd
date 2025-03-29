@@ -23,7 +23,7 @@ class_name player_ship extends CharacterBody2D
 @onready var shot_cooldown_timer : Timer = %shot_cooldown_timer
 
 ## Custom signals
-signal player_shooting(bullet_scene:PackedScene, locations:Array[Vector2])
+signal shooting(bullet_scene:PackedScene, locations:Array[Vector2])
 
 ## Packed scenes
 var bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/player_bullet.tscn")
@@ -70,7 +70,7 @@ func handle_shooting() -> void:
 			on_shooting_cooldown = true
 			
 			var locations : Array[Vector2] = [muzzle_l.global_position, muzzle_r.global_position]
-			player_shooting.emit(bullet_scene, locations)
+			shooting.emit(bullet_scene, locations)
 			
 			muzzle_flash_l.play("shoot")
 			muzzle_flash_r.play("shoot")

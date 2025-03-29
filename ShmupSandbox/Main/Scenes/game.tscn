@@ -18,4 +18,4 @@ limit_bottom = 960
 
 [node name="PlayerProjectiles" type="Node2D" parent="."]
 
-[connection signal="player_shooting" from="PlayerShip" to="." method="_on_player_ship_player_shooting"]
+[connection signal="shooting" from="PlayerShip" to="." method="_on_player_ship_shooting"]

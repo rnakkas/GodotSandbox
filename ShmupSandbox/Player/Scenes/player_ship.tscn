@@ -226,7 +226,7 @@ script = ExtResource("1_qbyav")
 _max_speed = 450.0
 _acceleration = 1600.0
 _damping = 1000.0
-shooting_rate = 3.0
+shooting_rate = 5.0
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

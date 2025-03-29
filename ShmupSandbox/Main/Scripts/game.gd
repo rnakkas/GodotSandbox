@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _on_player_ship_player_shooting(bullet_scene: PackedScene, locations: Array[Vector2]) -> void:
+func _on_player_ship_shooting(bullet_scene: PackedScene, locations: Array[Vector2]) -> void:
 	for i:int in range(locations.size()):
 		var bullet := bullet_scene.instantiate()
 		bullet.position = locations[i]
