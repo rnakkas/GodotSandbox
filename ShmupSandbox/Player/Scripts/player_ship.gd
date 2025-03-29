@@ -6,7 +6,7 @@ class_name player_ship extends CharacterBody2D
 @export var _damping : float
 
 ## Shooting
-@export var shooting_rate : float
+@export var fire_rate : float
 
 ## Sprites
 @onready var body: AnimatedSprite2D = %Body
@@ -19,8 +19,8 @@ class_name player_ship extends CharacterBody2D
 @onready var muzzle_l : Marker2D = %MuzzleL
 @onready var muzzle_r : Marker2D = %MuzzleR
 
-## Timers
-@onready var shot_cooldown_timer : Timer = %shot_cooldown_timer
+## Hurtbox
+@onready var hurtbox : Area2D = $hurtbox
 
 ## Custom signals
 signal shooting(bullet_scene:PackedScene, locations:Array[Vector2])
@@ -29,8 +29,8 @@ signal shooting(bullet_scene:PackedScene, locations:Array[Vector2])
 var bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/player_bullet.tscn")
 
 var viewport_size : Vector2
-
 var on_shooting_cooldown : bool
+var is_dead : bool
 
 func _ready() -> void:
 	body.play("idle")
@@ -75,17 +75,30 @@ func handle_shooting() -> void:
 			muzzle_flash_l.play("shoot")
 			muzzle_flash_r.play("shoot")
 			
-			await get_tree().create_timer(1/shooting_rate).timeout
+			await get_tree().create_timer(1/fire_rate).timeout
 			on_shooting_cooldown = false
 
 func _physics_process(delta):
-	handle_input(delta)
-	move_and_slide()
+	if (!is_dead):
+		handle_input(delta)
+		move_and_slide()
 
 func _process(_delta: float) -> void:
 	clamp_movement_to_screen_bounds()
-	handle_shooting()
+	
+	if (!is_dead):
+		handle_shooting()
 
-## Signal connections
-func _on_shot_cooldown_timer_timeout() -> void:
-	on_shooting_cooldown = false
+## Hit by enemy or enemy projectiles
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	is_dead = true
+	
+	velocity = Vector2.ZERO
+	hurtbox.set_deferred("monitoring", false)
+	hurtbox.set_deferred("monitorable", false)
+	thrusterL.play("death")
+	thrusterR.play("death")
+	body.play("death")
+	await body.animation_finished
+	queue_free()
+	
