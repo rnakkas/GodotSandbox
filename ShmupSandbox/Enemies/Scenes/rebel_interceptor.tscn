@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://dir2ledda2odf"]
+
+[ext_resource type="Texture2D" uid="uid://boe68akioub03" path="res://ShmupSandbox/Assets/Enemy/enemyBlack2.png" id="1_hrrgf"]
+[ext_resource type="Script" uid="uid://bf1silpptuf3y" path="res://ShmupSandbox/Enemies/Scripts/rebel_fighter.gd" id="1_i7l64"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i7l64"]
+radius = 37.34
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inete"]
+atlas = ExtResource("1_hrrgf")
+region = Rect2(0, 0, 104, 84)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_doy78"]
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inete")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="rebel_interceptor" type="Area2D"]
+script = ExtResource("1_i7l64")
+hp = 2
+speed = 650.0
+
+[node name="collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_i7l64")
+
+[node name="body" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 0.196078, 0.0588235, 1)
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_doy78")
+animation = &"idle"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, -58)

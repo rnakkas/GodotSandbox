@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0ndt0kisoyg3"]
+[gd_scene load_steps=5 format=3 uid="uid://b0ndt0kisoyg3"]
 
 [ext_resource type="PackedScene" uid="uid://ck20r21lsokw1" path="res://ShmupSandbox/Player/Scenes/player_ship.tscn" id="1_cxqyk"]
 [ext_resource type="Script" uid="uid://cj0ffr545wyhi" path="res://ShmupSandbox/Main/Scripts/game.gd" id="1_f5mi8"]
 [ext_resource type="PackedScene" uid="uid://uv73jmnpfp6" path="res://ShmupSandbox/Enemies/Scenes/rebel_fighter.tscn" id="3_k74nh"]
+[ext_resource type="PackedScene" uid="uid://dir2ledda2odf" path="res://ShmupSandbox/Enemies/Scenes/rebel_interceptor.tscn" id="4_umyhj"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_f5mi8")
@@ -19,8 +20,13 @@ limit_bottom = 960
 
 [node name="PlayerProjectiles" type="Node2D" parent="."]
 
-[node name="rebel_fighter" parent="." instance=ExtResource("3_k74nh")]
+[node name="EnemiesContainer" type="Node2D" parent="."]
+
+[node name="rebel_fighter" parent="EnemiesContainer" instance=ExtResource("3_k74nh")]
 position = Vector2(150, 89)
 hp = 1
+
+[node name="rebel_interceptor" parent="EnemiesContainer" instance=ExtResource("4_umyhj")]
+position = Vector2(428, 214)
 
 [connection signal="shooting" from="PlayerShip" to="." method="_on_player_ship_shooting"]
