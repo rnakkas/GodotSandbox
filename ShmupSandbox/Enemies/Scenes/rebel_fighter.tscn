@@ -90,7 +90,7 @@ debug_color = Color(0.897961, 0.293812, 0.302015, 0.42)
 modulate = Color(0.941176, 0.988235, 0, 1)
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_77s1a")
-animation = &"idle"
+animation = &"death"
 autoplay = "idle"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

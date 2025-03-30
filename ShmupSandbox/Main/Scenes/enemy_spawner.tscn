@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxfke2pw5vqm1"]
+
+[ext_resource type="Script" uid="uid://ck4k7lot2auvk" path="res://ShmupSandbox/Main/Scripts/enemy_spawner.gd" id="1_d7rdr"]
+
+[node name="enemy_spawner" type="Node2D"]
+script = ExtResource("1_d7rdr")
+sp_tolerance = 20.0
+
+[node name="enemy_spawn_timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="enemy_spawn_timer" to="." method="_on_enemy_spawn_timer_timeout"]

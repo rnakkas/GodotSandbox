@@ -90,7 +90,7 @@ func _process(_delta: float) -> void:
 		handle_shooting()
 
 ## Hit by enemy or enemy projectiles
-func _on_hurtbox_area_entered(area: Area2D) -> void:
+func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	is_dead = true
 	
 	velocity = Vector2.ZERO
