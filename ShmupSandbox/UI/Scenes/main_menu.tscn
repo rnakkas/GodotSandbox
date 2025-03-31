@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dw1uu0vpx6e46"]
+[gd_scene load_steps=3 format=3 uid="uid://dw1uu0vpx6e46"]
 
+[ext_resource type="Script" uid="uid://3yghkjrm0tt5" path="res://ShmupSandbox/UI/Scripts/main_menu.gd" id="1_70k6g"]
 [ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="3_v14c2"]
 
 [node name="main_menu" type="Control"]
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_70k6g")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -41,16 +43,18 @@ text = "GAME TITLE"
 horizontal_alignment = 1
 
 [node name="play_button" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
 text = "PLAY"
 flat = true
 
 [node name="options_button" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 8
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
@@ -58,18 +62,25 @@ text = "Options"
 flat = true
 
 [node name="hi_scores_button" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
 text = "Hi-Scores"
 flat = true
 
 [node name="quit_button" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 8
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
 text = "Quit"
 flat = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/options_button" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/hi_scores_button" to="." method="_on_hi_scores_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/quit_button" to="." method="_on_quit_button_pressed"]

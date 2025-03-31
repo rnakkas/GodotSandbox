@@ -29,6 +29,7 @@ signal shooting(bullet_scene:PackedScene, locations:Array[Vector2])
 var bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/player_bullet.tscn")
 
 var viewport_size : Vector2
+var shooting_cooldown_time : float
 var on_shooting_cooldown : bool
 var is_dead : bool
 
@@ -40,6 +41,8 @@ func _ready() -> void:
 	muzzle_flash_r.play("idle")
 	
 	viewport_size = get_viewport_rect().size
+	shooting_cooldown_time = 1/fire_rate
+
 
 func handle_input(delta) -> void:
 	var input_dir := Vector2.ZERO
@@ -75,7 +78,7 @@ func handle_shooting() -> void:
 			muzzle_flash_l.play("shoot")
 			muzzle_flash_r.play("shoot")
 			
-			await get_tree().create_timer(1/fire_rate).timeout
+			await get_tree().create_timer(shooting_cooldown_time).timeout
 			on_shooting_cooldown = false
 
 func _physics_process(delta):
