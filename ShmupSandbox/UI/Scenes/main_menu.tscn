@@ -1,7 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://dw1uu0vpx6e46"]
+[gd_scene load_steps=2 format=3 uid="uid://dw1uu0vpx6e46"]
 
-[ext_resource type="Script" uid="uid://cv1tb3kosvc8x" path="res://ShmupSandbox/UI/Scripts/parallax_background.gd" id="1_70k6g"]
-[ext_resource type="Texture2D" uid="uid://db1kvoxnhwk4t" path="res://ShmupSandbox/Assets/ParallaxBackgrounds/black.png" id="1_n1a8v"]
 [ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="3_v14c2"]
 
 [node name="main_menu" type="Control"]
@@ -11,19 +9,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-script = ExtResource("1_70k6g")
-scroll_speed = 150.0
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0, 0.5)
-motion_mirroring = Vector2(0, 960)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(271.5, 478.5)
-scale = Vector2(2.10547, 3.76172)
-texture = ExtResource("1_n1a8v")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -44,10 +29,10 @@ theme_override_constants/separation = 70
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer"]
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="title" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.964706, 0.941176, 1)
 theme_override_fonts/font = ExtResource("3_v14c2")
@@ -55,7 +40,7 @@ theme_override_font_sizes/font_size = 116
 text = "GAME TITLE"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="play_button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("3_v14c2")
@@ -63,7 +48,7 @@ theme_override_font_sizes/font_size = 70
 text = "PLAY"
 flat = true
 
-[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="options_button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -72,7 +57,7 @@ theme_override_font_sizes/font_size = 70
 text = "Options"
 flat = true
 
-[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="hi_scores_button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("3_v14c2")
@@ -80,7 +65,7 @@ theme_override_font_sizes/font_size = 70
 text = "Hi-Scores"
 flat = true
 
-[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="quit_button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

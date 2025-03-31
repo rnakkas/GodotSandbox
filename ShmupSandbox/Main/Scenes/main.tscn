@@ -1,11 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://betfkrygq2ejo"]
+[gd_scene load_steps=5 format=3 uid="uid://betfkrygq2ejo"]
 
 [ext_resource type="Script" uid="uid://rllceid1ypu1" path="res://ShmupSandbox/Main/Scripts/main.gd" id="1_aucld"]
-[ext_resource type="PackedScene" uid="uid://b0ndt0kisoyg3" path="res://ShmupSandbox/Main/Scenes/game.tscn" id="1_c17wt"]
+[ext_resource type="PackedScene" uid="uid://dw1uu0vpx6e46" path="res://ShmupSandbox/UI/Scenes/main_menu.tscn" id="2_wc50p"]
+[ext_resource type="Script" uid="uid://cv1tb3kosvc8x" path="res://ShmupSandbox/UI/Scripts/parallax_background.gd" id="3_sfnpo"]
+[ext_resource type="Texture2D" uid="uid://db1kvoxnhwk4t" path="res://ShmupSandbox/Assets/ParallaxBackgrounds/black.png" id="4_ug3jy"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_aucld")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Game" parent="." instance=ExtResource("1_c17wt")]
+[node name="main_menu" parent="UI" instance=ExtResource("2_wc50p")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="UI"]
+script = ExtResource("3_sfnpo")
+scroll_speed = 160.0
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="UI/ParallaxBackground"]
+motion_scale = Vector2(0, 0.5)
+motion_mirroring = Vector2(0, 960)
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/ParallaxBackground/ParallaxLayer"]
+position = Vector2(270.5, 484)
+scale = Vector2(2.08984, 3.79688)
+texture = ExtResource("4_ug3jy")
