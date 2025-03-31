@@ -14,13 +14,13 @@ enemy_scenes = Array[PackedScene]([ExtResource("3_k74nh"), ExtResource("4_umyhj"
 
 [node name="PlayerShip" parent="." instance=ExtResource("1_cxqyk")]
 unique_name_in_owner = true
-position = Vector2(253, 858)
+position = Vector2(246, 877)
 
 [node name="Camera2D" type="Camera2D" parent="PlayerShip"]
 limit_left = 0
 limit_top = 0
-limit_right = 720
-limit_bottom = 1280
+limit_right = 540
+limit_bottom = 960
 
 [node name="PlayerProjectiles" type="Node2D" parent="."]
 

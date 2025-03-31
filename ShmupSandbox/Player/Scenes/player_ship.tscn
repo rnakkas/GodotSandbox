@@ -240,7 +240,7 @@ fire_rate = 4.0
 unique_name_in_owner = true
 z_index = 1
 position = Vector2(0, -13)
-scale = Vector2(2.2, 2.2)
+scale = Vector2(1.6, 1.6)
 sprite_frames = SubResource("SpriteFrames_20w05")
 animation = &"idle"
 
@@ -249,7 +249,7 @@ unique_name_in_owner = true
 position = Vector2(-4, 18.9091)
 scale = Vector2(1.1, 1.1)
 sprite_frames = SubResource("SpriteFrames_ekk4r")
-animation = &"death"
+animation = &"idle"
 
 [node name="ThrusterR" type="AnimatedSprite2D" parent="Body"]
 unique_name_in_owner = true
@@ -260,13 +260,13 @@ animation = &"idle"
 
 [node name="MuzzleL" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-20, -33)
+position = Vector2(-14, -27)
 
 [node name="MuzzleFlashL" type="AnimatedSprite2D" parent="MuzzleL"]
 unique_name_in_owner = true
-scale = Vector2(2.3, 2.3)
+scale = Vector2(1.6, 1.6)
 sprite_frames = SubResource("SpriteFrames_45j1j")
-animation = &"idle"
+animation = &"shoot"
 autoplay = "idle"
 
 [node name="Collider" type="CollisionShape2D" parent="."]
@@ -276,19 +276,19 @@ shape = SubResource("CapsuleShape2D_45j1j")
 
 [node name="MuzzleR" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(20, -33)
+position = Vector2(14, -27)
 
 [node name="MuzzleFlashR" type="AnimatedSprite2D" parent="MuzzleR"]
 unique_name_in_owner = true
-scale = Vector2(2.3, 2.3)
+scale = Vector2(1.6, 1.6)
 sprite_frames = SubResource("SpriteFrames_ia6lr")
-animation = &"idle"
+animation = &"shoot"
 autoplay = "idle"
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_mask = 24
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="hurtbox"]
-polygon = PackedVector2Array(-35, 4, -23, -9, -23, -22, -18, -22, -15, -41, -5, -52, 6, -52, 14, -41, 18, -21, 23, -21, 23, -8, 35, 4, 35, 17, -35, 17)
+polygon = PackedVector2Array(-16, -5, -11, -17, -7, -17, -7, -19, -7, -26, -3, -31, 2, -31, 7, -26, 7, -19, 8, -17, 11, -17, 16, -5, 16, 1, -16, 1)
 
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://0uiw6fd5nr31" path="res://ShmupSandbox/Assets/Player/spaceship-001-spritesheet-001.png" id="2_77s1a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_flo0d"]
-radius = 37.3363
+radius = 23.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mqof1"]
 atlas = ExtResource("2_77s1a")
@@ -79,7 +79,7 @@ animations = [{
 collision_layer = 8
 collision_mask = 3
 script = ExtResource("1_to7fy")
-hp = 2
+hp = 1
 speed = 350.0
 
 [node name="collider" type="CollisionShape2D" parent="."]
@@ -88,9 +88,9 @@ debug_color = Color(0.897961, 0.293812, 0.302015, 0.42)
 
 [node name="body" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.941176, 0.988235, 0, 1)
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_77s1a")
-animation = &"death"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

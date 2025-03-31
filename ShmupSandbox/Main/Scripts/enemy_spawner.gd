@@ -21,15 +21,17 @@ func _ready() -> void:
 
 func spawn_enemy() -> void:
 	var enemy : Area2D = enemy_scenes.pick_random().instantiate()
-	var sp : Vector2 = _get_spawn_point()
+	var sp : Vector2 = _generate_spawn_point()
 	enemy.global_position = sp
 	
 	add_enemy_to_game.emit(enemy)
 
-func _get_spawn_point() -> Vector2:
-	var too_close = true
+func _generate_spawn_point() -> Vector2:
+	var too_close : bool = true
 	var sp_x : float
 	
+	## Check that the spawn point is not too close to the last 5 spawn points
+	##	to prevent enemies overlapping as much as possible
 	while too_close:
 		sp_x = randf_range(0 + sp_tolerance, viewport_size.x - sp_tolerance)
 		too_close = false
@@ -42,39 +44,8 @@ func _get_spawn_point() -> Vector2:
 	prev_sp_list.append(sp_x)
 	if prev_sp_list.size() > 5:
 		prev_sp_list.remove_at(0)
-	
-	
-	#print(prev_sp_list.size())
-	#print(prev_sp_list)
-	#
-	#for i:int in range(prev_sp_list.size() - 1):
-		#if abs(sp_x - prev_sp_list[i]) <= sp_tolerance:
-			#sp_x = randf_range(0 + sp_tolerance, viewport_size.x - sp_tolerance)
-			#_populate_prev_sp_list(sp_x)
-			#break
-	
-	
-	#prev_sp = sp_x
-	#
-	### When new sp is on the right of previous sp
-	#if sp_x <= prev_sp + sp_tolerance:
-		#sp_x = sp_x + sp_tolerance
-		### Stay within screen bounds
-		#if sp_x >= viewport_size.x:
-			#sp_x = viewport_size.x - sp_tolerance
-	### When new sp is on left of previous sp
-	#elif sp_x >= prev_sp - sp_tolerance:
-		#sp_x = sp_x - sp_tolerance
-		### Stay within screen bounds
-		#if sp_x <= 0:
-			#sp_x = sp_tolerance
 
 	return Vector2(sp_x, sp_y)
-
-func _populate_prev_sp_list(sp_x : float) -> void:
-	if prev_sp_list.size() >= 3:
-		prev_sp_list.pop_front()
-	prev_sp_list.append(sp_x)
 
 ## Spawn enemies on timeout
 func _on_enemy_spawn_timer_timeout() -> void:

@@ -90,8 +90,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_whoyt"]
-radius = 6.5
-height = 32.0
+radius = 4.5
+height = 20.0
 
 [node name="player_bullet" type="Area2D"]
 collision_layer = 2
@@ -100,9 +100,9 @@ script = ExtResource("1_whoyt")
 speed = 950.0
 
 [node name="bullet_sprite" type="AnimatedSprite2D" parent="."]
-scale = Vector2(2.5, 2.5)
+scale = Vector2(1.6, 1.6)
 sprite_frames = SubResource("SpriteFrames_eymk2")
-animation = &"hit"
+animation = &"fly"
 autoplay = "fly"
 
 [node name="bullet_collider" type="CollisionShape2D" parent="."]

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://0uiw6fd5nr31" path="res://ShmupSandbox/Assets/Player/spaceship-001-spritesheet-001.png" id="2_inete"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i7l64"]
-radius = 37.34
+radius = 24.0208
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mqof1"]
 atlas = ExtResource("2_inete")
@@ -79,15 +79,16 @@ animations = [{
 collision_layer = 8
 collision_mask = 3
 script = ExtResource("1_i7l64")
-hp = 2
+hp = 1
 speed = 650.0
 
 [node name="collider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_i7l64")
+debug_color = Color(0.817086, 0.404717, 0.059545, 0.42)
 
 [node name="body" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 0.196078, 0.0588235, 1)
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_doy78")
 animation = &"idle"
 autoplay = "idle"
