@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dir2ledda2odf" path="res://ShmupSandbox/Enemies/Scenes/rebel_interceptor.tscn" id="4_umyhj"]
 
 [node name="Game" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_f5mi8")
 
 [node name="enemy_spawner" parent="." instance=ExtResource("2_f46ya")]

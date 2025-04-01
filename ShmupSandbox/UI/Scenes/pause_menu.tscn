@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://bumbgw58q7r1d"]
+[gd_scene load_steps=3 format=3 uid="uid://bumbgw58q7r1d"]
+
+[ext_resource type="Script" uid="uid://k8kst8326lwc" path="res://ShmupSandbox/UI/Scripts/pause_menu.gd" id="1_00ny2"]
+[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_ur1kj"]
 
 [node name="pause_menu" type="Control"]
 layout_mode = 3
@@ -7,3 +10,74 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_00ny2")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 70
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="options_label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ur1kj")
+theme_override_font_sizes/font_size = 90
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="resume_button" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_ur1kj")
+theme_override_font_sizes/font_size = 70
+text = "Resume"
+flat = true
+
+[node name="options_button" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_ur1kj")
+theme_override_font_sizes/font_size = 70
+text = "Options"
+flat = true
+
+[node name="main_menu_button" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_ur1kj")
+theme_override_font_sizes/font_size = 70
+text = "Main Menu"
+flat = true
+
+[node name="quit_button" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_ur1kj")
+theme_override_font_sizes/font_size = 70
+text = "Quit"
+flat = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/resume_button" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/options_button" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/main_menu_button" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/quit_button" to="." method="_on_quit_button_pressed"]

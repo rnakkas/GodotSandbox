@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://btcsgnuk4yo61"]
+
+[ext_resource type="Texture2D" uid="uid://bof6go348a3m7" path="res://ShmupSandbox/Assets/Icons/pause_icon.png" id="1_3cdpm"]
+[ext_resource type="Script" uid="uid://cj0ip88n58brx" path="res://ShmupSandbox/UI/Scripts/player_hud.gd" id="1_wamog"]
+[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_xvmxs"]
+
+[node name="player_hud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wamog")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 100
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="shield_1" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="shield_2" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="shield_3" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="score" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_xvmxs")
+theme_override_font_sizes/font_size = 50
+text = "00002223"
+
+[node name="pause_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+icon = ExtResource("1_3cdpm")
+flat = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/pause_button" to="." method="_on_pause_button_pressed"]

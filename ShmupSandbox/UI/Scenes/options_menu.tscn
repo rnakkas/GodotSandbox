@@ -56,26 +56,31 @@ theme_override_font_sizes/font_size = 70
 text = "Sound"
 horizontal_alignment = 1
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 
 [node name="sound_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_vertical = 8
-value = 50.0
+max_value = 10.0
+value = 5.0
+rounded = true
 tick_count = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 38
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -88,26 +93,31 @@ theme_override_font_sizes/font_size = 70
 text = "Music"
 horizontal_alignment = 1
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 
 [node name="music_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_vertical = 8
-value = 50.0
+max_value = 10.0
+value = 5.0
+rounded = true
 tick_count = 1
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation = 32
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
@@ -122,21 +132,26 @@ text = "Screen
 Shake"
 horizontal_alignment = 1
 
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer2"]
 layout_mode = 2
 
 [node name="screen_shake_amount_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer2"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_vertical = 8
-value = 50.0
+max_value = 10.0
+value = 5.0
+rounded = true
 tick_count = 1
 
-[node name="return_to_main_menu" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="back_button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_qkcl6")
@@ -144,4 +159,4 @@ theme_override_font_sizes/font_size = 70
 text = "Back"
 flat = true
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/return_to_main_menu" to="." method="_on_return_to_main_menu_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/back_button" to="." method="_on_back_button_pressed"]
