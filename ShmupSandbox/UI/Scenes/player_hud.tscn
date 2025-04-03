@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://btcsgnuk4yo61"]
+[gd_scene load_steps=3 format=3 uid="uid://btcsgnuk4yo61"]
 
-[ext_resource type="Texture2D" uid="uid://bof6go348a3m7" path="res://ShmupSandbox/Assets/Icons/pause_icon.png" id="1_3cdpm"]
 [ext_resource type="Script" uid="uid://cj0ip88n58brx" path="res://ShmupSandbox/UI/Scripts/player_hud.gd" id="1_wamog"]
 [ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_xvmxs"]
 
@@ -53,12 +52,3 @@ size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_xvmxs")
 theme_override_font_sizes/font_size = 50
 text = "00002223"
-
-[node name="pause_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-icon = ExtResource("1_3cdpm")
-flat = true
-
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/pause_button" to="." method="_on_pause_button_pressed"]
