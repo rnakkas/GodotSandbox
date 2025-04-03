@@ -68,3 +68,4 @@ func _toggle_ui(menu_type : UiType) -> void:
 		ui_element.visible = !ui_element.visible
 		ui_element.process_mode = Node.PROCESS_MODE_ALWAYS if ui_element.visible else Node.PROCESS_MODE_DISABLED
 		
+		

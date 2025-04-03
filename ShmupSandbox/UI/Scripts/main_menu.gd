@@ -17,20 +17,27 @@ signal options_button_pressed()
 signal hi_scores_button_pressed()
 signal quit_button_pressed()
 
-var button_selector_map : Dictionary[Button, TextureRect] = {}
+enum ButtonType {
+	PLAY,
+	OPTIONS,
+	HI_SCORES,
+	QUIT
+}
+
+var button_selector_array : Array[TextureRect] = []
 
 func _ready() -> void:
-	button_selector_map = {
-		play_button : play_selector_icon,
-		options_button : options_selector_icon,
-		hi_scores_button : hi_scores_selector_icon,
-		quit_button : quit_selector_icon
-	}
-	
-	print(button_selector_map[play_button])
+	button_selector_array.append_array(
+		[
+			play_selector_icon, 
+			options_selector_icon,
+			hi_scores_selector_icon,
+			quit_selector_icon
+		]
+	)
 	
 	if self.visible:
-		play_button.grab_focus()
+		_focus_on_button(play_button, play_selector_icon)
 
 func _on_play_button_pressed() -> void:
 	play_button_pressed.emit()
@@ -45,5 +52,8 @@ func _on_quit_button_pressed() -> void:
 	quit_button_pressed.emit()
 
 ## Helper funcs
-func _show_button_selected() -> void:
-	print("s")
+func _focus_on_button(button : Button, icon : TextureRect) -> void:
+	button.grab_focus()
+	for i:int in range(button_selector_array.size()):
+			if button_selector_array[i] != icon:
+				button_selector_array[i].visible = false
