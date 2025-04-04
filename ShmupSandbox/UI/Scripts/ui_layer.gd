@@ -103,14 +103,15 @@ func _toggle_ui(menu_type : UiType) -> void:
 	match menu_type:
 		UiType.MAIN_MENU:
 			ui_element = main_menu_ui
-			main_menu_ui.play_button.grab_focus()
+			ui_element.play_button.grab_focus()
 		UiType.OPTIONS_MENU:
 			ui_element = options_menu_ui
-			options_menu_ui.sound_volume_slider.grab_focus()
+			ui_element.sound_volume_slider.grab_focus()
 		UiType.PLAYER_HUD_UI:
 			ui_element = player_hud_ui
 		UiType.PAUSE_MENU:
 			ui_element = pause_menu_ui
+			ui_element.resume_button.grab_focus()
 		
 	if ui_element:
 		ui_element.visible = !ui_element.visible
