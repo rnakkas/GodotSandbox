@@ -17,43 +17,76 @@ signal options_button_pressed()
 signal hi_scores_button_pressed()
 signal quit_button_pressed()
 
-enum ButtonType {
-	PLAY,
-	OPTIONS,
-	HI_SCORES,
-	QUIT
-}
-
-var button_selector_array : Array[TextureRect] = []
+var selector_icons : Array[TextureRect] = []
 
 func _ready() -> void:
-	button_selector_array.append_array(
+	_create_icons_list()
+	
+	if self.visible:
+		play_button.grab_focus()
+
+####
+
+## Helper funcs
+func _create_icons_list() -> void:
+	selector_icons.append_array(
 		[
-			play_selector_icon, 
+			play_selector_icon,
 			options_selector_icon,
 			hi_scores_selector_icon,
 			quit_selector_icon
 		]
 	)
-	
-	if self.visible:
-		_focus_on_button(play_button, play_selector_icon)
 
+func _show_button_as_selected(icon: TextureRect) -> void:
+	for i:int in range(selector_icons.size()):
+		if selector_icons[i] == icon:
+			selector_icons[i].visible = true
+		else:
+			selector_icons[i].visible = false
+
+
+####
+
+## Play button
 func _on_play_button_pressed() -> void:
 	play_button_pressed.emit()
+	
+func _on_play_button_focus_entered() -> void:
+	_show_button_as_selected(play_selector_icon)
 
+func _on_play_button_mouse_entered() -> void:
+	play_button.grab_focus()
+
+
+## Options button
 func _on_options_button_pressed() -> void:
 	options_button_pressed.emit()
 
+func _on_options_button_focus_entered() -> void:
+	_show_button_as_selected(options_selector_icon)
+
+func _on_options_button_mouse_entered() -> void:
+	options_button.grab_focus()
+
+
+## Hi scores button
 func _on_hi_scores_button_pressed() -> void:
 	hi_scores_button_pressed.emit()
 
+func _on_hi_scores_button_focus_entered() -> void:
+	_show_button_as_selected(hi_scores_selector_icon)
+
+func _on_hi_scores_button_mouse_entered() -> void:
+	hi_scores_button.grab_focus()
+
+
+## Quit button
 func _on_quit_button_pressed() -> void:
 	quit_button_pressed.emit()
 
-## Helper funcs
-func _focus_on_button(button : Button, icon : TextureRect) -> void:
-	button.grab_focus()
-	for i:int in range(button_selector_array.size()):
-			if button_selector_array[i] != icon:
-				button_selector_array[i].visible = false
+func _on_quit_button_focus_entered() -> void:
+	_show_button_as_selected(quit_selector_icon)
+
+func _on_quit_button_mouse_entered() -> void:
+	quit_button.grab_focus()

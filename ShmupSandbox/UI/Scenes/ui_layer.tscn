@@ -9,7 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://db1kvoxnhwk4t" path="res://ShmupSandbox/Assets/ParallaxBackgrounds/black.png" id="6_dlse4"]
 
 [node name="UI_layer" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_hgdm0")
+
+[node name="player_hud" parent="." instance=ExtResource("4_dqs3x")]
+unique_name_in_owner = true
+visible = false
 
 [node name="main_menu" parent="." instance=ExtResource("1_ga2yo")]
 unique_name_in_owner = true
@@ -19,10 +24,6 @@ unique_name_in_owner = true
 visible = false
 
 [node name="pause_menu" parent="." instance=ExtResource("3_3gw38")]
-unique_name_in_owner = true
-visible = false
-
-[node name="player_hud" parent="." instance=ExtResource("4_dqs3x")]
 unique_name_in_owner = true
 visible = false
 
@@ -44,4 +45,8 @@ texture = ExtResource("6_dlse4")
 [connection signal="options_button_pressed" from="main_menu" to="." method="_on_main_menu_options_button_pressed"]
 [connection signal="play_button_pressed" from="main_menu" to="." method="_on_main_menu_play_button_pressed"]
 [connection signal="quit_button_pressed" from="main_menu" to="." method="_on_main_menu_quit_button_pressed"]
-[connection signal="back_to_main_menu_button_pressed" from="options_menu" to="." method="_on_options_menu_back_to_main_menu_button_pressed"]
+[connection signal="back_button_pressed" from="options_menu" to="." method="_on_options_menu_back_button_pressed"]
+[connection signal="main_menu_button_pressed" from="pause_menu" to="." method="_on_pause_menu_main_menu_button_pressed"]
+[connection signal="options_button_pressed" from="pause_menu" to="." method="_on_pause_menu_options_button_pressed"]
+[connection signal="quit_button_pressed" from="pause_menu" to="." method="_on_pause_menu_quit_button_pressed"]
+[connection signal="resume_button_pressed" from="pause_menu" to="." method="_on_pause_menu_resume_button_pressed"]

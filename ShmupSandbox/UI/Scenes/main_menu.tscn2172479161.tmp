@@ -87,6 +87,7 @@ layout_mode = 2
 
 [node name="options_selector_icon" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -118,6 +119,7 @@ layout_mode = 2
 
 [node name="hi_scores_selector_icon" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -148,6 +150,7 @@ layout_mode = 2
 
 [node name="quit_selector_icon" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -166,14 +169,14 @@ text = "Quit"
 flat = true
 
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/play_button" to="." method="_on_play_button_focus_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/play_button" to="." method="_on_play_button_mouse_entered"]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/HBoxContainer/play_button" to="." method="_on_play_button_focus_exited"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/options_button" to="." method="_on_options_button_focus_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/options_button" to="." method="_on_options_button_mouse_entered"]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/HBoxContainer2/options_button" to="." method="_on_options_button_focus_exited"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/options_button" to="." method="_on_options_button_pressed"]
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer3/hi_scores_button" to="." method="_on_hi_scores_button_focus_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer3/hi_scores_button" to="." method="_on_hi_scores_button_mouse_entered"]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/HBoxContainer3/hi_scores_button" to="." method="_on_hi_scores_button_focus_exited"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer3/hi_scores_button" to="." method="_on_hi_scores_button_pressed"]
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer4/quit_button" to="." method="_on_quit_button_focus_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer4/quit_button" to="." method="_on_quit_button_mouse_entered"]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/HBoxContainer4/quit_button" to="." method="_on_quit_button_focus_exited"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer4/quit_button" to="." method="_on_quit_button_pressed"]

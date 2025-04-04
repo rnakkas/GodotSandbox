@@ -4,8 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://wq32mri3ebiv" path="res://ShmupSandbox/UI/Scenes/ui_layer.tscn" id="2_aucld"]
 
 [node name="Main" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_aucld")
 
 [node name="UI_layer" parent="." instance=ExtResource("2_aucld")]
 
 [connection signal="game_started" from="UI_layer" to="." method="_on_ui_layer_game_started"]
+[connection signal="returned_to_main_menu_from_game" from="UI_layer" to="." method="_on_ui_layer_returned_to_main_menu_from_game"]
