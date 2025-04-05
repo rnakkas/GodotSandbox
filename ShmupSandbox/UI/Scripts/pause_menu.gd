@@ -55,13 +55,6 @@ func create_ui_elements_list() -> void:
 		]
 	)
 
-func _highlight_selected_element(ui_element : Control) -> void:
-	for i:int in range(ui_elements_list.size()):
-		if ui_elements_list[i] == ui_element:
-			UiUtility.highlight_ui_elment(ui_elements_list[i])
-		else:
-			UiUtility.remove_highlight_from_ui_element(ui_elements_list[i])
-
 
 ####
 
@@ -71,7 +64,7 @@ func _on_resume_button_pressed() -> void:
 
 func _on_resume_button_focus_entered() -> void:
 	#_show_button_as_selected(resume_selector_icon)
-	_highlight_selected_element(resume_button)
+	UiUtility.highlight_selected_element(ui_elements_list, resume_button)
 
 func _on_resume_button_mouse_entered() -> void:
 	resume_button.grab_focus()
@@ -83,7 +76,7 @@ func _on_options_button_pressed() -> void:
 
 func _on_options_button_focus_entered() -> void:
 	#_show_button_as_selected(options_selector_icon)
-	_highlight_selected_element(options_button)
+	UiUtility.highlight_selected_element(ui_elements_list, options_button)
 
 func _on_options_button_mouse_entered() -> void:
 	options_button.grab_focus()
@@ -95,7 +88,7 @@ func _on_main_menu_button_pressed() -> void:
 
 func _on_main_menu_button_focus_entered() -> void:
 	#_show_button_as_selected(main_menu_selector_icon)
-	_highlight_selected_element(main_menu_button)
+	UiUtility.highlight_selected_element(ui_elements_list, main_menu_button)
 
 func _on_main_menu_button_mouse_entered() -> void:
 	main_menu_button.grab_focus()
@@ -107,7 +100,7 @@ func _on_quit_button_pressed() -> void:
 
 func _on_quit_button_focus_entered() -> void:
 	#_show_button_as_selected(quit_selector_icon)
-	_highlight_selected_element(quit_button)
+	UiUtility.highlight_selected_element(ui_elements_list, quit_button)
 
 func _on_quit_button_mouse_entered() -> void:
 	quit_button.grab_focus()

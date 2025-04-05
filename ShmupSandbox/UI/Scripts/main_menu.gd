@@ -25,7 +25,7 @@ func _ready() -> void:
 	create_ui_elements_list()
 	
 	if self.visible:
-		play_button.grab_focus()
+		play_button.call_deferred("grab_focus")
 
 ####
 
@@ -59,13 +59,6 @@ func create_ui_elements_list() -> void:
 		]
 	)
 
-func _highlight_selected_element(ui_element : Control) -> void:
-	for i:int in range(ui_elements_list.size()):
-		if ui_elements_list[i] == ui_element:
-			UiUtility.highlight_ui_elment(ui_elements_list[i])
-		else:
-			UiUtility.remove_highlight_from_ui_element(ui_elements_list[i])
-
 ####
 
 ## Play button
@@ -74,7 +67,7 @@ func _on_play_button_pressed() -> void:
 	
 func _on_play_button_focus_entered() -> void:
 	#_show_button_as_selected(play_selector_icon)
-	_highlight_selected_element(play_button)
+	UiUtility.highlight_selected_element(ui_elements_list, play_button)
 
 func _on_play_button_mouse_entered() -> void:
 	play_button.grab_focus()
@@ -86,7 +79,7 @@ func _on_options_button_pressed() -> void:
 
 func _on_options_button_focus_entered() -> void:
 	#_show_button_as_selected(options_selector_icon)
-	_highlight_selected_element(options_button)
+	UiUtility.highlight_selected_element(ui_elements_list, options_button)
 
 func _on_options_button_mouse_entered() -> void:
 	options_button.grab_focus()
@@ -98,7 +91,7 @@ func _on_hi_scores_button_pressed() -> void:
 
 func _on_hi_scores_button_focus_entered() -> void:
 	#_show_button_as_selected(hi_scores_selector_icon)
-	_highlight_selected_element(hi_scores_button)
+	UiUtility.highlight_selected_element(ui_elements_list, hi_scores_button)
 
 func _on_hi_scores_button_mouse_entered() -> void:
 	hi_scores_button.grab_focus()
@@ -110,7 +103,7 @@ func _on_quit_button_pressed() -> void:
 
 func _on_quit_button_focus_entered() -> void:
 	#_show_button_as_selected(quit_selector_icon)
-	_highlight_selected_element(quit_button)
+	UiUtility.highlight_selected_element(ui_elements_list, quit_button)
 
 func _on_quit_button_mouse_entered() -> void:
 	quit_button.grab_focus()

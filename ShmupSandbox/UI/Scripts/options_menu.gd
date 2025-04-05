@@ -37,32 +37,24 @@ func create_ui_elements_list() -> void:
 	)
 
 
-func _highlight_selected_element(ui_element : Control) -> void:
-	for i:int in range(ui_elements_list.size()):
-		if ui_elements_list[i] == ui_element:
-			UiUtility.highlight_ui_elment(ui_elements_list[i])
-		else:
-			UiUtility.remove_highlight_from_ui_element(ui_elements_list[i])
-
-
 ####
 ## Signal connections
 
 func _on_sound_volume_slider_focus_entered() -> void:
 	#back_selector_icon.visible = false
-	_highlight_selected_element(sound_label)
+	UiUtility.highlight_selected_element(ui_elements_list, sound_label)
 
 func _on_music_volume_slider_focus_entered() -> void:
 	#back_selector_icon.visible = false
-	_highlight_selected_element(music_label)
+	UiUtility.highlight_selected_element(ui_elements_list, music_label)
 
 func _on_screen_shake_amount_slider_focus_entered() -> void:
 	#back_selector_icon.visible = false
-	_highlight_selected_element(screen_shake_label)
+	UiUtility.highlight_selected_element(ui_elements_list, screen_shake_label)
 
 func _on_back_button_focus_entered() -> void:
 	#back_selector_icon.visible = false
-	_highlight_selected_element(back_button)
+	UiUtility.highlight_selected_element(ui_elements_list, back_button)
 
 func _on_back_button_pressed() -> void:
 	back_button_pressed.emit()
