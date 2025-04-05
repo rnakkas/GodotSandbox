@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bumbgw58q7r1d"]
+[gd_scene load_steps=5 format=3 uid="uid://bumbgw58q7r1d"]
 
 [ext_resource type="Script" uid="uid://k8kst8326lwc" path="res://ShmupSandbox/UI/Scripts/pause_menu.gd" id="1_00ny2"]
 [ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_ur1kj"]
 [ext_resource type="Texture2D" uid="uid://d04yolfqx8m3v" path="res://ShmupSandbox/Assets/Icons/selctor_icon.png" id="3_prqwj"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_prqwj"]
 
 [node name="pause_menu" type="Control"]
 layout_mode = 3
@@ -12,6 +14,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_00ny2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.133333, 0.137255, 0.137255, 0.701961)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_prqwj")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -67,6 +79,7 @@ stretch_mode = 3
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
+focus_neighbor_bottom = NodePath("../../HBoxContainer2/options_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
 text = "Resume"
@@ -96,6 +109,8 @@ stretch_mode = 3
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../../HBoxContainer/resume_button")
+focus_neighbor_bottom = NodePath("../../HBoxContainer3/main_menu_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
 text = "Options"
@@ -125,6 +140,8 @@ stretch_mode = 3
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../../HBoxContainer2/options_button")
+focus_neighbor_bottom = NodePath("../../HBoxContainer4/quit_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
 text = "Main Menu"
@@ -154,12 +171,23 @@ stretch_mode = 3
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../../HBoxContainer3/main_menu_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
 text = "Quit"
 flat = true
 
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/resume_button" to="." method="_on_resume_button_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/resume_button" to="." method="_on_resume_button_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/resume_button" to="." method="_on_resume_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer2" to="." method="_on_h_box_container_2_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2" to="." method="_on_h_box_container_2_mouse_entered"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/options_button" to="." method="_on_options_button_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/options_button" to="." method="_on_options_button_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/options_button" to="." method="_on_options_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer3/main_menu_button" to="." method="_on_main_menu_button_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer3/main_menu_button" to="." method="_on_main_menu_button_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer3/main_menu_button" to="." method="_on_main_menu_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer4/quit_button" to="." method="_on_quit_button_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer4/quit_button" to="." method="_on_quit_button_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer4/quit_button" to="." method="_on_quit_button_pressed"]

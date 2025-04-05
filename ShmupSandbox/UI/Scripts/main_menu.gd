@@ -38,6 +38,7 @@ func _create_icons_list() -> void:
 		]
 	)
 
+
 func _show_button_as_selected(icon: TextureRect) -> void:
 	for i:int in range(selector_icons.size()):
 		if selector_icons[i] == icon:

@@ -69,6 +69,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 focus_neighbor_bottom = NodePath("../../HBoxContainer2/options_button")
+theme_override_colors/font_pressed_color = Color(1, 0.639216, 0.121569, 1)
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
 text = "PLAY"
