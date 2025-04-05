@@ -1,8 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://dw1uu0vpx6e46"]
+[gd_scene load_steps=8 format=3 uid="uid://dw1uu0vpx6e46"]
 
 [ext_resource type="Script" uid="uid://3yghkjrm0tt5" path="res://ShmupSandbox/UI/Scripts/main_menu.gd" id="1_70k6g"]
 [ext_resource type="Texture2D" uid="uid://d04yolfqx8m3v" path="res://ShmupSandbox/Assets/Icons/selctor_icon.png" id="3_t2d3o"]
 [ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="3_v14c2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v14c2"]
+bg_color = Color(0.941176, 0.964706, 0.941176, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t2d3o"]
+bg_color = Color(0.941176, 0.964706, 0.941176, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwp8g"]
+bg_color = Color(0.941176, 0.964706, 0.941176, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t30nx"]
+bg_color = Color(0.941176, 0.964706, 0.941176, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
 
 [node name="main_menu" type="Control"]
 layout_mode = 3
@@ -69,9 +85,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 focus_neighbor_bottom = NodePath("../../HBoxContainer2/options_button")
-theme_override_colors/font_pressed_color = Color(1, 0.639216, 0.121569, 1)
+theme_override_colors/font_hover_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_colors/font_focus_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_colors/font_pressed_color = Color(0.941176, 0.964706, 0.941176, 1)
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxFlat_v14c2")
 text = "PLAY"
 flat = true
 
@@ -101,8 +120,12 @@ size_flags_horizontal = 8
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../../HBoxContainer/play_button")
 focus_neighbor_bottom = NodePath("../../HBoxContainer3/hi_scores_button")
+theme_override_colors/font_hover_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_colors/font_focus_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_colors/font_pressed_color = Color(0.941176, 0.964706, 0.941176, 1)
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxFlat_t2d3o")
 text = "Options"
 flat = true
 
@@ -131,8 +154,12 @@ layout_mode = 2
 size_flags_horizontal = 8
 focus_neighbor_top = NodePath("../../HBoxContainer2/options_button")
 focus_neighbor_bottom = NodePath("../../HBoxContainer4/quit_button")
+theme_override_colors/font_hover_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_colors/font_focus_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_colors/font_pressed_color = Color(0.941176, 0.964706, 0.941176, 1)
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxFlat_jwp8g")
 text = "Hi-Scores"
 flat = true
 
@@ -161,8 +188,12 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../../HBoxContainer3/hi_scores_button")
+theme_override_colors/font_hover_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_colors/font_focus_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_colors/font_pressed_color = Color(0.941176, 0.964706, 0.941176, 1)
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxFlat_t30nx")
 text = "Quit"
 flat = true
 

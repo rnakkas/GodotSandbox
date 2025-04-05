@@ -1,8 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://ny01qnyexpg2"]
+[gd_scene load_steps=8 format=3 uid="uid://ny01qnyexpg2"]
 
 [ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_qkcl6"]
 [ext_resource type="Script" uid="uid://cvsyjssmvhl4m" path="res://ShmupSandbox/UI/Scripts/options_menu.gd" id="1_unpda"]
 [ext_resource type="Texture2D" uid="uid://d04yolfqx8m3v" path="res://ShmupSandbox/Assets/Icons/selctor_icon.png" id="3_ce2tu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ce2tu"]
+bg_color = Color(0.941176, 0.964706, 0.941176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6upo5"]
+bg_color = Color(0.941176, 0.964706, 0.941176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n03th"]
+bg_color = Color(0.941176, 0.964706, 0.941176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3i6ea"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(0.8, 0.8, 0.8, 0)
 
 [node name="options_menu" type="Control"]
 layout_mode = 3
@@ -51,6 +64,7 @@ layout_mode = 2
 theme_override_constants/separation = 5
 
 [node name="sound_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 70
@@ -76,6 +90,7 @@ custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_vertical = 8
 focus_neighbor_bottom = NodePath("../../../HBoxContainer2/VBoxContainer2/music_volume_slider")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ce2tu")
 max_value = 10.0
 value = 5.0
 rounded = true
@@ -90,6 +105,7 @@ layout_mode = 2
 theme_override_constants/separation = 5
 
 [node name="music_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 70
@@ -116,6 +132,7 @@ layout_mode = 2
 size_flags_vertical = 8
 focus_neighbor_top = NodePath("../../../HBoxContainer/VBoxContainer2/sound_volume_slider")
 focus_neighbor_bottom = NodePath("../../../HBoxContainer3/VBoxContainer2/screen_shake_amount_slider")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_6upo5")
 max_value = 10.0
 value = 5.0
 rounded = true
@@ -130,6 +147,7 @@ layout_mode = 2
 theme_override_constants/separation = 5
 
 [node name="screen_shake_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_qkcl6")
@@ -155,6 +173,7 @@ layout_mode = 2
 size_flags_vertical = 8
 focus_neighbor_top = NodePath("../../../HBoxContainer2/VBoxContainer2/music_volume_slider")
 focus_neighbor_bottom = NodePath("../../../HBoxContainer4/VBoxContainer2/back_button")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_n03th")
 max_value = 10.0
 value = 5.0
 rounded = true
@@ -165,6 +184,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+visible = false
 custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 theme_override_constants/separation = 18
@@ -190,6 +210,7 @@ size_flags_horizontal = 4
 focus_neighbor_top = NodePath("../../../HBoxContainer3/VBoxContainer2/screen_shake_amount_slider")
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxFlat_3i6ea")
 text = "Back"
 flat = true
 

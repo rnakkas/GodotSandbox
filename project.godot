@@ -15,6 +15,10 @@ run/main_scene="uid://betfkrygq2ejo"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Utility="*res://ShmupSandbox/Autoloads/Utility.gd"
+
 [display]
 
 window/size/viewport_width=540

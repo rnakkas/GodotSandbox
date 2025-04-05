@@ -1,10 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://bumbgw58q7r1d"]
+[gd_scene load_steps=9 format=3 uid="uid://bumbgw58q7r1d"]
 
 [ext_resource type="Script" uid="uid://k8kst8326lwc" path="res://ShmupSandbox/UI/Scripts/pause_menu.gd" id="1_00ny2"]
 [ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_ur1kj"]
 [ext_resource type="Texture2D" uid="uid://d04yolfqx8m3v" path="res://ShmupSandbox/Assets/Icons/selctor_icon.png" id="3_prqwj"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_prqwj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prqwj"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tuk35"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gpvhe"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bx2eb"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(0.8, 0.8, 0.8, 0)
 
 [node name="pause_menu" type="Control"]
 layout_mode = 3
@@ -82,6 +98,7 @@ size_flags_horizontal = 4
 focus_neighbor_bottom = NodePath("../../HBoxContainer2/options_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxFlat_prqwj")
 text = "Resume"
 flat = true
 
@@ -113,6 +130,7 @@ focus_neighbor_top = NodePath("../../HBoxContainer/resume_button")
 focus_neighbor_bottom = NodePath("../../HBoxContainer3/main_menu_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxFlat_tuk35")
 text = "Options"
 flat = true
 
@@ -144,6 +162,7 @@ focus_neighbor_top = NodePath("../../HBoxContainer2/options_button")
 focus_neighbor_bottom = NodePath("../../HBoxContainer4/quit_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxFlat_gpvhe")
 text = "Main Menu"
 flat = true
 
@@ -174,6 +193,7 @@ size_flags_horizontal = 4
 focus_neighbor_top = NodePath("../../HBoxContainer3/main_menu_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxFlat_bx2eb")
 text = "Quit"
 flat = true
 
