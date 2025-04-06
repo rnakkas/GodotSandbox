@@ -4,7 +4,7 @@ class_name game extends Node2D
 @onready var player : CharacterBody2D
 
 ## Containers
-@onready var player_projectiles_container : Node2D = $PlayerProjectiles
+@onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
 @onready var enemies_container : Node2D = $EnemiesContainer
 
 func _ready() -> void:
