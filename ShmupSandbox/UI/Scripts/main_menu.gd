@@ -63,8 +63,10 @@ func create_ui_elements_list() -> void:
 
 ## Play button
 func _on_play_button_pressed() -> void:
+	await get_tree().create_timer(2).timeout
 	play_button_pressed.emit()
 	
+
 func _on_play_button_focus_entered() -> void:
 	#_show_button_as_selected(play_selector_icon)
 	UiUtility.highlight_selected_element(ui_elements_list, play_button)

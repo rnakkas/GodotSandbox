@@ -72,6 +72,7 @@ size_flags_vertical = 4
 focus_neighbor_bottom = NodePath("../../HBoxContainer2/options_button")
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
+action_mode = 0
 text = "PLAY"
 flat = true
 
@@ -104,6 +105,7 @@ focus_neighbor_top = NodePath("../../HBoxContainer/play_button")
 focus_neighbor_bottom = NodePath("../../HBoxContainer3/hi_scores_button")
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
+action_mode = 0
 text = "Options"
 flat = true
 
@@ -135,6 +137,7 @@ focus_neighbor_top = NodePath("../../HBoxContainer2/options_button")
 focus_neighbor_bottom = NodePath("../../HBoxContainer4/quit_button")
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
+action_mode = 0
 text = "Hi-Scores"
 flat = true
 
@@ -166,6 +169,7 @@ size_flags_vertical = 4
 focus_neighbor_top = NodePath("../../HBoxContainer3/hi_scores_button")
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 70
+action_mode = 0
 text = "Quit"
 flat = true
 

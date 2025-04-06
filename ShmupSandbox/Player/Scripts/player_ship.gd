@@ -44,7 +44,7 @@ func _ready() -> void:
 	shooting_cooldown_time = 1/fire_rate
 
 
-func handle_input(delta) -> void:
+func handle_movement(delta) -> void:
 	var input_dir := Vector2.ZERO
 	
 	# Get input direction
@@ -68,6 +68,8 @@ func clamp_movement_to_screen_bounds() -> void:
 	position.y = clamp(position.y, offset - min_bounds.y, max_bounds.y - offset)
 
 func handle_shooting() -> void:
+	if is_dead:
+		return
 	if Input.is_action_pressed("shoot"):
 		if !on_shooting_cooldown:
 			on_shooting_cooldown = true
@@ -82,15 +84,14 @@ func handle_shooting() -> void:
 			on_shooting_cooldown = false
 
 func _physics_process(delta):
-	if (!is_dead):
-		handle_input(delta)
-		move_and_slide()
+	if is_dead:
+		return
+	handle_movement(delta)
+	move_and_slide()
 
 func _process(_delta: float) -> void:
 	clamp_movement_to_screen_bounds()
-	
-	if (!is_dead):
-		handle_shooting()
+	handle_shooting()
 
 ## Hit by enemy or enemy projectiles
 func _on_hurtbox_area_entered(_area: Area2D) -> void:

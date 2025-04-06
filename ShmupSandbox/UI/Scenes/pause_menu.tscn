@@ -83,6 +83,7 @@ size_flags_horizontal = 4
 focus_neighbor_bottom = NodePath("../../HBoxContainer2/options_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
+action_mode = 0
 text = "Resume"
 flat = true
 
@@ -115,6 +116,7 @@ focus_neighbor_top = NodePath("../../HBoxContainer/resume_button")
 focus_neighbor_bottom = NodePath("../../HBoxContainer3/main_menu_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
+action_mode = 0
 text = "Options"
 flat = true
 
@@ -147,6 +149,7 @@ focus_neighbor_top = NodePath("../../HBoxContainer2/options_button")
 focus_neighbor_bottom = NodePath("../../HBoxContainer4/quit_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
+action_mode = 0
 text = "Main Menu"
 flat = true
 
@@ -178,6 +181,7 @@ size_flags_horizontal = 4
 focus_neighbor_top = NodePath("../../HBoxContainer3/main_menu_button")
 theme_override_fonts/font = ExtResource("1_ur1kj")
 theme_override_font_sizes/font_size = 70
+action_mode = 0
 text = "Quit"
 flat = true
 
