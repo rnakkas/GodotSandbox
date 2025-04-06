@@ -55,7 +55,7 @@ func _on_options_button_mouse_entered() -> void:
 	options_button.grab_focus()
 
 
-## Main Menu button
+## Main Menu button ## TODO: Create popup asking player to confirm return to main menu
 func _on_main_menu_button_pressed() -> void:
 	await UiUtility.press_selected_button_element(main_menu_button)
 	main_menu_button_pressed.emit()

@@ -86,7 +86,7 @@ func _on_pause_menu_main_menu_button_pressed() -> void:
 	_toggle_ui(ui_type.PLAYER_HUD_UI)
 	_toggle_ui(ui_type.MAIN_MENU)
 	
-	player_hud_ui.score_label.text = str(0).pad_zeros(8) ## Reset player score
+	player_hud_ui.score_value.text = str(0).pad_zeros(8) ## Reset player score
 	
 	get_tree().paused = false 
 	is_game_running = false
