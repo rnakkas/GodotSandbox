@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://ny01qnyexpg2"]
+[gd_scene load_steps=6 format=3 uid="uid://ny01qnyexpg2"]
 
 [ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_qkcl6"]
 [ext_resource type="Script" uid="uid://cvsyjssmvhl4m" path="res://ShmupSandbox/UI/Scripts/options_menu.gd" id="1_unpda"]
-[ext_resource type="Texture2D" uid="uid://d04yolfqx8m3v" path="res://ShmupSandbox/Assets/Icons/selctor_icon.png" id="3_ce2tu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ce2tu"]
 bg_color = Color(0.941176, 0.964706, 0.941176, 1)
@@ -178,23 +177,6 @@ tick_count = 1
 [node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
-visible = false
-custom_minimum_size = Vector2(36, 0)
-layout_mode = 2
-theme_override_constants/separation = 18
-
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer"]
-layout_mode = 2
-
-[node name="back_selector_icon" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("3_ce2tu")
-stretch_mode = 3
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
 layout_mode = 2

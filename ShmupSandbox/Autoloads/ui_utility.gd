@@ -15,10 +15,18 @@ func highlight_selected_element(ui_elements_list : Array[Control], selected_elem
 			_remove_highlight_from_ui_element(ui_elements_list[element])
 
 
+func press_selected_button_element(selected_element : Button) -> void:
+	_remove_highlight_from_ui_element(selected_element)
+	selected_element.focus_mode = Control.FOCUS_NONE
+	await get_tree().create_timer(0.2).timeout
+	selected_element.focus_mode = Control.FOCUS_ALL
+
+
+## Private helper funcs
 func _highlight_ui_elment(ui_element : Control) -> void:
 	var style : StyleBoxFlat = StyleBoxFlat.new()
 	ui_element.add_theme_color_override("font_color", color_black)
-	style.bg_color = color_white
+	style.bg_color = color_yellow
 	
 	ui_element.add_theme_stylebox_override("normal", style)
 	ui_element.add_theme_stylebox_override("focus", style)
@@ -30,7 +38,7 @@ func _highlight_ui_elment(ui_element : Control) -> void:
 	ui_element.add_theme_color_override("font_pressed_color", color_white)
 
 
-func _remove_highlight_from_ui_element(ui_element : Variant) -> void:
+func _remove_highlight_from_ui_element(ui_element : Control) -> void:
 	var style : StyleBoxFlat = StyleBoxFlat.new()
 	ui_element.add_theme_color_override("font_color", color_white)
 	style.bg_color = color_transparent

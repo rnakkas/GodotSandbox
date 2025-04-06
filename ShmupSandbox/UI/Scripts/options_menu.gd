@@ -11,9 +11,6 @@ class_name options_menu extends Control
 
 @onready var back_button: Button = %back_button
 
-## ++++ Selector Icons: Keeping it just in case i want to use later ++++
-#@onready var back_selector_icon: TextureRect = %back_selector_icon
-
 signal back_button_pressed()
 
 var ui_elements_list : Array[Control] = []
@@ -40,23 +37,22 @@ func create_ui_elements_list() -> void:
 ####
 ## Signal connections
 
+## Sliders
 func _on_sound_volume_slider_focus_entered() -> void:
-	#back_selector_icon.visible = false
 	UiUtility.highlight_selected_element(ui_elements_list, sound_label)
 
 func _on_music_volume_slider_focus_entered() -> void:
-	#back_selector_icon.visible = false
 	UiUtility.highlight_selected_element(ui_elements_list, music_label)
 
 func _on_screen_shake_amount_slider_focus_entered() -> void:
-	#back_selector_icon.visible = false
 	UiUtility.highlight_selected_element(ui_elements_list, screen_shake_label)
 
+## Back button
 func _on_back_button_focus_entered() -> void:
-	#back_selector_icon.visible = false
 	UiUtility.highlight_selected_element(ui_elements_list, back_button)
 
 func _on_back_button_pressed() -> void:
+	await UiUtility.press_selected_button_element(back_button)
 	back_button_pressed.emit()
 
 func _on_back_button_mouse_entered() -> void:
