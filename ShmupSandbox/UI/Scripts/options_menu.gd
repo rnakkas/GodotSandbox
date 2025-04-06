@@ -41,11 +41,21 @@ func create_ui_elements_list() -> void:
 func _on_sound_volume_slider_focus_entered() -> void:
 	UiUtility.highlight_selected_element(ui_elements_list, sound_label)
 
+func _on_sound_volume_slider_mouse_entered() -> void:
+	sound_volume_slider.grab_focus()
+
 func _on_music_volume_slider_focus_entered() -> void:
 	UiUtility.highlight_selected_element(ui_elements_list, music_label)
 
+func _on_music_volume_slider_mouse_entered() -> void:
+	music_volume_slider.grab_focus()
+
 func _on_screen_shake_amount_slider_focus_entered() -> void:
 	UiUtility.highlight_selected_element(ui_elements_list, screen_shake_label)
+
+func _on_screen_shake_amount_slider_mouse_entered() -> void:
+	screen_shake_amount_slider.grab_focus()
+
 
 ## Back button
 func _on_back_button_focus_entered() -> void:
