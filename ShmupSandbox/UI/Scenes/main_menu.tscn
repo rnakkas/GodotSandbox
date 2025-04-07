@@ -19,26 +19,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 35
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 70
-
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="title" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.964706, 0.941176, 1)
 theme_override_fonts/font = ExtResource("3_v14c2")
-theme_override_font_sizes/font_size = 116
+theme_override_font_sizes/font_size = 70
 text = "GAME TITLE"
 horizontal_alignment = 1
 
@@ -54,7 +48,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 focus_neighbor_bottom = NodePath("../../HBoxContainer2/options_button")
 theme_override_fonts/font = ExtResource("3_v14c2")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 45
 action_mode = 0
 text = "PLAY"
 flat = true
@@ -71,7 +65,7 @@ size_flags_vertical = 4
 focus_neighbor_top = NodePath("../../HBoxContainer/play_button")
 focus_neighbor_bottom = NodePath("../../HBoxContainer3/hi_scores_button")
 theme_override_fonts/font = ExtResource("3_v14c2")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 45
 action_mode = 0
 text = "Options"
 flat = true
@@ -87,7 +81,7 @@ size_flags_horizontal = 8
 focus_neighbor_top = NodePath("../../HBoxContainer2/options_button")
 focus_neighbor_bottom = NodePath("../../HBoxContainer4/quit_button")
 theme_override_fonts/font = ExtResource("3_v14c2")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 45
 action_mode = 0
 text = "Hi-Scores"
 flat = true
@@ -103,7 +97,7 @@ size_flags_horizontal = 8
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../../HBoxContainer3/hi_scores_button")
 theme_override_fonts/font = ExtResource("3_v14c2")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 45
 action_mode = 0
 text = "Quit"
 flat = true

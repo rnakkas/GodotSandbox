@@ -8,8 +8,8 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krxhe"]
 bg_color = Color(0.133333, 0.137255, 0.137255, 1)
 skew = Vector2(0.4, 0)
-border_width_top = 12
-border_width_bottom = 12
+border_width_top = 5
+border_width_bottom = 5
 border_color = Color(0.133333, 0.137255, 0.137255, 1)
 corner_detail = 2
 
@@ -25,8 +25,8 @@ corner_detail = 2
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6upo5"]
 bg_color = Color(0.133333, 0.137255, 0.137255, 1)
 skew = Vector2(0.4, 0)
-border_width_top = 12
-border_width_bottom = 12
+border_width_top = 5
+border_width_bottom = 5
 border_color = Color(0.133333, 0.137255, 0.137255, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n03th"]
@@ -63,41 +63,41 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 35
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 70
-
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
+theme_override_constants/separation = 12
 
 [node name="options_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 90
+theme_override_font_sizes/font_size = 45
 text = "Options"
 horizontal_alignment = 1
 
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 35
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 5
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="sound_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 35
 text = "Sound"
 horizontal_alignment = 1
 
@@ -109,10 +109,7 @@ layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
+size_flags_vertical = 4
 
 [node name="sound_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
 unique_name_in_owner = true
@@ -129,17 +126,20 @@ rounded = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 38
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_constants/separation = 5
 
 [node name="music_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 35
 text = "Music"
 horizontal_alignment = 1
 
@@ -150,10 +150,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 
 [node name="music_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2"]
@@ -171,10 +167,12 @@ rounded = true
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 32
+size_flags_horizontal = 4
+theme_override_constants/separation = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_constants/separation = 5
 
 [node name="screen_shake_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer"]
@@ -182,26 +180,23 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 35
 text = "Screen 
 Shake"
 horizontal_alignment = 1
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer2"]
-layout_mode = 2
-
 [node name="screen_shake_amount_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-size_flags_vertical = 8
+size_flags_vertical = 4
 theme_override_constants/grabber_offset = 5000
 theme_override_styles/slider = SubResource("StyleBoxFlat_krxhe")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_unpda")
@@ -212,17 +207,18 @@ rounded = true
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
+size_flags_vertical = 4
 
 [node name="back_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 35
 action_mode = 0
 text = "Back"
 flat = true

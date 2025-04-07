@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://v4u6mxfaksoq"]
+
+[ext_resource type="Script" uid="uid://cv1tb3kosvc8x" path="res://ShmupSandbox/UI/Scripts/parallax_background.gd" id="1_22bcp"]
+[ext_resource type="Texture2D" uid="uid://db1kvoxnhwk4t" path="res://ShmupSandbox/Assets/ParallaxBackgrounds/black.png" id="2_jvt07"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+process_mode = 1
+script = ExtResource("1_22bcp")
+scroll_speed = 160.0
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0, 0.5)
+motion_mirroring = Vector2(670, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+position = Vector2(338, 189)
+scale = Vector2(2.61719, 1.49219)
+texture = ExtResource("2_jvt07")

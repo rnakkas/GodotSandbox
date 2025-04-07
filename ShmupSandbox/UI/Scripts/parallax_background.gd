@@ -5,4 +5,4 @@ extends ParallaxBackground
 @export var scroll_speed : float = 50.0 
 
 func _process(delta: float) -> void:
-	background_layer.motion_offset.y += scroll_speed * delta
+	background_layer.motion_offset.x -= scroll_speed * delta
