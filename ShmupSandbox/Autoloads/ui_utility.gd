@@ -1,5 +1,9 @@
 extends Node
 
+## UI dialog box strings
+var dialog_return_to_main_menu = "Return to Main Menu?"
+var dialog_quit = "Quit the game?"
+
 ## Colour and hex code references
 var color_white : Color = "#f0f6f0"
 var color_black : Color = "#222323"

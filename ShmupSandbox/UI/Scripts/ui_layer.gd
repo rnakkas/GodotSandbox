@@ -4,6 +4,7 @@ class_name ui_layer extends CanvasLayer
 @onready var options_menu_ui : options_menu = %options_menu
 @onready var pause_menu_ui : pause_menu = %pause_menu
 @onready var player_hud_ui : player_hud = %player_hud
+@onready var confirm_dialog_ui : confirm_dialog = %confirm_dialog
 
 signal game_started()
 signal returned_to_main_menu_from_game()
@@ -13,7 +14,8 @@ enum ui_type
 	MAIN_MENU,
 	OPTIONS_MENU,
 	PAUSE_MENU,
-	PLAYER_HUD_UI
+	PLAYER_HUD_UI,
+	CONFIRM_DIALOG
 }
 
 var is_game_running : bool
@@ -28,6 +30,8 @@ func _ready() -> void:
 	options_menu_ui.visible = false
 	pause_menu_ui.visible = false
 	player_hud_ui.visible = false
+	confirm_dialog_ui.visible = false
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
@@ -82,20 +86,40 @@ func _on_pause_menu_options_button_pressed() -> void:
 
 
 func _on_pause_menu_main_menu_button_pressed() -> void:
-	_toggle_ui(ui_type.PAUSE_MENU)
-	_toggle_ui(ui_type.PLAYER_HUD_UI)
-	_toggle_ui(ui_type.MAIN_MENU)
-	
-	player_hud_ui.score_value.text = str(0).pad_zeros(8) ## Reset player score
-	
-	get_tree().paused = false 
-	is_game_running = false
-	returned_to_main_menu_from_game.emit()
+	confirm_dialog_ui.dialog_label_main.text = UiUtility.dialog_return_to_main_menu
+	_toggle_ui(ui_type.CONFIRM_DIALOG)
 
 
 func _on_pause_menu_quit_button_pressed() -> void:
-	get_tree().call_deferred("quit")
+	confirm_dialog_ui.dialog_label_main.text = UiUtility.dialog_quit
+	_toggle_ui(ui_type.CONFIRM_DIALOG)
 
+
+####
+
+## Confirm dialog
+func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
+	match dialog_text:
+		UiUtility.dialog_return_to_main_menu:
+			_toggle_ui(ui_type.CONFIRM_DIALOG)
+			_toggle_ui(ui_type.PAUSE_MENU)
+			_toggle_ui(ui_type.PLAYER_HUD_UI)
+			_toggle_ui(ui_type.MAIN_MENU)
+			
+			player_hud_ui.score_value.text = str(0).pad_zeros(8) ## Reset player score
+			
+			get_tree().paused = false 
+			is_game_running = false
+			returned_to_main_menu_from_game.emit()
+		
+		UiUtility.dialog_quit:
+			get_tree().call_deferred("quit")
+
+
+func _on_confirm_dialog_no_button_pressed() -> void:
+	_toggle_ui(ui_type.CONFIRM_DIALOG)
+	pause_menu_ui.resume_button.grab_focus()
+	
 
 ####
 
@@ -115,6 +139,9 @@ func _toggle_ui(menu_type : ui_type) -> void:
 		ui_type.PAUSE_MENU:
 			ui_element = pause_menu_ui
 			ui_element.resume_button.grab_focus()
+		ui_type.CONFIRM_DIALOG:
+			ui_element = confirm_dialog_ui
+			ui_element.no_button.grab_focus()
 		
 	if ui_element:
 		ui_element.visible = !ui_element.visible

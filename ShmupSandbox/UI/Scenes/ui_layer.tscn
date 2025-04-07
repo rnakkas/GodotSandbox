@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://wq32mri3ebiv"]
+[gd_scene load_steps=8 format=3 uid="uid://wq32mri3ebiv"]
 
 [ext_resource type="PackedScene" uid="uid://dw1uu0vpx6e46" path="res://ShmupSandbox/UI/Scenes/main_menu.tscn" id="1_ga2yo"]
 [ext_resource type="Script" uid="uid://s70ghdyj3lk3" path="res://ShmupSandbox/UI/Scripts/ui_layer.gd" id="1_hgdm0"]
+[ext_resource type="PackedScene" uid="uid://dvex6ouhoh1ev" path="res://ShmupSandbox/UI/Scenes/confirm_dialog.tscn" id="2_3gw38"]
 [ext_resource type="PackedScene" uid="uid://ny01qnyexpg2" path="res://ShmupSandbox/UI/Scenes/options_menu.tscn" id="2_hgdm0"]
 [ext_resource type="PackedScene" uid="uid://bumbgw58q7r1d" path="res://ShmupSandbox/UI/Scenes/pause_menu.tscn" id="3_3gw38"]
 [ext_resource type="PackedScene" uid="uid://btcsgnuk4yo61" path="res://ShmupSandbox/UI/Scenes/player_hud.tscn" id="4_dqs3x"]
@@ -26,6 +27,10 @@ visible = false
 unique_name_in_owner = true
 visible = false
 
+[node name="confirm_dialog" parent="." instance=ExtResource("2_3gw38")]
+unique_name_in_owner = true
+visible = false
+
 [node name="ParallaxBackground" parent="." instance=ExtResource("6_ga2yo")]
 
 [connection signal="hi_scores_button_pressed" from="main_menu" to="." method="_on_main_menu_hi_scores_button_pressed"]
@@ -37,3 +42,5 @@ visible = false
 [connection signal="options_button_pressed" from="pause_menu" to="." method="_on_pause_menu_options_button_pressed"]
 [connection signal="quit_button_pressed" from="pause_menu" to="." method="_on_pause_menu_quit_button_pressed"]
 [connection signal="resume_button_pressed" from="pause_menu" to="." method="_on_pause_menu_resume_button_pressed"]
+[connection signal="no_button_pressed" from="confirm_dialog" to="." method="_on_confirm_dialog_no_button_pressed"]
+[connection signal="yes_button_pressed" from="confirm_dialog" to="." method="_on_confirm_dialog_yes_button_pressed"]
