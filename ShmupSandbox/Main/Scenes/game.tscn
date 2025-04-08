@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://b0ndt0kisoyg3"]
 
-[ext_resource type="PackedScene" uid="uid://ck20r21lsokw1" path="res://ShmupSandbox/Player/Scenes/player_ship.tscn" id="1_cxqyk"]
 [ext_resource type="Script" uid="uid://cj0ffr545wyhi" path="res://ShmupSandbox/Main/Scripts/game.gd" id="1_f5mi8"]
 [ext_resource type="PackedScene" uid="uid://bxfke2pw5vqm1" path="res://ShmupSandbox/Main/Scenes/enemy_spawner.tscn" id="2_f46ya"]
 [ext_resource type="PackedScene" uid="uid://uv73jmnpfp6" path="res://ShmupSandbox/Enemies/Scenes/rebel_fighter.tscn" id="3_k74nh"]
 [ext_resource type="PackedScene" uid="uid://dir2ledda2odf" path="res://ShmupSandbox/Enemies/Scenes/rebel_interceptor.tscn" id="4_umyhj"]
+[ext_resource type="PackedScene" uid="uid://diqmrgjokhuyb" path="res://ShmupSandbox/Player/Scenes/player_cat.tscn" id="5_f46ya"]
 
 [node name="Game" type="Node2D"]
 process_mode = 1
@@ -13,11 +13,12 @@ script = ExtResource("1_f5mi8")
 [node name="enemy_spawner" parent="." instance=ExtResource("2_f46ya")]
 enemy_scenes = Array[PackedScene]([ExtResource("3_k74nh"), ExtResource("4_umyhj")])
 
-[node name="PlayerShip" parent="." instance=ExtResource("1_cxqyk")]
-unique_name_in_owner = true
-position = Vector2(329, 223)
+[node name="player_cat" parent="." instance=ExtResource("5_f46ya")]
+position = Vector2(69, 191)
+fire_rate = 8.0
 
-[node name="Camera2D" type="Camera2D" parent="PlayerShip"]
+[node name="Camera2D" type="Camera2D" parent="player_cat"]
+position = Vector2(2, -7)
 limit_left = 0
 limit_top = 0
 limit_right = 640
@@ -28,4 +29,4 @@ limit_bottom = 360
 [node name="EnemiesContainer" type="Node2D" parent="."]
 
 [connection signal="add_enemy_to_game" from="enemy_spawner" to="." method="_on_enemy_spawner_add_enemy_to_game"]
-[connection signal="shooting" from="PlayerShip" to="." method="_on_player_ship_shooting"]
+[connection signal="shooting" from="player_cat" to="." method="_on_player_cat_shooting"]

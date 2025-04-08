@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://0uiw6fd5nr31" path="res://ShmupSandbox/Assets/Player/spaceship-001-spritesheet-001.png" id="2_77s1a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_flo0d"]
-radius = 23.0
+radius = 17.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mqof1"]
 atlas = ExtResource("2_77s1a")
@@ -88,13 +88,14 @@ debug_color = Color(0.897961, 0.293812, 0.302015, 0.42)
 
 [node name="body" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.941176, 0.988235, 0, 1)
-scale = Vector2(0.5, 0.5)
+rotation = 1.5708
+scale = Vector2(0.35, 0.35)
 sprite_frames = SubResource("SpriteFrames_77s1a")
 animation = &"idle"
 autoplay = "idle"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(0, -58)
+position = Vector2(58, 0)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

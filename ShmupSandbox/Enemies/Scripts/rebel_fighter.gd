@@ -10,7 +10,7 @@ class_name rebel_fighter extends Area2D
 
 
 func _physics_process(delta: float) -> void:
-	global_position.y += speed * delta
+	global_position.x -= speed * delta
 
 func _process(_delta: float) -> void:
 	_handle_dying()
