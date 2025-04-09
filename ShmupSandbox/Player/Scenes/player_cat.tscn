@@ -69,6 +69,14 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"none",
+"speed": 5.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5tcps"]
@@ -133,6 +141,14 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"none",
+"speed": 5.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_unr50"]
@@ -205,6 +221,14 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"none",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -286,6 +310,14 @@ animations = [{
 "loop": false,
 "name": &"death",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"none",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gdjmk"]
@@ -327,7 +359,7 @@ animations = [{
 "texture": null
 }],
 "loop": false,
-"name": &"idle",
+"name": &"none",
 "speed": 5.0
 }, {
 "frames": [{
@@ -357,25 +389,26 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_uobwy"]
 radius = 15.0333
 
-[node name="player_cat" type="CharacterBody2D" node_paths=PackedStringArray("sprites_list")]
+[node name="player_cat" type="CharacterBody2D"]
 collision_mask = 28
 script = ExtResource("1_m8806")
 _acceleration = 1800.0
 _damping = 2000.0
 fire_rate = 5.0
-sprites_list = [NodePath("rocket"), NodePath("rocket/thruster"), NodePath("rocket/body"), NodePath("death"), NodePath("muzzle/muzzle_flash")]
 
 [node name="rocket" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(1, 3)
 sprite_frames = SubResource("SpriteFrames_f7xhn")
 animation = &"idle"
+autoplay = "idle"
 
 [node name="thruster" type="AnimatedSprite2D" parent="rocket"]
 unique_name_in_owner = true
 position = Vector2(-40.4762, -0.476191)
 sprite_frames = SubResource("SpriteFrames_dqpge")
 animation = &"idle"
+autoplay = "idle"
 
 [node name="body" type="AnimatedSprite2D" parent="rocket"]
 unique_name_in_owner = true
@@ -387,12 +420,10 @@ autoplay = "idle"
 
 [node name="death" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-visible = false
 position = Vector2(-11, -6)
 sprite_frames = SubResource("SpriteFrames_7idpd")
-animation = &"death"
-frame = 9
-frame_progress = 1.0
+animation = &"none"
+autoplay = "none"
 
 [node name="collider_body" type="CollisionShape2D" parent="."]
 position = Vector2(-1.19209e-07, -16)
@@ -415,8 +446,8 @@ unique_name_in_owner = true
 position = Vector2(8, 1)
 scale = Vector2(1.8, 1.8)
 sprite_frames = SubResource("SpriteFrames_gdjmk")
-animation = &"idle"
-autoplay = "idle"
+animation = &"none"
+autoplay = "none"
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_mask = 24

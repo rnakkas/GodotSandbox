@@ -16,8 +16,6 @@ class_name player_cat extends CharacterBody2D
 @onready var muzzle_flash: AnimatedSprite2D = %muzzle_flash
 @onready var death : AnimatedSprite2D = %death
 
-@export var sprites_list : Array[AnimatedSprite2D] = []
-
 ## Muzzle
 @onready var muzzle : Marker2D = %muzzle
 
@@ -34,26 +32,24 @@ var on_shooting_cooldown : bool
 var is_dead : bool
 
 func _ready() -> void:
-	sprites_list = [
-		body,
-		rocket,
-		thruster,
-		muzzle_flash,
-		death
-	]
-	
-	for sprite:int in range(sprites_list.size()):
-		if sprites_list[sprite] == death:
-			sprites_list[sprite].visible = false
-		else:
-			sprites_list[sprite].visible = true
-			sprites_list[sprite].play("idle")
-	
 	viewport_size = get_viewport_rect().size
 	shooting_cooldown_time = 1/fire_rate
 
+func _physics_process(delta):
+	if is_dead:
+		return
+	_handle_movement(delta)
+	move_and_slide()
 
-func handle_movement(delta) -> void:
+func _process(_delta: float) -> void:
+	_clamp_movement_to_screen_bounds()
+	_handle_shooting()
+
+####
+
+## Helper funcs
+
+func _handle_movement(delta) -> void:
 	var input_dir := Vector2.ZERO
 	
 	# Get input direction
@@ -67,7 +63,7 @@ func handle_movement(delta) -> void:
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, _damping * delta)
 
-func clamp_movement_to_screen_bounds() -> void:
+func _clamp_movement_to_screen_bounds() -> void:
 	# Clamp position within bounds
 	var min_bounds : Vector2 = Vector2(0, 0)
 	var max_bounds : Vector2 = viewport_size
@@ -76,7 +72,7 @@ func clamp_movement_to_screen_bounds() -> void:
 	position.x = clamp(position.x, offset - min_bounds.x, max_bounds.x - offset)
 	position.y = clamp(position.y, offset - min_bounds.y, max_bounds.y - offset)
 
-func handle_shooting() -> void:
+func _handle_shooting() -> void:
 	if is_dead:
 		return
 	if Input.is_action_pressed("shoot"):
@@ -94,17 +90,9 @@ func handle_shooting() -> void:
 	else:
 		body.play("idle")
 		body.frame = rocket.frame
-	
 
-func _physics_process(delta):
-	if is_dead:
-		return
-	handle_movement(delta)
-	move_and_slide()
 
-func _process(_delta: float) -> void:
-	clamp_movement_to_screen_bounds()
-	handle_shooting()
+####
 
 ## Hit by enemy or enemy projectiles
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
@@ -114,12 +102,11 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	hurtbox.set_deferred("monitoring", false)
 	hurtbox.set_deferred("monitorable", false)
 	
-	for sprite:int in range(sprites_list.size()):
-		if sprites_list[sprite] == death:
-			sprites_list[sprite].visible = true
-			sprites_list[sprite].play("death")
-		else:
-			sprites_list[sprite].visible = false
+	body.play("none")
+	rocket.play("none")
+	thruster.play("none")
+	muzzle_flash.play("none")
+	death.play("death")
 	
 	await death.animation_finished
 	

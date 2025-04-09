@@ -6,7 +6,7 @@
 [node name="ParallaxBackground" type="ParallaxBackground"]
 process_mode = 1
 script = ExtResource("1_22bcp")
-scroll_speed = 160.0
+scroll_speed = 300.0
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="."]
 motion_scale = Vector2(0, 0.5)
