@@ -14,6 +14,9 @@ class_name player_cat extends CharacterBody2D
 @onready var rocket : AnimatedSprite2D = %rocket
 @onready var thruster : AnimatedSprite2D = %thruster
 @onready var muzzle_flash: AnimatedSprite2D = %muzzle_flash
+@onready var death : AnimatedSprite2D = %death
+
+@export var sprites_list : Array[AnimatedSprite2D] = []
 
 ## Muzzle
 @onready var muzzle : Marker2D = %muzzle
@@ -31,10 +34,20 @@ var on_shooting_cooldown : bool
 var is_dead : bool
 
 func _ready() -> void:
-	body.play("idle")
-	rocket.play("idle")
-	thruster.play("idle")
-	muzzle_flash.play("idle")
+	sprites_list = [
+		body,
+		rocket,
+		thruster,
+		muzzle_flash,
+		death
+	]
+	
+	for sprite:int in range(sprites_list.size()):
+		if sprites_list[sprite] == death:
+			sprites_list[sprite].visible = false
+		else:
+			sprites_list[sprite].visible = true
+			sprites_list[sprite].play("idle")
 	
 	viewport_size = get_viewport_rect().size
 	shooting_cooldown_time = 1/fire_rate
@@ -101,9 +114,14 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	hurtbox.set_deferred("monitoring", false)
 	hurtbox.set_deferred("monitorable", false)
 	
-	muzzle_flash.play("idle")
-	body.play("death")
-	await body.animation_finished
+	for sprite:int in range(sprites_list.size()):
+		if sprites_list[sprite] == death:
+			sprites_list[sprite].visible = true
+			sprites_list[sprite].play("death")
+		else:
+			sprites_list[sprite].visible = false
+	
+	await death.animation_finished
 	
 	queue_free()
 	
