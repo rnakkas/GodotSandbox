@@ -1,28 +1,28 @@
 [gd_scene load_steps=15 format=3 uid="uid://k2akwdsnkyda"]
 
-[ext_resource type="Texture2D" uid="uid://0uiw6fd5nr31" path="res://ShmupSandbox/Assets/Player/spaceship-001-spritesheet-001.png" id="1_bk2fx"]
 [ext_resource type="Script" uid="uid://dmwv3jrlakeyp" path="res://ShmupSandbox/Player/Scripts/player_bullet.gd" id="1_whoyt"]
+[ext_resource type="Texture2D" uid="uid://urig11iauhr4" path="res://ShmupSandbox/Assets/Player/bullet-v2.png" id="2_dkjwp"]
 [ext_resource type="Texture2D" uid="uid://ic3u5r3ara6l" path="res://ShmupSandbox/Assets/Player/bullet_hit-v1.png" id="4_onk7t"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_whoyt"]
-atlas = ExtResource("1_bk2fx")
-region = Rect2(0, 64, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dkjwp"]
-atlas = ExtResource("1_bk2fx")
-region = Rect2(16, 64, 16, 16)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_onk7t"]
-atlas = ExtResource("1_bk2fx")
-region = Rect2(32, 64, 16, 16)
+atlas = ExtResource("2_dkjwp")
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wr6iu"]
-atlas = ExtResource("1_bk2fx")
-region = Rect2(48, 64, 16, 16)
+atlas = ExtResource("2_dkjwp")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lxxth"]
-atlas = ExtResource("1_bk2fx")
-region = Rect2(64, 64, 16, 16)
+atlas = ExtResource("2_dkjwp")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvwbh"]
+atlas = ExtResource("2_dkjwp")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cha4"]
+atlas = ExtResource("2_dkjwp")
+region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eymk2"]
 atlas = ExtResource("4_onk7t")
@@ -44,12 +44,6 @@ region = Rect2(84, 0, 28, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_whoyt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dkjwp")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_onk7t")
 }, {
 "duration": 1.0,
@@ -57,6 +51,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lxxth")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvwbh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4cha4")
 }],
 "loop": true,
 "name": &"fly",
@@ -94,10 +94,9 @@ script = ExtResource("1_whoyt")
 speed = 950.0
 
 [node name="bullet_sprite" type="AnimatedSprite2D" parent="."]
-rotation = 1.5708
-scale = Vector2(1.6, 1.6)
+scale = Vector2(1.3, 1.3)
 sprite_frames = SubResource("SpriteFrames_eymk2")
-animation = &"hit"
+animation = &"fly"
 autoplay = "fly"
 
 [node name="bullet_collider" type="CollisionShape2D" parent="."]

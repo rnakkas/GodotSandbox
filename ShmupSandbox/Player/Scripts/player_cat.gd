@@ -11,6 +11,8 @@ class_name player_cat extends CharacterBody2D
 
 ## Sprites
 @onready var body: AnimatedSprite2D = %body
+@onready var rocket : AnimatedSprite2D = %rocket
+@onready var thruster : AnimatedSprite2D = %thruster
 @onready var muzzle_flash: AnimatedSprite2D = %muzzle_flash
 
 ## Muzzle
@@ -30,6 +32,8 @@ var is_dead : bool
 
 func _ready() -> void:
 	body.play("idle")
+	rocket.play("idle")
+	thruster.play("idle")
 	muzzle_flash.play("idle")
 	
 	viewport_size = get_viewport_rect().size
@@ -76,6 +80,8 @@ func handle_shooting() -> void:
 			on_shooting_cooldown = false
 	else:
 		body.play("idle")
+		body.frame = rocket.frame
+	
 
 func _physics_process(delta):
 	if is_dead:

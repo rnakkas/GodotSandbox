@@ -6,6 +6,7 @@ class_name rebel_fighter extends Area2D
 @export var kill_score : int = 100
 
 @onready var enemy_sprite : AnimatedSprite2D = $body
+@onready var particles : CPUParticles2D = $CPUParticles2D
 
 
 
@@ -19,6 +20,7 @@ func _handle_dying() -> void:
 	if hp <= 0:
 		_deactivate_self()
 		enemy_sprite.play("death")
+		particles.emitting = true
 		await enemy_sprite.animation_finished
 		queue_free()
 

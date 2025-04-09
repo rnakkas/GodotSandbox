@@ -3,7 +3,6 @@ class_name player_bullet extends Area2D
 @export var speed : float
 
 @onready var bullet_sprite : AnimatedSprite2D = $bullet_sprite
-@onready var bullet_sprite_alt : AnimatedSprite2D = $bullet_sprite_alt
 
 func _physics_process(delta: float) -> void:
 	global_position.x += speed * delta
