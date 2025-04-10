@@ -96,6 +96,8 @@ func _handle_shooting() -> void:
 
 ## Hit by enemy or enemy projectiles
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
+	SignalsBus.player_death_event()
+	
 	is_dead = true
 	
 	velocity = Vector2.ZERO

@@ -1,35 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://uv73jmnpfp6"]
+[gd_scene load_steps=6 format=3 uid="uid://uv73jmnpfp6"]
 
 [ext_resource type="Texture2D" uid="uid://ciidgqeuvko6j" path="res://ShmupSandbox/Assets/Enemy/enemyBlack1.png" id="1_flo0d"]
 [ext_resource type="Script" uid="uid://bf1silpptuf3y" path="res://ShmupSandbox/Enemies/Scripts/rebel_fighter.gd" id="1_to7fy"]
-[ext_resource type="Texture2D" uid="uid://0uiw6fd5nr31" path="res://ShmupSandbox/Assets/Player/spaceship-001-spritesheet-001.png" id="2_77s1a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_flo0d"]
 radius = 17.0
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mqof1"]
-atlas = ExtResource("2_77s1a")
-region = Rect2(0, 108, 32, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wew1h"]
-atlas = ExtResource("2_77s1a")
-region = Rect2(32, 108, 32, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uda7c"]
-atlas = ExtResource("2_77s1a")
-region = Rect2(64, 108, 32, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6d5ge"]
-atlas = ExtResource("2_77s1a")
-region = Rect2(96, 108, 32, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bgiwp"]
-atlas = ExtResource("2_77s1a")
-region = Rect2(128, 108, 32, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uf8q7"]
-atlas = ExtResource("2_77s1a")
-region = Rect2(160, 108, 32, 36)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_to7fy"]
 atlas = ExtResource("1_flo0d")
@@ -39,22 +14,22 @@ region = Rect2(0, 0, 93, 84)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mqof1")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wew1h")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uda7c")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6d5ge")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bgiwp")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uf8q7")
+"texture": null
 }, {
 "duration": 1.0,
 "texture": null
@@ -99,7 +74,7 @@ position = Vector2(58, 0)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 emitting = false
-amount = 20
+amount = 150
 lifetime = 0.41
 one_shot = true
 explosiveness = 1.0

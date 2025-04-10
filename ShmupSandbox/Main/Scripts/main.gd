@@ -26,5 +26,12 @@ func _on_ui_layer_returned_to_main_menu_from_game() -> void:
 
 ## Helper functions
 func _start_game() -> void:
+	_reset_player_data()
 	game_instance = game_scene.instantiate()
 	add_child(game_instance)
+
+func _reset_player_data() -> void:
+	## Reset player data
+	PlayerData.player_score = 0
+	PlayerData.enemies_killed = 0
+	PlayerData.player_lives = 3

@@ -44,10 +44,16 @@ func _input(event: InputEvent) -> void:
 
 ## Main menu
 func _on_main_menu_play_button_pressed() -> void:
+	game_started.emit()
+	
+	## Grab fresh player data on game start
+	player_hud_ui.player_lives_value.text = "x " + str(PlayerData.player_lives)
+	player_hud_ui.score_value.text = str(PlayerData.player_score).pad_zeros(8)
+	
 	_toggle_ui(ui_type.MAIN_MENU)
 	_toggle_ui(ui_type.PLAYER_HUD_UI)
+	
 	is_game_running = true
-	game_started.emit()
 
 func _on_main_menu_options_button_pressed() -> void:
 	_toggle_ui(ui_type.MAIN_MENU)
@@ -97,7 +103,7 @@ func _on_pause_menu_quit_button_pressed() -> void:
 
 ####
 
-## Confirm dialog
+## Confirm return to main menu or quit dialog
 func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 	match dialog_text:
 		UiUtility.dialog_return_to_main_menu:
@@ -105,8 +111,6 @@ func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 			_toggle_ui(ui_type.PAUSE_MENU)
 			_toggle_ui(ui_type.PLAYER_HUD_UI)
 			_toggle_ui(ui_type.MAIN_MENU)
-			
-			player_hud_ui.score_value.text = str(0).pad_zeros(8) ## Reset player score
 			
 			get_tree().paused = false 
 			is_game_running = false

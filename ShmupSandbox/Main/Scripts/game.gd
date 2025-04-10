@@ -24,3 +24,6 @@ func _on_player_cat_shooting(bullet_scene: PackedScene, locations: Array[Vector2
 ## Spawning enemies
 func _on_enemy_spawner_add_enemy_to_game(enemy: Area2D) -> void:
 	enemies_container.add_child(enemy)
+
+## TODO: Player respawn on death, spawn at player_spawn_point_start and move until player reaches
+## 	player_spawn_point_end
