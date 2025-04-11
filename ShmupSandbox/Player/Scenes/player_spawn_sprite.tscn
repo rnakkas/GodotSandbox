@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://4q47w0v1xcl2"]
+
+[ext_resource type="Texture2D" uid="uid://dga5fjnybn0ve" path="res://ShmupSandbox/Assets/Player/player_spawn_sprite-v1.png" id="1_gd6hd"]
+[ext_resource type="Script" uid="uid://dn5nva7ifah8d" path="res://ShmupSandbox/Player/Scripts/player_spawn_sprite.gd" id="2_0eyyq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0eyyq"]
+atlas = ExtResource("1_gd6hd")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2aldf"]
+atlas = ExtResource("1_gd6hd")
+region = Rect2(96, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tyyhb"]
+atlas = ExtResource("1_gd6hd")
+region = Rect2(192, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5hl1"]
+atlas = ExtResource("1_gd6hd")
+region = Rect2(288, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rna21"]
+atlas = ExtResource("1_gd6hd")
+region = Rect2(384, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osvbw"]
+atlas = ExtResource("1_gd6hd")
+region = Rect2(480, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3d46s"]
+atlas = ExtResource("1_gd6hd")
+region = Rect2(576, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pe0ga"]
+atlas = ExtResource("1_gd6hd")
+region = Rect2(672, 0, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_irp3e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0eyyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2aldf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tyyhb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5hl1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rna21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osvbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3d46s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe0ga")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}]
+
+[node name="player_spawn_sprite" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_irp3e")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("2_0eyyq")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-200, 0)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]

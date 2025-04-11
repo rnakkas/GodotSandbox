@@ -2,11 +2,11 @@ class_name player_cat extends CharacterBody2D
 
 ## Velocity
 @export var _max_speed : float = 450.0
-@export var _acceleration : float = 1600.0
-@export var _damping : float = 1200.0
+@export var _acceleration : float = 1800.0
+@export var _damping : float = 2000.0
 
 ## Shooting
-@export var fire_rate : float = 4.0
+@export var fire_rate : float = 8.0
 @export var bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/player_bullet.tscn")
 
 ## Sprites
@@ -21,9 +21,6 @@ class_name player_cat extends CharacterBody2D
 
 ## Hurtbox
 @onready var hurtbox : Area2D = $hurtbox
-
-## Custom signals
-signal shooting(bullet_scene:PackedScene, locations:Array[Vector2])
 
 
 var viewport_size : Vector2
@@ -80,7 +77,7 @@ func _handle_shooting() -> void:
 			on_shooting_cooldown = true
 			
 			var locations : Array[Vector2] = [muzzle.global_position]
-			shooting.emit(bullet_scene, locations)
+			SignalsBus.player_shooting_event(bullet_scene, locations)
 			
 			body.play("shoot")
 			muzzle_flash.play("shoot")
@@ -96,8 +93,6 @@ func _handle_shooting() -> void:
 
 ## Hit by enemy or enemy projectiles
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
-	SignalsBus.player_death_event()
-	
 	is_dead = true
 	
 	velocity = Vector2.ZERO
@@ -111,6 +106,11 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	death.play("death")
 	
 	await death.animation_finished
+	
+	## wait 0.5 seconds before sending signal to player spawner
+	await get_tree().create_timer(0.5).timeout 
+	
+	SignalsBus.player_death_event()
 	
 	queue_free()
 	

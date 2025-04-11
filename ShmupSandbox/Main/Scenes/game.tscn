@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bxfke2pw5vqm1" path="res://ShmupSandbox/Main/Scenes/enemy_spawner.tscn" id="2_f46ya"]
 [ext_resource type="PackedScene" uid="uid://uv73jmnpfp6" path="res://ShmupSandbox/Enemies/Scenes/rebel_fighter.tscn" id="3_k74nh"]
 [ext_resource type="PackedScene" uid="uid://dir2ledda2odf" path="res://ShmupSandbox/Enemies/Scenes/rebel_interceptor.tscn" id="4_umyhj"]
-[ext_resource type="PackedScene" uid="uid://diqmrgjokhuyb" path="res://ShmupSandbox/Player/Scenes/player_cat.tscn" id="5_f46ya"]
+[ext_resource type="PackedScene" uid="uid://cd36pie1fwh40" path="res://ShmupSandbox/Main/Scenes/player_spawner.tscn" id="5_qwfjg"]
 
 [node name="Game" type="Node2D"]
 process_mode = 1
@@ -13,12 +13,10 @@ script = ExtResource("1_f5mi8")
 [node name="enemy_spawner" parent="." instance=ExtResource("2_f46ya")]
 enemy_scenes = Array[PackedScene]([ExtResource("3_k74nh"), ExtResource("4_umyhj")])
 
-[node name="player_cat" parent="." instance=ExtResource("5_f46ya")]
-position = Vector2(91, 302)
-fire_rate = 8.0
+[node name="player_spawner" parent="." instance=ExtResource("5_qwfjg")]
 
-[node name="Camera2D" type="Camera2D" parent="player_cat"]
-position = Vector2(2, -7)
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(331, 196)
 limit_left = 0
 limit_top = 0
 limit_right = 640
@@ -28,11 +26,6 @@ limit_bottom = 360
 
 [node name="EnemiesContainer" type="Node2D" parent="."]
 
-[node name="player_spawn_point_start" type="Marker2D" parent="."]
-position = Vector2(-67, 180)
-
-[node name="player_spawn_point_end" type="Marker2D" parent="."]
-position = Vector2(100, 180)
-
 [connection signal="add_enemy_to_game" from="enemy_spawner" to="." method="_on_enemy_spawner_add_enemy_to_game"]
-[connection signal="shooting" from="player_cat" to="." method="_on_player_cat_shooting"]
+[connection signal="add_player_spawn_sprite_to_game" from="player_spawner" to="." method="_on_player_spawner_add_player_spawn_sprite_to_game"]
+[connection signal="add_player_to_game" from="player_spawner" to="." method="_on_player_spawner_add_player_to_game"]

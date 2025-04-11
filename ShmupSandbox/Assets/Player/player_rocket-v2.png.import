@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b73e86kx0brmn"
-path="res://.godot/imported/player_rocket-v1.png-3e2534e06ed0675d2ee15b18a245c897.ctex"
+uid="uid://be0mrlvskk6x5"
+path="res://.godot/imported/player_rocket-v2.png-5cf259864f8b1226f712ab8bea8f2ca2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShmupSandbox/Assets/Player/player_rocket-v1.png"
-dest_files=["res://.godot/imported/player_rocket-v1.png-3e2534e06ed0675d2ee15b18a245c897.ctex"]
+source_file="res://ShmupSandbox/Assets/Player/player_rocket-v2.png"
+dest_files=["res://.godot/imported/player_rocket-v2.png-5cf259864f8b1226f712ab8bea8f2ca2.ctex"]
 
 [params]
 
