@@ -10,5 +10,13 @@ func _physics_process(delta: float) -> void:
 
 ## When it reaches the spawn point
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
-	SignalsBus.player_spawn_ready(global_position)
+	var can_be_invincible : bool
+	
+	if self.animation == "spawn":
+		can_be_invincible = false
+	if self.animation == "respawn":
+		can_be_invincible = true
+	
+	SignalsBus.player_spawn_event(global_position, can_be_invincible)
+	
 	call_deferred("queue_free")

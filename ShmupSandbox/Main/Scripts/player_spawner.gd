@@ -18,25 +18,27 @@ func _ready() -> void:
 
 func _connect_to_signals() -> void:
 	SignalsBus.player_died.connect(_on_player_death)
-	SignalsBus.spawn_sprite_in_position.connect(_on_player_spawn_ready)
+	SignalsBus.spawn_player.connect(_on_player_spawn)
 
 
 ####
 
 ## Connected signal methods
 func _on_player_death() -> void:
-	spawn_player_sprite()
+	spawn_player_sprite("respawn") ## Play respawn animation for player
 
-func _on_player_spawn_ready(pos : Vector2) -> void:
+func _on_player_spawn(pos : Vector2, can_be_invincible : bool) -> void:
 	var player : player_cat = player_scene.instantiate()
 	player.global_position = Vector2(pos.x + x_offset, pos.y + y_offset)
+	player.can_be_invincible = can_be_invincible
 	add_player_to_game.emit(player)
 
 
 ####
 
 ## Helper funcs
-func spawn_player_sprite() -> void:
+func spawn_player_sprite(animation_name : String) -> void:
 	var spawn_sprite : AnimatedSprite2D = player_sprite_scene.instantiate()
 	spawn_sprite.global_position = spawn_point.global_position
+	spawn_sprite.play(animation_name)
 	add_player_spawn_sprite_to_game.emit(spawn_sprite)

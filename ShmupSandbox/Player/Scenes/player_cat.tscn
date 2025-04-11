@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://diqmrgjokhuyb"]
+[gd_scene load_steps=65 format=3 uid="uid://diqmrgjokhuyb"]
 
 [ext_resource type="Script" uid="uid://dkp2sd4d5myi" path="res://ShmupSandbox/Player/Scripts/player_cat.gd" id="1_m8806"]
 [ext_resource type="Texture2D" uid="uid://cc83l4ep22dak" path="res://ShmupSandbox/Assets/Player/muzzle_flash-v1.png" id="2_4ua8s"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ch2vyaqwwcs27" path="res://ShmupSandbox/Assets/Player/player_thruster-v1.png" id="4_uobwy"]
 [ext_resource type="Texture2D" uid="uid://de4bx2ufdb8mn" path="res://ShmupSandbox/Assets/Player/player_death-v1.png" id="5_unr50"]
 [ext_resource type="Texture2D" uid="uid://cxtlp1qpmmv15" path="res://ShmupSandbox/Assets/Player/player_cat_sprite-v2.png" id="5_uobwy"]
+[ext_resource type="Texture2D" uid="uid://cxtd1ijs171gs" path="res://ShmupSandbox/Assets/Player/player_respawn_sprite-v1.png" id="6_unr50"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7idpd"]
 atlas = ExtResource("2_uobwy")
@@ -320,6 +321,78 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_15prd"]
+atlas = ExtResource("6_unr50")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fj4lb"]
+atlas = ExtResource("6_unr50")
+region = Rect2(96, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7sna"]
+atlas = ExtResource("6_unr50")
+region = Rect2(192, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vroh"]
+atlas = ExtResource("6_unr50")
+region = Rect2(288, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txp3y"]
+atlas = ExtResource("6_unr50")
+region = Rect2(384, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vqhl"]
+atlas = ExtResource("6_unr50")
+region = Rect2(480, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqu3l"]
+atlas = ExtResource("6_unr50")
+region = Rect2(576, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s64he"]
+atlas = ExtResource("6_unr50")
+region = Rect2(672, 0, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uobwy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15prd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fj4lb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7sna")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vroh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_txp3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0vqhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqu3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s64he")
+}],
+"loop": true,
+"name": &"invincible",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"none",
+"speed": 5.0
+}]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gdjmk"]
 radius = 5.0
 height = 14.0
@@ -422,6 +495,13 @@ sprite_frames = SubResource("SpriteFrames_7idpd")
 animation = &"none"
 autoplay = "none"
 
+[node name="invincible" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-16, -5)
+sprite_frames = SubResource("SpriteFrames_uobwy")
+animation = &"invincible"
+autoplay = "none"
+
 [node name="collider_body" type="CollisionShape2D" parent="."]
 position = Vector2(-1.19209e-07, -16)
 scale = Vector2(2.1, 2.1)
@@ -454,4 +534,8 @@ position = Vector2(-1, -10)
 shape = SubResource("CircleShape2D_uobwy")
 debug_color = Color(0.655731, 0.513291, 0.170064, 0.42)
 
+[node name="invincibility_timer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="invincibility_timer" to="." method="_on_invincibility_timer_timeout"]

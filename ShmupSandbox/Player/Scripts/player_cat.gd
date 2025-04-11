@@ -15,6 +15,7 @@ class_name player_cat extends CharacterBody2D
 @onready var thruster : AnimatedSprite2D = %thruster
 @onready var muzzle_flash: AnimatedSprite2D = %muzzle_flash
 @onready var death : AnimatedSprite2D = %death
+@onready var invincible : AnimatedSprite2D = %invincible
 
 ## Muzzle
 @onready var muzzle : Marker2D = %muzzle
@@ -22,15 +23,20 @@ class_name player_cat extends CharacterBody2D
 ## Hurtbox
 @onready var hurtbox : Area2D = $hurtbox
 
+## Timers
+@export var invincibility_time : float = 2.0
+@onready var invincibility_timer : Timer = $invincibility_timer
 
 var viewport_size : Vector2
 var shooting_cooldown_time : float
 var on_shooting_cooldown : bool
 var is_dead : bool
+var can_be_invincible : bool
 
 func _ready() -> void:
 	viewport_size = get_viewport_rect().size
 	shooting_cooldown_time = 1/fire_rate
+	invincibility_timer.wait_time = invincibility_time
 
 func _physics_process(delta):
 	if is_dead:
@@ -41,6 +47,7 @@ func _physics_process(delta):
 func _process(_delta: float) -> void:
 	_clamp_movement_to_screen_bounds()
 	_handle_shooting()
+	_handle_invincibility()
 
 ####
 
@@ -88,6 +95,16 @@ func _handle_shooting() -> void:
 		body.play("idle")
 		body.frame = rocket.frame
 
+func _handle_invincibility() -> void:
+	if can_be_invincible:
+		can_be_invincible = false
+		invincibility_timer.start()
+		
+		hurtbox.set_deferred("monitoring", false)
+		hurtbox.set_deferred("monitorable", false)
+		
+		rocket.visible = false # Contains body and thruster sprites
+		invincible.play("invincible")
 
 ####
 
@@ -99,10 +116,7 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	hurtbox.set_deferred("monitoring", false)
 	hurtbox.set_deferred("monitorable", false)
 	
-	body.play("none")
-	rocket.play("none")
-	thruster.play("none")
-	muzzle_flash.play("none")
+	rocket.visible = false # Contains body and thruster sprites
 	death.play("death")
 	
 	await death.animation_finished
@@ -114,3 +128,15 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	
 	queue_free()
 	
+
+####
+
+## Stop invincibility
+func _on_invincibility_timer_timeout() -> void:
+	# Re-enable hurtbox
+	hurtbox.set_deferred("monitoring", true)
+	hurtbox.set_deferred("monitorable", true)
+	
+	# Return to default animations
+	rocket.visible = true # Contains body and thruster sprites
+	invincible.play("none")

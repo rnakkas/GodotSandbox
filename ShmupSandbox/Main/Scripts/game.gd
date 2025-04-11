@@ -9,7 +9,7 @@ class_name game extends Node2D
 
 func _ready() -> void:
 	SignalsBus.player_shooting.connect(_on_player_shooting)
-	player_spawner_node.spawn_player_sprite()
+	player_spawner_node.spawn_player_sprite("spawn") ## play spawn animation for player
 
 func _process(_delta: float) -> void:
 	pass

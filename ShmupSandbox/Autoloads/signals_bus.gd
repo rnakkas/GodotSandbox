@@ -3,7 +3,7 @@ extends Node
 signal give_score_when_hit(score : int)
 signal give_score_when_killed(score : int)
 signal player_died()
-signal spawn_sprite_in_position(pos : Vector2)
+signal spawn_player(pos : Vector2, can_be_invincible : bool)
 signal player_shooting(bullet_scene:PackedScene, locations:Array[Vector2])
 
 func score_when_hit(score : int) -> void:
@@ -15,8 +15,8 @@ func score_when_killed(score : int) -> void:
 func player_death_event() -> void:
 	player_died.emit()
 
-func player_spawn_ready(pos : Vector2) -> void:
-	spawn_sprite_in_position.emit(pos)
+func player_spawn_event(pos : Vector2, can_be_invincible : bool) -> void:
+	spawn_player.emit(pos, can_be_invincible)
 
 func player_shooting_event(bullet_scene:PackedScene, locations:Array[Vector2]):
 	player_shooting.emit(bullet_scene, locations)
