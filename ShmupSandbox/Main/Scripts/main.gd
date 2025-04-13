@@ -34,4 +34,4 @@ func _reset_player_data() -> void:
 	## Reset player data
 	PlayerData.player_score = 0
 	PlayerData.enemies_killed = 0
-	PlayerData.player_lives = 3
+	PlayerData.player_lives = 0

@@ -5,6 +5,7 @@ class_name ui_layer extends CanvasLayer
 @onready var pause_menu_ui : pause_menu = %pause_menu
 @onready var player_hud_ui : player_hud = %player_hud
 @onready var confirm_dialog_ui : confirm_dialog = %confirm_dialog
+@onready var continue_screen : ContinueScreen = %continue_screen
 
 signal game_started()
 signal returned_to_main_menu_from_game()
@@ -15,7 +16,8 @@ enum ui_type
 	OPTIONS_MENU,
 	PAUSE_MENU,
 	PLAYER_HUD_UI,
-	CONFIRM_DIALOG
+	CONFIRM_DIALOG,
+	CONTINUE_SCREEN
 }
 
 var is_game_running : bool
@@ -31,11 +33,14 @@ func _ready() -> void:
 	pause_menu_ui.visible = false
 	player_hud_ui.visible = false
 	confirm_dialog_ui.visible = false
+	continue_screen.visible = false
+
+	SignalsBus.player_lives_depleted.connect(_on_player_lives_depleted)
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		if !main_menu_ui.visible && !options_menu_ui.visible && !pause_menu_ui.visible:
+		if !main_menu_ui.visible && !options_menu_ui.visible && !pause_menu_ui.visible && !continue_screen.visible:
 			_toggle_ui(ui_type.PAUSE_MENU)
 			get_tree().paused = true 
 
@@ -123,7 +128,14 @@ func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 func _on_confirm_dialog_no_button_pressed() -> void:
 	_toggle_ui(ui_type.CONFIRM_DIALOG)
 	pause_menu_ui.resume_button.grab_focus()
-	
+
+
+####
+
+## Continue screen 
+func _on_player_lives_depleted() -> void:
+	_toggle_ui(ui_type.CONTINUE_SCREEN)
+
 
 ####
 
@@ -146,6 +158,10 @@ func _toggle_ui(menu_type : ui_type) -> void:
 		ui_type.CONFIRM_DIALOG:
 			ui_element = confirm_dialog_ui
 			ui_element.no_button.grab_focus()
+		ui_type.CONTINUE_SCREEN:
+			ui_element = continue_screen
+			ui_element.start_countdown()
+			ui_element.yes_button.grab_focus()
 		
 	if ui_element:
 		ui_element.visible = !ui_element.visible

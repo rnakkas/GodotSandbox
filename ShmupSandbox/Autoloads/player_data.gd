@@ -1,12 +1,12 @@
 extends Node
 
-var player_lives : int = 3
+var player_lives : int
 
-var player_score: int = 0
+var player_score: int
 
 var player_hi_scores_list : Array[int]
 
-var enemies_killed: int = 0
+var enemies_killed: int
 
 func _ready() -> void:
 	player_hi_scores_list.resize(10) ## Array of size 10 for storing top 10 high scores

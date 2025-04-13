@@ -59,7 +59,9 @@ size_flags_vertical = 4
 theme_override_constants/separation = 120
 
 [node name="yes_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../no_button")
@@ -68,11 +70,14 @@ focus_next = NodePath(".")
 focus_previous = NodePath(".")
 theme_override_fonts/font = ExtResource("1_iw70x")
 theme_override_font_sizes/font_size = 45
+action_mode = 0
 text = "YES"
 flat = true
 
 [node name="no_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
 focus_neighbor_left = NodePath("../yes_button")
 focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath(".")
@@ -81,9 +86,16 @@ focus_next = NodePath(".")
 focus_previous = NodePath(".")
 theme_override_fonts/font = ExtResource("1_iw70x")
 theme_override_font_sizes/font_size = 45
+action_mode = 0
 text = "NO"
 flat = true
 
 [node name="tick_timer" type="Timer" parent="."]
 
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/yes_button" to="." method="_on_yes_button_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/yes_button" to="." method="_on_yes_button_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/yes_button" to="." method="_on_yes_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/no_button" to="." method="_on_no_button_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/no_button" to="." method="_on_no_button_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/no_button" to="." method="_on_no_button_pressed"]
 [connection signal="timeout" from="tick_timer" to="." method="_on_tick_timer_timeout"]

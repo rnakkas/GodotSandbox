@@ -22,5 +22,8 @@ func _on_kill_score_given(score : int) -> void:
 
 func _on_player_death() -> void:
 	PlayerData.player_lives -= 1
-	player_lives_value.text = "x " + str(PlayerData.player_lives)
+	if PlayerData.player_lives >= 0:
+		player_lives_value.text = "x " + str(PlayerData.player_lives)
+	else: 
+		SignalsBus.player_lives_depleted_event()
 	
