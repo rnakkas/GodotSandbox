@@ -1,4 +1,4 @@
-class_name enemy_spawner extends Node2D
+class_name EnemySpawner extends Node2D
 
 @export var enemy_scenes : Array[PackedScene] = []
 @export var sp_tolerance : float = 128

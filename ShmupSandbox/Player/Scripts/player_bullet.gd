@@ -1,4 +1,4 @@
-class_name player_bullet extends Area2D
+class_name PlayerBullet extends Area2D
 
 @export var speed : float
 

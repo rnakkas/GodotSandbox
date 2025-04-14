@@ -1,4 +1,4 @@
-class_name rebel_fighter extends Area2D
+class_name RebelFighter extends Area2D
 
 @export var hp : int
 @export var speed : float

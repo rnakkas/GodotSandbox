@@ -1,4 +1,4 @@
-class_name player_spawn_sprite extends AnimatedSprite2D
+class_name PlayerSpawnSprite extends AnimatedSprite2D
 
 @export var speed : float = 350.0
 @onready var on_screen_notifier : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D

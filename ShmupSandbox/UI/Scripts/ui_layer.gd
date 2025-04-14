@@ -1,4 +1,4 @@
-class_name ui_layer extends CanvasLayer
+class_name UiLayer extends CanvasLayer
 
 @onready var main_menu : MainMenu = %main_menu
 @onready var options_menu : OptionsMenu = %options_menu

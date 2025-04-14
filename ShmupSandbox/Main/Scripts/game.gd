@@ -1,7 +1,7 @@
-class_name game extends Node2D
+class_name Game extends Node2D
 
 ## Spawners
-@onready var player_spawner_node : player_spawner = $player_spawner 
+@onready var player_spawner_node : PlayerSpawner = $player_spawner 
 
 ## Containers
 @onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
@@ -17,7 +17,7 @@ func _process(_delta: float) -> void:
 ## Player shooting
 func _on_player_shooting(bullet_scene: PackedScene, locations: Array[Vector2]) -> void:
 	for i:int in range(locations.size()):
-		var bullet : player_bullet = bullet_scene.instantiate()
+		var bullet : PlayerBullet = bullet_scene.instantiate()
 		bullet.position = locations[i]
 		player_projectiles_container.add_child(bullet)
 
@@ -31,5 +31,5 @@ func _on_player_spawner_add_player_spawn_sprite_to_game(spawn_sprite: AnimatedSp
 	add_child(spawn_sprite)
 
 ## Spawning player
-func _on_player_spawner_add_player_to_game(player: player_cat) -> void:
+func _on_player_spawner_add_player_to_game(player: PlayerCat) -> void:
 	add_child(player)

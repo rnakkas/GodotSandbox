@@ -1,4 +1,4 @@
-class_name player_cat extends CharacterBody2D
+class_name PlayerCat extends CharacterBody2D
 
 ## Velocity
 @export var _max_speed : float = 450.0

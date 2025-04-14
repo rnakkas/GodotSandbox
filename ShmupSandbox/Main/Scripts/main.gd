@@ -1,4 +1,4 @@
-class_name main extends Node2D
+class_name Main extends Node2D
 
 
 var game_scene : PackedScene = preload("res://ShmupSandbox/Main/Scenes/game.tscn")
