@@ -1,4 +1,4 @@
-class_name options_menu extends Control
+class_name OptionsMenu extends Control
 
 @onready var sound_label : Label = %sound_label
 @onready var sound_volume_slider: HSlider = %sound_volume_slider
@@ -62,7 +62,7 @@ func _on_back_button_focus_entered() -> void:
 	UiUtility.highlight_selected_element(ui_elements_list, back_button)
 
 func _on_back_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(back_button)
+	await UiUtility.selected_button_element_press_animation(back_button)
 	back_button_pressed.emit()
 
 func _on_back_button_mouse_entered() -> void:

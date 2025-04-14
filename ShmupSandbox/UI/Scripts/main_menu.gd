@@ -1,4 +1,4 @@
-class_name main_menu extends Control
+class_name MainMenu extends Control
 
 @onready var play_button: Button = %play_button
 @onready var options_button: Button = %options_button
@@ -36,7 +36,7 @@ func _create_ui_elements_list() -> void:
 
 ## Play button
 func _on_play_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(play_button)
+	await UiUtility.selected_button_element_press_animation(play_button)
 	play_button_pressed.emit()
 
 
@@ -49,7 +49,7 @@ func _on_play_button_mouse_entered() -> void:
 
 ## Options button
 func _on_options_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(options_button)
+	await UiUtility.selected_button_element_press_animation(options_button)
 	options_button_pressed.emit()
 
 func _on_options_button_focus_entered() -> void:
@@ -61,7 +61,7 @@ func _on_options_button_mouse_entered() -> void:
 
 ## Hi scores button
 func _on_hi_scores_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(hi_scores_button) ## TODO: Doesn't do anything yet
+	await UiUtility.selected_button_element_press_animation(hi_scores_button) ## TODO: Doesn't do anything yet
 	hi_scores_button_pressed.emit()
 
 func _on_hi_scores_button_focus_entered() -> void:
@@ -73,7 +73,7 @@ func _on_hi_scores_button_mouse_entered() -> void:
 
 ## Quit button
 func _on_quit_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(quit_button)
+	await UiUtility.selected_button_element_press_animation(quit_button)
 	quit_button_pressed.emit()
 
 func _on_quit_button_focus_entered() -> void:

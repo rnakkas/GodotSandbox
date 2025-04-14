@@ -19,7 +19,7 @@ func highlight_selected_element(ui_elements_list : Array[Control], selected_elem
 			_remove_highlight_from_ui_element(ui_elements_list[element])
 
 
-func press_selected_button_element(selected_element : Button) -> void:
+func selected_button_element_press_animation(selected_element : Button) -> void:
 	_remove_highlight_from_ui_element(selected_element)
 	selected_element.focus_mode = Control.FOCUS_NONE
 	await get_tree().create_timer(0.2).timeout

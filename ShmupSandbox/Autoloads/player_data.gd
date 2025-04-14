@@ -1,6 +1,6 @@
 extends Node
 
-const _player_max_lives : int = 0
+const _player_max_lives : int = 1
 
 var player_lives : int
 

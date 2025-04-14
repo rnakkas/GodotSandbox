@@ -1,4 +1,4 @@
-class_name player_hud extends Control
+class_name PlayerHud extends Control
 
 @onready var score_value : Label = %score_value
 @onready var player_lives_value : Label = %lives_value

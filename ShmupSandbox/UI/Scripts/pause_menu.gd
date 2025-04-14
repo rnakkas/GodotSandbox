@@ -1,4 +1,4 @@
-class_name pause_menu extends Control
+class_name PauseMenu extends Control
 
 @onready var resume_button: Button = %resume_button
 @onready var options_button: Button = %options_button
@@ -33,7 +33,7 @@ func _create_ui_elements_list() -> void:
 
 ## Resume button
 func _on_resume_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(resume_button)
+	await UiUtility.selected_button_element_press_animation(resume_button)
 	resume_button_pressed.emit()
 
 func _on_resume_button_focus_entered() -> void:
@@ -45,7 +45,7 @@ func _on_resume_button_mouse_entered() -> void:
 
 ## Options button
 func _on_options_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(options_button)
+	await UiUtility.selected_button_element_press_animation(options_button)
 	options_button_pressed.emit()
 
 func _on_options_button_focus_entered() -> void:
@@ -57,7 +57,7 @@ func _on_options_button_mouse_entered() -> void:
 
 ## Main Menu button ## TODO: Create popup asking player to confirm return to main menu
 func _on_main_menu_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(main_menu_button)
+	await UiUtility.selected_button_element_press_animation(main_menu_button)
 	main_menu_button_pressed.emit()
 
 func _on_main_menu_button_focus_entered() -> void:
@@ -69,7 +69,7 @@ func _on_main_menu_button_mouse_entered() -> void:
 
 ## Quit button
 func _on_quit_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(quit_button)
+	await UiUtility.selected_button_element_press_animation(quit_button)
 	quit_button_pressed.emit()
 
 func _on_quit_button_focus_entered() -> void:

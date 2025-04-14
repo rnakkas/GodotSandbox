@@ -1,4 +1,4 @@
-class_name confirm_dialog extends Control
+class_name ConfirmDialog extends Control
 
 @onready var yes_button : Button = %yes_button
 @onready var no_button : Button = %no_button
@@ -27,7 +27,7 @@ func _create_ui_elements_list() -> void:
 ####
 
 func _on_yes_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(yes_button)
+	await UiUtility.selected_button_element_press_animation(yes_button)
 	yes_button_pressed.emit(dialog_label_main.text)
 
 
@@ -40,7 +40,7 @@ func _on_yes_button_mouse_entered() -> void:
 
 
 func _on_no_button_pressed() -> void:
-	await UiUtility.press_selected_button_element(no_button)
+	await UiUtility.selected_button_element_press_animation(no_button)
 	no_button_pressed.emit()
 
 

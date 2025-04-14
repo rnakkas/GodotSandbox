@@ -1,10 +1,10 @@
 class_name ui_layer extends CanvasLayer
 
-@onready var main_menu_ui : main_menu = %main_menu
-@onready var options_menu_ui : options_menu = %options_menu
-@onready var pause_menu_ui : pause_menu = %pause_menu
-@onready var player_hud_ui : player_hud = %player_hud
-@onready var confirm_dialog_ui : confirm_dialog = %confirm_dialog
+@onready var main_menu : MainMenu = %main_menu
+@onready var options_menu : OptionsMenu = %options_menu
+@onready var pause_menu : PauseMenu = %pause_menu
+@onready var player_hud : PlayerHud = %player_hud
+@onready var confirm_dialog : ConfirmDialog = %confirm_dialog
 @onready var continue_screen : ContinueScreen = %continue_screen
 
 signal game_started()
@@ -15,7 +15,7 @@ enum ui_type
 	MAIN_MENU,
 	OPTIONS_MENU,
 	PAUSE_MENU,
-	PLAYER_HUD_UI,
+	PLAYER_HUD,
 	CONFIRM_DIALOG,
 	CONTINUE_SCREEN
 }
@@ -26,13 +26,13 @@ func _ready() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	## Turn visibility on for main menu
-	main_menu_ui.visible = true
+	main_menu.visible = true
 	
 	## Turn visibility off for all other ui
-	options_menu_ui.visible = false
-	pause_menu_ui.visible = false
-	player_hud_ui.visible = false
-	confirm_dialog_ui.visible = false
+	options_menu.visible = false
+	pause_menu.visible = false
+	player_hud.visible = false
+	confirm_dialog.visible = false
 	continue_screen.visible = false
 
 	SignalsBus.player_lives_depleted.connect(_on_player_lives_depleted)
@@ -40,7 +40,7 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		if !main_menu_ui.visible && !options_menu_ui.visible && !pause_menu_ui.visible && !continue_screen.visible:
+		if !main_menu.visible && !options_menu.visible && !pause_menu.visible && !continue_screen.visible:
 			_toggle_ui(ui_type.PAUSE_MENU)
 			get_tree().paused = true 
 
@@ -52,11 +52,11 @@ func _on_main_menu_play_button_pressed() -> void:
 	game_started.emit()
 	
 	## Grab fresh player data on game start
-	player_hud_ui.player_lives_value.text = "x " + str(PlayerData.player_lives)
-	player_hud_ui.score_value.text = str(PlayerData.player_score).pad_zeros(8)
+	player_hud.player_lives_value.text = "x " + str(PlayerData.player_lives)
+	player_hud.score_value.text = str(PlayerData.player_score).pad_zeros(8)
 	
 	_toggle_ui(ui_type.MAIN_MENU)
-	_toggle_ui(ui_type.PLAYER_HUD_UI)
+	_toggle_ui(ui_type.PLAYER_HUD)
 	
 	is_game_running = true
 
@@ -97,12 +97,12 @@ func _on_pause_menu_options_button_pressed() -> void:
 
 
 func _on_pause_menu_main_menu_button_pressed() -> void:
-	confirm_dialog_ui.dialog_label_main.text = UiUtility.dialog_return_to_main_menu
+	confirm_dialog.dialog_label_main.text = UiUtility.dialog_return_to_main_menu
 	_toggle_ui(ui_type.CONFIRM_DIALOG)
 
 
 func _on_pause_menu_quit_button_pressed() -> void:
-	confirm_dialog_ui.dialog_label_main.text = UiUtility.dialog_quit
+	confirm_dialog.dialog_label_main.text = UiUtility.dialog_quit
 	_toggle_ui(ui_type.CONFIRM_DIALOG)
 
 
@@ -114,7 +114,7 @@ func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 		UiUtility.dialog_return_to_main_menu:
 			_toggle_ui(ui_type.CONFIRM_DIALOG)
 			_toggle_ui(ui_type.PAUSE_MENU)
-			_toggle_ui(ui_type.PLAYER_HUD_UI)
+			_toggle_ui(ui_type.PLAYER_HUD)
 			_toggle_ui(ui_type.MAIN_MENU)
 			
 			get_tree().paused = false 
@@ -127,7 +127,7 @@ func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 
 func _on_confirm_dialog_no_button_pressed() -> void:
 	_toggle_ui(ui_type.CONFIRM_DIALOG)
-	pause_menu_ui.resume_button.grab_focus()
+	pause_menu.resume_button.grab_focus()
 
 
 ####
@@ -136,6 +136,13 @@ func _on_confirm_dialog_no_button_pressed() -> void:
 func _on_player_lives_depleted() -> void:
 	_toggle_ui(ui_type.CONTINUE_SCREEN)
 
+func _on_continue_screen_no_button_pressed() -> void:
+	pass # Replace with function body.
+
+func _on_continue_screen_yes_button_pressed() -> void:
+	_toggle_ui(ui_type.CONTINUE_SCREEN)
+	player_hud.player_lives_value.text = "x " + str(PlayerData._player_max_lives)
+	player_hud.score_value.text = str(PlayerData.player_score).pad_zeros(8)
 
 ####
 
@@ -145,18 +152,18 @@ func _toggle_ui(menu_type : ui_type) -> void:
 	
 	match menu_type:
 		ui_type.MAIN_MENU:
-			ui_element = main_menu_ui
+			ui_element = main_menu
 			ui_element.play_button.grab_focus()
 		ui_type.OPTIONS_MENU:
-			ui_element = options_menu_ui
+			ui_element = options_menu
 			ui_element.sound_volume_slider.grab_focus()
-		ui_type.PLAYER_HUD_UI:
-			ui_element = player_hud_ui
+		ui_type.PLAYER_HUD:
+			ui_element = player_hud
 		ui_type.PAUSE_MENU:
-			ui_element = pause_menu_ui
+			ui_element = pause_menu
 			ui_element.resume_button.grab_focus()
 		ui_type.CONFIRM_DIALOG:
-			ui_element = confirm_dialog_ui
+			ui_element = confirm_dialog
 			ui_element.no_button.grab_focus()
 		ui_type.CONTINUE_SCREEN:
 			ui_element = continue_screen

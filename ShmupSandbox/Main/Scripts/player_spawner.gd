@@ -19,6 +19,7 @@ func _ready() -> void:
 func _connect_to_signals() -> void:
 	SignalsBus.player_died.connect(_on_player_death)
 	SignalsBus.spawn_player.connect(_on_player_spawn)
+	SignalsBus.continue_game_player_respawn.connect(_on_continue_game_player_respawn)
 
 
 ####
@@ -34,6 +35,8 @@ func _on_player_spawn(pos : Vector2, can_be_invincible : bool) -> void:
 	player.can_be_invincible = can_be_invincible
 	add_player_to_game.emit(player)
 
+func _on_continue_game_player_respawn() -> void:
+	spawn_player_sprite("respawn")
 
 ####
 

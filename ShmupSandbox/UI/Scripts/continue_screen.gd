@@ -5,7 +5,11 @@ class_name ContinueScreen extends Control
 @onready var yes_button : Button = %yes_button
 @onready var no_button : Button = %no_button
 
-var continue_time : int = 10
+signal yes_button_pressed()
+signal no_button_pressed()
+
+var max_continue_time : int = 10
+var continue_time : int
 const tick_time : int = 1
 var ui_elements_list : Array[Control] = []
 
@@ -25,6 +29,7 @@ func _create_ui_elements_list() -> void:
 	)
 
 func start_countdown() -> void:
+	continue_time = max_continue_time
 	continue_time_left.text = str(continue_time)
 	tick_timer.wait_time = tick_time
 	tick_timer.start()
@@ -43,8 +48,21 @@ func _on_tick_timer_timeout() -> void:
 ####
 
 func _on_yes_button_pressed() -> void:
-	print("continue yes") # TODO: Reset lives to max, deduct score by 10%, respawn player
+	## Reset player lives to max
 	PlayerData.set_player_lives_to_max()
+
+	## Reduce player's current score by 10%
+	PlayerData.player_score = int(round(PlayerData.player_score * 0.9)) ## Round off to neared int
+
+	## Turn off the continue screen
+	await UiUtility.selected_button_element_press_animation(yes_button)
+
+	## Set hud values
+	yes_button_pressed.emit()
+
+	## Respawn player
+	SignalsBus.continue_game_player_respawn_event()
+	
 
 func _on_yes_button_focus_entered() -> void:
 	UiUtility.highlight_selected_element(ui_elements_list, yes_button)
