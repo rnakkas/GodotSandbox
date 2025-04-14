@@ -8,10 +8,11 @@ class_name ContinueScreen extends Control
 signal yes_button_pressed()
 signal no_button_pressed()
 
-var max_continue_time : int = 10
+var max_continue_time : int = 2
 var continue_time : int
 const tick_time : int = 1
 var ui_elements_list : Array[Control] = []
+var current_focused_button : Button
 
 func _ready() -> void:
 	_create_ui_elements_list()
@@ -41,13 +42,25 @@ func _on_tick_timer_timeout() -> void:
 	continue_time -= tick_time
 	
 	if continue_time <= 0:
-		tick_timer.stop()
+		await get_tree().create_timer(0.2).timeout
+		_handle_countdown_end()
 	
 	continue_time_left.text = str(continue_time)
 		
 ####
 
-func _on_yes_button_pressed() -> void:
+## Helper funcs
+
+func _handle_countdown_end() -> void:
+	tick_timer.stop()
+	match current_focused_button:
+		yes_button:
+			_continue_game()
+		no_button:
+			print("press no")
+
+
+func _continue_game() -> void:
 	## Reset player lives to max
 	PlayerData.set_player_lives_to_max()
 
@@ -62,10 +75,17 @@ func _on_yes_button_pressed() -> void:
 
 	## Respawn player
 	SignalsBus.continue_game_player_respawn_event()
+
+####
+
+
+func _on_yes_button_pressed() -> void:
+	_continue_game()
 	
 
 func _on_yes_button_focus_entered() -> void:
 	UiUtility.highlight_selected_element(ui_elements_list, yes_button)
+	current_focused_button = yes_button
 
 func _on_yes_button_mouse_entered() -> void:
 	yes_button.grab_focus()
@@ -77,6 +97,7 @@ func _on_no_button_pressed() -> void:
 
 func _on_no_button_focus_entered() -> void:
 	UiUtility.highlight_selected_element(ui_elements_list, no_button)
+	current_focused_button = no_button
 
 func _on_no_button_mouse_entered() -> void:
 	no_button.grab_focus()
