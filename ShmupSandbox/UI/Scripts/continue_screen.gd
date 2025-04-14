@@ -44,6 +44,7 @@ func _on_tick_timer_timeout() -> void:
 
 func _on_yes_button_pressed() -> void:
 	print("continue yes") # TODO: Reset lives to max, deduct score by 10%, respawn player
+	PlayerData.set_player_lives_to_max()
 
 func _on_yes_button_focus_entered() -> void:
 	UiUtility.highlight_selected_element(ui_elements_list, yes_button)

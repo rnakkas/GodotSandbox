@@ -6,6 +6,9 @@ signal player_died()
 signal spawn_player(pos : Vector2, can_be_invincible : bool)
 signal player_shooting(bullet_scene:PackedScene, locations:Array[Vector2])
 signal player_lives_depleted()
+## TODO: signals for continuing game from continue screen
+signal continue_game_score_deduction(score : int)
+signal continue_game_player_respawn()
 
 func score_when_hit(score : int) -> void:
 	give_score_when_hit.emit(score) 
