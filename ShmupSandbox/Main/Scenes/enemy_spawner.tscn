@@ -7,6 +7,7 @@ script = ExtResource("1_d7rdr")
 sp_tolerance = 20.0
 
 [node name="enemy_spawn_timer" type="Timer" parent="."]
+wait_time = 0.6
 autostart = true
 
 [connection signal="timeout" from="enemy_spawn_timer" to="." method="_on_enemy_spawn_timer_timeout"]
