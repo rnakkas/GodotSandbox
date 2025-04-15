@@ -1,14 +1,16 @@
-class_name RebelFighter extends Area2D
+class_name Skulljack extends Area2D
 
-@export var hp : int
-@export var speed : float
+@export var hp : int = 1
+@export var speed : float = 500.0
 @export var hit_score : int = 50
 @export var kill_score : int = 100
 
-@onready var enemy_sprite : AnimatedSprite2D = $body
+@onready var enemy_sprite : AnimatedSprite2D = $animated_sprite
 @onready var particles : CPUParticles2D = $CPUParticles2D
 
-
+## FIXME: This is just for testing, will remove this later
+func _ready() -> void:
+	speed = randf_range(speed, speed*1.5)
 
 func _physics_process(delta: float) -> void:
 	global_position.x -= speed * delta
