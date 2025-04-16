@@ -53,11 +53,13 @@ func _on_tick_timer_timeout() -> void:
 
 func _handle_countdown_end() -> void:
 	tick_timer.stop()
+
+	## Automatically press the button that is focused
 	match current_focused_button:
 		yes_button:
 			_continue_game()
 		no_button:
-			print("press no")
+			_end_game()
 
 
 func _continue_game() -> void:
@@ -76,6 +78,11 @@ func _continue_game() -> void:
 	## Respawn player
 	SignalsBus.continue_game_player_respawn_event()
 
+
+func _end_game() -> void:
+	## Display game over screen
+	no_button_pressed.emit()
+
 ####
 
 
@@ -92,8 +99,9 @@ func _on_yes_button_mouse_entered() -> void:
 
 
 func _on_no_button_pressed() -> void:
-	# TODO: Display game over screen, Take player to enter hi score screen if within top 10 hi scores, else return to main menu
-	print("continue no") 
+	# Display game over screen -done, 
+	# TODO: Take player to enter hi score screen if within top 10 hi scores, else return to main menu
+	_end_game()
 
 func _on_no_button_focus_entered() -> void:
 	UiUtility.highlight_selected_element(ui_elements_list, no_button)

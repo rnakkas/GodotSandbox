@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwdcwh6sflfw1"]
+
+[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_6ttin"]
+[ext_resource type="Script" uid="uid://085p20o8tmyi" path="res://ShmupSandbox/UI/Scripts/game_over_screen.gd" id="1_sf477"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_sf477"]
+
+[node name="game_over_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sf477")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.886275, 0.294118, 0.0745098, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_sf477")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 35
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="game_over_label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6ttin")
+theme_override_font_sizes/font_size = 85
+text = "GAME OVER, MAN!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="game_over_timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="game_over_timer" to="." method="_on_game_over_timer_timeout"]

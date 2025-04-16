@@ -6,6 +6,7 @@ class_name UiLayer extends CanvasLayer
 @onready var player_hud : PlayerHud = %player_hud
 @onready var confirm_dialog : ConfirmDialog = %confirm_dialog
 @onready var continue_screen : ContinueScreen = %continue_screen
+@onready var game_over_screen : GameOverScreen = %game_over_screen
 
 signal game_started()
 signal returned_to_main_menu_from_game()
@@ -17,7 +18,8 @@ enum ui_type
 	PAUSE_MENU,
 	PLAYER_HUD,
 	CONFIRM_DIALOG,
-	CONTINUE_SCREEN
+	CONTINUE_SCREEN,
+	GAME_OVER_SCREEN
 }
 
 var is_game_running : bool
@@ -34,15 +36,22 @@ func _ready() -> void:
 	player_hud.visible = false
 	confirm_dialog.visible = false
 	continue_screen.visible = false
+	game_over_screen.visible = false
 
 	SignalsBus.player_lives_depleted.connect(_on_player_lives_depleted)
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		if !main_menu.visible && !options_menu.visible && !pause_menu.visible && !continue_screen.visible:
-			_toggle_ui(ui_type.PAUSE_MENU)
-			get_tree().paused = true 
+		if (
+			!main_menu.visible && 
+			!options_menu.visible && 
+			!pause_menu.visible && 
+			!continue_screen.visible && 
+			!game_over_screen.visible
+			):
+				_toggle_ui(ui_type.PAUSE_MENU)
+				get_tree().paused = true 
 
 
 ####
@@ -137,7 +146,8 @@ func _on_player_lives_depleted() -> void:
 	_toggle_ui(ui_type.CONTINUE_SCREEN)
 
 func _on_continue_screen_no_button_pressed() -> void:
-	pass # Replace with function body.
+	_toggle_ui(ui_type.CONTINUE_SCREEN)
+	_toggle_ui(ui_type.GAME_OVER_SCREEN)
 
 func _on_continue_screen_yes_button_pressed() -> void:
 	_toggle_ui(ui_type.CONTINUE_SCREEN)
@@ -145,6 +155,13 @@ func _on_continue_screen_yes_button_pressed() -> void:
 	player_hud.score_value.text = str(PlayerData.player_score).pad_zeros(8)
 
 ####
+
+## Game over screen
+func _on_game_over_screen_game_over_screen_timed_out() -> void:
+	_toggle_ui(ui_type.GAME_OVER_SCREEN)
+	_toggle_ui(ui_type.PLAYER_HUD)
+	_toggle_ui(ui_type.MAIN_MENU)
+	returned_to_main_menu_from_game.emit()
 
 ## Helper functions
 func _toggle_ui(menu_type : ui_type) -> void:
@@ -169,6 +186,9 @@ func _toggle_ui(menu_type : ui_type) -> void:
 			ui_element = continue_screen
 			ui_element.start_countdown()
 			ui_element.yes_button.grab_focus()
+		ui_type.GAME_OVER_SCREEN:
+			ui_element = game_over_screen
+			ui_element.game_over_timer.start()
 		
 	if ui_element:
 		ui_element.visible = !ui_element.visible
