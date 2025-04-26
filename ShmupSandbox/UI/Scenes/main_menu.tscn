@@ -33,7 +33,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.964706, 0.941176, 1)
 theme_override_fonts/font = ExtResource("3_v14c2")
 theme_override_font_sizes/font_size = 90
-text = "ATOM CAT"
+text = "CATACLYZM"
 horizontal_alignment = 1
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]

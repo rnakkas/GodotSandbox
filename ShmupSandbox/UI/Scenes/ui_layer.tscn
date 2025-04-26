@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://wq32mri3ebiv"]
+[gd_scene load_steps=11 format=3 uid="uid://wq32mri3ebiv"]
 
 [ext_resource type="PackedScene" uid="uid://dw1uu0vpx6e46" path="res://ShmupSandbox/UI/Scenes/main_menu.tscn" id="1_ga2yo"]
 [ext_resource type="Script" uid="uid://s70ghdyj3lk3" path="res://ShmupSandbox/UI/Scripts/ui_layer.gd" id="1_hgdm0"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dn51megt1rye4" path="res://ShmupSandbox/UI/Scenes/continue_screen.tscn" id="6_3gw38"]
 [ext_resource type="PackedScene" uid="uid://v4u6mxfaksoq" path="res://ShmupSandbox/UI/Scenes/parallax_background.tscn" id="6_ga2yo"]
 [ext_resource type="PackedScene" uid="uid://cwdcwh6sflfw1" path="res://ShmupSandbox/UI/Scenes/game_over_screen.tscn" id="8_dqs3x"]
+[ext_resource type="PackedScene" uid="uid://cwajjxolnfu64" path="res://ShmupSandbox/UI/Scenes/hi_scores_menu.tscn" id="9_kbioj"]
 
 [node name="UI_layer" type="CanvasLayer"]
 process_mode = 3
@@ -41,6 +42,10 @@ visible = false
 unique_name_in_owner = true
 visible = false
 
+[node name="hi_scores_menu" parent="." instance=ExtResource("9_kbioj")]
+unique_name_in_owner = true
+visible = false
+
 [node name="ParallaxBackground" parent="." instance=ExtResource("6_ga2yo")]
 
 [connection signal="hi_scores_button_pressed" from="main_menu" to="." method="_on_main_menu_hi_scores_button_pressed"]
@@ -57,3 +62,4 @@ visible = false
 [connection signal="no_button_pressed" from="confirm_dialog" to="." method="_on_confirm_dialog_no_button_pressed"]
 [connection signal="yes_button_pressed" from="confirm_dialog" to="." method="_on_confirm_dialog_yes_button_pressed"]
 [connection signal="game_over_screen_timed_out" from="game_over_screen" to="." method="_on_game_over_screen_game_over_screen_timed_out"]
+[connection signal="back_button_pressed" from="hi_scores_menu" to="." method="_on_hi_scores_menu_back_button_pressed"]

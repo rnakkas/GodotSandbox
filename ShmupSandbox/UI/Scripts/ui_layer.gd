@@ -7,6 +7,7 @@ class_name UiLayer extends CanvasLayer
 @onready var confirm_dialog : ConfirmDialog = %confirm_dialog
 @onready var continue_screen : ContinueScreen = %continue_screen
 @onready var game_over_screen : GameOverScreen = %game_over_screen
+@onready var hi_scores_menu: HiScoresMenu = %hi_scores_menu
 
 signal game_started()
 signal returned_to_main_menu_from_game()
@@ -19,7 +20,8 @@ enum ui_type
 	PLAYER_HUD,
 	CONFIRM_DIALOG,
 	CONTINUE_SCREEN,
-	GAME_OVER_SCREEN
+	GAME_OVER_SCREEN,
+	HI_SCORES_MENU
 }
 
 var is_game_running : bool
@@ -37,6 +39,7 @@ func _ready() -> void:
 	confirm_dialog.visible = false
 	continue_screen.visible = false
 	game_over_screen.visible = false
+	hi_scores_menu.visible = false
 
 	SignalsBus.player_lives_depleted.connect(_on_player_lives_depleted)
 
@@ -48,7 +51,8 @@ func _input(event: InputEvent) -> void:
 			!options_menu.visible && 
 			!pause_menu.visible && 
 			!continue_screen.visible && 
-			!game_over_screen.visible
+			!game_over_screen.visible &&
+			!hi_scores_menu.visible
 			):
 				_toggle_ui(ui_type.PAUSE_MENU)
 				get_tree().paused = true 
@@ -74,7 +78,8 @@ func _on_main_menu_options_button_pressed() -> void:
 	_toggle_ui(ui_type.OPTIONS_MENU)
 
 func _on_main_menu_hi_scores_button_pressed() -> void:
-	print("show hi scores")
+	_toggle_ui(ui_type.MAIN_MENU)
+	_toggle_ui(ui_type.HI_SCORES_MENU)
 
 func _on_main_menu_quit_button_pressed() -> void:
 	get_tree().call_deferred("quit")
@@ -163,6 +168,16 @@ func _on_game_over_screen_game_over_screen_timed_out() -> void:
 	_toggle_ui(ui_type.MAIN_MENU)
 	returned_to_main_menu_from_game.emit()
 
+
+####
+
+## Hi Scores menu
+func _on_hi_scores_menu_back_button_pressed() -> void:
+	_toggle_ui(ui_type.HI_SCORES_MENU)
+	_toggle_ui(ui_type.MAIN_MENU)
+
+####
+
 ## Helper functions
 func _toggle_ui(menu_type : ui_type) -> void:
 	var ui_element : Variant
@@ -189,6 +204,9 @@ func _toggle_ui(menu_type : ui_type) -> void:
 		ui_type.GAME_OVER_SCREEN:
 			ui_element = game_over_screen
 			ui_element.game_over_timer.start()
+		ui_type.HI_SCORES_MENU:
+			ui_element = hi_scores_menu
+			ui_element.back_button.grab_focus()
 		
 	if ui_element:
 		ui_element.visible = !ui_element.visible
