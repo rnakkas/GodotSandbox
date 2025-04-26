@@ -165,7 +165,7 @@ func _on_continue_screen_yes_button_pressed() -> void:
 func _on_game_over_screen_game_over_screen_timed_out() -> void:
 	_toggle_ui(ui_type.GAME_OVER_SCREEN)
 	_toggle_ui(ui_type.PLAYER_HUD)
-	_toggle_ui(ui_type.MAIN_MENU)
+	_toggle_ui(ui_type.HI_SCORES_MENU)
 	returned_to_main_menu_from_game.emit()
 
 
