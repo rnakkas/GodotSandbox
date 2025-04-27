@@ -26,6 +26,6 @@ func _on_ui_layer_returned_to_main_menu_from_game() -> void:
 
 ## Helper functions
 func _start_game() -> void:
-	PlayerData.reset_all_player_data()
+	PlayerData.reset_all_player_data_on_start()
 	game_instance = game_scene.instantiate()
 	add_child(game_instance)

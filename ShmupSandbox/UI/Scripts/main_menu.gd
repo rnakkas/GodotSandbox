@@ -61,7 +61,7 @@ func _on_options_button_mouse_entered() -> void:
 
 ## Hi scores button
 func _on_hi_scores_button_pressed() -> void:
-	await UiUtility.selected_button_element_press_animation(hi_scores_button) ## TODO: Doesn't do anything yet
+	await UiUtility.selected_button_element_press_animation(hi_scores_button)
 	hi_scores_button_pressed.emit()
 
 func _on_hi_scores_button_focus_entered() -> void:
