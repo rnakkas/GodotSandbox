@@ -2,19 +2,77 @@ class_name HiScoresMenu extends Control
 
 @onready var back_button : Button = %back_button
 
-@export var score_label_list : Array[Label]
+var player_hi_scores_list : Array[int] = []
+var score_label_list : Array[Label] = []
+var name_label_list : Array[Label] = []
+
 
 signal back_button_pressed()
 
 func _ready() -> void:
+	populate_high_scores_screen()
 
+
+## Helper funcs
+func populate_high_scores_screen() -> void:
+	# Step 1: Initialize the score and name label lists
+	_initialize_label_lists()
+
+	# Step 2: Resize the label lists to match the number of high scores
+	_resize_label_lists()
+
+	# Step 3: Sort the label lists
+	_sort_label_lists()
+
+	# Step 4: Sort the high score dictionaries
+	_sort_high_scores()
+
+	# Step 5: Update the high score UI
+	_update_high_score_ui()
+
+
+## Private funcs
+func _initialize_label_lists() -> void:
+	## Get all the score labels, score labels are in the named group
+	for node : Node in get_tree().get_nodes_in_group("hi_score_score_label"):
+		if node is Label:
+			score_label_list.append(node)
+	
+	## Get the name labels from the group
+	for node : Node in get_tree().get_nodes_in_group("hi_score_name_label"):
+		if node is Label:
+			name_label_list.append(node)
+
+
+func _resize_label_lists() -> void:
+	## Ensure size is same as list of high scores
+	score_label_list.resize(PlayerData.player_hi_scores_dictionaries.size())
+	name_label_list.resize(PlayerData.player_hi_scores_dictionaries.size())
+
+
+func _sort_label_lists() -> void:
+	## Sort alphabetically, i.e. 1st, 2nd, 3rd etc.
 	score_label_list.sort()
-	print("score labels list: ", score_label_list, "\n")
+	name_label_list.sort()
 
-	## Sets the score label's text TODO:
-	for score: int in PlayerData.player_hi_scores_list.size():
-		print("score: ", PlayerData.player_hi_scores_list[score])
-		
+
+func _sort_high_scores() -> void:
+	## Sort the high scores dictionaries by score
+	PlayerData.player_hi_scores_dictionaries.sort_custom(func(a, b):
+		# First, compare by score in descending order
+		if a["score"] != b["score"]:
+			return a["score"] > b["score"]
+
+		# If scores are the same, compare by name alphabetically (ascending)
+		return a["name"] < b["name"]
+	)
+
+
+func _update_high_score_ui() -> void:
+	## Add the scores and names to the high scores screen
+	for i : int in score_label_list.size():
+		score_label_list[i].text = str(PlayerData.player_hi_scores_dictionaries[i]["score"])
+		name_label_list[i].text = PlayerData.player_hi_scores_dictionaries[i]["name"]
 
 
 ####

@@ -8,38 +8,27 @@ var player_score: int
 
 var player_hi_scores_list : Array[int]
 
-var player_hi_scores_and_names_list : Array[Dictionary] = [
-	{107400 : "APE"},
-	{90250 : "YAN"},
-	{96000 : "HIT"},
-	{110230 : "IAN"},
-	{96000 : "FAN"},
-	{84000 : "GIT"},
-	{54100 : "GAT"},
-	{91000 : "APE"},
-	{72010 : "BAD"},
-	{67200 : "BAT"}
+## TODO: Getting new player scores and making sure only the top 10 highest scores are saved
+## Try: 
+##		Get the new score
+##		Append to this array
+##		Sort the array in descending order for scores
+##		Slice to only take indices 0 to 10, i.e. top 10 scores
+var player_hi_scores_dictionaries : Array[Dictionary] = [
+	{"score" : 107400, "name" : "APE"},
+	{"score" : 90250, "name" : "YAN"},
+	{"score" : 96000, "name" : "HIT"},
+	{"score" : 110230, "name" : "IAN"},
+	{"score" : 96000, "name" : "FAN"},
+	{"score" : 84000, "name" : "GIT"},
+	{"score" : 54100, "name" : "GAT"},
+	{"score" : 91000, "name" : "APE"},
+	{"score" : 72010, "name" : "BAD"},
+	{"score" : 67200, "name" : "BAT"}
 ]
 
 var enemies_killed: int
 
-func _ready() -> void:
-	
-	## TODO:
-	for i : int in range(player_hi_scores_and_names_list.size()):
-		print("score and name: \n", player_hi_scores_and_names_list[i])
-		print("score: ", player_hi_scores_and_names_list[i].keys()[0])
-		
-		player_hi_scores_list.append(player_hi_scores_and_names_list[i].keys()[0])
-		player_hi_scores_list.sort()
-		player_hi_scores_list.reverse()
-		
-		for score in player_hi_scores_and_names_list[i]:
-			print("name: ", player_hi_scores_and_names_list[i][score], "\n")
-
-
-	
-	print("scores : " , player_hi_scores_list, "\n")
 
 func reset_all_player_data_on_start() -> void:
 	## Reset all the of player data for new game
