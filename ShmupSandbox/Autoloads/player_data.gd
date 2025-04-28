@@ -8,7 +8,7 @@ var player_score: int
 
 var enemies_killed: int
 
-var player_hi_scores_list : Array[int]
+const continue_score_deduction : float = 0.9
 
 ## TODO: Getting new player scores and making sure only the top 10 highest scores are saved
 ## Try: 
@@ -16,20 +16,6 @@ var player_hi_scores_list : Array[int]
 ##		Append to this array
 ##		Sort the array in descending order for scores
 ##		Slice to only take indices 0 to 10, i.e. top 10 scores
-
-# var player_hi_scores_dictionaries : Array[Dictionary] = [
-# 	{"score" : 107400, "name" : "APE"},
-# 	{"score" : 90250, "name" : "YAN"},
-# 	{"score" : 96000, "name" : "HIT"},
-# 	{"score" : 110230, "name" : "IAN"},
-# 	{"score" : 96000, "name" : "FAN"},
-# 	{"score" : 84000, "name" : "GIT"},
-# 	{"score" : 54100, "name" : "GAT"},
-# 	{"score" : 91000, "name" : "APE"},
-# 	{"score" : 72010, "name" : "BAD"},
-# 	{"score" : 67200, "name" : "BAT"}
-# ]
-
 var player_hi_scores_dictionaries : Array[Dictionary] = [
 	{"score" : 200, "name" : "APE"},
 	{"score" : 300, "name" : "YAN"},
@@ -45,7 +31,17 @@ var player_hi_scores_dictionaries : Array[Dictionary] = [
 
 
 func _ready() -> void:
+	sort_high_scores()
+	_connect_to_signals()
 	player_hi_scores_dictionaries.sort()
+
+
+## Helper funcs
+
+func _connect_to_signals() -> void:
+	SignalsBus.score_increased.connect(_on_update_current_score)
+	SignalsBus.continue_game_player_respawn.connect(_on_continue_score_deduced)
+	SignalsBus.player_died.connect(_on_player_death)
 
 
 func sort_high_scores() -> void:
@@ -68,5 +64,28 @@ func reset_all_player_data_on_start() -> void:
 	enemies_killed = 0
 	player_lives = _player_max_lives
 	
+
 func set_player_lives_to_max() -> void:
 	player_lives = _player_max_lives
+
+
+####
+
+## Signals connections
+
+func _on_update_current_score(score : int) -> void:
+	player_score += score
+	SignalsBus.player_score_updated_event()
+
+
+func _on_continue_score_deduced() -> void:
+	player_score = int(round(player_score * continue_score_deduction))
+	SignalsBus.player_score_updated_event()
+
+
+func _on_player_death() -> void:
+	player_lives -= 1
+	SignalsBus.player_lives_updated_event()
+
+
+

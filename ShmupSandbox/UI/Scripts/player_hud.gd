@@ -9,37 +9,32 @@ func _ready() -> void:
 
 ## Helper funcs
 func _connect_to_signals() -> void:
-	SignalsBus.give_score_when_hit.connect(_on_hit_score_given)
-	SignalsBus.give_score_when_killed.connect(_on_kill_score_given)
-	SignalsBus.player_died.connect(_on_player_death)
+	SignalsBus.player_score_updated.connect(_on_player_score_updated)
+	SignalsBus.player_lives_updated.connect(_on_player_lives_updated)
 
 
 func set_score_values_on_hud() -> void:
 	score_value.text = str(PlayerData.player_score).pad_zeros(10)
-
-	PlayerData.sort_high_scores()
 	top_score_value.text = str(PlayerData.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
 
 ####
 
 ## Signals connections
 
-func _on_hit_score_given(score : int) -> void:
-	PlayerData.player_score += score
-	score_value.text = str(PlayerData.player_score).pad_zeros(8)
+func _on_player_score_updated() -> void:
+	score_value.text = str(PlayerData.player_score).pad_zeros(10)
+
+	## If cuurent score is higher than top, show current score in Top
+	if PlayerData.player_score > PlayerData.player_hi_scores_dictionaries[0]["score"]:
+		top_score_value.text = str(PlayerData.player_score).pad_zeros(10)
+	## If current score is lower than top, show Top
+	elif PlayerData.player_score <= PlayerData.player_hi_scores_dictionaries[0]["score"]:
+		top_score_value.text = str(PlayerData.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
 
 
-func _on_kill_score_given(score : int) -> void:
-	PlayerData.player_score += score
-	score_value.text = str(PlayerData.player_score).pad_zeros(8)
-
-
-func _on_player_death() -> void:
-	PlayerData.player_lives -= 1
+func _on_player_lives_updated() -> void:
 	if PlayerData.player_lives >= 0:
 		player_lives_value.text = "x " + str(PlayerData.player_lives)
-	else: 
-		SignalsBus.player_lives_depleted_event()
 	
 
 func _on_visibility_changed() -> void:

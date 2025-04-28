@@ -41,7 +41,7 @@ func _ready() -> void:
 	game_over_screen.visible = false
 	hi_scores_menu.visible = false
 
-	SignalsBus.player_lives_depleted.connect(_on_player_lives_depleted)
+	SignalsBus.player_lives_updated.connect(_on_player_lives_depleted)
 
 
 func _input(event: InputEvent) -> void:
@@ -148,7 +148,8 @@ func _on_confirm_dialog_no_button_pressed() -> void:
 
 ## Continue screen 
 func _on_player_lives_depleted() -> void:
-	_toggle_ui(ui_type.CONTINUE_SCREEN)
+	if PlayerData.player_lives < 0:
+		_toggle_ui(ui_type.CONTINUE_SCREEN)
 
 func _on_continue_screen_no_button_pressed() -> void:
 	_toggle_ui(ui_type.CONTINUE_SCREEN)
