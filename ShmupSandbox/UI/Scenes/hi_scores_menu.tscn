@@ -174,7 +174,6 @@ layout_mode = 2
 theme_override_constants/separation = 5
 
 [node name="score_01" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
-unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_trilj")
 theme_override_font_sizes/font_size = 22
@@ -182,7 +181,6 @@ text = "107400"
 horizontal_alignment = 2
 
 [node name="score_02" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
-unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_trilj")
 theme_override_font_sizes/font_size = 22
@@ -190,7 +188,6 @@ text = "98210"
 horizontal_alignment = 2
 
 [node name="score_03" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
-unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_trilj")
 theme_override_font_sizes/font_size = 22
@@ -198,7 +195,6 @@ text = "85344"
 horizontal_alignment = 2
 
 [node name="score_04" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
-unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_trilj")
 theme_override_font_sizes/font_size = 22
@@ -206,7 +202,6 @@ text = "71098"
 horizontal_alignment = 2
 
 [node name="score_05" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
-unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_trilj")
 theme_override_font_sizes/font_size = 22
@@ -214,7 +209,6 @@ text = "66998"
 horizontal_alignment = 2
 
 [node name="score_06" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
-unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_trilj")
 theme_override_font_sizes/font_size = 22
@@ -222,7 +216,6 @@ text = "54562"
 horizontal_alignment = 2
 
 [node name="score_07" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
-unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_trilj")
 theme_override_font_sizes/font_size = 22
@@ -230,7 +223,6 @@ text = "42010"
 horizontal_alignment = 2
 
 [node name="score_08" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
-unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_trilj")
 theme_override_font_sizes/font_size = 22
@@ -238,7 +230,6 @@ text = "35001"
 horizontal_alignment = 2
 
 [node name="score_09" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
-unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_trilj")
 theme_override_font_sizes/font_size = 22
@@ -246,7 +237,6 @@ text = "28993"
 horizontal_alignment = 2
 
 [node name="score_10" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
-unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_trilj")
 theme_override_font_sizes/font_size = 22

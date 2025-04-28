@@ -17,9 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-UiUtility="*res://ShmupSandbox/Autoloads/ui_utility.gd"
-SignalsBus="*res://ShmupSandbox/Autoloads/signals_bus.gd"
 PlayerData="*res://ShmupSandbox/Autoloads/player_data.gd"
+SaveManager="*res://ShmupSandbox/Autoloads/save_manager.gd"
+SignalsBus="*res://ShmupSandbox/Autoloads/signals_bus.gd"
+UiUtility="*res://ShmupSandbox/Autoloads/ui_utility.gd"
 
 [display]
 

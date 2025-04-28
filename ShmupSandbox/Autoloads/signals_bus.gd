@@ -7,6 +7,7 @@ signal player_shooting(bullet_scene:PackedScene, locations:Array[Vector2])
 signal player_lives_updated()
 signal continue_game_player_respawn()
 signal player_score_updated()
+signal game_loaded()
 
 
 func score_increased_event(score : int) -> void:
@@ -29,3 +30,6 @@ func continue_game_player_respawn_event() -> void:
 
 func player_score_updated_event() -> void:
 	player_score_updated.emit()
+
+func game_loaded_event() -> void:
+	game_loaded.emit()

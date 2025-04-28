@@ -19,13 +19,13 @@ const continue_score_deduction : float = 0.9
 var player_hi_scores_dictionaries : Array[Dictionary] = [
 	{"score" : 200, "name" : "APE"},
 	{"score" : 300, "name" : "YAN"},
-	{"score" : 400, "name" : "HIT"},
+	{"score" : 420, "name" : "HIT"},
 	{"score" : 500, "name" : "IAN"},
 	{"score" : 600, "name" : "FAN"},
 	{"score" : 700, "name" : "GIT"},
 	{"score" : 800, "name" : "GAT"},
 	{"score" : 900, "name" : "APE"},
-	{"score" : 1000, "name" : "BAD"},
+	{"score" : 1111, "name" : "BAD"},
 	{"score" : 1100, "name" : "BAT"}
 ]
 
@@ -33,7 +33,6 @@ var player_hi_scores_dictionaries : Array[Dictionary] = [
 func _ready() -> void:
 	sort_high_scores()
 	_connect_to_signals()
-	player_hi_scores_dictionaries.sort()
 
 
 ## Helper funcs
@@ -42,11 +41,12 @@ func _connect_to_signals() -> void:
 	SignalsBus.score_increased.connect(_on_update_current_score)
 	SignalsBus.continue_game_player_respawn.connect(_on_continue_score_deduced)
 	SignalsBus.player_died.connect(_on_player_death)
+	SignalsBus.game_loaded.connect(_on_game_loaded)
 
 
 func sort_high_scores() -> void:
 	## Sort the high scores dictionaries by score
-	PlayerData.player_hi_scores_dictionaries.sort_custom(func(a, b):
+	player_hi_scores_dictionaries.sort_custom(func(a, b):
 		# First, compare by score in descending order
 		if a["score"] != b["score"]:
 			return a["score"] > b["score"]
@@ -69,6 +69,23 @@ func set_player_lives_to_max() -> void:
 	player_lives = _player_max_lives
 
 
+func _update_high_scores_from_save_data() -> void:
+	player_hi_scores_dictionaries.clear()
+	for entry in SaveManager.loaded_data["player_high_scores"]:
+		if entry.has("score") && typeof(entry["score"] == TYPE_FLOAT): # Clean up scores from float to int
+			entry["score"] = int(entry["score"])
+		
+		if typeof(entry) == TYPE_DICTIONARY: # Append the cleaned up scores to high score list
+			player_hi_scores_dictionaries.append(entry)
+		else:
+			push_error("invalid score entry detected")
+
+
+func _save_player_hi_scores() -> void:
+	SaveManager.contents_to_save["player_high_scores"].append(player_hi_scores_dictionaries) # Update with latest score data
+	SaveManager.save_game()
+
+
 ####
 
 ## Signals connections
@@ -88,4 +105,5 @@ func _on_player_death() -> void:
 	SignalsBus.player_lives_updated_event()
 
 
-
+func _on_game_loaded() -> void:
+	_update_high_scores_from_save_data()
