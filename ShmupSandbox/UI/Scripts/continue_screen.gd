@@ -109,3 +109,9 @@ func _on_no_button_focus_entered() -> void:
 
 func _on_no_button_mouse_entered() -> void:
 	no_button.grab_focus()
+
+
+func _on_visibility_changed() -> void:
+	if self.visible:
+		start_countdown()
+		yes_button.grab_focus()

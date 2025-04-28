@@ -13,3 +13,8 @@ func _ready() -> void:
 
 func _on_game_over_timer_timeout() -> void:
 	game_over_screen_timed_out.emit()
+
+
+func _on_visibility_changed() -> void:
+	if self.visible:
+		game_over_timer.start()

@@ -95,3 +95,5 @@ size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_xvmxs")
 theme_override_font_sizes/font_size = 25
 text = "00000000"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

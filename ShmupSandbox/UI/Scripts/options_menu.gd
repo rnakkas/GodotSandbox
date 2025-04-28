@@ -67,3 +67,8 @@ func _on_back_button_pressed() -> void:
 
 func _on_back_button_mouse_entered() -> void:
 	back_button.grab_focus()
+
+
+func _on_visibility_changed() -> void:
+	if self.visible:
+		sound_volume_slider.grab_focus()

@@ -223,6 +223,7 @@ action_mode = 0
 text = "Back"
 flat = true
 
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/sound_volume_slider" to="." method="_on_sound_volume_slider_focus_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/sound_volume_slider" to="." method="_on_sound_volume_slider_mouse_entered"]
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/music_volume_slider" to="." method="_on_music_volume_slider_focus_entered"]

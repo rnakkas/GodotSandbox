@@ -77,3 +77,8 @@ func _on_quit_button_focus_entered() -> void:
 
 func _on_quit_button_mouse_entered() -> void:
 	quit_button.grab_focus()
+
+
+func _on_visibility_changed() -> void:
+	if self.visible:
+		resume_button.grab_focus()

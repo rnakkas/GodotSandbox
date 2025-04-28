@@ -18,14 +18,14 @@ func populate_high_scores_screen() -> void:
 	# Step 1: Initialize the score and name label lists
 	_initialize_label_lists()
 
-	# Step 2: Resize the label lists to match the number of high scores
+	# Step 2: Sort list of high scores
+	PlayerData.sort_high_scores()
+
+	# Step 3: Resize the label lists to match the size of high scores list
 	_resize_label_lists()
 
-	# Step 3: Sort the label lists
+	# Step 4: Sort the label lists
 	_sort_label_lists()
-
-	# Step 4: Sort the high score dictionaries
-	_sort_high_scores()
 
 	# Step 5: Update the high score UI
 	_update_high_score_ui()
@@ -56,18 +56,6 @@ func _sort_label_lists() -> void:
 	name_label_list.sort()
 
 
-func _sort_high_scores() -> void:
-	## Sort the high scores dictionaries by score
-	PlayerData.player_hi_scores_dictionaries.sort_custom(func(a, b):
-		# First, compare by score in descending order
-		if a["score"] != b["score"]:
-			return a["score"] > b["score"]
-
-		# If scores are the same, compare by name alphabetically (ascending)
-		return a["name"] < b["name"]
-	)
-
-
 func _update_high_score_ui() -> void:
 	## Add the scores and names to the high scores screen
 	for i : int in score_label_list.size():
@@ -88,3 +76,8 @@ func _on_back_button_mouse_entered() -> void:
 
 func _on_back_button_focus_entered() -> void:
 	UiUtility.highlight_selected_element([back_button], back_button)
+
+
+func _on_visibility_changed() -> void:
+	if self.visible:
+		back_button.grab_focus()

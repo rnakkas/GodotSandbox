@@ -6,6 +6,8 @@ var player_lives : int
 
 var player_score: int
 
+var enemies_killed: int
+
 var player_hi_scores_list : Array[int]
 
 ## TODO: Getting new player scores and making sure only the top 10 highest scores are saved
@@ -14,20 +16,50 @@ var player_hi_scores_list : Array[int]
 ##		Append to this array
 ##		Sort the array in descending order for scores
 ##		Slice to only take indices 0 to 10, i.e. top 10 scores
+
+# var player_hi_scores_dictionaries : Array[Dictionary] = [
+# 	{"score" : 107400, "name" : "APE"},
+# 	{"score" : 90250, "name" : "YAN"},
+# 	{"score" : 96000, "name" : "HIT"},
+# 	{"score" : 110230, "name" : "IAN"},
+# 	{"score" : 96000, "name" : "FAN"},
+# 	{"score" : 84000, "name" : "GIT"},
+# 	{"score" : 54100, "name" : "GAT"},
+# 	{"score" : 91000, "name" : "APE"},
+# 	{"score" : 72010, "name" : "BAD"},
+# 	{"score" : 67200, "name" : "BAT"}
+# ]
+
 var player_hi_scores_dictionaries : Array[Dictionary] = [
-	{"score" : 107400, "name" : "APE"},
-	{"score" : 90250, "name" : "YAN"},
-	{"score" : 96000, "name" : "HIT"},
-	{"score" : 110230, "name" : "IAN"},
-	{"score" : 96000, "name" : "FAN"},
-	{"score" : 84000, "name" : "GIT"},
-	{"score" : 54100, "name" : "GAT"},
-	{"score" : 91000, "name" : "APE"},
-	{"score" : 72010, "name" : "BAD"},
-	{"score" : 67200, "name" : "BAT"}
+	{"score" : 200, "name" : "APE"},
+	{"score" : 300, "name" : "YAN"},
+	{"score" : 400, "name" : "HIT"},
+	{"score" : 500, "name" : "IAN"},
+	{"score" : 600, "name" : "FAN"},
+	{"score" : 700, "name" : "GIT"},
+	{"score" : 800, "name" : "GAT"},
+	{"score" : 900, "name" : "APE"},
+	{"score" : 1000, "name" : "BAD"},
+	{"score" : 1100, "name" : "BAT"}
 ]
 
-var enemies_killed: int
+
+func _ready() -> void:
+	player_hi_scores_dictionaries.sort()
+
+
+func sort_high_scores() -> void:
+	## Sort the high scores dictionaries by score
+	PlayerData.player_hi_scores_dictionaries.sort_custom(func(a, b):
+		# First, compare by score in descending order
+		if a["score"] != b["score"]:
+			return a["score"] > b["score"]
+
+		# If scores are the same, compare by name alphabetically (ascending)
+		return a["name"] < b["name"]
+	)
+
+	player_hi_scores_dictionaries = player_hi_scores_dictionaries.slice(0,10) # Only keep the top 10 scores
 
 
 func reset_all_player_data_on_start() -> void:

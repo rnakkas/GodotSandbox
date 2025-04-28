@@ -51,4 +51,5 @@ vertical_alignment = 1
 
 [node name="game_over_timer" type="Timer" parent="."]
 
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="timeout" from="game_over_timer" to="." method="_on_game_over_timer_timeout"]

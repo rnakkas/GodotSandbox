@@ -185,28 +185,21 @@ func _toggle_ui(menu_type : ui_type) -> void:
 	match menu_type:
 		ui_type.MAIN_MENU:
 			ui_element = main_menu
-			ui_element.play_button.grab_focus()
+			ui_element.play_button.grab_focus() ## TODO: Remove when start screen is ready
 		ui_type.OPTIONS_MENU:
 			ui_element = options_menu
-			ui_element.sound_volume_slider.grab_focus()
 		ui_type.PLAYER_HUD:
 			ui_element = player_hud
 		ui_type.PAUSE_MENU:
 			ui_element = pause_menu
-			ui_element.resume_button.grab_focus()
 		ui_type.CONFIRM_DIALOG:
 			ui_element = confirm_dialog
-			ui_element.no_button.grab_focus()
 		ui_type.CONTINUE_SCREEN:
 			ui_element = continue_screen
-			ui_element.start_countdown()
-			ui_element.yes_button.grab_focus()
 		ui_type.GAME_OVER_SCREEN:
 			ui_element = game_over_screen
-			ui_element.game_over_timer.start()
 		ui_type.HI_SCORES_MENU:
 			ui_element = hi_scores_menu
-			ui_element.back_button.grab_focus()
 		
 	if ui_element:
 		ui_element.visible = !ui_element.visible
