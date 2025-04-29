@@ -16,6 +16,7 @@ script = ExtResource("1_67rqg")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 self_modulate = Color(0.133333, 0.137255, 0.137255, 1)
+layout_mode = 0
 offset_left = 120.0
 offset_top = 80.0
 offset_right = 520.0
@@ -68,11 +69,17 @@ theme_override_font_sizes/font_size = 25
 text = "Enter your name:"
 
 [node name="HBoxContainer_letters" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 7
+theme_override_constants/separation = 2
+alignment = 1
 
-[node name="letter_1" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_letters" groups=["name_entry_dialog_letters"]]
+[node name="letter_1_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters"]
+custom_minimum_size = Vector2(12, 22)
+layout_mode = 2
+
+[node name="letter_1" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_letters/letter_1_container" groups=["name_entry_dialog_letters"]]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath(".")
@@ -85,7 +92,11 @@ theme_override_fonts/font = ExtResource("1_fmiaw")
 theme_override_font_sizes/font_size = 30
 text = "A"
 
-[node name="letter_2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_letters" groups=["name_entry_dialog_letters"]]
+[node name="letter_2_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters"]
+custom_minimum_size = Vector2(12, 22)
+layout_mode = 2
+
+[node name="letter_2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_letters/letter_2_container" groups=["name_entry_dialog_letters"]]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath(".")
@@ -96,9 +107,13 @@ focus_previous = NodePath(".")
 focus_mode = 2
 theme_override_fonts/font = ExtResource("1_fmiaw")
 theme_override_font_sizes/font_size = 30
-text = "A"
+text = "B"
 
-[node name="letter_3" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_letters" groups=["name_entry_dialog_letters"]]
+[node name="letter_3_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters"]
+custom_minimum_size = Vector2(12, 22)
+layout_mode = 2
+
+[node name="letter_3" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_letters/letter_3_container" groups=["name_entry_dialog_letters"]]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath(".")
@@ -106,8 +121,11 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
+focus_mode = 2
 theme_override_fonts/font = ExtResource("1_fmiaw")
 theme_override_font_sizes/font_size = 30
-text = "A"
+text = "C"
 
-[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer_letters/letter_1" to="." method="_on_letter_1_focus_entered"]
+[node name="blink_timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="blink_timer" to="." method="_on_blink_timer_timeout"]
