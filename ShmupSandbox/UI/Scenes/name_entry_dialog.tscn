@@ -75,9 +75,16 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 2
 alignment = 1
 
-[node name="letter_1_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters"]
+[node name="letter_1_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters" groups=["name_entry_dialog_letter_containers"]]
 custom_minimum_size = Vector2(12, 22)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 2
 
 [node name="letter_1" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_letters/letter_1_container" groups=["name_entry_dialog_letters"]]
 layout_mode = 2
@@ -92,9 +99,16 @@ theme_override_fonts/font = ExtResource("1_fmiaw")
 theme_override_font_sizes/font_size = 30
 text = "A"
 
-[node name="letter_2_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters"]
+[node name="letter_2_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters" groups=["name_entry_dialog_letter_containers"]]
 custom_minimum_size = Vector2(12, 22)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 2
 
 [node name="letter_2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_letters/letter_2_container" groups=["name_entry_dialog_letters"]]
 layout_mode = 2
@@ -109,9 +123,16 @@ theme_override_fonts/font = ExtResource("1_fmiaw")
 theme_override_font_sizes/font_size = 30
 text = "B"
 
-[node name="letter_3_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters"]
+[node name="letter_3_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters" groups=["name_entry_dialog_letter_containers"]]
 custom_minimum_size = Vector2(12, 22)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 2
 
 [node name="letter_3" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_letters/letter_3_container" groups=["name_entry_dialog_letters"]]
 layout_mode = 2
