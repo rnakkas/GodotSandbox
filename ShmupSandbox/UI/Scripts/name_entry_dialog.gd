@@ -3,44 +3,30 @@ class_name NameEntryDialog extends Control
 @onready var score_label : Label = %score_label
 @onready var ok_button : Button = %ok_button
 @onready var blink_timer : Timer = $blink_timer
+@onready var idle_timer : Timer = $idle_timer
 
 var letter_labels_list : Array[Label] = []
 var letter_containers_list : Array[Control] = []
+
 const blink_time : float = 0.4
-# const allowed_chars : Array[String] = [
-# 	"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-# 	"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
-# 	"Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
-# 	"!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_",
-# 	"+", "=", "/", "<", ">", "?", ".", ","
-# ]
+@export var idle_time : float = 30.0
 
-signal ok_button_pressed(player_name : String)
-
-## FIXME: For testing only, remove
 const allowed_chars : Array[String] = [
-	"A", "B", "C", "D", "E", "F"
+	"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+	"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
+	"Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+	"!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_",
+	"+", "=", "/", "<", ">", "?", ".", ","
 ]
 
+signal ok_button_pressed()
 
-
-## TODO: Name entry dialog WIP
-## NEXT:
-	# Being able to confirm on selecting a letter for the name - done
-	# Once a selection on a letter is made, move focus to the next letter - done
-	# Once all letters have been selected, send signal to move player to game over screen
-	# Also add a timer to automatically set name and move to game over screen if player idles too long on this dialog
-	# Grab focus on first letter from left when dialog becomes visible, i.e. connect to visibility_changed signal
 
 func _ready() -> void:
 	_initialize_letters_list()
 	_initialize_letter_containers_list()
 	_set_blink_timer_properties()
-
-	ok_button.visible = false
-
-	## FIXME: For testing only, will remove
-	letter_containers_list[0]. grab_focus()
+	_set_idle_timer_properties()
 
 
 ## Get the list of letters and connect to their signals
@@ -71,6 +57,11 @@ func _connect_to_group_signals(node : Control) -> void:
 func _set_blink_timer_properties() -> void:
 	blink_timer.wait_time = blink_time
 	blink_timer.one_shot = false
+
+## Idle timer properties
+func _set_idle_timer_properties() -> void:
+	idle_timer.wait_time = idle_time
+	idle_timer.one_shot = true
 
 
 ####
@@ -130,6 +121,22 @@ func _accept_letter() -> void:
 
 ## Signals connections
 
+## When this dialog becomes visible
+func _on_visibility_changed() -> void:
+	if self.visible:
+		score_label.text = str(PlayerData.player_score)
+		_reset_name_entry_letters()
+		idle_timer.start()
+
+## To reset the letters back to AAA in the name entry, and ok to be made invisible
+func _reset_name_entry_letters() -> void:
+	ok_button.visible = !ok_button.visible
+	letter_containers_list[0].grab_focus()
+
+	for letter : int in range(letter_labels_list.size()):
+		letter_labels_list[letter].text = allowed_chars[0]
+
+
 ## Focus entered for letter containers
 func _on_focus_entered() -> void:
 	for element : int in range(letter_containers_list.size()):
@@ -138,7 +145,7 @@ func _on_focus_entered() -> void:
 			blink_timer.start()	
 
 
-
+## Blinking timer
 func _on_blink_timer_timeout() -> void:
 	_blink_current_letter()
 
@@ -149,14 +156,40 @@ func _blink_current_letter() -> void:
 			letter_containers_list[element].get_child(0).visible = !letter_containers_list[element].get_child(0).visible
 
 
-
+## OK button behaviour
 func _on_ok_button_focus_entered() -> void:
 	UiUtility.highlight_selected_element([ok_button], ok_button)
 
-
 func _on_ok_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(ok_button)
-	var player_name_string : String = letter_labels_list[0].text + letter_labels_list[1].text + letter_labels_list[2].text
-	print(player_name_string)
-	ok_button_pressed.emit(player_name_string)
+	var player_name_string : String = ""
+	for letter : int in range(letter_labels_list.size()):
+		player_name_string += letter_labels_list[letter].text
+	
+	ok_button_pressed.emit()
+	SignalsBus.player_hi_score_name_entered_event(player_name_string)
 
+
+## If player is idle for too long, name entry is chosen for them
+func _on_idle_timer_timeout() -> void:
+	_name_entry_when_idle()
+
+func _name_entry_when_idle() -> void:
+	var player_name_string : String = ""
+	for letter : int in range(letter_labels_list.size()):
+		player_name_string += letter_labels_list[letter].text
+		letter_labels_list[letter].visible = true
+	
+	# Highlight the letters as if a selection has been made
+	for container : int in range(letter_containers_list.size()):
+		letter_containers_list[container].modulate = UiUtility.color_yellow
+
+	ok_button.visible = !ok_button.visible
+	ok_button.grab_focus()
+
+	# Just to be able to see the ok being highlighted for a split second to indicate a choice was made
+	await get_tree().create_timer(0.25).timeout
+	await UiUtility.selected_button_element_press_animation(ok_button)
+
+	ok_button_pressed.emit()
+	SignalsBus.player_hi_score_name_entered_event(player_name_string)

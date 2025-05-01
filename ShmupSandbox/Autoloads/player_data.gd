@@ -1,6 +1,6 @@
 extends Node
 
-const _player_max_lives : int = 1
+const _player_max_lives : int = 3
 
 var player_lives : int
 
@@ -10,12 +10,7 @@ var enemies_killed: int
 
 const continue_score_deduction : float = 0.9
 
-## TODO: Getting new player scores and making sure only the top 10 highest scores are saved
-## Try: 
-##		Get the new score
-##		Append to this array
-##		Sort the array in descending order for scores
-##		Slice to only take indices 0 to 10, i.e. top 10 scores
+## The default high score list when there is no save data
 var player_hi_scores_dictionaries : Array[Dictionary] = [
 	{"score" : 200, "name" : "APE"},
 	{"score" : 300, "name" : "YAN"},
@@ -42,6 +37,7 @@ func _connect_to_signals() -> void:
 	SignalsBus.continue_game_player_respawn.connect(_on_continue_score_deduced)
 	SignalsBus.player_died.connect(_on_player_death)
 	SignalsBus.game_loaded.connect(_on_game_loaded)
+	SignalsBus.player_hi_score_name_entered.connect(_on_player_hi_score_name_entered)
 
 
 func sort_high_scores() -> void:
@@ -82,7 +78,7 @@ func _update_high_scores_from_save_data() -> void:
 
 
 func _save_player_hi_scores() -> void:
-	SaveManager.contents_to_save["player_high_scores"].append(player_hi_scores_dictionaries) # Update with latest score data
+	SaveManager.contents_to_save["player_high_scores"] = player_hi_scores_dictionaries # Update with latest score data
 	SaveManager.save_game()
 
 
@@ -107,3 +103,11 @@ func _on_player_death() -> void:
 
 func _on_game_loaded() -> void:
 	_update_high_scores_from_save_data()
+
+
+func _on_player_hi_score_name_entered(player_name : String) -> void:
+	player_hi_scores_dictionaries.append(
+		{"score" : player_score, "name" : player_name}
+	)
+	sort_high_scores()
+	_save_player_hi_scores()

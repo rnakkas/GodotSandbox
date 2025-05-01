@@ -8,7 +8,7 @@ class_name ContinueScreen extends Control
 signal yes_button_pressed()
 signal no_button_pressed()
 
-var max_continue_time : int = 2
+var max_continue_time : int = 10
 var continue_time : int
 const tick_time : int = 1
 var ui_elements_list : Array[Control] = []
@@ -80,7 +80,6 @@ func _continue_game() -> void:
 
 
 func _end_game() -> void:
-	## Display game over screen
 	no_button_pressed.emit()
 
 ####
@@ -99,8 +98,6 @@ func _on_yes_button_mouse_entered() -> void:
 
 
 func _on_no_button_pressed() -> void:
-	# Display game over screen -done, 
-	# TODO: Take player to enter hi score screen if within top 10 hi scores, else return to main menu
 	_end_game()
 
 func _on_no_button_focus_entered() -> void:

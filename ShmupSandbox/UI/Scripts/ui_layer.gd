@@ -46,6 +46,7 @@ func _toggle_ui(ui: Control) -> void:
 
 ####
 
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		if (
@@ -201,3 +202,9 @@ func _on_hi_scores_menu_back_button_pressed() -> void:
 	_toggle_ui(main_menu)
 
 
+####
+
+## Name entry dialog
+func _on_name_entry_dialog_ok_button_pressed() -> void:
+	_toggle_ui(name_entry_dialog)
+	_toggle_ui(game_over_screen)

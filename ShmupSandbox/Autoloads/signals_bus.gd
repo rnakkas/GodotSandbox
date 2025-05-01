@@ -8,6 +8,7 @@ signal player_lives_updated()
 signal continue_game_player_respawn()
 signal player_score_updated()
 signal game_loaded()
+signal player_hi_score_name_entered(player_name : String)
 
 
 func score_increased_event(score : int) -> void:
@@ -33,3 +34,6 @@ func player_score_updated_event() -> void:
 
 func game_loaded_event() -> void:
 	game_loaded.emit()
+
+func player_hi_score_name_entered_event(player_name : String) -> void:
+	player_hi_score_name_entered.emit(player_name)

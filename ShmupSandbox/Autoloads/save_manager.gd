@@ -24,14 +24,11 @@ func save_game() -> void:
 	if FileAccess.file_exists(main_save_path):
 		var dir : DirAccess = DirAccess.open(base_path)  # Open the user directory to perform file operations
 		dir.copy(main_save_path, backup_file)  # Copy the current save file to the backup location
-		# print("Backup created: ", backup_file)
 
 	# Now save the new game state
 	var file : FileAccess = FileAccess.open(main_save_path, FileAccess.WRITE)
 	file.store_string(JSON.stringify(contents_to_save, "\t"))  # Save data in JSON format
 	file.close()
-
-	# print("Save successful: ", main_save_path)
 
 
 ## Helper function to load and parse a JSON file
@@ -67,7 +64,6 @@ func _restore_from_backup() -> void:
 
 		loaded_data = load_data  # Store the data
 		SignalsBus.game_loaded_event()  # Trigger the loaded event
-		# print("Restored from backup: ", backup_file)
 	else:
 		push_error("Failed to read from backup, using default data")
 

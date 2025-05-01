@@ -68,3 +68,4 @@ visible = false
 [connection signal="yes_button_pressed" from="confirm_dialog" to="." method="_on_confirm_dialog_yes_button_pressed"]
 [connection signal="game_over_screen_timed_out" from="game_over_screen" to="." method="_on_game_over_screen_game_over_screen_timed_out"]
 [connection signal="back_button_pressed" from="hi_scores_menu" to="." method="_on_hi_scores_menu_back_button_pressed"]
+[connection signal="ok_button_pressed" from="name_entry_dialog" to="." method="_on_name_entry_dialog_ok_button_pressed"]
