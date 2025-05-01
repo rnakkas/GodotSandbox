@@ -1,6 +1,7 @@
 class_name NameEntryDialog extends Control
 
 @onready var score_label : Label = %score_label
+@onready var ok_button : Button = %ok_button
 @onready var blink_timer : Timer = $blink_timer
 
 var letter_labels_list : Array[Label] = []
@@ -14,6 +15,8 @@ const blink_time : float = 0.4
 # 	"+", "=", "/", "<", ">", "?", ".", ","
 # ]
 
+signal ok_button_pressed(player_name : String)
+
 ## FIXME: For testing only, remove
 const allowed_chars : Array[String] = [
 	"A", "B", "C", "D", "E", "F"
@@ -23,8 +26,8 @@ const allowed_chars : Array[String] = [
 
 ## TODO: Name entry dialog WIP
 ## NEXT:
-	# Being able to confirm on selecting a letter for the name
-	# Once a selection on a letter is made, move focus to the next letter
+	# Being able to confirm on selecting a letter for the name - done
+	# Once a selection on a letter is made, move focus to the next letter - done
 	# Once all letters have been selected, send signal to move player to game over screen
 	# Also add a timer to automatically set name and move to game over screen if player idles too long on this dialog
 	# Grab focus on first letter from left when dialog becomes visible, i.e. connect to visibility_changed signal
@@ -33,6 +36,8 @@ func _ready() -> void:
 	_initialize_letters_list()
 	_initialize_letter_containers_list()
 	_set_blink_timer_properties()
+
+	ok_button.visible = false
 
 	## FIXME: For testing only, will remove
 	letter_containers_list[0]. grab_focus()
@@ -107,12 +112,16 @@ func _scroll_down() -> void:
 func _accept_letter() -> void:
 	for element : int in range(letter_containers_list.size()):
 		if letter_containers_list[element].has_focus(): 
+			letter_containers_list[element].get_child(0).visible = true
 			if element < letter_containers_list.size()-1:
-				letter_containers_list[element].get_child(0).visible = true
 				letter_containers_list[element+1].grab_focus()
 				break
 			elif element == letter_containers_list.size()-1:
 				letter_containers_list[element].release_focus()
+				blink_timer.stop()
+				await get_tree().create_timer(0.3).timeout
+				ok_button.visible = true
+				ok_button.grab_focus()
 				print("confirmed all letters")
 
 
@@ -121,6 +130,7 @@ func _accept_letter() -> void:
 
 ## Signals connections
 
+## Focus entered for letter containers
 func _on_focus_entered() -> void:
 	for element : int in range(letter_containers_list.size()):
 		if letter_containers_list[element].has_focus():
@@ -137,3 +147,16 @@ func _blink_current_letter() -> void:
 	for element : int in range(letter_containers_list.size()):
 		if letter_containers_list[element].has_focus():
 			letter_containers_list[element].get_child(0).visible = !letter_containers_list[element].get_child(0).visible
+
+
+
+func _on_ok_button_focus_entered() -> void:
+	UiUtility.highlight_selected_element([ok_button], ok_button)
+
+
+func _on_ok_button_pressed() -> void:
+	await UiUtility.selected_button_element_press_animation(ok_button)
+	var player_name_string : String = letter_labels_list[0].text + letter_labels_list[1].text + letter_labels_list[2].text
+	print(player_name_string)
+	ok_button_pressed.emit(player_name_string)
+
