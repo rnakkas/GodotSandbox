@@ -7,22 +7,11 @@ class_name UiLayer extends CanvasLayer
 @onready var confirm_dialog : ConfirmDialog = %confirm_dialog
 @onready var continue_screen : ContinueScreen = %continue_screen
 @onready var game_over_screen : GameOverScreen = %game_over_screen
-@onready var hi_scores_menu: HiScoresMenu = %hi_scores_menu
+@onready var hi_scores_menu : HiScoresMenu = %hi_scores_menu
+@onready var name_entry_dialog  : NameEntryDialog = %name_entry_dialog
 
 signal game_started()
 signal returned_to_main_menu_from_game()
-
-enum ui_type 
-{
-	MAIN_MENU,
-	OPTIONS_MENU,
-	PAUSE_MENU,
-	PLAYER_HUD,
-	CONFIRM_DIALOG,
-	CONTINUE_SCREEN,
-	GAME_OVER_SCREEN,
-	HI_SCORES_MENU
-}
 
 var is_game_running : bool
 
@@ -40,9 +29,22 @@ func _ready() -> void:
 	continue_screen.visible = false
 	game_over_screen.visible = false
 	hi_scores_menu.visible = false
+	name_entry_dialog.visible = false
 
 	SignalsBus.player_lives_updated.connect(_on_player_lives_depleted)
 
+####
+
+## Main function to toggle the different ui's
+func _toggle_ui(ui: Control) -> void:
+	if ui is MainMenu: ## TODO: Remove when start screen is ready
+		ui = main_menu
+		ui.play_button.grab_focus()
+	
+	ui.visible = !ui.visible
+	ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+
+####
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
@@ -52,9 +54,10 @@ func _input(event: InputEvent) -> void:
 			!pause_menu.visible && 
 			!continue_screen.visible && 
 			!game_over_screen.visible &&
-			!hi_scores_menu.visible
+			!hi_scores_menu.visible &&
+			!name_entry_dialog.visible
 			):
-				_toggle_ui(ui_type.PAUSE_MENU)
+				_toggle_ui(pause_menu)
 				get_tree().paused = true 
 
 
@@ -68,18 +71,18 @@ func _on_main_menu_play_button_pressed() -> void:
 	player_hud.player_lives_value.text = "x " + str(PlayerData.player_lives)
 	player_hud.score_value.text = str(PlayerData.player_score).pad_zeros(8)
 	
-	_toggle_ui(ui_type.MAIN_MENU)
-	_toggle_ui(ui_type.PLAYER_HUD)
+	_toggle_ui(main_menu)
+	_toggle_ui(player_hud)
 	
 	is_game_running = true
 
 func _on_main_menu_options_button_pressed() -> void:
-	_toggle_ui(ui_type.MAIN_MENU)
-	_toggle_ui(ui_type.OPTIONS_MENU)
+	_toggle_ui(main_menu)
+	_toggle_ui(options_menu)
 
 func _on_main_menu_hi_scores_button_pressed() -> void:
-	_toggle_ui(ui_type.MAIN_MENU)
-	_toggle_ui(ui_type.HI_SCORES_MENU)
+	_toggle_ui(main_menu)
+	_toggle_ui(hi_scores_menu)
 
 func _on_main_menu_quit_button_pressed() -> void:
 	get_tree().call_deferred("quit")
@@ -90,11 +93,11 @@ func _on_main_menu_quit_button_pressed() -> void:
 ## Options menu
 func _on_options_menu_back_button_pressed() -> void:
 	if !is_game_running:
-		_toggle_ui(ui_type.OPTIONS_MENU)
-		_toggle_ui(ui_type.MAIN_MENU)
+		_toggle_ui(options_menu)
+		_toggle_ui(main_menu)
 	else:
-		_toggle_ui(ui_type.OPTIONS_MENU)
-		_toggle_ui(ui_type.PAUSE_MENU)
+		_toggle_ui(options_menu)
+		_toggle_ui(pause_menu)
 
 
 ####
@@ -102,22 +105,22 @@ func _on_options_menu_back_button_pressed() -> void:
 ## Pause menu
 func _on_pause_menu_resume_button_pressed() -> void:
 	get_tree().paused = false
-	_toggle_ui(ui_type.PAUSE_MENU)
+	_toggle_ui(pause_menu)
 
 
 func _on_pause_menu_options_button_pressed() -> void:
-	_toggle_ui(ui_type.PAUSE_MENU)
-	_toggle_ui(ui_type.OPTIONS_MENU)
+	_toggle_ui(pause_menu)
+	_toggle_ui(options_menu)
 
 
 func _on_pause_menu_main_menu_button_pressed() -> void:
 	confirm_dialog.dialog_label_main.text = UiUtility.dialog_return_to_main_menu
-	_toggle_ui(ui_type.CONFIRM_DIALOG)
+	_toggle_ui(confirm_dialog)
 
 
 func _on_pause_menu_quit_button_pressed() -> void:
 	confirm_dialog.dialog_label_main.text = UiUtility.dialog_quit
-	_toggle_ui(ui_type.CONFIRM_DIALOG)
+	_toggle_ui(confirm_dialog)
 
 
 ####
@@ -126,10 +129,10 @@ func _on_pause_menu_quit_button_pressed() -> void:
 func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 	match dialog_text:
 		UiUtility.dialog_return_to_main_menu:
-			_toggle_ui(ui_type.CONFIRM_DIALOG)
-			_toggle_ui(ui_type.PAUSE_MENU)
-			_toggle_ui(ui_type.PLAYER_HUD)
-			_toggle_ui(ui_type.MAIN_MENU)
+			_toggle_ui(confirm_dialog)
+			_toggle_ui(pause_menu)
+			_toggle_ui(player_hud)
+			_toggle_ui(main_menu)
 			
 			get_tree().paused = false 
 			is_game_running = false
@@ -140,7 +143,7 @@ func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 
 
 func _on_confirm_dialog_no_button_pressed() -> void:
-	_toggle_ui(ui_type.CONFIRM_DIALOG)
+	_toggle_ui(confirm_dialog)
 	pause_menu.resume_button.grab_focus()
 
 
@@ -149,14 +152,34 @@ func _on_confirm_dialog_no_button_pressed() -> void:
 ## Continue screen 
 func _on_player_lives_depleted() -> void:
 	if PlayerData.player_lives < 0:
-		_toggle_ui(ui_type.CONTINUE_SCREEN)
+		_toggle_ui(continue_screen)
 
 func _on_continue_screen_no_button_pressed() -> void:
-	_toggle_ui(ui_type.CONTINUE_SCREEN)
-	_toggle_ui(ui_type.GAME_OVER_SCREEN)
+	_toggle_ui(continue_screen)
+
+	if _is_player_score_in_top_ten():
+		_toggle_ui(name_entry_dialog)
+	else:
+		_toggle_ui(game_over_screen)
+
+## Helper func to check for player current score vs top 10 hi scores
+func _is_player_score_in_top_ten() -> bool:
+	var is_in_top_ten : bool
+	var hi_score_list_size : int = PlayerData.player_hi_scores_dictionaries.size()
+
+	for score_entry : int in range(hi_score_list_size):
+		if PlayerData.player_score > PlayerData.player_hi_scores_dictionaries[score_entry]["score"]:
+			is_in_top_ten = true
+			break;
+	
+	if PlayerData.player_score <= PlayerData.player_hi_scores_dictionaries[hi_score_list_size-1]["score"] :
+		is_in_top_ten = false
+	
+	return is_in_top_ten
+
 
 func _on_continue_screen_yes_button_pressed() -> void:
-	_toggle_ui(ui_type.CONTINUE_SCREEN)
+	_toggle_ui(continue_screen)
 	player_hud.player_lives_value.text = "x " + str(PlayerData._player_max_lives)
 	player_hud.score_value.text = str(PlayerData.player_score).pad_zeros(8)
 
@@ -164,9 +187,9 @@ func _on_continue_screen_yes_button_pressed() -> void:
 
 ## Game over screen
 func _on_game_over_screen_game_over_screen_timed_out() -> void:
-	_toggle_ui(ui_type.GAME_OVER_SCREEN)
-	_toggle_ui(ui_type.PLAYER_HUD)
-	_toggle_ui(ui_type.HI_SCORES_MENU)
+	_toggle_ui(game_over_screen)
+	_toggle_ui(player_hud)
+	_toggle_ui(hi_scores_menu)
 	returned_to_main_menu_from_game.emit()
 
 
@@ -174,34 +197,7 @@ func _on_game_over_screen_game_over_screen_timed_out() -> void:
 
 ## Hi Scores menu
 func _on_hi_scores_menu_back_button_pressed() -> void:
-	_toggle_ui(ui_type.HI_SCORES_MENU)
-	_toggle_ui(ui_type.MAIN_MENU)
+	_toggle_ui(hi_scores_menu)
+	_toggle_ui(main_menu)
 
-####
 
-## Helper functions
-func _toggle_ui(menu_type : ui_type) -> void:
-	var ui_element : Variant
-	
-	match menu_type:
-		ui_type.MAIN_MENU:
-			ui_element = main_menu
-			ui_element.play_button.grab_focus() ## TODO: Remove when start screen is ready
-		ui_type.OPTIONS_MENU:
-			ui_element = options_menu
-		ui_type.PLAYER_HUD:
-			ui_element = player_hud
-		ui_type.PAUSE_MENU:
-			ui_element = pause_menu
-		ui_type.CONFIRM_DIALOG:
-			ui_element = confirm_dialog
-		ui_type.CONTINUE_SCREEN:
-			ui_element = continue_screen
-		ui_type.GAME_OVER_SCREEN:
-			ui_element = game_over_screen
-		ui_type.HI_SCORES_MENU:
-			ui_element = hi_scores_menu
-		
-	if ui_element:
-		ui_element.visible = !ui_element.visible
-		ui_element.process_mode = Node.PROCESS_MODE_ALWAYS if ui_element.visible else Node.PROCESS_MODE_DISABLED

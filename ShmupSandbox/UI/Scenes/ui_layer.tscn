@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://wq32mri3ebiv"]
+[gd_scene load_steps=12 format=3 uid="uid://wq32mri3ebiv"]
 
 [ext_resource type="PackedScene" uid="uid://dw1uu0vpx6e46" path="res://ShmupSandbox/UI/Scenes/main_menu.tscn" id="1_ga2yo"]
 [ext_resource type="Script" uid="uid://s70ghdyj3lk3" path="res://ShmupSandbox/UI/Scripts/ui_layer.gd" id="1_hgdm0"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://v4u6mxfaksoq" path="res://ShmupSandbox/UI/Scenes/parallax_background.tscn" id="6_ga2yo"]
 [ext_resource type="PackedScene" uid="uid://cwdcwh6sflfw1" path="res://ShmupSandbox/UI/Scenes/game_over_screen.tscn" id="8_dqs3x"]
 [ext_resource type="PackedScene" uid="uid://cwajjxolnfu64" path="res://ShmupSandbox/UI/Scenes/hi_scores_menu.tscn" id="9_kbioj"]
+[ext_resource type="PackedScene" uid="uid://dmdtueiex673w" path="res://ShmupSandbox/UI/Scenes/name_entry_dialog.tscn" id="10_dlse4"]
 
 [node name="UI_layer" type="CanvasLayer"]
 process_mode = 3
@@ -43,6 +44,10 @@ unique_name_in_owner = true
 visible = false
 
 [node name="hi_scores_menu" parent="." instance=ExtResource("9_kbioj")]
+unique_name_in_owner = true
+visible = false
+
+[node name="name_entry_dialog" parent="." instance=ExtResource("10_dlse4")]
 unique_name_in_owner = true
 visible = false
 
