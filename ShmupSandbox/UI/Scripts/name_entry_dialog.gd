@@ -19,7 +19,6 @@ const allowed_chars : Array[String] = [
 	"A", "B", "C", "D", "E", "F"
 ]
 
-var current_char : String 
 
 
 ## TODO: Name entry dialog WIP
@@ -36,7 +35,7 @@ func _ready() -> void:
 	_set_blink_timer_properties()
 
 	## FIXME: For testing only, will remove
-	letter_containers_list[2]. grab_focus()
+	letter_containers_list[0]. grab_focus()
 
 
 ## Get the list of letters and connect to their signals
@@ -61,19 +60,24 @@ func _connect_to_group_signals(node : Control) -> void:
 		node.focus_entered.connect(_on_focus_entered)
 
 
+####
+
 ## Blinking timer properties
 func _set_blink_timer_properties() -> void:
 	blink_timer.wait_time = blink_time
 	blink_timer.one_shot = false
 
 
+####
+
 ## Selecting letters for name entry
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("move_up"):
+	if event.is_action_pressed("move_up") || event.is_action_pressed("ui_up"):
 		_scroll_up()
-	elif event.is_action_pressed("move_down"):
+	elif event.is_action_pressed("move_down") || event.is_action_pressed("ui_down"):
 		_scroll_down()
-
+	elif event.is_action_pressed("shoot") || event.is_action_pressed("ui_accept"):
+		_accept_letter()
 
 ## When user scrolls up
 func _scroll_up() -> void:
@@ -98,6 +102,20 @@ func _scroll_down() -> void:
 					character = (character - 1)%allowed_chars.size()
 					letter_labels_list[element].text = allowed_chars[character]
 					break
+
+## When user accepts selected letter
+func _accept_letter() -> void:
+	for element : int in range(letter_containers_list.size()):
+		if letter_containers_list[element].has_focus(): 
+			if element < letter_containers_list.size()-1:
+				letter_containers_list[element].get_child(0).visible = true
+				letter_containers_list[element+1].grab_focus()
+				break
+			elif element == letter_containers_list.size()-1:
+				letter_containers_list[element].release_focus()
+				print("confirmed all letters")
+
+
 
 ####
 

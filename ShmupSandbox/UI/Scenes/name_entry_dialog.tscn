@@ -44,13 +44,13 @@ theme_override_constants/margin_bottom = 35
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 7
 
 [node name="dialog_label_1" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_fmiaw")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 28
 text = "New Hi Score!"
 
 [node name="score_label" type="Label" parent="MarginContainer/VBoxContainer"]
@@ -58,14 +58,17 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_fmiaw")
-theme_override_font_sizes/font_size = 35
-text = "53290"
+theme_override_font_sizes/font_size = 22
+text = "2215156631548"
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
 
 [node name="dialog_label_2" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_fmiaw")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 18
 text = "Enter your name:"
 
 [node name="HBoxContainer_letters" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
@@ -96,8 +99,9 @@ focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
 theme_override_fonts/font = ExtResource("1_fmiaw")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 18
 text = "A"
+horizontal_alignment = 1
 
 [node name="letter_2_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters" groups=["name_entry_dialog_letter_containers"]]
 custom_minimum_size = Vector2(12, 22)
@@ -120,8 +124,9 @@ focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
 theme_override_fonts/font = ExtResource("1_fmiaw")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 18
 text = "B"
+horizontal_alignment = 1
 
 [node name="letter_3_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters" groups=["name_entry_dialog_letter_containers"]]
 custom_minimum_size = Vector2(12, 22)
@@ -144,8 +149,18 @@ focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
 theme_override_fonts/font = ExtResource("1_fmiaw")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 18
 text = "C"
+horizontal_alignment = 1
+
+[node name="ok_button" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_fmiaw")
+theme_override_font_sizes/font_size = 18
+text = "OK"
+flat = true
 
 [node name="blink_timer" type="Timer" parent="."]
 
