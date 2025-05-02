@@ -14,9 +14,6 @@ var ui_elements_list : Array[Control] = []
 
 func _ready() -> void:
 	_create_ui_elements_list()
-	
-	if self.visible:
-		play_button.call_deferred("grab_focus")
 
 ####
 
@@ -81,3 +78,9 @@ func _on_quit_button_focus_entered() -> void:
 
 func _on_quit_button_mouse_entered() -> void:
 	quit_button.grab_focus()
+
+
+## When main menu becomes visible
+func _on_visibility_changed() -> void:
+	if self.visible:
+		play_button.grab_focus()

@@ -129,6 +129,7 @@ action_mode = 0
 text = "Quit"
 flat = true
 
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/play_button" to="." method="_on_play_button_focus_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/play_button" to="." method="_on_play_button_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/play_button" to="." method="_on_play_button_pressed"]

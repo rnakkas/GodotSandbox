@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://bntsd8akyqgiv"]
+
+[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_6l7vw"]
+[ext_resource type="Script" uid="uid://g4pwoynin2x4" path="res://ShmupSandbox/UI/Scripts/start_screen.gd" id="1_bbtnf"]
+
+[node name="start_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bbtnf")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 35
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="title" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6l7vw")
+theme_override_font_sizes/font_size = 90
+text = "CATACLYZM"
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 15
+
+[node name="press_start_label" type="Label" parent="MarginContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6l7vw")
+theme_override_font_sizes/font_size = 50
+text = "Press Start"
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="blink_timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="blink_timer" to="." method="_on_blink_timer_timeout"]

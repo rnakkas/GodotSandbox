@@ -1,5 +1,6 @@
 class_name UiLayer extends CanvasLayer
 
+@onready var start_screen : StartScreen = %start_screen
 @onready var main_menu : MainMenu = %main_menu
 @onready var options_menu : OptionsMenu = %options_menu
 @onready var pause_menu : PauseMenu = %pause_menu
@@ -22,10 +23,11 @@ func _ready() -> void:
 func _initialize_ui_scenes() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	## Turn visibility on for main menu
-	main_menu.visible = true
+	## Turn visibility on for start screen
+	start_screen.visible = true
 	
 	## Turn visibility off for all other ui
+	main_menu.visible = false
 	options_menu.visible = false
 	pause_menu.visible = false
 	player_hud.visible = false
@@ -43,10 +45,6 @@ func _connect_to_signals() -> void:
 
 ## Main function to toggle the different ui's
 func _toggle_ui(ui: Control) -> void:
-	if ui is MainMenu: ## TODO: Remove when start screen is ready
-		ui = main_menu
-		ui.play_button.grab_focus()
-	
 	ui.visible = !ui.visible
 	ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 
@@ -56,6 +54,14 @@ func _toggle_ui(ui: Control) -> void:
 func _on_player_pauses_game() -> void:
 	get_tree().paused = true
 	_toggle_ui(pause_menu)
+
+
+####
+
+## Start screen
+func _on_start_screen_start_pressed() -> void:
+	_toggle_ui(start_screen)
+	_toggle_ui(main_menu)
 
 
 ####
@@ -206,3 +212,5 @@ func _on_hi_scores_menu_back_button_pressed() -> void:
 func _on_name_entry_dialog_ok_button_pressed() -> void:
 	_toggle_ui(name_entry_dialog)
 	_toggle_ui(game_over_screen)
+
+
