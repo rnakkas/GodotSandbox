@@ -11,11 +11,15 @@ class_name UiLayer extends CanvasLayer
 @onready var name_entry_dialog  : NameEntryDialog = %name_entry_dialog
 
 signal game_started()
-signal returned_to_main_menu_from_game()
+signal kill_game_instance()
 
 var is_game_running : bool
 
 func _ready() -> void:
+	_initialize_ui_scenes()
+	_connect_to_signals()
+	
+func _initialize_ui_scenes() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	## Turn visibility on for main menu
@@ -31,7 +35,9 @@ func _ready() -> void:
 	hi_scores_menu.visible = false
 	name_entry_dialog.visible = false
 
+func _connect_to_signals() -> void:
 	SignalsBus.player_lives_updated.connect(_on_player_lives_depleted)
+	SignalsBus.player_pressed_pause_game.connect(_on_player_pauses_game)
 
 ####
 
@@ -46,20 +52,10 @@ func _toggle_ui(ui: Control) -> void:
 
 ####
 
-
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause"):
-		if (
-			!main_menu.visible && 
-			!options_menu.visible && 
-			!pause_menu.visible && 
-			!continue_screen.visible && 
-			!game_over_screen.visible &&
-			!hi_scores_menu.visible &&
-			!name_entry_dialog.visible
-			):
-				_toggle_ui(pause_menu)
-				get_tree().paused = true 
+## Pausing game
+func _on_player_pauses_game() -> void:
+	get_tree().paused = true
+	_toggle_ui(pause_menu)
 
 
 ####
@@ -137,7 +133,7 @@ func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 			
 			get_tree().paused = false 
 			is_game_running = false
-			returned_to_main_menu_from_game.emit()
+			kill_game_instance.emit()
 		
 		UiUtility.dialog_quit:
 			get_tree().call_deferred("quit")
@@ -162,6 +158,8 @@ func _on_continue_screen_no_button_pressed() -> void:
 		_toggle_ui(name_entry_dialog)
 	else:
 		_toggle_ui(game_over_screen)
+
+	kill_game_instance.emit()
 
 ## Helper func to check for player current score vs top 10 hi scores
 func _is_player_score_in_top_ten() -> bool:
@@ -191,7 +189,7 @@ func _on_game_over_screen_game_over_screen_timed_out() -> void:
 	_toggle_ui(game_over_screen)
 	_toggle_ui(player_hud)
 	_toggle_ui(hi_scores_menu)
-	returned_to_main_menu_from_game.emit()
+	# kill_game_instance.emit()
 
 
 ####

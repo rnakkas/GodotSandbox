@@ -63,6 +63,9 @@ func _handle_countdown_end() -> void:
 
 
 func _continue_game() -> void:
+	## Unpause
+	get_tree().paused = false
+
 	## Reset player lives to max
 	PlayerData.set_player_lives_to_max()
 
@@ -80,14 +83,16 @@ func _continue_game() -> void:
 
 
 func _end_game() -> void:
+	get_tree().paused = false # Unpause
 	no_button_pressed.emit()
+
 
 ####
 
+## Yes button actions
 
 func _on_yes_button_pressed() -> void:
 	_continue_game()
-	
 
 func _on_yes_button_focus_entered() -> void:
 	UiUtility.highlight_selected_element(ui_elements_list, yes_button)
@@ -96,6 +101,10 @@ func _on_yes_button_focus_entered() -> void:
 func _on_yes_button_mouse_entered() -> void:
 	yes_button.grab_focus()
 
+
+####
+
+## No button actions
 
 func _on_no_button_pressed() -> void:
 	_end_game()
@@ -108,7 +117,12 @@ func _on_no_button_mouse_entered() -> void:
 	no_button.grab_focus()
 
 
+####
+
+## When continue screen becomes visibile
 func _on_visibility_changed() -> void:
 	if self.visible:
+		get_tree().paused = true # Pause the game when continue screen comes up
 		start_countdown()
 		yes_button.grab_focus()
+

@@ -10,4 +10,4 @@ script = ExtResource("1_aucld")
 [node name="UI_layer" parent="." instance=ExtResource("2_aucld")]
 
 [connection signal="game_started" from="UI_layer" to="." method="_on_ui_layer_game_started"]
-[connection signal="returned_to_main_menu_from_game" from="UI_layer" to="." method="_on_ui_layer_returned_to_main_menu_from_game"]
+[connection signal="kill_game_instance" from="UI_layer" to="." method="_on_ui_layer_kill_game_instance"]

@@ -8,10 +8,10 @@ func _ready() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(_delta: float) -> void:
-	## For testing only
+	## FIXME: For testing only, remove later
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit()
-	## For testing only
+	## FIXME: For testing only, remove later
 	if Input.is_action_just_pressed("reset"):
 		get_tree().paused = false
 		get_tree().reload_current_scene()
@@ -20,7 +20,7 @@ func _process(_delta: float) -> void:
 func _on_ui_layer_game_started() -> void:
 	_start_game()
 
-func _on_ui_layer_returned_to_main_menu_from_game() -> void:
+func _on_ui_layer_kill_game_instance() -> void:
 	game_instance.call_deferred("queue_free")
 
 

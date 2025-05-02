@@ -49,6 +49,11 @@ func _process(_delta: float) -> void:
 	_handle_shooting()
 	_handle_invincibility()
 
+## Handle pausing game
+func _unhandled_input(event: InputEvent) -> void: 
+	if event.is_action_pressed("pause"):
+		SignalsBus.player_pressed_pause_game_event()
+
 ####
 
 ## Helper funcs
