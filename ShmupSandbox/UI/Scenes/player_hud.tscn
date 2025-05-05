@@ -26,6 +26,7 @@ theme_override_constants/margin_bottom = 25
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -33,7 +34,7 @@ size_flags_horizontal = 8
 theme_override_constants/separation = 30
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(60, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 
 [node name="lives_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3"]
@@ -106,5 +107,30 @@ size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("1_xvmxs")
 theme_override_font_sizes/font_size = 25
 text = "0000000000"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="credits_label" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("1_xvmxs")
+theme_override_font_sizes/font_size = 25
+text = "Credits:"
+
+[node name="credits_value" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("1_xvmxs")
+theme_override_font_sizes/font_size = 25
+text = "3"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

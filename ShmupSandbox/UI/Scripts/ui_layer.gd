@@ -69,15 +69,9 @@ func _on_start_screen_start_pressed() -> void:
 ## Main menu
 func _on_main_menu_play_button_pressed() -> void:
 	game_started.emit()
-	
-	## Grab fresh player data on game start
-	player_hud.player_lives_value.text = "x " + str(PlayerData.player_lives)
-	player_hud.score_value.text = str(PlayerData.player_score).pad_zeros(8)
-	
+	is_game_running = true
 	_toggle_ui(main_menu)
 	_toggle_ui(player_hud)
-	
-	is_game_running = true
 
 func _on_main_menu_options_button_pressed() -> void:
 	_toggle_ui(main_menu)
@@ -155,17 +149,15 @@ func _on_confirm_dialog_no_button_pressed() -> void:
 ## Continue screen 
 func _on_player_lives_depleted() -> void:
 	if PlayerData.player_lives < 0:
-		_toggle_ui(continue_screen)
+		if PlayerData.player_credits > 0:
+			_toggle_ui(continue_screen)
+		elif PlayerData.player_credits <= 0:
+			_handle_name_entry_or_game_over_logic()
+
 
 func _on_continue_screen_no_button_pressed() -> void:
 	_toggle_ui(continue_screen)
-
-	if _is_player_score_in_top_ten():
-		_toggle_ui(name_entry_dialog)
-	else:
-		_toggle_ui(game_over_screen)
-
-	kill_game_instance.emit()
+	_handle_name_entry_or_game_over_logic()
 
 ## Helper func to check for player current score vs top 10 hi scores
 func _is_player_score_in_top_ten() -> bool:
@@ -182,6 +174,16 @@ func _is_player_score_in_top_ten() -> bool:
 	
 	return is_in_top_ten
 
+## Helper func with logic to show name entry dialog or game over screen based on player score
+func _handle_name_entry_or_game_over_logic() -> void:
+	if _is_player_score_in_top_ten():
+		_toggle_ui(name_entry_dialog)
+	else:
+		_toggle_ui(game_over_screen)
+
+	is_game_running = false
+	kill_game_instance.emit()
+
 
 func _on_continue_screen_yes_button_pressed() -> void:
 	_toggle_ui(continue_screen)
@@ -195,7 +197,6 @@ func _on_game_over_screen_game_over_screen_timed_out() -> void:
 	_toggle_ui(game_over_screen)
 	_toggle_ui(player_hud)
 	_toggle_ui(hi_scores_menu)
-	# kill_game_instance.emit()
 
 
 ####
