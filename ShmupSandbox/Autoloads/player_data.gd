@@ -2,6 +2,7 @@ extends Node
 
 const _player_max_lives : int = 0
 const _player_max_credits : int = 1
+const life_extend_score : int = 500
 
 var player_lives : int
 var player_credits : int
@@ -95,6 +96,12 @@ func _save_player_hi_scores() -> void:
 
 func _on_update_current_score(score : int) -> void:
 	player_score += score
+
+	## TODO: Figure out this logic
+	if player_score >= player_score + life_extend_score:
+		player_lives += 1
+		SignalsBus.player_lives_updated_event()
+
 	SignalsBus.player_score_updated_event()
 
 
