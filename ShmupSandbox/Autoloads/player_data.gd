@@ -1,14 +1,16 @@
 extends Node
 
-const _player_max_lives : int = 3
+const _player_max_lives : int = 0
+const _player_max_credits : int = 1
 
 var player_lives : int
+var player_credits : int
 
 var player_score: int
 
 var enemies_killed: int
 
-const continue_score_deduction : float = 0.9
+const score_penallty_multiplier : float = 0.9
 
 ## The default high score list when there is no save data
 var player_hi_scores_dictionaries : Array[Dictionary] = [
@@ -34,7 +36,7 @@ func _ready() -> void:
 
 func _connect_to_signals() -> void:
 	SignalsBus.score_increased.connect(_on_update_current_score)
-	SignalsBus.continue_game_player_respawn.connect(_on_continue_score_deduced)
+	SignalsBus.continue_game_player_respawn.connect(_on_continue_refresh_player_data)
 	SignalsBus.player_died.connect(_on_player_death)
 	SignalsBus.game_loaded.connect(_on_game_loaded)
 	SignalsBus.player_hi_score_name_entered.connect(_on_player_hi_score_name_entered)
@@ -59,10 +61,15 @@ func reset_all_player_data_on_start() -> void:
 	player_score = 0
 	enemies_killed = 0
 	player_lives = _player_max_lives
+	player_credits = _player_max_credits
+
+	SignalsBus.player_score_updated_event()
+	SignalsBus.player_lives_updated_event()
+	SignalsBus.player_credits_updated_event()
 	
 
-func set_player_lives_to_max() -> void:
-	player_lives = _player_max_lives
+# func set_player_lives_to_max() -> void:
+# 	player_lives = _player_max_lives
 
 
 func _update_high_scores_from_save_data() -> void:
@@ -91,9 +98,15 @@ func _on_update_current_score(score : int) -> void:
 	SignalsBus.player_score_updated_event()
 
 
-func _on_continue_score_deduced() -> void:
-	player_score = int(round(player_score * continue_score_deduction))
+func _on_continue_refresh_player_data() -> void:
+	player_score = int(round(player_score * score_penallty_multiplier))
+	player_lives = _player_max_lives
+	player_credits -= 1
+	print(player_credits)
+
 	SignalsBus.player_score_updated_event()
+	SignalsBus.player_lives_updated_event()
+	SignalsBus.player_credits_updated_event()
 
 
 func _on_player_death() -> void:

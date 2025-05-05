@@ -4,11 +4,12 @@ class_name ContinueScreen extends Control
 @onready var tick_timer : Timer = $tick_timer
 @onready var yes_button : Button = %yes_button
 @onready var no_button : Button = %no_button
+@onready var score_penalty_value : Label = %score_penalty_value
 
 signal yes_button_pressed()
 signal no_button_pressed()
 
-var max_continue_time : int = 10
+@export var max_continue_time : int = 10
 var continue_time : int
 const tick_time : int = 1
 var ui_elements_list : Array[Control] = []
@@ -66,12 +67,6 @@ func _continue_game() -> void:
 	## Unpause
 	get_tree().paused = false
 
-	## Reset player lives to max
-	PlayerData.set_player_lives_to_max()
-
-	## Reduce player's current score by 10%
-	PlayerData.player_score = int(round(PlayerData.player_score * 0.9)) ## Round off to neared int
-
 	## Turn off the continue screen
 	await UiUtility.selected_button_element_press_animation(yes_button)
 
@@ -122,7 +117,18 @@ func _on_no_button_mouse_entered() -> void:
 ## When continue screen becomes visibile
 func _on_visibility_changed() -> void:
 	if self.visible:
-		get_tree().paused = true # Pause the game when continue screen comes up
-		start_countdown()
-		yes_button.grab_focus()
+		_set_continue_dialog_values()
 
+func _set_continue_dialog_values() -> void:
+	get_tree().paused = true # Pause the game when continue screen comes up
+	start_countdown()
+	yes_button.grab_focus()
+
+	# Display score penalty
+	score_penalty_value.text = str(
+		int(
+			round(
+				PlayerData.player_score * (1.0 - PlayerData.score_penallty_multiplier)
+				)
+		)
+	)

@@ -37,7 +37,7 @@ layout_mode = 2
 [node name="continue_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_iw70x")
-theme_override_font_sizes/font_size = 100
+theme_override_font_sizes/font_size = 75
 text = "Continue?"
 
 [node name="time_left_label" type="Label" parent="MarginContainer/VBoxContainer"]
@@ -45,11 +45,34 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_iw70x")
-theme_override_font_sizes/font_size = 80
+theme_override_font_sizes/font_size = 70
 text = "10"
 
 [node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="score_penalty_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_iw70x")
+theme_override_font_sizes/font_size = 30
+text = "Score Penalty:"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="score_penalty_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_iw70x")
+theme_override_font_sizes/font_size = 30
+text = "2200120"
 
 [node name="separator5" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
