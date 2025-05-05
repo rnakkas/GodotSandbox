@@ -1,0 +1,371 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwajjxolnfu64"]
+
+[ext_resource type="Script" uid="uid://biaylbfglcrv3" path="res://ShmupSandbox/UI/Scripts/hi_scores_menu.gd" id="1_lwip8"]
+[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_trilj"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_iw54p"]
+
+[node name="hi_scores_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lwip8")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.133, 0.137, 0.137, 0.702)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_iw54p")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="hi_score_title_label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 45
+text = "HALL OF FAME"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = -10
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="underline_label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 30
+text = "------------------------------------------------------"
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 100
+
+[node name="VBoxContainer_rank" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="rank_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank"]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 25
+text = "Rank"
+
+[node name="VBoxContainer_ranks" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="rank_1st" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank/VBoxContainer_ranks"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "1st"
+
+[node name="rank_2nd" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank/VBoxContainer_ranks"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "2nd"
+
+[node name="rank_3rd" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank/VBoxContainer_ranks"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "3rd"
+
+[node name="rank_4th" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank/VBoxContainer_ranks"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "4th"
+
+[node name="rank_5th" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank/VBoxContainer_ranks"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "5th"
+
+[node name="rank_6th" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank/VBoxContainer_ranks"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "6th"
+
+[node name="rank_7th" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank/VBoxContainer_ranks"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "7th"
+
+[node name="rank_8th" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank/VBoxContainer_ranks"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "8th"
+
+[node name="rank_9th" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank/VBoxContainer_ranks"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "9th"
+
+[node name="rank_10th" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_rank/VBoxContainer_ranks"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "10th"
+
+[node name="VBoxContainer_score" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="score_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 25
+text = "Score"
+
+[node name="VBoxContainer_scores" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="score_01" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "107400"
+horizontal_alignment = 2
+
+[node name="score_02" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "98210"
+horizontal_alignment = 2
+
+[node name="score_03" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "85344"
+horizontal_alignment = 2
+
+[node name="score_04" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "71098"
+horizontal_alignment = 2
+
+[node name="score_05" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "66998"
+horizontal_alignment = 2
+
+[node name="score_06" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "54562"
+horizontal_alignment = 2
+
+[node name="score_07" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "42010"
+horizontal_alignment = 2
+
+[node name="score_08" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "35001"
+horizontal_alignment = 2
+
+[node name="score_09" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "28993"
+horizontal_alignment = 2
+
+[node name="score_10" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score/VBoxContainer_scores" groups=["hi_score_score_label"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "15450"
+horizontal_alignment = 2
+
+[node name="VBoxContainer_name" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="name_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name"]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 25
+text = "Name"
+
+[node name="VBoxContainer_names" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name"]
+custom_minimum_size = Vector2(50, 200)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="name_01" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name/VBoxContainer_names" groups=["hi_score_name_label"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "APE"
+
+[node name="name_02" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name/VBoxContainer_names" groups=["hi_score_name_label"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "BAT"
+
+[node name="name_03" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name/VBoxContainer_names" groups=["hi_score_name_label"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "CAT"
+
+[node name="name_04" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name/VBoxContainer_names" groups=["hi_score_name_label"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "DOG"
+
+[node name="name_05" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name/VBoxContainer_names" groups=["hi_score_name_label"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "EEL"
+
+[node name="name_06" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name/VBoxContainer_names" groups=["hi_score_name_label"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "FOX"
+
+[node name="name_07" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name/VBoxContainer_names" groups=["hi_score_name_label"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "GNU"
+
+[node name="name_08" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name/VBoxContainer_names" groups=["hi_score_name_label"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "HEN"
+
+[node name="name_09" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name/VBoxContainer_names" groups=["hi_score_name_label"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "IMP"
+
+[node name="name_10" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_name/VBoxContainer_names" groups=["hi_score_name_label"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 22
+text = "JAY"
+
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer_back_button" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer_back_button"]
+layout_mode = 2
+theme_override_constants/separation = -15
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/VBoxContainer_back_button/HBoxContainer"]
+layout_mode = 2
+
+[node name="back_button" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer_back_button/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+theme_override_fonts/font = ExtResource("1_trilj")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "BACK"
+flat = true
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/VBoxContainer_back_button/HBoxContainer/back_button" to="." method="_on_back_button_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/VBoxContainer_back_button/HBoxContainer/back_button" to="." method="_on_back_button_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer_back_button/HBoxContainer/back_button" to="." method="_on_back_button_pressed"]

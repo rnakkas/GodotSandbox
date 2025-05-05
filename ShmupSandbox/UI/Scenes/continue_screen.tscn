@@ -1,0 +1,127 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn51megt1rye4"]
+
+[ext_resource type="Script" uid="uid://ds1o34bueiily" path="res://ShmupSandbox/UI/Scripts/continue_screen.gd" id="1_8fmy5"]
+[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_iw70x"]
+
+[node name="continue_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8fmy5")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 35
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 18
+
+[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="continue_label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_iw70x")
+theme_override_font_sizes/font_size = 75
+text = "Continue?"
+
+[node name="time_left_label" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_iw70x")
+theme_override_font_sizes/font_size = 70
+text = "10"
+
+[node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="score_penalty_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_iw70x")
+theme_override_font_sizes/font_size = 30
+text = "Score Penalty:"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="score_penalty_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_iw70x")
+theme_override_font_sizes/font_size = 30
+text = "2200120"
+
+[node name="separator5" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 120
+
+[node name="yes_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../no_button")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+theme_override_fonts/font = ExtResource("1_iw70x")
+theme_override_font_sizes/font_size = 45
+action_mode = 0
+text = "YES"
+flat = true
+
+[node name="no_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+focus_neighbor_left = NodePath("../yes_button")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+theme_override_fonts/font = ExtResource("1_iw70x")
+theme_override_font_sizes/font_size = 45
+action_mode = 0
+text = "NO"
+flat = true
+
+[node name="tick_timer" type="Timer" parent="."]
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/yes_button" to="." method="_on_yes_button_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/yes_button" to="." method="_on_yes_button_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/yes_button" to="." method="_on_yes_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/no_button" to="." method="_on_no_button_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/no_button" to="." method="_on_no_button_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/no_button" to="." method="_on_no_button_pressed"]
+[connection signal="timeout" from="tick_timer" to="." method="_on_tick_timer_timeout"]

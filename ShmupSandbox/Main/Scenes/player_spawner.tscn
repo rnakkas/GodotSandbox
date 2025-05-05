@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd36pie1fwh40"]
+
+[ext_resource type="Script" uid="uid://drcbtcq267roy" path="res://ShmupSandbox/Main/Scripts/player_spawner.gd" id="1_rof5w"]
+
+[node name="player_spawner" type="Node2D"]
+script = ExtResource("1_rof5w")
+
+[node name="spawn_point" type="Marker2D" parent="."]
+position = Vector2(-18, 180)
+gizmo_extents = 25.0
