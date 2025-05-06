@@ -12,11 +12,10 @@ signal start_pressed()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	await get_tree().create_timer(0.7).timeout
-	input_enabled = true
-
 	_set_blink_timer_properties(idle_blink_time)
 	blink_timer.start()
+	await get_tree().create_timer(0.7).timeout
+	input_enabled = true
 
 func _set_blink_timer_properties(blink_time : float) -> void:
 	blink_timer.wait_time = blink_time
@@ -28,7 +27,8 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		return
 	
-	if event.is_pressed():
+	if event.is_pressed() && input_enabled:
+		input_enabled = false
 		_set_blink_timer_properties(pressed_blink_time)
 		await get_tree().create_timer(1.0).timeout
 		start_pressed.emit()
