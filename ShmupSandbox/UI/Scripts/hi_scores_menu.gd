@@ -19,7 +19,7 @@ func populate_high_scores_screen() -> void:
 	_initialize_label_lists()
 
 	# Step 2: Sort list of high scores
-	PlayerData.sort_high_scores()
+	GameManager.sort_high_scores()
 
 	# Step 3: Resize the label lists to match the size of high scores list
 	_resize_label_lists()
@@ -46,8 +46,8 @@ func _initialize_label_lists() -> void:
 
 func _resize_label_lists() -> void:
 	## Ensure size is same as list of high scores
-	score_label_list.resize(PlayerData.player_hi_scores_dictionaries.size())
-	name_label_list.resize(PlayerData.player_hi_scores_dictionaries.size())
+	score_label_list.resize(GameManager.player_hi_scores_dictionaries.size())
+	name_label_list.resize(GameManager.player_hi_scores_dictionaries.size())
 
 
 func _sort_label_lists() -> void:
@@ -59,8 +59,8 @@ func _sort_label_lists() -> void:
 func _update_high_score_ui() -> void:
 	## Add the scores and names to the high scores screen
 	for i : int in score_label_list.size():
-		score_label_list[i].text = str(PlayerData.player_hi_scores_dictionaries[i]["score"])
-		name_label_list[i].text = PlayerData.player_hi_scores_dictionaries[i]["name"]
+		score_label_list[i].text = str(GameManager.player_hi_scores_dictionaries[i]["score"])
+		name_label_list[i].text = GameManager.player_hi_scores_dictionaries[i]["name"]
 
 
 ####

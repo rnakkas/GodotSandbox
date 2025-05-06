@@ -124,7 +124,7 @@ func _accept_letter() -> void:
 ## When this dialog becomes visible
 func _on_visibility_changed() -> void:
 	if self.visible:
-		score_label.text = str(PlayerData.player_score)
+		score_label.text = str(GameManager.player_score)
 		_reset_name_entry_letters()
 		idle_timer.start()
 

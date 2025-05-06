@@ -8,13 +8,19 @@ const main_save_path : String = "user://save_file.json"  # Path to the main save
 
 var contents_to_save : Dictionary = {
 	"test_message": "If you can read this, saving works :)",
-	"player_high_scores" : PlayerData.player_hi_scores_dictionaries
+	"player_high_scores" : GameManager.player_hi_scores_dictionaries,
+	"settings" : {
+		"game_settings" : GameManager.game_settings_dictionary,
+		"display_settings" : GameManager.display_settings_dictionary,
+		"audio_settings" : GameManager.audio_settings_dictionary
+	}
 }
 
 var loaded_data : Dictionary = {}
 
 
 func _ready() -> void:
+	save_game()
 	_load_game()
 
 

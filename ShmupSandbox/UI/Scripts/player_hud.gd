@@ -16,32 +16,32 @@ func _connect_to_signals() -> void:
 
 
 func set_score_values_on_hud() -> void:
-	score_value.text = str(PlayerData.player_score).pad_zeros(10)
-	top_score_value.text = str(PlayerData.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
+	score_value.text = str(GameManager.player_score).pad_zeros(10)
+	top_score_value.text = str(GameManager.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
 
 ####
 
 ## Signals connections
 
 func _on_player_score_updated() -> void:
-	score_value.text = str(PlayerData.player_score).pad_zeros(10)
+	score_value.text = str(GameManager.player_score).pad_zeros(10)
 
 	## If cuurent score is higher than top, show current score in Top
-	if PlayerData.player_score > PlayerData.player_hi_scores_dictionaries[0]["score"]:
-		top_score_value.text = str(PlayerData.player_score).pad_zeros(10)
+	if GameManager.player_score > GameManager.player_hi_scores_dictionaries[0]["score"]:
+		top_score_value.text = str(GameManager.player_score).pad_zeros(10)
 	## If current score is lower than top, show Top
-	elif PlayerData.player_score <= PlayerData.player_hi_scores_dictionaries[0]["score"]:
-		top_score_value.text = str(PlayerData.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
+	elif GameManager.player_score <= GameManager.player_hi_scores_dictionaries[0]["score"]:
+		top_score_value.text = str(GameManager.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
 
 
 func _on_player_lives_updated() -> void:
-	if PlayerData.player_lives >= 0:
-		player_lives_value.text = "x " + str(PlayerData.player_lives)
+	if GameManager.player_lives >= 0:
+		player_lives_value.text = "x " + str(GameManager.player_lives)
 	
 
 func _on_player_credits_updated() -> void:
-	if PlayerData.player_credits >= 0:
-		credits_value.text = str(PlayerData.player_credits)
+	if GameManager.player_credits >= 0:
+		credits_value.text = str(GameManager.player_credits)
 
 
 func _on_visibility_changed() -> void:

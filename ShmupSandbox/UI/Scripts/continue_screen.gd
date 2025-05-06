@@ -128,7 +128,7 @@ func _set_continue_dialog_values() -> void:
 	score_penalty_value.text = str(
 		int(
 			round(
-				PlayerData.player_score * (1.0 - PlayerData.score_penallty_multiplier)
+				GameManager.player_score * (1.0 - GameManager.score_penallty_multiplier)
 				)
 		)
 	)

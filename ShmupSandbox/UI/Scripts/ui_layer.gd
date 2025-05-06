@@ -148,10 +148,10 @@ func _on_confirm_dialog_no_button_pressed() -> void:
 
 ## Continue screen 
 func _on_player_lives_depleted() -> void:
-	if PlayerData.player_lives < 0:
-		if PlayerData.player_credits > 0:
+	if GameManager.player_lives < 0:
+		if GameManager.player_credits > 0:
 			_toggle_ui(continue_screen)
-		elif PlayerData.player_credits <= 0:
+		elif GameManager.player_credits <= 0:
 			_handle_name_entry_or_game_over_logic()
 
 
@@ -162,14 +162,14 @@ func _on_continue_screen_no_button_pressed() -> void:
 ## Helper func to check for player current score vs top 10 hi scores
 func _is_player_score_in_top_ten() -> bool:
 	var is_in_top_ten : bool
-	var hi_score_list_size : int = PlayerData.player_hi_scores_dictionaries.size()
+	var hi_score_list_size : int = GameManager.player_hi_scores_dictionaries.size()
 
 	for score_entry : int in range(hi_score_list_size):
-		if PlayerData.player_score > PlayerData.player_hi_scores_dictionaries[score_entry]["score"]:
+		if GameManager.player_score > GameManager.player_hi_scores_dictionaries[score_entry]["score"]:
 			is_in_top_ten = true
 			break;
 	
-	if PlayerData.player_score <= PlayerData.player_hi_scores_dictionaries[hi_score_list_size-1]["score"] :
+	if GameManager.player_score <= GameManager.player_hi_scores_dictionaries[hi_score_list_size-1]["score"] :
 		is_in_top_ten = false
 	
 	return is_in_top_ten
@@ -187,8 +187,8 @@ func _handle_name_entry_or_game_over_logic() -> void:
 
 func _on_continue_screen_yes_button_pressed() -> void:
 	_toggle_ui(continue_screen)
-	player_hud.player_lives_value.text = "x " + str(PlayerData._player_max_lives)
-	player_hud.score_value.text = str(PlayerData.player_score).pad_zeros(8)
+	player_hud.player_lives_value.text = "x " + str(GameManager._player_max_lives)
+	player_hud.score_value.text = str(GameManager.player_score).pad_zeros(8)
 
 ####
 
