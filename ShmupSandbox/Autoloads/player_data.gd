@@ -1,7 +1,13 @@
 extends Node
 
-const _player_max_lives : int = 0
-const _player_max_credits : int = 1
+const _player_max_lives : int = 3
+const _player_max_credits : int = 2
+const life_extend_score_1 : int = 100000
+const life_extend_score_2 : int = 250000
+const score_penallty_multiplier : float = 0.9
+
+var life_extend_1_reached : bool
+var life_extend_2_reached : bool
 
 var player_lives : int
 var player_credits : int
@@ -9,8 +15,6 @@ var player_credits : int
 var player_score: int
 
 var enemies_killed: int
-
-const score_penallty_multiplier : float = 0.9
 
 ## The default high score list when there is no save data
 var player_hi_scores_dictionaries : Array[Dictionary] = [
@@ -34,6 +38,7 @@ func _ready() -> void:
 
 ## Helper funcs
 
+## Connect to global signals
 func _connect_to_signals() -> void:
 	SignalsBus.score_increased.connect(_on_update_current_score)
 	SignalsBus.continue_game_player_respawn.connect(_on_continue_refresh_player_data)
@@ -42,6 +47,7 @@ func _connect_to_signals() -> void:
 	SignalsBus.player_hi_score_name_entered.connect(_on_player_hi_score_name_entered)
 
 
+## Sorting the high scores from highest to lowest
 func sort_high_scores() -> void:
 	## Sort the high scores dictionaries by score
 	player_hi_scores_dictionaries.sort_custom(func(a, b):
@@ -56,22 +62,21 @@ func sort_high_scores() -> void:
 	player_hi_scores_dictionaries = player_hi_scores_dictionaries.slice(0,10) # Only keep the top 10 scores
 
 
+## Reset all the of player data for new game
 func reset_all_player_data_on_start() -> void:
-	## Reset all the of player data for new game
 	player_score = 0
 	enemies_killed = 0
 	player_lives = _player_max_lives
 	player_credits = _player_max_credits
+	life_extend_1_reached = false
+	life_extend_2_reached = false
 
 	SignalsBus.player_score_updated_event()
 	SignalsBus.player_lives_updated_event()
 	SignalsBus.player_credits_updated_event()
-	
-
-# func set_player_lives_to_max() -> void:
-# 	player_lives = _player_max_lives
 
 
+## Get the high scores list from save game data
 func _update_high_scores_from_save_data() -> void:
 	player_hi_scores_dictionaries.clear()
 	for entry in SaveManager.loaded_data["player_high_scores"]:
@@ -84,6 +89,7 @@ func _update_high_scores_from_save_data() -> void:
 			push_error("invalid score entry detected")
 
 
+## Save the player's high scores to save file
 func _save_player_hi_scores() -> void:
 	SaveManager.contents_to_save["player_high_scores"] = player_hi_scores_dictionaries # Update with latest score data
 	SaveManager.save_game()
@@ -95,14 +101,27 @@ func _save_player_hi_scores() -> void:
 
 func _on_update_current_score(score : int) -> void:
 	player_score += score
+	_handle_life_extension()
+
 	SignalsBus.player_score_updated_event()
+
+## Helper func to extend life on reaching extend scores
+func _handle_life_extension() -> void:
+	if player_score >= life_extend_score_1 && !life_extend_1_reached:
+		life_extend_1_reached = true
+		player_lives += 1
+		
+	if player_score >= life_extend_score_2 && !life_extend_2_reached:
+		life_extend_2_reached = true
+		player_lives += 1
+
+	SignalsBus.player_lives_updated_event()
 
 
 func _on_continue_refresh_player_data() -> void:
 	player_score = int(round(player_score * score_penallty_multiplier))
 	player_lives = _player_max_lives
 	player_credits -= 1
-	print(player_credits)
 
 	SignalsBus.player_score_updated_event()
 	SignalsBus.player_lives_updated_event()
@@ -110,6 +129,8 @@ func _on_continue_refresh_player_data() -> void:
 
 
 func _on_player_death() -> void:
+	# Extend life before decreasing life on death if the score is higher than extension threshold
+	_handle_life_extension() 
 	player_lives -= 1
 	SignalsBus.player_lives_updated_event()
 
