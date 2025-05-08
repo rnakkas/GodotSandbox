@@ -15,7 +15,7 @@ grow_vertical = 2
 script = ExtResource("1_sf477")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-self_modulate = Color(0.886, 0.294, 0.075, 0.884)
+self_modulate = Color(0.886275, 0.294118, 0.0745098, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

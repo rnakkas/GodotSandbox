@@ -5,7 +5,7 @@ extends Node
 ## TODO: These will be changed via the options menus
 ## Game settings
 var _player_max_lives : int = 3
-var _player_max_credits : int = 2
+var _player_max_credits : int = 3
 var life_extend_score_1 : int = 100000
 var life_extend_score_2 : int = 250000
 const score_penallty_multiplier : float = 0.9
@@ -99,8 +99,8 @@ func sort_high_scores() -> void:
 func reset_all_player_data_on_start() -> void:
 	player_score = 0
 	enemies_killed = 0
-	player_lives = _player_max_lives
-	player_credits = _player_max_credits
+	player_lives = _player_max_lives - 1
+	player_credits = _player_max_credits - 1
 	life_extend_1_reached = false
 	life_extend_2_reached = false
 
