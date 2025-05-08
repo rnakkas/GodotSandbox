@@ -1,0 +1,123 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfb4oxvkojkrw"]
+
+[ext_resource type="Script" uid="uid://cc4cakfuy8gq1" path="res://ShmupSandbox/UI/Scripts/display_settings.gd" id="1_1adna"]
+[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_bbwi3"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ycgb6"]
+
+[node name="display_settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1adna")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.133, 0.137, 0.137, 0.702)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_ycgb6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 35
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="display_settings_label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bbwi3")
+theme_override_font_sizes/font_size = 75
+text = "Display Settings"
+horizontal_alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer_mode" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 20
+alignment = 2
+
+[node name="mode_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_mode" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 2
+theme_override_fonts/font = ExtResource("1_bbwi3")
+theme_override_font_sizes/font_size = 35
+text = "Mode"
+horizontal_alignment = 2
+
+[node name="mode_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_mode" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bbwi3")
+theme_override_font_sizes/font_size = 35
+text = "Fullscreen"
+horizontal_alignment = 2
+
+[node name="HBoxContainer_credits" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(95, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 20
+alignment = 2
+
+[node name="credits_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_credits" groups=["display_settings_ui_nodes"]]
+layout_mode = 2
+focus_mode = 2
+theme_override_fonts/font = ExtResource("1_bbwi3")
+theme_override_font_sizes/font_size = 35
+text = "CRT Filter"
+horizontal_alignment = 2
+
+[node name="credits_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_credits" groups=["display_settings_ui_nodes"]]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bbwi3")
+theme_override_font_sizes/font_size = 35
+text = "Off"
+horizontal_alignment = 2
+
+[node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer_back" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 2
+
+[node name="back_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_back" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("1_bbwi3")
+theme_override_font_sizes/font_size = 35
+action_mode = 0
+text = "Back"
+flat = true

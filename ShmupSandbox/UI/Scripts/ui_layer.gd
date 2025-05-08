@@ -3,6 +3,9 @@ class_name UiLayer extends CanvasLayer
 @onready var start_screen : StartScreen = %start_screen
 @onready var main_menu : MainMenu = %main_menu
 @onready var options_menu : OptionsMenu = %options_menu
+@onready var game_settings : GameSettings = %game_settings
+@onready var display_settings : DisplaySettings = %display_settings
+@onready var audio_settings : AudioSettings = %audio_settings
 @onready var pause_menu : PauseMenu = %pause_menu
 @onready var player_hud : PlayerHud = %player_hud
 @onready var confirm_dialog : ConfirmDialog = %confirm_dialog
@@ -96,6 +99,17 @@ func _on_options_menu_back_button_pressed() -> void:
 		_toggle_ui(options_menu)
 		_toggle_ui(pause_menu)
 
+func _on_options_menu_game_settings_button_pressed() -> void:
+	_toggle_ui(options_menu)
+	_toggle_ui(game_settings)
+
+func _on_options_menu_display_settings_button_pressed() -> void:
+	_toggle_ui(options_menu)
+	_toggle_ui(display_settings)
+
+func _on_options_menu_audio_settings_button_pressed() -> void:
+	_toggle_ui(options_menu)
+	_toggle_ui(audio_settings)
 
 ####
 

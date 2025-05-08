@@ -1,0 +1,175 @@
+[gd_scene load_steps=7 format=3 uid="uid://b0td5yoxb431c"]
+
+[ext_resource type="Script" uid="uid://c43ig0gykkvm8" path="res://ShmupSandbox/UI/Scripts/audio_settings.gd" id="1_8stjm"]
+[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_elnbm"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ycgb6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8stjm"]
+bg_color = Color(0.133333, 0.137255, 0.137255, 1)
+skew = Vector2(0.4, 0)
+border_width_top = 5
+border_width_bottom = 5
+border_color = Color(0.133333, 0.137255, 0.137255, 1)
+corner_detail = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wywn7"]
+bg_color = Color(0.941176, 0.964706, 0.941176, 1)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8yk6"]
+bg_color = Color(1, 0.639216, 0.121569, 1)
+skew = Vector2(0.4, 0)
+corner_detail = 2
+
+[node name="audio_settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8stjm")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.133, 0.137, 0.137, 0.702)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_ycgb6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 35
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="audio_settings_label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_elnbm")
+theme_override_font_sizes/font_size = 75
+text = "Audio Settings"
+horizontal_alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer_master" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 25
+alignment = 2
+
+[node name="master_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_master" groups=["audio_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 2
+theme_override_fonts/font = ExtResource("1_elnbm")
+theme_override_font_sizes/font_size = 35
+text = "Master"
+horizontal_alignment = 2
+
+[node name="master_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_master" groups=["audio_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/grabber_offset = 5000
+theme_override_styles/slider = SubResource("StyleBoxFlat_8stjm")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_wywn7")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_w8yk6")
+max_value = 10.0
+value = 5.0
+rounded = true
+
+[node name="HBoxContainer_sound" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 25
+alignment = 2
+
+[node name="sound_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_sound" groups=["audio_settings_ui_nodes"]]
+layout_mode = 2
+focus_mode = 2
+theme_override_fonts/font = ExtResource("1_elnbm")
+theme_override_font_sizes/font_size = 35
+text = "Sound"
+horizontal_alignment = 2
+
+[node name="sound_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_sound" groups=["audio_settings_ui_nodes"]]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/grabber_offset = 5000
+theme_override_styles/slider = SubResource("StyleBoxFlat_8stjm")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_wywn7")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_w8yk6")
+max_value = 10.0
+value = 5.0
+rounded = true
+
+[node name="HBoxContainer_music" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 25
+alignment = 2
+
+[node name="music_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_music" groups=["audio_settings_ui_nodes"]]
+layout_mode = 2
+focus_mode = 2
+theme_override_fonts/font = ExtResource("1_elnbm")
+theme_override_font_sizes/font_size = 35
+text = "Music"
+horizontal_alignment = 2
+
+[node name="music_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_music" groups=["audio_settings_ui_nodes"]]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/grabber_offset = 5000
+theme_override_styles/slider = SubResource("StyleBoxFlat_8stjm")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_wywn7")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_w8yk6")
+max_value = 10.0
+value = 5.0
+rounded = true
+
+[node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer_back" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 2
+
+[node name="back_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_back" groups=["audio_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("1_elnbm")
+theme_override_font_sizes/font_size = 35
+action_mode = 0
+text = "Back"
+flat = true

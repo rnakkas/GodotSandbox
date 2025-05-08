@@ -1,41 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ny01qnyexpg2"]
+[gd_scene load_steps=4 format=3 uid="uid://ny01qnyexpg2"]
 
 [ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_qkcl6"]
 [ext_resource type="Script" uid="uid://cvsyjssmvhl4m" path="res://ShmupSandbox/UI/Scripts/options_menu.gd" id="1_unpda"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_unpda"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krxhe"]
-bg_color = Color(0.133333, 0.137255, 0.137255, 1)
-skew = Vector2(0.4, 0)
-border_width_top = 5
-border_width_bottom = 5
-border_color = Color(0.133333, 0.137255, 0.137255, 1)
-corner_detail = 2
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_unpda"]
-bg_color = Color(0.941176, 0.964706, 0.941176, 1)
-skew = Vector2(0.4, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ce2tu"]
-bg_color = Color(1, 0.639216, 0.121569, 1)
-skew = Vector2(0.4, 0)
-corner_detail = 2
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6upo5"]
-bg_color = Color(0.133333, 0.137255, 0.137255, 1)
-skew = Vector2(0.4, 0)
-border_width_top = 5
-border_width_bottom = 5
-border_color = Color(0.133333, 0.137255, 0.137255, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n03th"]
-bg_color = Color(0.941176, 0.964706, 0.941176, 1)
-skew = Vector2(0.4, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3i6ea"]
-bg_color = Color(1, 0.639216, 0.121569, 1)
-skew = Vector2(0.4, 0)
 
 [node name="options_menu" type="Control"]
 layout_mode = 3
@@ -63,10 +31,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 30
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 35
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -75,7 +43,7 @@ theme_override_constants/separation = 12
 [node name="options_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 75
 text = "Options"
 horizontal_alignment = 1
 
@@ -85,274 +53,48 @@ layout_mode = 2
 [node name="separator2" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer_settings_parent" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer_gameplay" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent"]
-custom_minimum_size = Vector2(190, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 20
-
-[node name="gameplay_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath(".")
-focus_neighbor_right = NodePath("../../VBoxContainer_display/display_label")
-focus_neighbor_bottom = NodePath("../HBoxContainer_gameplay/VBoxContainer_gameplay_labels/lives_label")
-focus_next = NodePath(".")
-focus_previous = NodePath(".")
-focus_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 30
-text = "Gameplay"
-horizontal_alignment = 1
-
-[node name="HBoxContainer_gameplay" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 20
-
-[node name="VBoxContainer_gameplay_labels" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay"]
-layout_mode = 2
-theme_override_constants/separation = 25
-
-[node name="lives_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_labels" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "Lives"
-
-[node name="credits_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_labels" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "Credits"
-
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay"]
-layout_mode = 2
-
-[node name="VBoxContainer_gameplay_values" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay"]
-layout_mode = 2
-theme_override_constants/separation = 25
-
-[node name="lives_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_values" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "3"
-horizontal_alignment = 1
-
-[node name="credits_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_values" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "3"
-horizontal_alignment = 1
-
-[node name="VBoxContainer_display" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent"]
-custom_minimum_size = Vector2(190, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 20
-
-[node name="display_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-focus_neighbor_left = NodePath("../../VBoxContainer_gameplay/gameplay_label")
-focus_neighbor_top = NodePath(".")
-focus_neighbor_right = NodePath("../../VBoxContainer_audio/audio_label")
-focus_neighbor_bottom = NodePath("../HBoxContainer_display/VBoxContainer_display_labels/mode_label")
-focus_next = NodePath(".")
-focus_previous = NodePath(".")
-focus_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 30
-text = "Display"
-horizontal_alignment = 1
-
-[node name="HBoxContainer_display" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 12
-
-[node name="VBoxContainer_display_labels" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display"]
-layout_mode = 2
-theme_override_constants/separation = 25
-
-[node name="mode_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_labels" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "Mode"
-
-[node name="crt_filter_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_labels" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "CRT Filter"
-
-[node name="VBoxContainer_display_values" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display"]
-layout_mode = 2
-theme_override_constants/separation = 25
-
-[node name="mode_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_values" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "Fullscreen"
-horizontal_alignment = 1
-
-[node name="crt_filter_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_values" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "Off"
-horizontal_alignment = 1
-
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent"]
-layout_mode = 2
-
-[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent"]
-layout_mode = 2
-
-[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent"]
-layout_mode = 2
-
-[node name="VBoxContainer_audio" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent"]
-custom_minimum_size = Vector2(190, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 20
-
-[node name="audio_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-focus_neighbor_left = NodePath("../../VBoxContainer_display/display_label")
-focus_neighbor_top = NodePath(".")
-focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../HBoxContainer_audio/VBoxContainer_audio_labels/master_label")
-focus_next = NodePath(".")
-focus_previous = NodePath(".")
-focus_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 30
-text = "Audio"
-horizontal_alignment = 1
-
-[node name="HBoxContainer_audio" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio"]
-layout_mode = 2
-
-[node name="VBoxContainer_audio_labels" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio"]
-layout_mode = 2
-theme_override_constants/separation = 25
-
-[node name="master_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_labels" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "Master"
-
-[node name="sound_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_labels" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "Sound"
-
-[node name="music_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_labels" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 22
-text = "Music"
-
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio"]
-layout_mode = 2
-
-[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio"]
-layout_mode = 2
-
-[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio"]
-layout_mode = 2
-
-[node name="separator4" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio"]
-layout_mode = 2
-
-[node name="VBoxContainer_audio_sliders" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio"]
-layout_mode = 2
-
-[node name="master_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/grabber_offset = 5000
-theme_override_styles/slider = SubResource("StyleBoxFlat_krxhe")
-theme_override_styles/grabber_area = SubResource("StyleBoxFlat_unpda")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ce2tu")
-max_value = 10.0
-value = 5.0
-rounded = true
-
-[node name="sound_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 50)
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_constants/grabber_offset = 5000
-theme_override_styles/slider = SubResource("StyleBoxFlat_krxhe")
-theme_override_styles/grabber_area = SubResource("StyleBoxFlat_unpda")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ce2tu")
-max_value = 10.0
-value = 5.0
-rounded = true
-
-[node name="music_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders" groups=["options_ui_nodes"]]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_constants/grabber_offset = 5000
-theme_override_styles/slider = SubResource("StyleBoxFlat_6upo5")
-theme_override_styles/grabber_area = SubResource("StyleBoxFlat_n03th")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_3i6ea")
-max_value = 10.0
-value = 5.0
-rounded = true
-
 [node name="separator3" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="01_game_settings_button" type="Button" parent="MarginContainer/VBoxContainer" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("1_qkcl6")
+theme_override_font_sizes/font_size = 35
+text = "Game Settings"
+flat = true
+
+[node name="02_display_settings_button" type="Button" parent="MarginContainer/VBoxContainer" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("1_qkcl6")
+theme_override_font_sizes/font_size = 35
+text = "Display Settings"
+flat = true
+
+[node name="03_audio_settings_button" type="Button" parent="MarginContainer/VBoxContainer" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("1_qkcl6")
+theme_override_font_sizes/font_size = 35
+text = "Audio Settings"
+flat = true
 
 [node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="separator5" type="Control" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
 [node name="HBoxContainer_back" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 8
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_back"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="back_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_back/VBoxContainer2" groups=["options_ui_nodes"]]
+[node name="04_back_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_back/VBoxContainer2" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -363,9 +105,3 @@ text = "Back"
 flat = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/master_volume_slider" to="." method="_on_screen_shake_amount_slider_focus_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/master_volume_slider" to="." method="_on_screen_shake_amount_slider_mouse_entered"]
-[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/sound_volume_slider" to="." method="_on_sound_volume_slider_focus_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/sound_volume_slider" to="." method="_on_sound_volume_slider_mouse_entered"]
-[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/music_volume_slider" to="." method="_on_music_volume_slider_focus_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/music_volume_slider" to="." method="_on_music_volume_slider_mouse_entered"]
