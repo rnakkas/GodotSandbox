@@ -94,8 +94,16 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 20
 
-[node name="gameplay_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay"]
+[node name="gameplay_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../VBoxContainer_display/display_label")
+focus_neighbor_bottom = NodePath("../HBoxContainer_gameplay/VBoxContainer_gameplay_labels/lives_label")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 30
 text = "Gameplay"
@@ -110,13 +118,16 @@ theme_override_constants/separation = 20
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="lives_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_labels"]
+[node name="lives_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_labels" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 22
 text = "Lives"
 
-[node name="credits_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_labels"]
+[node name="credits_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_labels" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 22
@@ -129,14 +140,16 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="lives_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_values"]
+[node name="lives_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_values" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 22
 text = "3"
 horizontal_alignment = 1
 
-[node name="credits_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_values"]
+[node name="credits_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_gameplay/HBoxContainer_gameplay/VBoxContainer_gameplay_values" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 22
@@ -149,8 +162,16 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 20
 
-[node name="display_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display"]
+[node name="display_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxContainer_gameplay/gameplay_label")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../VBoxContainer_audio/audio_label")
+focus_neighbor_bottom = NodePath("../HBoxContainer_display/VBoxContainer_display_labels/mode_label")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 30
 text = "Display"
@@ -165,13 +186,15 @@ theme_override_constants/separation = 12
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="mode_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_labels"]
+[node name="mode_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_labels" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 22
 text = "Mode"
 
-[node name="crt_filter_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_labels"]
+[node name="crt_filter_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_labels" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 22
@@ -181,7 +204,8 @@ text = "CRT Filter"
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="mode_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_values"]
+[node name="mode_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_values" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
@@ -189,7 +213,8 @@ theme_override_font_sizes/font_size = 22
 text = "Fullscreen"
 horizontal_alignment = 1
 
-[node name="crt_filter_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_values"]
+[node name="crt_filter_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_display/HBoxContainer_display/VBoxContainer_display_values" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
@@ -212,8 +237,16 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 20
 
-[node name="audio_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio"]
+[node name="audio_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio" groups=["options_ui_nodes"]]
+unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxContainer_display/display_label")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../HBoxContainer_audio/VBoxContainer_audio_labels/master_label")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 30
 text = "Audio"
@@ -226,30 +259,27 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="master_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_labels"]
+[node name="master_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_labels" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 22
 text = "Master"
-horizontal_alignment = 1
 
-[node name="sound_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_labels"]
+[node name="sound_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_labels" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 22
 text = "Sound"
-horizontal_alignment = 1
 
-[node name="music_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_labels"]
+[node name="music_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_labels" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qkcl6")
 theme_override_font_sizes/font_size = 22
 text = "Music"
-horizontal_alignment = 1
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio"]
 layout_mode = 2
@@ -266,7 +296,7 @@ layout_mode = 2
 [node name="VBoxContainer_audio_sliders" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio"]
 layout_mode = 2
 
-[node name="screen_shake_amount_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders"]
+[node name="master_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
@@ -279,7 +309,7 @@ max_value = 10.0
 value = 5.0
 rounded = true
 
-[node name="sound_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders"]
+[node name="sound_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
@@ -292,7 +322,7 @@ max_value = 10.0
 value = 5.0
 rounded = true
 
-[node name="music_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders"]
+[node name="music_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
@@ -322,7 +352,7 @@ size_flags_horizontal = 4
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="back_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_back/VBoxContainer2"]
+[node name="back_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_back/VBoxContainer2" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -333,12 +363,9 @@ text = "Back"
 flat = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/screen_shake_amount_slider" to="." method="_on_screen_shake_amount_slider_focus_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/screen_shake_amount_slider" to="." method="_on_screen_shake_amount_slider_mouse_entered"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/master_volume_slider" to="." method="_on_screen_shake_amount_slider_focus_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/master_volume_slider" to="." method="_on_screen_shake_amount_slider_mouse_entered"]
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/sound_volume_slider" to="." method="_on_sound_volume_slider_focus_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/sound_volume_slider" to="." method="_on_sound_volume_slider_mouse_entered"]
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/music_volume_slider" to="." method="_on_music_volume_slider_focus_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer_settings_parent/VBoxContainer_audio/HBoxContainer_audio/VBoxContainer_audio_sliders/music_volume_slider" to="." method="_on_music_volume_slider_mouse_entered"]
-[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer_back/VBoxContainer2/back_button" to="." method="_on_back_button_focus_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer_back/VBoxContainer2/back_button" to="." method="_on_back_button_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer_back/VBoxContainer2/back_button" to="." method="_on_back_button_pressed"]
