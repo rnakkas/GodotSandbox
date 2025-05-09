@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://d4ccnuy1t5mki"]
+[gd_scene load_steps=7 format=3 uid="uid://d4ccnuy1t5mki"]
 
 [ext_resource type="Script" uid="uid://c0kdhjvb8mxvo" path="res://ShmupSandbox/UI/Scripts/game_settings.gd" id="1_4inky"]
 [ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_qbri3"]
+[ext_resource type="Texture2D" uid="uid://ck0in7gybh8ba" path="res://ShmupSandbox/Assets/Icons/ui_arrow_normal-v1.png" id="3_4mwjo"]
+[ext_resource type="Texture2D" uid="uid://ctup0ogyxav55" path="res://ShmupSandbox/Assets/Icons/ui_arrow_pressed-v1.png" id="4_vj7cy"]
+[ext_resource type="Texture2D" uid="uid://cxhn75t4av8pe" path="res://ShmupSandbox/Assets/Icons/ui_arrow_hover-v1.png" id="5_h0p24"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ycgb6"]
 
@@ -54,22 +57,68 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="separator3" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="HBoxContainer_lives" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(95, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 theme_override_constants/separation = 20
-alignment = 2
+alignment = 1
 
 [node name="lives_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_lives" groups=["game_settings_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../HBoxContainer_credits/credits_label")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
 focus_mode = 2
 theme_override_fonts/font = ExtResource("1_qbri3")
 theme_override_font_sizes/font_size = 35
 text = "Lives"
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives"]
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives"]
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives"]
+layout_mode = 2
+
+[node name="separator4" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_lives"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/VBoxContainer"]
+layout_mode = 2
+
+[node name="lives_left_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/VBoxContainer" groups=["game_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+texture_normal = ExtResource("3_4mwjo")
+texture_pressed = ExtResource("4_vj7cy")
+texture_hover = ExtResource("5_h0p24")
+texture_focused = ExtResource("5_h0p24")
+flip_h = true
 
 [node name="lives_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_lives" groups=["game_settings_ui_nodes"]]
 unique_name_in_owner = true
@@ -80,21 +129,90 @@ theme_override_font_sizes/font_size = 35
 text = "3"
 horizontal_alignment = 1
 
-[node name="HBoxContainer_credits" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(95, 0)
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_lives"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/VBoxContainer2"]
+layout_mode = 2
+
+[node name="lives_right_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/VBoxContainer2" groups=["game_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+texture_normal = ExtResource("3_4mwjo")
+texture_pressed = ExtResource("4_vj7cy")
+texture_hover = ExtResource("5_h0p24")
+texture_focused = ExtResource("5_h0p24")
+
+[node name="HBoxContainer_credits" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 20
-alignment = 2
+alignment = 1
 
 [node name="credits_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_credits" groups=["game_settings_ui_nodes"]]
+unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../HBoxContainer_lives/lives_label")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../back_button")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
 focus_mode = 2
 theme_override_fonts/font = ExtResource("1_qbri3")
 theme_override_font_sizes/font_size = 35
 text = "Credits"
 
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_credits"]
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_credits"]
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_credits"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_credits"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/VBoxContainer3"]
+layout_mode = 2
+
+[node name="credits_left_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/VBoxContainer3" groups=["game_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+texture_normal = ExtResource("3_4mwjo")
+texture_pressed = ExtResource("4_vj7cy")
+texture_hover = ExtResource("5_h0p24")
+texture_focused = ExtResource("5_h0p24")
+flip_h = true
+
 [node name="credits_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_credits" groups=["game_settings_ui_nodes"]]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qbri3")
@@ -102,20 +220,48 @@ theme_override_font_sizes/font_size = 35
 text = "3"
 horizontal_alignment = 1
 
+[node name="VBoxContainer4" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_credits"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/VBoxContainer4"]
+layout_mode = 2
+
+[node name="credits_right_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/VBoxContainer4" groups=["game_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+texture_normal = ExtResource("3_4mwjo")
+texture_pressed = ExtResource("4_vj7cy")
+texture_hover = ExtResource("5_h0p24")
+texture_focused = ExtResource("5_h0p24")
+
 [node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer_back" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-alignment = 2
-
-[node name="back_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_back" groups=["game_settings_ui_nodes"]]
+[node name="back_button" type="Button" parent="MarginContainer/VBoxContainer" groups=["game_settings_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../HBoxContainer_credits/credits_label")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
 theme_override_fonts/font = ExtResource("1_qbri3")
 theme_override_font_sizes/font_size = 35
 action_mode = 0
 text = "Back"
 flat = true
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

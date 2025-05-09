@@ -11,6 +11,14 @@ var color_yellow : Color = "#ffa31f"
 var color_red : Color = "#e24b13"
 var color_transparent : Color = Color(0, 0 , 0, 0)
 
+## UI group names
+var options_ui_nodes : String = "options_ui_nodes"
+var game_settings_ui_nodes : String = "game_settings_ui_nodes"
+
+## Control node signal names
+var signal_focus_entered : String = "focus_entered"
+var signal_mouse_entered : String = "mouse_entered"
+
 
 func highlight_selected_element(ui_elements_list : Array[Control], selected_element : Control) -> void:
 	for element:int in range(ui_elements_list.size()):
