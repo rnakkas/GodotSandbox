@@ -2,22 +2,21 @@ extends Node
 
 #### #### #### #### #### #### #### ####
 
-## TODO: These will be changed via the options menus
-## Game settings
-var _player_max_lives : int = 3
-var _player_max_credits : int = 3
 var life_extend_score_1 : int = 100000
 var life_extend_score_2 : int = 250000
 const score_penallty_multiplier : float = 0.9
 
+## TODO: These will be changed via the options menus
+## Default Game settings
+var _player_max_lives : int = 3
+var _player_max_credits : int = 3
+
 var game_settings_dictionary : Dictionary = {
 	"player_max_lives" : _player_max_lives,
-	"player_max_credits" : _player_max_credits,
-	"life_extend_score_1" : life_extend_score_1,
-	"life_extend_score_2" : life_extend_score_2
+	"player_max_credits" : _player_max_credits
 }
 
-## Display settings
+## Default Display settings
 var window_mode : int = 3 # Fullscreen
 var crt_filter : bool = false
 
@@ -26,7 +25,7 @@ var display_settings_dictionary : Dictionary = {
 	"crt_filter" : crt_filter
 }
 
-## Audio settings
+## Default Audio settings
 var master_volume : int = 100
 var sound_volume : int = 75
 var music_volume : int = 75

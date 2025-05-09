@@ -60,5 +60,6 @@ func _remove_highlight_from_ui_element(ui_element : Control) -> void:
 func arrow_buttons_press_animation(button : TextureButton) -> void:
 	button.toggle_mode = true 
 	button.button_pressed = true
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.13).timeout
 	button.toggle_mode = false 
+	button.button_pressed = false

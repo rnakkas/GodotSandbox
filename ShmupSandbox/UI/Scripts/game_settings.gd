@@ -5,6 +5,7 @@ class_name GameSettings extends Control
 @onready var lives_label : Label = %lives_label
 @onready var lives_value : Label = %lives_value
 @onready var credits_label : Label = %credits_label
+@onready var credits_value : Label = %credits_value
 @onready var lives_left_button : TextureButton = %lives_left_button
 @onready var lives_right_button : TextureButton = %lives_right_button
 @onready var credits_left_button : TextureButton = %credits_left_button
@@ -17,6 +18,12 @@ var allowed_values_credits : Array[int] = [1, 3, 5, 7, 9]
 
 signal back_button_pressed()
 
+## TODO: 
+	# - make the left or right arrow disappear if min or max values are reached
+	# - make the left or right arrow appear if not at min or max values
+	# - hook up to save game data
+	# - on ready, grab settings from save game data, if not available use default settings
+	# - on back button pressed, save settings to save file
 
 func _ready() -> void:
 	_create_ui_elements_list()
@@ -25,29 +32,88 @@ func _ready() -> void:
 func _on_visibility_changed() -> void:
 	if self.visible:
 		lives_label.grab_focus()
+		if lives_value.text.to_int() == allowed_values_lives[0]:
+			lives_left_button.visible = false
+		if lives_value.text.to_int() == allowed_values_lives[allowed_values_lives.size()-1]:
+			lives_right_button.visible = false
+		if credits_value.text.to_int() == allowed_values_credits[0]:
+			credits_left_button.visible = false
+		if credits_value.text.to_int() == allowed_values_credits[allowed_values_credits.size()-1]:
+			credits_right_button.visible = false
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("move_left") || event.is_action_pressed("ui_left"):
+		## Decrease lives
 		if lives_label.has_focus():
-			print("decrease lives")
-			_toggle_arrow_buttons(lives_left_button)
+			await UiUtility.arrow_buttons_press_animation(lives_left_button)
+			_update_value(lives_value, allowed_values_lives, -1)
 
+		## Decrease credits
 		if credits_label.has_focus():
-			print("decrease credits")
-			_toggle_arrow_buttons(credits_left_button)
+			await UiUtility.arrow_buttons_press_animation(credits_left_button)
+			_update_value(credits_value, allowed_values_credits, -1)
 			
 	if event.is_action_pressed("move_right") || event.is_action_pressed("ui_right"):
+		## Increase lives
 		if lives_label.has_focus():
-			print("increase lives")
-			_toggle_arrow_buttons(lives_right_button)
+			await UiUtility.arrow_buttons_press_animation(lives_right_button)
+			_update_value(lives_value, allowed_values_lives, 1)
 
+		## Increase credits
 		if credits_label.has_focus():
-			print("increase credits")
-			_toggle_arrow_buttons(credits_right_button)
+			await UiUtility.arrow_buttons_press_animation(credits_right_button)
+			_update_value(credits_value, allowed_values_credits, 1)
+
+
+####
+
+## Signal connections
+func _on_element_focused() -> void:
+	for element in ui_elements_list:
+		if element.has_focus():
+			UiUtility.highlight_selected_element(ui_elements_list, element)
+
+func _on_element_focused_with_mouse(node : Control) -> void:
+	if node == lives_left_button || node == lives_right_button || node == lives_value_hbox:
+		lives_label.grab_focus()
+	elif node == credits_left_button || node == credits_right_button || node == credits_value_hbox:
+		credits_label.grab_focus()
+	else:
+		node.grab_focus()
+
+func _on_button_pressed(node: Control) -> void:
+	match node:
+		back_button:
+			await UiUtility.selected_button_element_press_animation(node)
+			back_button_pressed.emit()
+		
+		lives_left_button:
+			lives_label.grab_focus()
+			await UiUtility.arrow_buttons_press_animation(lives_left_button)
+			_update_value(lives_value, allowed_values_lives, -1)
+		
+		lives_right_button:
+			lives_label.grab_focus()
+			await UiUtility.arrow_buttons_press_animation(lives_right_button)
+			_update_value(lives_value, allowed_values_lives, 1)
+		
+		credits_left_button:
+			credits_label.grab_focus()
+			await UiUtility.arrow_buttons_press_animation(credits_left_button)
+			_update_value(credits_value, allowed_values_credits, -1)
+		
+		credits_right_button:
+			credits_label.grab_focus()
+			await UiUtility.arrow_buttons_press_animation(credits_right_button)
+			_update_value(credits_value, allowed_values_credits, 1)
+
+		_:
+			push_error("Unhandled button pressed: ", node.name)
+
+####
 
 ## Helper funcs
-
 func _create_ui_elements_list() -> void:
 	for node : Control in get_tree().get_nodes_in_group(UiUtility.game_settings_ui_nodes):
 		ui_elements_list.append(node)
@@ -62,59 +128,14 @@ func _connect_to_group_signals(node : Control) -> void:
 	if node is Button || node is TextureButton:
 		node.pressed.connect(_on_button_pressed.bind(node))
 
-func _on_element_focused() -> void:
-	for element in ui_elements_list:
-		if element.has_focus():
-			UiUtility.highlight_selected_element(ui_elements_list, element)
+func _update_value(value_to_change : Label, allowed_values : Array[int], direction : int):
+	var current_value : int = value_to_change.text.to_int()
+	var index : int = allowed_values.find(current_value)
 
-func _on_element_focused_with_mouse(node : Control) -> void:
-	if node == lives_left_button || node == lives_right_button || node == lives_value_hbox:
-		lives_label.grab_focus()
-	elif node == credits_left_button || node == credits_right_button || node == credits_value_hbox:
-		credits_label.grab_focus()
-	else:
-		node.grab_focus()
-
-
-func _on_button_pressed(node: Control) -> void:
-	match node:
-		back_button:
-			await UiUtility.selected_button_element_press_animation(node)
-			back_button_pressed.emit()
-		
-		lives_left_button:
-			await UiUtility.arrow_buttons_press_animation(lives_left_button)
-			print("clicked: decrease lives")
-			lives_label.grab_focus()
-		
-		lives_right_button:
-			await UiUtility.arrow_buttons_press_animation(lives_right_button)
-			print("clicked: increase life")
-			lives_label.grab_focus()
-		
-		credits_left_button:
-			await UiUtility.arrow_buttons_press_animation(credits_left_button)
-			print("clicked: decrease credits")
-			credits_label.grab_focus()
-		
-		credits_right_button:
-			await UiUtility.arrow_buttons_press_animation(credits_right_button)
-			print("clicked: increase credits")
-			credits_label.grab_focus()
-
-		_:
-			push_error("Unhandled button pressed: ", node.name)
-
-
-func _toggle_arrow_buttons(button : TextureButton) -> void:
-	button.toggle_mode = true 
-	button.button_pressed = true
-	await get_tree().create_timer(0.2).timeout
-	button.toggle_mode = false 
-
-##TODO:
-func _decrease_lives_value() -> void:
-	for value : int in range(allowed_values_lives.size()):
-		if lives_value.text == str(allowed_values_lives[value]):
-			value = (value + 1)%allowed_values_lives.size()
-			lives_value.text = str(allowed_values_lives[value])
+	if index == -1:
+		push_warning("invalid value, not in allowed_values list: ", str(current_value))
+		return
+	
+	var new_index : int = index + direction
+	if new_index >= 0 and new_index < allowed_values.size():
+		value_to_change.text = str(allowed_values[new_index])
