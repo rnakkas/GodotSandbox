@@ -94,18 +94,24 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_lives"]
+[node name="HBoxContainer_lives_value" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_lives" groups=["game_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/HBoxContainer_lives_value"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/VBoxContainer"]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/HBoxContainer_lives_value/VBoxContainer"]
 layout_mode = 2
 
-[node name="lives_left_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/VBoxContainer" groups=["game_settings_ui_nodes"]]
+[node name="lives_left_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/HBoxContainer_lives_value/VBoxContainer" groups=["game_settings_ui_nodes"]]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 12)
 layout_mode = 2
 size_flags_vertical = 4
 focus_neighbor_left = NodePath(".")
@@ -114,13 +120,13 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
+action_mode = 0
 texture_normal = ExtResource("3_4mwjo")
 texture_pressed = ExtResource("4_vj7cy")
 texture_hover = ExtResource("5_h0p24")
-texture_focused = ExtResource("5_h0p24")
 flip_h = true
 
-[node name="lives_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_lives" groups=["game_settings_ui_nodes"]]
+[node name="lives_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/HBoxContainer_lives_value" groups=["game_settings_ui_nodes"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
@@ -129,18 +135,19 @@ theme_override_font_sizes/font_size = 35
 text = "3"
 horizontal_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_lives"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/HBoxContainer_lives_value"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/VBoxContainer2"]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/HBoxContainer_lives_value/VBoxContainer2"]
 layout_mode = 2
 
-[node name="lives_right_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/VBoxContainer2" groups=["game_settings_ui_nodes"]]
+[node name="lives_right_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_lives/HBoxContainer_lives_value/VBoxContainer2" groups=["game_settings_ui_nodes"]]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 12)
 layout_mode = 2
 size_flags_vertical = 4
 focus_neighbor_left = NodePath(".")
@@ -185,18 +192,24 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_credits"]
+[node name="HBoxContainer_credits_value" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_credits" groups=["game_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/HBoxContainer_credits_value"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/VBoxContainer3"]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/HBoxContainer_credits_value/VBoxContainer3"]
 layout_mode = 2
 
-[node name="credits_left_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/VBoxContainer3" groups=["game_settings_ui_nodes"]]
+[node name="credits_left_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/HBoxContainer_credits_value/VBoxContainer3" groups=["game_settings_ui_nodes"]]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 12)
 layout_mode = 2
 size_flags_vertical = 4
 focus_neighbor_left = NodePath(".")
@@ -211,7 +224,7 @@ texture_hover = ExtResource("5_h0p24")
 texture_focused = ExtResource("5_h0p24")
 flip_h = true
 
-[node name="credits_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_credits" groups=["game_settings_ui_nodes"]]
+[node name="credits_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/HBoxContainer_credits_value" groups=["game_settings_ui_nodes"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
@@ -220,18 +233,19 @@ theme_override_font_sizes/font_size = 35
 text = "3"
 horizontal_alignment = 1
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_credits"]
+[node name="VBoxContainer4" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/HBoxContainer_credits_value"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/VBoxContainer4"]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/HBoxContainer_credits_value/VBoxContainer4"]
 layout_mode = 2
 
-[node name="credits_right_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/VBoxContainer4" groups=["game_settings_ui_nodes"]]
+[node name="credits_right_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_credits/HBoxContainer_credits_value/VBoxContainer4" groups=["game_settings_ui_nodes"]]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 12)
 layout_mode = 2
 size_flags_vertical = 4
 focus_neighbor_left = NodePath(".")

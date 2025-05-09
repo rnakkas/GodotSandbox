@@ -35,7 +35,6 @@ func selected_button_element_press_animation(selected_element : Button) -> void:
 	selected_element.focus_mode = Control.FOCUS_ALL
 
 
-## Private helper funcs
 func _highlight_ui_elment(ui_element : Control) -> void:
 	var style : StyleBoxFlat = StyleBoxFlat.new()
 	ui_element.add_theme_color_override("font_color", color_black)
@@ -56,3 +55,10 @@ func _remove_highlight_from_ui_element(ui_element : Control) -> void:
 	ui_element.add_theme_color_override("font_color", color_white)
 	style.bg_color = color_transparent
 	ui_element.add_theme_stylebox_override("normal", style)
+
+
+func arrow_buttons_press_animation(button : TextureButton) -> void:
+	button.toggle_mode = true 
+	button.button_pressed = true
+	await get_tree().create_timer(0.2).timeout
+	button.toggle_mode = false 
