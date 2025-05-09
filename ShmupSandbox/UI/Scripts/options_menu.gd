@@ -16,15 +16,16 @@ func _ready() -> void:
 	_create_ui_elements_list()
 
 
-## Helper funcs
-####
+func _on_visibility_changed() -> void:
+	if self.visible:
+		game_settings_button.grab_focus()
+
 
 ## Helper funcs
 func _create_ui_elements_list() -> void:
 	for node : Control in get_tree().get_nodes_in_group(UiUtility.options_ui_nodes):
 		ui_elements_list.append(node)
 		_connect_to_group_signals(node)
-	ui_elements_list.sort() # Sort in alphabetical order
 
 func _connect_to_group_signals(node : Control) -> void:
 	if node.has_signal(UiUtility.signal_focus_entered):
@@ -39,9 +40,10 @@ func _connect_to_group_signals(node : Control) -> void:
 ## Signal connections
 
 func _on_element_focused() -> void:
-	for element : int in range(ui_elements_list.size()):
-		if ui_elements_list[element].has_focus():
-			UiUtility.highlight_selected_element(ui_elements_list, ui_elements_list[element])
+	for element in ui_elements_list:
+		if element.has_focus():
+			UiUtility.highlight_selected_element(ui_elements_list, element)
+			break
 	
 
 func _on_element_focused_with_mouse(node : Control) -> void:
@@ -60,8 +62,5 @@ func _on_button_pressed(node : Button) -> void:
 			audio_settings_button_pressed.emit()
 		back_button:
 			back_button_pressed.emit()
-		
-
-func _on_visibility_changed() -> void:
-	if self.visible:
-		game_settings_button.grab_focus()
+		_:
+			push_error("Unhandled button pressed: ", node.name)
