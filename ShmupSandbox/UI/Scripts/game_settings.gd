@@ -19,8 +19,8 @@ var allowed_values_credits : Array[int] = [1, 3, 5, 7, 9]
 signal back_button_pressed()
 
 ## TODO: 
-	# - make the left or right arrow disappear if min or max values are reached
-	# - make the left or right arrow appear if not at min or max values
+	# - make the left or right arrow disappear if min or max values are reached - done
+	# - make the left or right arrow appear if not at min or max values - done
 	# - hook up to save game data
 	# - on ready, grab settings from save game data, if not available use default settings
 	# - on back button pressed, save settings to save file
@@ -32,14 +32,8 @@ func _ready() -> void:
 func _on_visibility_changed() -> void:
 	if self.visible:
 		lives_label.grab_focus()
-		if lives_value.text.to_int() == allowed_values_lives[0]:
-			lives_left_button.visible = false
-		if lives_value.text.to_int() == allowed_values_lives[allowed_values_lives.size()-1]:
-			lives_right_button.visible = false
-		if credits_value.text.to_int() == allowed_values_credits[0]:
-			credits_left_button.visible = false
-		if credits_value.text.to_int() == allowed_values_credits[allowed_values_credits.size()-1]:
-			credits_right_button.visible = false
+		_toggle_arrow_button_visibility()
+		
 
 
 func _input(event: InputEvent) -> void:
@@ -64,6 +58,12 @@ func _input(event: InputEvent) -> void:
 		if credits_label.has_focus():
 			await UiUtility.arrow_buttons_press_animation(credits_right_button)
 			_update_value(credits_value, allowed_values_credits, 1)
+
+
+## Only when this menu is visible, show or hide arrow buttons based on the lives and credits values
+func _process(_delta: float) -> void:
+	if self.visible:
+		_toggle_arrow_button_visibility()
 
 
 ####
@@ -111,6 +111,7 @@ func _on_button_pressed(node: Control) -> void:
 		_:
 			push_error("Unhandled button pressed: ", node.name)
 
+
 ####
 
 ## Helper funcs
@@ -120,6 +121,7 @@ func _create_ui_elements_list() -> void:
 		_connect_to_group_signals(node)
 	ui_elements_list.sort() # Sort in alphabetical order
 
+
 func _connect_to_group_signals(node : Control) -> void:
 	if node.has_signal(UiUtility.signal_focus_entered):
 		node.focus_entered.connect(_on_element_focused)
@@ -127,6 +129,7 @@ func _connect_to_group_signals(node : Control) -> void:
 		node.mouse_entered.connect(_on_element_focused_with_mouse.bind(node)) # Use 'bind' to pass source node as property
 	if node is Button || node is TextureButton:
 		node.pressed.connect(_on_button_pressed.bind(node))
+
 
 func _update_value(value_to_change : Label, allowed_values : Array[int], direction : int):
 	var current_value : int = value_to_change.text.to_int()
@@ -139,3 +142,29 @@ func _update_value(value_to_change : Label, allowed_values : Array[int], directi
 	var new_index : int = index + direction
 	if new_index >= 0 and new_index < allowed_values.size():
 		value_to_change.text = str(allowed_values[new_index])
+
+
+func _toggle_arrow_button_visibility() -> void:
+	# Lives left button
+	if lives_value.text.to_int() == allowed_values_lives[0]:
+		lives_left_button.visible = false
+	else:
+		lives_left_button.visible = true
+
+	# Lives right button
+	if lives_value.text.to_int() == allowed_values_lives[allowed_values_lives.size()-1]:
+		lives_right_button.visible = false
+	else:
+		lives_right_button.visible = true
+
+	# Credits left button
+	if credits_value.text.to_int() == allowed_values_credits[0]:
+		credits_left_button.visible = false
+	else:
+		credits_left_button.visible = true
+	
+	# Credits right button
+	if credits_value.text.to_int() == allowed_values_credits[allowed_values_credits.size()-1]:
+		credits_right_button.visible = false
+	else: 
+		credits_right_button.visible = true
