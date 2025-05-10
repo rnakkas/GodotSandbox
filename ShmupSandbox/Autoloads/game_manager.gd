@@ -77,6 +77,7 @@ func _connect_to_signals() -> void:
 	SignalsBus.player_died.connect(_on_player_death)
 	SignalsBus.game_loaded.connect(_on_game_loaded)
 	SignalsBus.player_hi_score_name_entered.connect(_on_player_hi_score_name_entered)
+	SignalsBus.game_settings_updated.connect(_on_game_settings_updated)
 
 
 ## Sorting the high scores from highest to lowest
@@ -108,24 +109,13 @@ func reset_all_player_data_on_start() -> void:
 	SignalsBus.player_credits_updated_event()
 
 
-## Get the high scores list from save game data
-func _update_high_scores_from_save_data() -> void:
-	player_hi_scores_dictionaries.clear()
-	for entry in SaveManager.loaded_data["player_high_scores"]:
-		if entry.has("score") && typeof(entry["score"] == TYPE_FLOAT): # Clean up scores from float to int
-			entry["score"] = int(entry["score"])
-		
-		if typeof(entry) == TYPE_DICTIONARY: # Append the cleaned up scores to high score list
-			player_hi_scores_dictionaries.append(entry)
-		else:
-			push_error("invalid score entry detected")
+####
 
-
-## Save the player's high scores to save file
-func _save_player_hi_scores() -> void:
+## Save all of the game data
+func _save_all_game_data() -> void:
 	SaveManager.contents_to_save["player_high_scores"] = player_hi_scores_dictionaries # Update with latest score data
+	SaveManager.contents_to_save["settings"]["game_settings"] = game_settings_dictionary # Update with latest game settings
 	SaveManager.save_game()
-
 
 ####
 
@@ -167,8 +157,36 @@ func _on_player_death() -> void:
 	SignalsBus.player_lives_updated_event()
 
 
+#### 
+
+## When game is loaded
 func _on_game_loaded() -> void:
 	_update_high_scores_from_save_data()
+	_update_game_settings_from_save_data()
+
+## Get the high scores list from save game data
+func _update_high_scores_from_save_data() -> void:
+	player_hi_scores_dictionaries.clear()
+	for entry in SaveManager.loaded_data["player_high_scores"]:
+		if entry.has("score") && typeof(entry["score"] == TYPE_FLOAT): # Clean up scores from float to int
+			entry["score"] = int(entry["score"])
+		
+		if typeof(entry) == TYPE_DICTIONARY: # Append the cleaned up scores to high score list
+			player_hi_scores_dictionaries.append(entry)
+		else:
+			push_error("invalid score entry detected")
+
+## Get the game settings from save game data
+func _update_game_settings_from_save_data() -> void:
+	# game_settings_dictionary.clear()
+	for entry in SaveManager.loaded_data["settings"]["game_settings"]:
+		var entry_value = SaveManager.loaded_data["settings"]["game_settings"][entry]
+		if typeof(entry_value == TYPE_FLOAT):
+			entry_value = int(entry_value)
+			if entry == "player_max_lives":
+				_player_max_lives = entry_value
+			if entry == "player_max_credits":
+				_player_max_credits = entry_value
 
 
 func _on_player_hi_score_name_entered(player_name : String) -> void:
@@ -176,4 +194,16 @@ func _on_player_hi_score_name_entered(player_name : String) -> void:
 		{"score" : player_score, "name" : player_name}
 	)
 	sort_high_scores()
-	_save_player_hi_scores()
+	_save_all_game_data()
+
+
+func _on_game_settings_updated() -> void:
+	# Update the settings values
+	for entry in game_settings_dictionary:
+		match entry:
+			"player_max_lives":
+				_player_max_lives = game_settings_dictionary[entry]
+			"player_max_credits":
+				_player_max_credits = game_settings_dictionary[entry]
+				
+	_save_all_game_data()

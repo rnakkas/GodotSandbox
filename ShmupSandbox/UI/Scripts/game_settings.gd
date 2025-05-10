@@ -18,23 +18,28 @@ var allowed_values_credits : Array[int] = [1, 3, 5, 7, 9]
 
 signal back_button_pressed()
 
-## TODO: 
-	# - make the left or right arrow disappear if min or max values are reached - done
-	# - make the left or right arrow appear if not at min or max values - done
-	# - hook up to save game data
-	# - on ready, grab settings from save game data, if not available use default settings
-	# - on back button pressed, save settings to save file
 
 func _ready() -> void:
 	_create_ui_elements_list()
 
 
+####
+## FOR SAVE DATA
+func _create_game_settings_save_data() -> void:
+	GameManager.game_settings_dictionary["player_max_lives"] = lives_value.text.to_int()
+	GameManager.game_settings_dictionary["player_max_credits"] = credits_value.text.to_int()
+####
+
+
 func _on_visibility_changed() -> void:
 	if self.visible:
+		# Get the current game settings
+		lives_value.text = str(GameManager._player_max_lives)
+		credits_value.text = str(GameManager._player_max_credits)
+
 		lives_label.grab_focus()
 		_toggle_arrow_button_visibility()
 		
-
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("move_left") || event.is_action_pressed("ui_left"):
@@ -87,6 +92,10 @@ func _on_button_pressed(node: Control) -> void:
 		back_button:
 			await UiUtility.selected_button_element_press_animation(node)
 			back_button_pressed.emit()
+
+			# Save game settings when back button is pressed
+			_create_game_settings_save_data()
+			SignalsBus.game_settings_updated_event()
 		
 		lives_left_button:
 			lives_label.grab_focus()
@@ -140,7 +149,7 @@ func _update_value(value_to_change : Label, allowed_values : Array[int], directi
 		return
 	
 	var new_index : int = index + direction
-	if new_index >= 0 and new_index < allowed_values.size():
+	if new_index >= 0 && new_index < allowed_values.size():
 		value_to_change.text = str(allowed_values[new_index])
 
 

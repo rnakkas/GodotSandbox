@@ -20,7 +20,6 @@ var loaded_data : Dictionary = {}
 
 
 func _ready() -> void:
-	save_game()
 	_load_game()
 
 
