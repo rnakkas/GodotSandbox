@@ -83,6 +83,7 @@ visible = false
 [connection signal="display_settings_button_pressed" from="options_menu" to="." method="_on_options_menu_display_settings_button_pressed"]
 [connection signal="game_settings_button_pressed" from="options_menu" to="." method="_on_options_menu_game_settings_button_pressed"]
 [connection signal="back_button_pressed" from="game_settings" to="." method="_on_game_settings_back_button_pressed"]
+[connection signal="back_button_pressed" from="display_settings" to="." method="_on_display_settings_back_button_pressed"]
 [connection signal="main_menu_button_pressed" from="pause_menu" to="." method="_on_pause_menu_main_menu_button_pressed"]
 [connection signal="options_button_pressed" from="pause_menu" to="." method="_on_pause_menu_options_button_pressed"]
 [connection signal="quit_button_pressed" from="pause_menu" to="." method="_on_pause_menu_quit_button_pressed"]

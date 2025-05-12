@@ -26,27 +26,38 @@ func _ready() -> void:
 
 
 ## TODO: 
-    ## - When window mode is changed, immediately change the window mode to be as selected, i.e. fullscreen or windowed
+    ## - When window mode is changed, immediately change the window mode to be as selected, i.e. fullscreen or windowed - done
     ## - create the crt filter, see godotshaders.com
     ## - When crt filter is turned on or off, immediate turn crt filter shader on or off
     ## - When back button is pressed, save these display settings to save file
     ## - Rework the save file contents_to_save so that it doesn't need high scores, game settings etc to save, only
     ##       the changed data is appended to the save file - done
+    ## - Hook it up to load data to use loaded settings when game starts
 
 ####
-## FOR SAVE DATA
-func _create_game_settings_save_data() -> void:
-    GameManager.display_settings_dictionary["window_mode"] = mode_value.text
-    GameManager.display_settings_dictionary["crt_filter"] = crt_value.text
+
+## SAVE DISPLAY SETTINGS
+
+func _save_display_settings() -> void:
+    GameManager.display_settings_dictionary["window_mode"] = DisplayServer.window_get_mode()
+
+    if crt_value.text == allowed_values_crt[0]:
+        GameManager.display_settings_dictionary["crt_filter"] = false
+    else:
+        GameManager.display_settings_dictionary["crt_filter"] = true
+    
+    SaveManager.contents_to_save["settings"]["display_settings"] = GameManager.display_settings_dictionary
+    SaveManager.save_game()
+
 ####
 
 
 func _on_visibility_changed() -> void:
     if self.visible:
         # Get the current game settings
-        if GameManager.window_mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+        if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
             mode_value.text = allowed_values_mode[0]
-        elif GameManager.window_mode == DisplayServer.WINDOW_MODE_WINDOWED:
+        elif DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
             mode_value.text = allowed_values_mode[1]
         
         if GameManager.crt_filter:
@@ -60,26 +71,35 @@ func _on_visibility_changed() -> void:
 
 func _input(event: InputEvent) -> void:
     if event.is_action_pressed("move_left") || event.is_action_pressed("ui_left"):
-        ## Decrease lives
+        ## Change window mode
         if mode_label.has_focus():
             await UiUtility.arrow_buttons_press_animation(mode_left_button)
             _update_value(mode_value, allowed_values_mode, -1)
+            _change_window_mode()
 
-        ## Decrease credits
+        ## Toggle crt filter
         if crt_label.has_focus():
             await UiUtility.arrow_buttons_press_animation(crt_left_button)
             _update_value(crt_value, allowed_values_crt, -1)
             
     if event.is_action_pressed("move_right") || event.is_action_pressed("ui_right"):
-        ## Increase lives
+        ## Change window mode
         if mode_label.has_focus():
             await UiUtility.arrow_buttons_press_animation(mode_right_button)
             _update_value(mode_value, allowed_values_mode, 1)
+            _change_window_mode()
 
-        ## Increase credits
+        ## Toggle crt filter
         if crt_label.has_focus():
             await UiUtility.arrow_buttons_press_animation(crt_right_button)
             _update_value(crt_value, allowed_values_crt, 1)
+
+func _change_window_mode() -> void:
+    if mode_value.text == allowed_values_mode[0]:
+        DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+    elif mode_value.text == allowed_values_mode[1]:
+        DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+        DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false) # Allows title bar and border for resize
 
 
 ## Only when this menu is visible, show or hide arrow buttons based on the lives and credits values
@@ -128,19 +148,21 @@ func _on_button_pressed(node: Control) -> void:
             await UiUtility.selected_button_element_press_animation(node)
             back_button_pressed.emit()
 
-            # # Save game settings when back button is pressed
-            # _create_game_settings_save_data()
-            # SignalsBus.game_settings_updated_event()
+            # Save game settings when back button is pressed
+            _update_game_manager()
+            _save_display_settings()
         
         mode_left_button:
             mode_label.grab_focus()
             await UiUtility.arrow_buttons_press_animation(mode_left_button)
             _update_value(mode_value, allowed_values_mode, -1)
-        
+            _change_window_mode()
+            
         mode_right_button:
             mode_label.grab_focus()
             await UiUtility.arrow_buttons_press_animation(mode_right_button)
             _update_value(mode_value, allowed_values_mode, 1)
+            _change_window_mode()
         
         crt_left_button:
             crt_label.grab_focus()
@@ -154,6 +176,15 @@ func _on_button_pressed(node: Control) -> void:
 
         _:
             push_error("Unhandled button pressed: ", node.name)
+
+func _update_game_manager() -> void:
+    GameManager.window_mode = DisplayServer.window_get_mode()
+    
+    if crt_value.text == allowed_values_crt[0]:
+        GameManager.crt_filter = false
+    elif crt_value.text == allowed_values_crt[1]:
+        GameManager.crt_filter = true
+
 
 
 func _update_value(value_to_change : Label, allowed_values : Array[String], direction : int):
