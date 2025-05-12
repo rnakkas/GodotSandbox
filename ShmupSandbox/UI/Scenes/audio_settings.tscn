@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0td5yoxb431c"]
+[gd_scene load_steps=8 format=3 uid="uid://b0td5yoxb431c"]
 
 [ext_resource type="Script" uid="uid://c43ig0gykkvm8" path="res://ShmupSandbox/UI/Scripts/audio_settings.gd" id="1_8stjm"]
-[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_elnbm"]
+[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_wywn7"]
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_w8yk6"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ycgb6"]
 
@@ -48,18 +49,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 35
-theme_override_constants/margin_top = 35
-theme_override_constants/margin_right = 35
-theme_override_constants/margin_bottom = 35
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_top = 70
+theme_override_constants/margin_right = 70
+theme_override_constants/margin_bottom = 70
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 9
 
 [node name="audio_settings_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_elnbm")
+theme_override_fonts/font = ExtResource("2_wywn7")
 theme_override_font_sizes/font_size = 75
 text = "Audio Settings"
 horizontal_alignment = 1
@@ -73,10 +74,16 @@ layout_mode = 2
 [node name="separator3" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="separator6" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator7" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="HBoxContainer_master" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 theme_override_constants/separation = 25
 alignment = 2
 
@@ -84,8 +91,8 @@ alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 2
-theme_override_fonts/font = ExtResource("1_elnbm")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_w8yk6")
+theme_override_font_sizes/font_size = 30
 text = "Master"
 horizontal_alignment = 2
 
@@ -102,18 +109,21 @@ max_value = 10.0
 value = 5.0
 rounded = true
 
+[node name="separator11" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="HBoxContainer_sound" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 theme_override_constants/separation = 25
 alignment = 2
 
 [node name="sound_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_sound" groups=["audio_settings_ui_nodes"]]
 layout_mode = 2
 focus_mode = 2
-theme_override_fonts/font = ExtResource("1_elnbm")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_w8yk6")
+theme_override_font_sizes/font_size = 30
 text = "Sound"
 horizontal_alignment = 2
 
@@ -129,18 +139,21 @@ max_value = 10.0
 value = 5.0
 rounded = true
 
+[node name="separator12" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="HBoxContainer_music" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 theme_override_constants/separation = 25
 alignment = 2
 
 [node name="music_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_music" groups=["audio_settings_ui_nodes"]]
 layout_mode = 2
 focus_mode = 2
-theme_override_fonts/font = ExtResource("1_elnbm")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_w8yk6")
+theme_override_font_sizes/font_size = 30
 text = "Music"
 horizontal_alignment = 2
 
@@ -159,16 +172,28 @@ rounded = true
 [node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="separator5" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator8" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator9" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator10" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="HBoxContainer_back" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 alignment = 2
 
 [node name="back_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_back" groups=["audio_settings_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_fonts/font = ExtResource("1_elnbm")
+theme_override_fonts/font = ExtResource("3_w8yk6")
 theme_override_font_sizes/font_size = 35
 action_mode = 0
 text = "Back"
