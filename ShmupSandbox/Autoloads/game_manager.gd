@@ -189,7 +189,7 @@ func _update_high_scores_from_save_data() -> void:
 ## Get the game settings from save game data
 func _update_game_settings_from_save_data() -> void:
 	# If save file doesn't have settings, retunr gracefully and use default settings
-	if !SaveManager.loaded_data.has("settings") || !SaveManager.loaded_data.has("game_settings"):
+	if !SaveManager.loaded_data.has("settings") || !SaveManager.loaded_data["settings"].has("game_settings"):
 		push_warning("No settings or game settings found in save file, using default game settings")
 		return
 
