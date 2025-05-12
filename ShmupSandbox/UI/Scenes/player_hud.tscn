@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://btcsgnuk4yo61"]
 
 [ext_resource type="Script" uid="uid://cj0ip88n58brx" path="res://ShmupSandbox/UI/Scripts/player_hud.gd" id="1_wamog"]
-[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_xvmxs"]
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="2_xvmxs"]
 
 [node name="player_hud" type="Control"]
 layout_mode = 3
@@ -19,10 +19,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -30,26 +30,26 @@ size_flags_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 theme_override_constants/separation = 30
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer_lives" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 
-[node name="lives_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3"]
+[node name="lives_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_lives"]
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_fonts/font = ExtResource("1_xvmxs")
+theme_override_fonts/font = ExtResource("2_xvmxs")
 theme_override_font_sizes/font_size = 20
 text = "Lives"
 
-[node name="lives_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3"]
+[node name="lives_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_lives"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_fonts/font = ExtResource("1_xvmxs")
-theme_override_font_sizes/font_size = 25
+theme_override_fonts/font = ExtResource("2_xvmxs")
+theme_override_font_sizes/font_size = 20
 text = "x 3"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
@@ -64,23 +64,35 @@ layout_mode = 2
 [node name="separator6" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="separator13" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="separator14" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="separator15" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="separator16" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer_top_score" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="top_score_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="top_score_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_top_score"]
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_fonts/font = ExtResource("1_xvmxs")
+theme_override_fonts/font = ExtResource("2_xvmxs")
 theme_override_font_sizes/font_size = 20
 text = "Top Score"
 
-[node name="top_score_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="top_score_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_top_score"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_fonts/font = ExtResource("1_xvmxs")
-theme_override_font_sizes/font_size = 25
+theme_override_fonts/font = ExtResource("2_xvmxs")
+theme_override_font_sizes/font_size = 20
 text = "0000000000"
 
 [node name="separator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
@@ -89,27 +101,46 @@ layout_mode = 2
 [node name="separator4" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="separator7" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="separator8" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="separator9" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="separator10" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="separator11" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="separator12" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer_score" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="score_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="score_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score"]
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_fonts/font = ExtResource("1_xvmxs")
+theme_override_fonts/font = ExtResource("2_xvmxs")
 theme_override_font_sizes/font_size = 20
 text = "Score"
 
-[node name="score_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="score_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer_score"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_fonts/font = ExtResource("1_xvmxs")
-theme_override_font_sizes/font_size = 25
+theme_override_fonts/font = ExtResource("2_xvmxs")
+theme_override_font_sizes/font_size = 20
 text = "0000000000"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 8
 alignment = 2
 
@@ -121,16 +152,16 @@ size_flags_vertical = 8
 [node name="credits_label" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 8
-theme_override_fonts/font = ExtResource("1_xvmxs")
-theme_override_font_sizes/font_size = 25
+theme_override_fonts/font = ExtResource("2_xvmxs")
+theme_override_font_sizes/font_size = 20
 text = "Credits:"
 
 [node name="credits_value" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
-theme_override_fonts/font = ExtResource("1_xvmxs")
-theme_override_font_sizes/font_size = 25
+theme_override_fonts/font = ExtResource("2_xvmxs")
+theme_override_font_sizes/font_size = 20
 text = "3"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ny01qnyexpg2"]
+[gd_scene load_steps=5 format=3 uid="uid://ny01qnyexpg2"]
 
-[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_qkcl6"]
 [ext_resource type="Script" uid="uid://cvsyjssmvhl4m" path="res://ShmupSandbox/UI/Scripts/options_menu.gd" id="1_unpda"]
+[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_unpda"]
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_ce2tu"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_unpda"]
 
@@ -31,10 +32,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 35
-theme_override_constants/margin_top = 35
-theme_override_constants/margin_right = 35
-theme_override_constants/margin_bottom = 35
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_top = 70
+theme_override_constants/margin_right = 70
+theme_override_constants/margin_bottom = 70
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -42,9 +43,9 @@ theme_override_constants/separation = 12
 
 [node name="options_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_qkcl6")
+theme_override_fonts/font = ExtResource("2_unpda")
 theme_override_font_sizes/font_size = 75
-text = "Options"
+text = "Settings"
 horizontal_alignment = 1
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
@@ -54,15 +55,14 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="separator3" type="Control" parent="MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="game_settings_button" type="Button" parent="MarginContainer/VBoxContainer" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_ce2tu")
+theme_override_font_sizes/font_size = 30
 text = "Game Settings"
 flat = true
 
@@ -70,8 +70,8 @@ flat = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_ce2tu")
+theme_override_font_sizes/font_size = 30
 text = "Display Settings"
 flat = true
 
@@ -79,19 +79,25 @@ flat = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_qkcl6")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_ce2tu")
+theme_override_font_sizes/font_size = 30
 text = "Audio Settings"
 flat = true
 
 [node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="separator5" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="separator6" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="back_button" type="Button" parent="MarginContainer/VBoxContainer" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_qkcl6")
+theme_override_fonts/font = ExtResource("3_ce2tu")
 theme_override_font_sizes/font_size = 35
 action_mode = 0
 text = "Back"

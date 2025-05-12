@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://diqmrgjokhuyb"]
+[gd_scene load_steps=64 format=3 uid="uid://diqmrgjokhuyb"]
 
 [ext_resource type="Script" uid="uid://dkp2sd4d5myi" path="res://ShmupSandbox/Player/Scripts/player_cat.gd" id="1_m8806"]
 [ext_resource type="Texture2D" uid="uid://cc83l4ep22dak" path="res://ShmupSandbox/Assets/Player/muzzle_flash-v1.png" id="2_4ua8s"]
@@ -397,10 +397,6 @@ animations = [{
 radius = 5.0
 height = 14.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uobwy"]
-radius = 2.85714
-height = 20.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_dguo2"]
 atlas = ExtResource("2_4ua8s")
 region = Rect2(0, 0, 32, 16)
@@ -460,11 +456,12 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uobwy"]
-radius = 15.0333
+radius = 9.0
 
 [node name="player_cat" type="CharacterBody2D"]
 collision_mask = 28
 script = ExtResource("1_m8806")
+_max_speed = 380.0
 
 [node name="rocket" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -499,19 +496,13 @@ autoplay = "none"
 unique_name_in_owner = true
 position = Vector2(-16, -5)
 sprite_frames = SubResource("SpriteFrames_uobwy")
-animation = &"invincible"
+animation = &"none"
 autoplay = "none"
 
 [node name="collider_body" type="CollisionShape2D" parent="."]
 position = Vector2(-1.19209e-07, -16)
 scale = Vector2(2.1, 2.1)
 shape = SubResource("CapsuleShape2D_gdjmk")
-
-[node name="collider_rocket" type="CollisionShape2D" parent="."]
-position = Vector2(1.42109e-14, 1.90735e-06)
-rotation = 1.5708
-scale = Vector2(2.1, 2.1)
-shape = SubResource("CapsuleShape2D_uobwy")
 
 [node name="muzzle" type="Marker2D" parent="."]
 unique_name_in_owner = true
@@ -532,7 +523,7 @@ collision_mask = 24
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(-1, -10)
 shape = SubResource("CircleShape2D_uobwy")
-debug_color = Color(0.655731, 0.513291, 0.170064, 0.42)
+debug_color = Color(0.994007, 0, 0.228904, 0.42)
 
 [node name="invincibility_timer" type="Timer" parent="."]
 one_shot = true

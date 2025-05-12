@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvex6ouhoh1ev"]
+[gd_scene load_steps=5 format=3 uid="uid://dvex6ouhoh1ev"]
 
 [ext_resource type="Script" uid="uid://72tq75cibxj6" path="res://ShmupSandbox/UI/Scripts/confirm_dialog.gd" id="1_aq2ro"]
-[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="2_h1ire"]
+[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_h1ire"]
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_sfbu7"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_gng12"]
 
@@ -16,11 +17,18 @@ script = ExtResource("1_aq2ro")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 self_modulate = Color(0.133333, 0.137255, 0.137255, 1)
-layout_mode = 2
-offset_left = 120.0
-offset_top = 80.0
-offset_right = 520.0
-offset_bottom = 280.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -175.0
+offset_right = 250.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = SubResource("CanvasTexture_gng12")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -37,10 +45,10 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 35
-theme_override_constants/margin_top = 35
-theme_override_constants/margin_right = 35
-theme_override_constants/margin_bottom = 35
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_top = 70
+theme_override_constants/margin_right = 70
+theme_override_constants/margin_bottom = 70
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -51,15 +59,15 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("2_h1ire")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 47
 text = "Return to Main Menu?"
 
 [node name="dialog_label2" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("2_h1ire")
-theme_override_font_sizes/font_size = 28
-text = "< score will NOT be saved >"
+theme_override_fonts/font = ExtResource("3_sfbu7")
+theme_override_font_sizes/font_size = 20
+text = "[ score will NOT be saved ]"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -77,8 +85,8 @@ theme_override_constants/separation = 80
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("2_h1ire")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_sfbu7")
+theme_override_font_sizes/font_size = 25
 action_mode = 0
 text = "YES"
 flat = true
@@ -88,8 +96,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("2_h1ire")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_sfbu7")
+theme_override_font_sizes/font_size = 25
 action_mode = 0
 text = "NO"
 flat = true

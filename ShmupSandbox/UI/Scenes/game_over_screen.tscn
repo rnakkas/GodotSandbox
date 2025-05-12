@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cwdcwh6sflfw1"]
 
-[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_6ttin"]
 [ext_resource type="Script" uid="uid://085p20o8tmyi" path="res://ShmupSandbox/UI/Scripts/game_over_screen.gd" id="1_sf477"]
+[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_sf477"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_sf477"]
 
@@ -31,10 +31,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 35
-theme_override_constants/margin_top = 35
-theme_override_constants/margin_right = 35
-theme_override_constants/margin_bottom = 35
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_top = 70
+theme_override_constants/margin_right = 70
+theme_override_constants/margin_bottom = 70
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -43,9 +43,9 @@ size_flags_vertical = 4
 
 [node name="game_over_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_6ttin")
-theme_override_font_sizes/font_size = 85
-text = "GAME OVER, MAN!"
+theme_override_fonts/font = ExtResource("2_sf477")
+theme_override_font_sizes/font_size = 100
+text = "Game Over!"
 horizontal_alignment = 1
 vertical_alignment = 1
 

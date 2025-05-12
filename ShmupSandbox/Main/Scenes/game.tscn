@@ -18,8 +18,8 @@ enemy_scenes = Array[PackedScene]([ExtResource("3_f46ya")])
 position = Vector2(479, 196)
 limit_left = 0
 limit_top = 0
-limit_right = 640
-limit_bottom = 360
+limit_right = 960
+limit_bottom = 540
 
 [node name="PlayerProjectilesContainer" type="Node2D" parent="."]
 
