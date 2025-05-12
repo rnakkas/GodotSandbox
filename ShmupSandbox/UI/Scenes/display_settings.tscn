@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfb4oxvkojkrw"]
+[gd_scene load_steps=8 format=3 uid="uid://cfb4oxvkojkrw"]
 
 [ext_resource type="Script" uid="uid://cc4cakfuy8gq1" path="res://ShmupSandbox/UI/Scripts/display_settings.gd" id="1_1adna"]
 [ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_y6iv1"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_y6iv1"]
+[ext_resource type="Texture2D" uid="uid://qusud1dgnpui" path="res://ShmupSandbox/Assets/Icons/ui_arrow_normal-v2.png" id="4_ae0s4"]
+[ext_resource type="Texture2D" uid="uid://dto7f70dxk21" path="res://ShmupSandbox/Assets/Icons/ui_arrow_pressed-v2.png" id="5_2moy2"]
+[ext_resource type="Texture2D" uid="uid://ulo54d8qyr7o" path="res://ShmupSandbox/Assets/Icons/ui_arrow_hover-v2.png" id="6_o3s6m"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ycgb6"]
 
@@ -63,55 +66,227 @@ layout_mode = 2
 [node name="separator6" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="separator12" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="HBoxContainer_mode" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 20
+theme_override_constants/separation = 21
+alignment = 1
 
 [node name="mode_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_mode" groups=["display_settings_ui_nodes"]]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
 focus_mode = 2
 theme_override_fonts/font = ExtResource("3_y6iv1")
 theme_override_font_sizes/font_size = 30
 text = "Mode"
-horizontal_alignment = 2
 
-[node name="mode_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_mode" groups=["display_settings_ui_nodes"]]
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_mode"]
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_mode"]
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_mode"]
+layout_mode = 2
+
+[node name="separator4" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_mode"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer_mode_value" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_mode" groups=["display_settings_ui_nodes"]]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_mode/HBoxContainer_mode_value"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_mode/HBoxContainer_mode_value/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="mode_left_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_mode/HBoxContainer_mode_value/VBoxContainer" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 12)
+layout_mode = 2
+size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 0
+action_mode = 0
+texture_normal = ExtResource("4_ae0s4")
+texture_pressed = ExtResource("5_2moy2")
+texture_hover = ExtResource("6_o3s6m")
+texture_focused = ExtResource("6_o3s6m")
+
+[node name="mode_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_mode/HBoxContainer_mode_value" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_y6iv1")
 theme_override_font_sizes/font_size = 30
 text = "Fullscreen"
-horizontal_alignment = 2
+horizontal_alignment = 1
 
-[node name="separator11" type="Control" parent="MarginContainer/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_mode/HBoxContainer_mode_value"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_mode/HBoxContainer_mode_value/VBoxContainer2"]
+visible = false
 layout_mode = 2
 
-[node name="HBoxContainer_credits" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(95, 0)
+[node name="mode_right_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_mode/HBoxContainer_mode_value/VBoxContainer2" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 12)
+layout_mode = 2
+size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 0
+action_mode = 0
+texture_normal = ExtResource("4_ae0s4")
+texture_pressed = ExtResource("5_2moy2")
+texture_hover = ExtResource("6_o3s6m")
+flip_h = true
+
+[node name="separator13" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer_crt" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 20
-alignment = 2
+theme_override_constants/separation = 14
+alignment = 1
 
-[node name="credits_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_credits" groups=["display_settings_ui_nodes"]]
+[node name="crt_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_crt" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../HBoxContainer_mode/mode_label")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../back_button")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
 focus_mode = 2
 theme_override_fonts/font = ExtResource("3_y6iv1")
 theme_override_font_sizes/font_size = 30
 text = "CRT Filter"
-horizontal_alignment = 2
 
-[node name="credits_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_credits" groups=["display_settings_ui_nodes"]]
-custom_minimum_size = Vector2(150, 30)
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_crt"]
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_crt"]
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_crt"]
+layout_mode = 2
+
+[node name="separator4" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_crt"]
+layout_mode = 2
+
+[node name="separator5" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_crt"]
+layout_mode = 2
+
+[node name="HBoxContainer_crt_value" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_crt" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_crt/HBoxContainer_crt_value"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_crt/HBoxContainer_crt_value/VBoxContainer3"]
+visible = false
+layout_mode = 2
+
+[node name="crt_left_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_crt/HBoxContainer_crt_value/VBoxContainer3" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 12)
+layout_mode = 2
+size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 0
+action_mode = 0
+texture_normal = ExtResource("4_ae0s4")
+texture_pressed = ExtResource("5_2moy2")
+texture_hover = ExtResource("6_o3s6m")
+texture_focused = ExtResource("6_o3s6m")
+
+[node name="crt_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_crt/HBoxContainer_crt_value" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_y6iv1")
 theme_override_font_sizes/font_size = 30
-text = "Off"
-horizontal_alignment = 2
+text = "OFF"
+horizontal_alignment = 1
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_crt/HBoxContainer_crt_value"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_crt/HBoxContainer_crt_value/VBoxContainer4"]
+visible = false
+layout_mode = 2
+
+[node name="crt_right_button" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer_crt/HBoxContainer_crt_value/VBoxContainer4" groups=["display_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 12)
+layout_mode = 2
+size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 0
+action_mode = 0
+texture_normal = ExtResource("4_ae0s4")
+texture_pressed = ExtResource("5_2moy2")
+texture_hover = ExtResource("6_o3s6m")
+texture_focused = ExtResource("6_o3s6m")
+flip_h = true
 
 [node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -128,6 +303,9 @@ layout_mode = 2
 [node name="separator10" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="separator14" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="HBoxContainer_back" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -142,3 +320,5 @@ theme_override_font_sizes/font_size = 35
 action_mode = 0
 text = "Back"
 flat = true
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
