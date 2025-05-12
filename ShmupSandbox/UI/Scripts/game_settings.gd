@@ -22,12 +22,16 @@ signal back_button_pressed()
 func _ready() -> void:
 	_create_ui_elements_list()
 
-
 ####
-## FOR SAVE DATA
-func _create_game_settings_save_data() -> void:
+
+## SAVE GAME SETTINGS
+
+func _save_game_settings() -> void:
 	GameManager.game_settings_dictionary["player_max_lives"] = lives_value.text.to_int()
 	GameManager.game_settings_dictionary["player_max_credits"] = credits_value.text.to_int()
+	SaveManager.contents_to_save["settings"]["game_settings"] = GameManager.game_settings_dictionary
+	SaveManager.save_game()
+
 ####
 
 
@@ -94,8 +98,8 @@ func _on_button_pressed(node: Control) -> void:
 			back_button_pressed.emit()
 
 			# Save game settings when back button is pressed
-			_create_game_settings_save_data()
-			SignalsBus.game_settings_updated_event()
+			_update_game_manager()
+			_save_game_settings()
 		
 		lives_left_button:
 			lives_label.grab_focus()
@@ -120,6 +124,10 @@ func _on_button_pressed(node: Control) -> void:
 		_:
 			push_error("Unhandled button pressed: ", node.name)
 
+
+func _update_game_manager() -> void:
+	GameManager._player_max_lives = lives_value.text.to_int()
+	GameManager._player_max_credits = credits_value.text.to_int()
 
 ####
 

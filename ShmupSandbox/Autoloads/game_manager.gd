@@ -17,7 +17,7 @@ var game_settings_dictionary : Dictionary = {
 }
 
 ## Default Display settings
-var window_mode : int = 3 # Fullscreen
+var window_mode : int = DisplayServer.WINDOW_MODE_FULLSCREEN
 var crt_filter : bool = false
 
 var display_settings_dictionary : Dictionary = {
@@ -68,6 +68,16 @@ func _ready() -> void:
 	_connect_to_signals()
 
 
+####
+
+## Save high scores
+func _save_high_scores() -> void:
+	SaveManager.contents_to_save["player_high_scores"] = player_hi_scores_dictionaries # Update with latest score data
+	SaveManager.save_game()
+
+####
+
+
 ## Helper funcs
 
 ## Connect to global signals
@@ -77,7 +87,6 @@ func _connect_to_signals() -> void:
 	SignalsBus.player_died.connect(_on_player_death)
 	SignalsBus.game_loaded.connect(_on_game_loaded)
 	SignalsBus.player_hi_score_name_entered.connect(_on_player_hi_score_name_entered)
-	SignalsBus.game_settings_updated.connect(_on_game_settings_updated)
 
 
 ## Sorting the high scores from highest to lowest
@@ -109,15 +118,7 @@ func reset_all_player_data_on_start() -> void:
 	SignalsBus.player_credits_updated_event()
 
 
-####
 
-## Save all of the game data
-func _save_all_game_data() -> void:
-	SaveManager.contents_to_save["player_high_scores"] = player_hi_scores_dictionaries # Update with latest score data
-	SaveManager.contents_to_save["settings"]["game_settings"] = game_settings_dictionary # Update with latest game settings
-	SaveManager.save_game()
-
-####
 
 ## Signals connections
 
@@ -166,6 +167,11 @@ func _on_game_loaded() -> void:
 
 ## Get the high scores list from save game data
 func _update_high_scores_from_save_data() -> void:
+	# If save file doesn't have any high score data, return gracefully and use default scores
+	if !SaveManager.loaded_data.has("player_high_scores"):
+		push_warning("No high scores found in save file, using default high score list")
+		return
+
 	player_hi_scores_dictionaries.clear()
 	for entry in SaveManager.loaded_data["player_high_scores"]:
 		if entry.has("score") && typeof(entry["score"] == TYPE_FLOAT): # Clean up scores from float to int
@@ -175,10 +181,19 @@ func _update_high_scores_from_save_data() -> void:
 			player_hi_scores_dictionaries.append(entry)
 		else:
 			push_error("invalid score entry detected")
+	
+	# Update save contents with the latest data after load
+	SaveManager.contents_to_save["player_high_scores"] = player_hi_scores_dictionaries
+
 
 ## Get the game settings from save game data
 func _update_game_settings_from_save_data() -> void:
-	# game_settings_dictionary.clear()
+	# If save file doesn't have settings, retunr gracefully and use default settings
+	if !SaveManager.loaded_data.has("settings") || !SaveManager.loaded_data.has("game_settings"):
+		push_warning("No settings or game settings found in save file, using default game settings")
+		return
+
+	game_settings_dictionary.clear()
 	for entry in SaveManager.loaded_data["settings"]["game_settings"]:
 		var entry_value = SaveManager.loaded_data["settings"]["game_settings"][entry]
 		if typeof(entry_value == TYPE_FLOAT):
@@ -187,6 +202,9 @@ func _update_game_settings_from_save_data() -> void:
 				_player_max_lives = entry_value
 			if entry == "player_max_credits":
 				_player_max_credits = entry_value
+	
+	# Update save contents with the latest data after load
+	SaveManager.contents_to_save["settings"]["game_settings"] = SaveManager.loaded_data["settings"]["game_settings"]
 
 
 func _on_player_hi_score_name_entered(player_name : String) -> void:
@@ -194,16 +212,4 @@ func _on_player_hi_score_name_entered(player_name : String) -> void:
 		{"score" : player_score, "name" : player_name}
 	)
 	sort_high_scores()
-	_save_all_game_data()
-
-
-func _on_game_settings_updated() -> void:
-	# Update the settings values
-	for entry in game_settings_dictionary:
-		match entry:
-			"player_max_lives":
-				_player_max_lives = game_settings_dictionary[entry]
-			"player_max_credits":
-				_player_max_credits = game_settings_dictionary[entry]
-				
-	_save_all_game_data()
+	_save_high_scores()

@@ -17,13 +17,21 @@ class_name DisplaySettings extends Control
 
 var ui_elements_list : Array[Control] = []
 var allowed_values_mode : Array[String] = ["Fullscreen", "Windowed"]
-var allowed_values_crt : Array[String] = ["On", "Off"]
+var allowed_values_crt : Array[String] = ["Off", "On"]
 
 signal back_button_pressed()
 
 func _ready() -> void:
     _create_ui_elements_list()
 
+
+## TODO: 
+    ## - When window mode is changed, immediately change the window mode to be as selected, i.e. fullscreen or windowed
+    ## - create the crt filter, see godotshaders.com
+    ## - When crt filter is turned on or off, immediate turn crt filter shader on or off
+    ## - When back button is pressed, save these display settings to save file
+    ## - Rework the save file contents_to_save so that it doesn't need high scores, game settings etc to save, only
+    ##       the changed data is appended to the save file - done
 
 ####
 ## FOR SAVE DATA
@@ -36,8 +44,15 @@ func _create_game_settings_save_data() -> void:
 func _on_visibility_changed() -> void:
     if self.visible:
         # Get the current game settings
-        mode_value.text = str(GameManager.window_mode)
-        crt_value.text = str(GameManager.crt_filter)
+        if GameManager.window_mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+            mode_value.text = allowed_values_mode[0]
+        elif GameManager.window_mode == DisplayServer.WINDOW_MODE_WINDOWED:
+            mode_value.text = allowed_values_mode[1]
+        
+        if GameManager.crt_filter:
+            crt_value.text = allowed_values_crt[1]
+        elif !GameManager.crt_filter:
+            crt_value.text = allowed_values_crt[0]
 
         mode_label.grab_focus()
         _toggle_arrow_button_visibility()
