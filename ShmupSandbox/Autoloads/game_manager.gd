@@ -164,6 +164,7 @@ func _on_player_death() -> void:
 func _on_game_loaded() -> void:
 	_update_high_scores_from_save_data()
 	_update_game_settings_from_save_data()
+	_update_display_settings_from_save_data()
 
 ## Get the high scores list from save game data
 func _update_high_scores_from_save_data() -> void:
@@ -174,7 +175,7 @@ func _update_high_scores_from_save_data() -> void:
 
 	player_hi_scores_dictionaries.clear()
 	for entry in SaveManager.loaded_data["player_high_scores"]:
-		if entry.has("score") && typeof(entry["score"] == TYPE_FLOAT): # Clean up scores from float to int
+		if entry.has("score") && typeof(entry["score"]) == TYPE_FLOAT: # Clean up scores from float to int
 			entry["score"] = int(entry["score"])
 		
 		if typeof(entry) == TYPE_DICTIONARY: # Append the cleaned up scores to high score list
@@ -196,7 +197,7 @@ func _update_game_settings_from_save_data() -> void:
 	game_settings_dictionary.clear()
 	for entry in SaveManager.loaded_data["settings"]["game_settings"]:
 		var entry_value = SaveManager.loaded_data["settings"]["game_settings"][entry]
-		if typeof(entry_value == TYPE_FLOAT):
+		if typeof(entry_value) == TYPE_FLOAT:
 			entry_value = int(entry_value)
 			if entry == "player_max_lives":
 				_player_max_lives = entry_value
@@ -206,6 +207,28 @@ func _update_game_settings_from_save_data() -> void:
 	# Update save contents with the latest data after load
 	SaveManager.contents_to_save["settings"]["game_settings"] = SaveManager.loaded_data["settings"]["game_settings"]
 
+## Get the display settings from save game data
+func _update_display_settings_from_save_data() -> void:
+	if !SaveManager.loaded_data.has("settings") || !SaveManager.loaded_data["settings"].has("display_settings"):
+		push_warning("No settings or display settings found in save file, using default display settings")
+		return
+	
+	display_settings_dictionary.clear()
+	for entry in SaveManager.loaded_data["settings"]["display_settings"]:
+		var entry_value = SaveManager.loaded_data["settings"]["display_settings"][entry]
+		if entry == "window_mode":
+			if typeof(entry_value) == TYPE_FLOAT:
+				entry_value = int(entry_value)
+			DisplayServer.window_set_mode(entry_value)
+			if (DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED):
+				DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false) # Allows title bar and border for resize
+			window_mode = DisplayServer.window_get_mode()
+		if entry == "crt_filter":
+			if typeof(entry_value) == TYPE_BOOL:
+				crt_filter = entry_value
+	
+	# Update save contents with the latest data after load
+	SaveManager.contents_to_save["settings"]["display_settings"] = SaveManager.loaded_data["settings"]["display_settings"]
 
 func _on_player_hi_score_name_entered(player_name : String) -> void:
 	player_hi_scores_dictionaries.append(
