@@ -131,6 +131,14 @@ func _on_display_settings_crt_filter_changed(crt_value: bool) -> void:
 
 ####
 
+## Audio settings
+func _on_audio_settings_back_button_pressed() -> void:
+	_toggle_ui(audio_settings)
+	_toggle_ui(options_menu)
+
+
+####
+
 ## Pause menu
 func _on_pause_menu_resume_button_pressed() -> void:
 	get_tree().paused = false

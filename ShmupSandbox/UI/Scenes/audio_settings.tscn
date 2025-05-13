@@ -9,8 +9,8 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8stjm"]
 bg_color = Color(0.133333, 0.137255, 0.137255, 1)
 skew = Vector2(0.4, 0)
-border_width_top = 5
-border_width_bottom = 5
+border_width_top = 7
+border_width_bottom = 7
 border_color = Color(0.133333, 0.137255, 0.137255, 1)
 corner_detail = 2
 
@@ -89,18 +89,23 @@ alignment = 2
 
 [node name="master_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_master" groups=["audio_settings_ui_nodes"]]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-focus_mode = 2
 theme_override_fonts/font = ExtResource("3_w8yk6")
 theme_override_font_sizes/font_size = 30
 text = "Master"
-horizontal_alignment = 2
 
 [node name="master_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_master" groups=["audio_settings_ui_nodes"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 30)
 layout_mode = 2
 size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../HBoxContainer_sound/sound_volume_slider")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
 theme_override_constants/grabber_offset = 5000
 theme_override_styles/slider = SubResource("StyleBoxFlat_8stjm")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_wywn7")
@@ -120,17 +125,24 @@ theme_override_constants/separation = 25
 alignment = 2
 
 [node name="sound_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_sound" groups=["audio_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-focus_mode = 2
 theme_override_fonts/font = ExtResource("3_w8yk6")
 theme_override_font_sizes/font_size = 30
 text = "Sound"
-horizontal_alignment = 2
 
 [node name="sound_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_sound" groups=["audio_settings_ui_nodes"]]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 30)
 layout_mode = 2
 size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../HBoxContainer_master/master_volume_slider")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../HBoxContainer_music/music_volume_slider")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
 theme_override_constants/grabber_offset = 5000
 theme_override_styles/slider = SubResource("StyleBoxFlat_8stjm")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_wywn7")
@@ -150,17 +162,24 @@ theme_override_constants/separation = 25
 alignment = 2
 
 [node name="music_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer_music" groups=["audio_settings_ui_nodes"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-focus_mode = 2
 theme_override_fonts/font = ExtResource("3_w8yk6")
 theme_override_font_sizes/font_size = 30
 text = "Music"
-horizontal_alignment = 2
 
 [node name="music_volume_slider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer_music" groups=["audio_settings_ui_nodes"]]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 30)
 layout_mode = 2
 size_flags_vertical = 4
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../HBoxContainer_sound/sound_volume_slider")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../HBoxContainer_back/back_button")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
 theme_override_constants/grabber_offset = 5000
 theme_override_styles/slider = SubResource("StyleBoxFlat_8stjm")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_wywn7")
@@ -193,8 +212,16 @@ alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../HBoxContainer_music/music_volume_slider")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
 theme_override_fonts/font = ExtResource("3_w8yk6")
 theme_override_font_sizes/font_size = 35
 action_mode = 0
 text = "Back"
 flat = true
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

@@ -15,6 +15,7 @@ var color_transparent : Color = Color(0, 0 , 0, 0)
 var options_ui_nodes : String = "options_ui_nodes"
 var game_settings_ui_nodes : String = "game_settings_ui_nodes"
 var display_settings_ui_nodes : String = "display_settings_ui_nodes"
+var audio_settings_ui_nodes : String = "audio_settings_ui_nodes"
 
 ## Control node signal names
 var signal_focus_entered : String = "focus_entered"

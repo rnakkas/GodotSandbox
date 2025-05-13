@@ -89,6 +89,7 @@ visible = false
 [connection signal="back_button_pressed" from="game_settings" to="." method="_on_game_settings_back_button_pressed"]
 [connection signal="back_button_pressed" from="display_settings" to="." method="_on_display_settings_back_button_pressed"]
 [connection signal="crt_filter_changed" from="display_settings" to="." method="_on_display_settings_crt_filter_changed"]
+[connection signal="back_button_pressed" from="audio_settings" to="." method="_on_audio_settings_back_button_pressed"]
 [connection signal="main_menu_button_pressed" from="pause_menu" to="." method="_on_pause_menu_main_menu_button_pressed"]
 [connection signal="options_button_pressed" from="pause_menu" to="." method="_on_pause_menu_options_button_pressed"]
 [connection signal="quit_button_pressed" from="pause_menu" to="." method="_on_pause_menu_quit_button_pressed"]
