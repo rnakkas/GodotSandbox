@@ -20,6 +20,7 @@ var allowed_values_mode : Array[String] = ["Fullscreen", "Windowed"]
 var allowed_values_crt : Array[String] = ["Off", "On"]
 
 signal back_button_pressed()
+signal crt_filter_changed(crt_value : bool)
 
 func _ready() -> void:
     _create_ui_elements_list()
@@ -81,6 +82,7 @@ func _input(event: InputEvent) -> void:
         if crt_label.has_focus():
             await UiUtility.arrow_buttons_press_animation(crt_left_button)
             _update_value(crt_value, allowed_values_crt, -1)
+            _change_crt_filter()
             
     if event.is_action_pressed("move_right") || event.is_action_pressed("ui_right"):
         ## Change window mode
@@ -93,6 +95,7 @@ func _input(event: InputEvent) -> void:
         if crt_label.has_focus():
             await UiUtility.arrow_buttons_press_animation(crt_right_button)
             _update_value(crt_value, allowed_values_crt, 1)
+            _change_crt_filter()
 
 func _change_window_mode() -> void:
     if mode_value.text == allowed_values_mode[0]:
@@ -100,6 +103,12 @@ func _change_window_mode() -> void:
     elif mode_value.text == allowed_values_mode[1]:
         DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
         DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false) # Allows title bar and border for resize
+
+func _change_crt_filter() -> void:
+    if crt_value.text == allowed_values_crt[0]:
+        crt_filter_changed.emit(false)
+    elif crt_value.text == allowed_values_crt[1]:
+        crt_filter_changed.emit(true)
 
 
 ## Only when this menu is visible, show or hide arrow buttons based on the lives and credits values
@@ -168,11 +177,13 @@ func _on_button_pressed(node: Control) -> void:
             crt_label.grab_focus()
             await UiUtility.arrow_buttons_press_animation(crt_left_button)
             _update_value(crt_value, allowed_values_crt, -1)
+            _change_crt_filter()
         
         crt_right_button:
             crt_label.grab_focus()
             await UiUtility.arrow_buttons_press_animation(crt_right_button)
             _update_value(crt_value, allowed_values_crt, 1)
+            _change_crt_filter()
 
         _:
             push_error("Unhandled button pressed: ", node.name)

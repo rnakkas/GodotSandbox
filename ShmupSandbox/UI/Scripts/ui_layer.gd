@@ -1,5 +1,6 @@
 class_name UiLayer extends CanvasLayer
 
+@onready var simple_crt_filter : CanvasLayer = %SimpleCRTFilter
 @onready var start_screen : StartScreen = %start_screen
 @onready var main_menu : MainMenu = %main_menu
 @onready var options_menu : OptionsMenu = %options_menu
@@ -22,7 +23,7 @@ var is_game_running : bool
 func _ready() -> void:
 	_initialize_ui_scenes()
 	_connect_to_signals()
-	
+
 func _initialize_ui_scenes() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
@@ -124,6 +125,12 @@ func _on_game_settings_back_button_pressed() -> void:
 func _on_display_settings_back_button_pressed() -> void:
 	_toggle_ui(display_settings)
 	_toggle_ui(options_menu)
+
+func _on_display_settings_crt_filter_changed(crt_value: bool) -> void:
+	if crt_value:
+		simple_crt_filter.visible = true
+	else:
+		simple_crt_filter.visible = false
 
 ####
 
@@ -241,5 +248,3 @@ func _on_hi_scores_menu_back_button_pressed() -> void:
 func _on_name_entry_dialog_ok_button_pressed() -> void:
 	_toggle_ui(name_entry_dialog)
 	_toggle_ui(game_over_screen)
-
-
