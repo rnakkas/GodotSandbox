@@ -70,6 +70,8 @@ func _ready() -> void:
 
 ####
 
+## GAME SAVING STUFF
+
 ## Save high scores
 func _save_high_scores() -> void:
 	SaveManager.contents_to_save["player_high_scores"] = player_hi_scores_dictionaries # Update with latest score data
@@ -118,8 +120,6 @@ func reset_all_player_data_on_start() -> void:
 	SignalsBus.player_credits_updated_event()
 
 
-
-
 ## Signals connections
 
 func _on_update_current_score(score : int) -> void:
@@ -158,7 +158,17 @@ func _on_player_death() -> void:
 	SignalsBus.player_lives_updated_event()
 
 
+func _on_player_hi_score_name_entered(player_name : String) -> void:
+	player_hi_scores_dictionaries.append(
+		{"score" : player_score, "name" : player_name}
+	)
+	sort_high_scores()
+	_save_high_scores()
+
+
 #### 
+
+## GAME LOADING STUFF
 
 ## When game is loaded
 func _on_game_loaded() -> void:
@@ -166,7 +176,7 @@ func _on_game_loaded() -> void:
 	_update_game_settings_from_save_data()
 	_update_display_settings_from_save_data()
 
-## Get the high scores list from save game data
+## Update the high scores list from save game data
 func _update_high_scores_from_save_data() -> void:
 	# If save file doesn't have any high score data, return gracefully and use default scores
 	if !SaveManager.loaded_data.has("player_high_scores"):
@@ -187,7 +197,7 @@ func _update_high_scores_from_save_data() -> void:
 	SaveManager.contents_to_save["player_high_scores"] = player_hi_scores_dictionaries
 
 
-## Get the game settings from save game data
+## Update the game settings from save game data
 func _update_game_settings_from_save_data() -> void:
 	# If save file doesn't have settings, retunr gracefully and use default settings
 	if !SaveManager.loaded_data.has("settings") || !SaveManager.loaded_data["settings"].has("game_settings"):
@@ -207,7 +217,7 @@ func _update_game_settings_from_save_data() -> void:
 	# Update save contents with the latest data after load
 	SaveManager.contents_to_save["settings"]["game_settings"] = SaveManager.loaded_data["settings"]["game_settings"]
 
-## Get the display settings from save game data
+## Update the display settings from save game data
 func _update_display_settings_from_save_data() -> void:
 	if !SaveManager.loaded_data.has("settings") || !SaveManager.loaded_data["settings"].has("display_settings"):
 		push_warning("No settings or display settings found in save file, using default display settings")
@@ -229,10 +239,3 @@ func _update_display_settings_from_save_data() -> void:
 	
 	# Update save contents with the latest data after load
 	SaveManager.contents_to_save["settings"]["display_settings"] = SaveManager.loaded_data["settings"]["display_settings"]
-
-func _on_player_hi_score_name_entered(player_name : String) -> void:
-	player_hi_scores_dictionaries.append(
-		{"score" : player_score, "name" : player_name}
-	)
-	sort_high_scores()
-	_save_high_scores()

@@ -1,6 +1,6 @@
 class_name UiLayer extends CanvasLayer
 
-@onready var simple_crt_filter : CanvasLayer = %SimpleCRTFilter
+@onready var simple_crt_filter : SimpleCrtFilter = %SimpleCRTFilter
 @onready var start_screen : StartScreen = %start_screen
 @onready var main_menu : MainMenu = %main_menu
 @onready var options_menu : OptionsMenu = %options_menu
@@ -127,10 +127,7 @@ func _on_display_settings_back_button_pressed() -> void:
 	_toggle_ui(options_menu)
 
 func _on_display_settings_crt_filter_changed(crt_value: bool) -> void:
-	if crt_value:
-		simple_crt_filter.visible = true
-	else:
-		simple_crt_filter.visible = false
+	simple_crt_filter.visible = crt_value
 
 ####
 

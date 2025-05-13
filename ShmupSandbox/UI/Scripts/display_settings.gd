@@ -26,17 +26,6 @@ func _ready() -> void:
     _create_ui_elements_list()
 
 
-## TODO: 
-    ## - When window mode is changed, immediately change the window mode to be as selected, i.e. fullscreen or windowed - done
-    ## - create the crt filter, see godotshaders.com
-    ## - When crt filter is turned on or off, immediate turn crt filter shader on or off
-    ## - When back button is pressed, save these display settings to save file
-    ## - Rework the save file contents_to_save so that it doesn't need high scores, game settings etc to save, only
-    ##       the changed data is appended to the save file - done
-    ## - Hook it up to load data to use loaded settings when game starts
-
-####
-
 ## SAVE DISPLAY SETTINGS
 
 func _save_display_settings() -> void:
