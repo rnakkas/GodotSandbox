@@ -38,7 +38,16 @@ func _connect_to_group_signals(node : Control) -> void:
 #NOTE: When options menu becomes visible
 ################################################
 func _on_visibility_changed() -> void:
-	if self.visible:
+	if !self.visible:
+		return
+	
+	# Only display game settings option element when player is not playing, i.e. play button has not been pressed in main menu
+	#	This is to prevent players from changing their lives and credits values while playing the game
+	if GameManager.is_game_running:
+		game_settings_button.visible = false
+		display_settings_button.grab_focus()
+	else:
+		game_settings_button.visible = true
 		game_settings_button.grab_focus()
 
 

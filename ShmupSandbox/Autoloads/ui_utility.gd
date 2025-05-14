@@ -27,6 +27,7 @@ var confirm_dialog_ui_nodes : String = "confirm_dialog_ui_nodes"
 var continue_screen_ui_nodes : String = "continue_screen_ui_nodes"
 var main_menu_ui_nodes : String = "main_menu_ui_nodes"
 var pause_menu_ui_nodes : String = "pause_menu_ui_nodes"
+var ui_layer_nodes : String = "ui_layer_nodes"
 
 
 ################################################

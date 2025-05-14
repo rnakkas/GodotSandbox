@@ -15,11 +15,14 @@ class_name UiLayer extends CanvasLayer
 @onready var hi_scores_menu : HiScoresMenu = %hi_scores_menu
 @onready var name_entry_dialog  : NameEntryDialog = %name_entry_dialog
 
+
 signal game_started()
 signal kill_game_instance()
 
-var is_game_running : bool
 
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
 	_initialize_ui_scenes()
 	_connect_to_signals()
@@ -27,19 +30,17 @@ func _ready() -> void:
 func _initialize_ui_scenes() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	## Turn visibility on for start screen
-	start_screen.visible = true
-	
-	## Turn visibility off for all other ui
-	main_menu.visible = false
-	options_menu.visible = false
-	pause_menu.visible = false
-	player_hud.visible = false
-	confirm_dialog.visible = false
-	continue_screen.visible = false
-	game_over_screen.visible = false
-	hi_scores_menu.visible = false
-	name_entry_dialog.visible = false
+	var ui_layer_nodes : Array[Control] = []
+	for node : Control in get_tree().get_nodes_in_group(UiUtility.ui_layer_nodes):
+		ui_layer_nodes.append(node)
+
+	# Turn visibility on for start screen and off for all other screens
+	for ui_node : Control in ui_layer_nodes:
+		if ui_node is StartScreen:
+			ui_node.visible = true
+		else:
+			ui_node.visible = false
+
 
 func _connect_to_signals() -> void:
 	SignalsBus.player_lives_updated.connect(_on_player_lives_depleted)
@@ -75,7 +76,7 @@ func _on_start_screen_start_pressed() -> void:
 ################################################
 func _on_main_menu_play_button_pressed() -> void:
 	game_started.emit()
-	is_game_running = true
+	GameManager.is_game_running = true
 	_toggle_ui(main_menu)
 	_toggle_ui(player_hud)
 
@@ -95,7 +96,7 @@ func _on_main_menu_quit_button_pressed() -> void:
 #NOTE: Options menu
 ################################################
 func _on_options_menu_back_button_pressed() -> void:
-	if !is_game_running:
+	if !GameManager.is_game_running:
 		_toggle_ui(options_menu)
 		_toggle_ui(main_menu)
 	else:
@@ -177,7 +178,7 @@ func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 			_toggle_ui(main_menu)
 			
 			get_tree().paused = false 
-			is_game_running = false
+			GameManager.is_game_running = false
 			kill_game_instance.emit()
 		
 		UiUtility.dialog_quit:
@@ -232,7 +233,7 @@ func _handle_name_entry_or_game_over_logic() -> void:
 	else:
 		_toggle_ui(game_over_screen)
 
-	is_game_running = false
+	GameManager.is_game_running = false
 	kill_game_instance.emit()
 
 
