@@ -22,26 +22,32 @@ var allowed_values_crt : Array[String] = ["Off", "On"]
 signal back_button_pressed()
 signal crt_filter_changed(crt_value : bool)
 
+
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
     _create_ui_elements_list()
 
-
-## SAVE DISPLAY SETTINGS
-
-func _save_display_settings() -> void:
-    GameManager.display_settings_dictionary["window_mode"] = DisplayServer.window_get_mode()
-
-    if crt_value.text == allowed_values_crt[0]:
-        GameManager.display_settings_dictionary["crt_filter"] = false
-    else:
-        GameManager.display_settings_dictionary["crt_filter"] = true
-    
-    SaveManager.contents_to_save["settings"]["display_settings"] = GameManager.display_settings_dictionary
-    SaveManager.save_game()
-
-####
+func _create_ui_elements_list() -> void:
+    for node : Control in get_tree().get_nodes_in_group(UiUtility.display_settings_ui_nodes):
+        ui_elements_list.append(node)
+        _connect_to_group_signals(node)
+    ui_elements_list.sort() # Sort in alphabetical order
 
 
+func _connect_to_group_signals(node : Control) -> void:
+    if node.has_signal(UiUtility.signal_focus_entered):
+        node.focus_entered.connect(_on_element_focused)
+    if node.has_signal(UiUtility.signal_mouse_entered):
+        node.mouse_entered.connect(_on_element_focused_with_mouse.bind(node)) # Use 'bind' to pass source node as property
+    if node is Button || node is TextureButton:
+        node.pressed.connect(_on_button_pressed.bind(node))
+
+
+################################################
+#NOTE: When menu becomes visible
+################################################
 func _on_visibility_changed() -> void:
     if self.visible:
         # Get the current game settings
@@ -59,6 +65,9 @@ func _on_visibility_changed() -> void:
         _toggle_arrow_button_visibility()
 		
 
+################################################
+#NOTE: Input events
+################################################
 func _input(event: InputEvent) -> void:
     if event.is_action_pressed("move_left") || event.is_action_pressed("ui_left"):
         ## Change window mode
@@ -86,6 +95,44 @@ func _input(event: InputEvent) -> void:
             _update_value(crt_value, allowed_values_crt, 1)
             _change_crt_filter()
 
+
+################################################
+#NOTE: Only when menu is visible, toggle arrow buttons based on settings values
+################################################
+func _process(_delta: float) -> void:
+    if self.visible:
+        _toggle_arrow_button_visibility()
+
+func _toggle_arrow_button_visibility() -> void:
+    # Lives left button
+    if mode_value.text == allowed_values_mode[0]:
+        mode_left_button.visible = false
+    else:
+        mode_left_button.visible = true
+
+    # Lives right button
+    if mode_value.text == allowed_values_mode[allowed_values_mode.size()-1]:
+        mode_right_button.visible = false
+    else:
+        mode_right_button.visible = true
+
+    # Credits left button
+    if crt_value.text == allowed_values_crt[0]:
+        crt_left_button.visible = false
+    else:
+        crt_left_button.visible = true
+
+    # Credits right button
+    if crt_value.text == allowed_values_crt[allowed_values_crt.size()-1]:
+        crt_right_button.visible = false
+    else: 
+        crt_right_button.visible = true
+
+
+
+################################################
+#NOTE: Helper func to change window mode: Windowed or Fullscreen
+################################################
 func _change_window_mode() -> void:
     if mode_value.text == allowed_values_mode[0]:
         DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -93,6 +140,10 @@ func _change_window_mode() -> void:
         DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
         DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false) # Allows title bar and border for resize
 
+
+################################################
+#NOTE: Helper func to change crt filter: On or Off
+################################################
 func _change_crt_filter() -> void:
     if crt_value.text == allowed_values_crt[0]:
         crt_filter_changed.emit(false)
@@ -100,38 +151,19 @@ func _change_crt_filter() -> void:
         crt_filter_changed.emit(true)
 
 
-## Only when this menu is visible, show or hide arrow buttons based on the lives and credits values
-func _process(_delta: float) -> void:
-    if self.visible:
-        _toggle_arrow_button_visibility()
 
-
-####
-
-
-func _create_ui_elements_list() -> void:
-    for node : Control in get_tree().get_nodes_in_group(UiUtility.display_settings_ui_nodes):
-        ui_elements_list.append(node)
-        _connect_to_group_signals(node)
-    ui_elements_list.sort() # Sort in alphabetical order
-
-
-func _connect_to_group_signals(node : Control) -> void:
-    if node.has_signal(UiUtility.signal_focus_entered):
-        node.focus_entered.connect(_on_element_focused)
-    if node.has_signal(UiUtility.signal_mouse_entered):
-        node.mouse_entered.connect(_on_element_focused_with_mouse.bind(node)) # Use 'bind' to pass source node as property
-    if node is Button || node is TextureButton:
-        node.pressed.connect(_on_button_pressed.bind(node))
-
-
-## Signal connections
+################################################
+#NOTE: Element focused signal connection
+################################################
 func _on_element_focused() -> void:
     for element in ui_elements_list:
         if element.has_focus():
             UiUtility.highlight_selected_element(ui_elements_list, element)
 
 
+################################################
+#NOTE: Mouse hovered signal connection
+################################################
 func _on_element_focused_with_mouse(node : Control) -> void:
     if node == mode_left_button || node == mode_right_button || node == mode_value_hbox:
         mode_label.grab_focus()
@@ -140,6 +172,10 @@ func _on_element_focused_with_mouse(node : Control) -> void:
     else:
         node.grab_focus()
 
+
+################################################
+#NOTE: Button pressed signal connection
+################################################
 func _on_button_pressed(node: Control) -> void:
     match node:
         back_button:
@@ -177,16 +213,10 @@ func _on_button_pressed(node: Control) -> void:
         _:
             push_error("Unhandled button pressed: ", node.name)
 
-func _update_game_manager() -> void:
-    GameManager.window_mode = DisplayServer.window_get_mode()
-    
-    if crt_value.text == allowed_values_crt[0]:
-        GameManager.crt_filter = false
-    elif crt_value.text == allowed_values_crt[1]:
-        GameManager.crt_filter = true
 
-
-
+################################################
+#NOTE: Helper func to update settings values on ui
+################################################
 func _update_value(value_to_change : Label, allowed_values : Array[String], direction : int):
     var current_value : String = value_to_change.text
     var index : int = allowed_values.find(current_value)
@@ -200,27 +230,30 @@ func _update_value(value_to_change : Label, allowed_values : Array[String], dire
         value_to_change.text = str(allowed_values[new_index])
 
 
-func _toggle_arrow_button_visibility() -> void:
-    # Lives left button
-    if mode_value.text == allowed_values_mode[0]:
-        mode_left_button.visible = false
-    else:
-        mode_left_button.visible = true
 
-    # Lives right button
-    if mode_value.text == allowed_values_mode[allowed_values_mode.size()-1]:
-        mode_right_button.visible = false
-    else:
-        mode_right_button.visible = true
+################################################
+#NOTE: Save display settings to save file
+################################################
+func _save_display_settings() -> void:
+    GameManager.display_settings_dictionary["window_mode"] = DisplayServer.window_get_mode()
 
-    # Credits left button
     if crt_value.text == allowed_values_crt[0]:
-        crt_left_button.visible = false
+        GameManager.display_settings_dictionary["crt_filter"] = false
     else:
-        crt_left_button.visible = true
+        GameManager.display_settings_dictionary["crt_filter"] = true
+    
+    SaveManager.contents_to_save["settings"]["display_settings"] = GameManager.display_settings_dictionary
+    SaveManager.save_game()
 
-    # Credits right button
-    if crt_value.text == allowed_values_crt[allowed_values_crt.size()-1]:
-        crt_right_button.visible = false
-    else: 
-        crt_right_button.visible = true
+
+
+################################################
+#NOTE: Helper func to update game maanger with current settings
+################################################
+func _update_game_manager() -> void:
+    GameManager.window_mode = DisplayServer.window_get_mode()
+    
+    if crt_value.text == allowed_values_crt[0]:
+        GameManager.crt_filter = false
+    elif crt_value.text == allowed_values_crt[1]:
+        GameManager.crt_filter = true

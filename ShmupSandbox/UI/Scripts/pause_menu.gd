@@ -13,25 +13,29 @@ signal quit_button_pressed()
 var selector_icons : Array[TextureRect] = []
 var ui_elements_list : Array[Control] = []
 
+
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
 	_create_ui_elements_list()
 
-## Helper funcs
-
 func _create_ui_elements_list() -> void:
-	ui_elements_list.append_array(
-		[
-			resume_button,
-			options_button,
-			main_menu_button,
-			quit_button
-		]
-	)
+	for node : Button in get_tree().get_nodes_in_group(UiUtility.pause_menu_ui_nodes):
+		ui_elements_list.append(node)
 
 
-####
+################################################
+#NOTE: When pause menu becomes visible
+################################################
+func _on_visibility_changed() -> void:
+	if self.visible:
+		resume_button.grab_focus()
 
-## Resume button
+
+################################################
+#NOTE: Signal connection: Resume button
+################################################
 func _on_resume_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(resume_button)
 	resume_button_pressed.emit()
@@ -43,7 +47,9 @@ func _on_resume_button_mouse_entered() -> void:
 	resume_button.grab_focus()
 
 
-## Options button
+################################################
+#NOTE: Signal connection: Options button
+################################################
 func _on_options_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(options_button)
 	options_button_pressed.emit()
@@ -55,7 +61,9 @@ func _on_options_button_mouse_entered() -> void:
 	options_button.grab_focus()
 
 
-## Main Menu button
+################################################
+#NOTE: Signal connection: Main Menu button
+################################################
 func _on_main_menu_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(main_menu_button)
 	main_menu_button_pressed.emit()
@@ -67,7 +75,9 @@ func _on_main_menu_button_mouse_entered() -> void:
 	main_menu_button.grab_focus()
 
 
-## Quit button
+################################################
+#NOTE: Signal connection: Quit button
+################################################
 func _on_quit_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(quit_button)
 	quit_button_pressed.emit()
@@ -77,8 +87,3 @@ func _on_quit_button_focus_entered() -> void:
 
 func _on_quit_button_mouse_entered() -> void:
 	quit_button.grab_focus()
-
-
-func _on_visibility_changed() -> void:
-	if self.visible:
-		resume_button.grab_focus()

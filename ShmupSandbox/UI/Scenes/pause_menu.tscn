@@ -65,7 +65,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="resume_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="resume_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" groups=["pause_menu_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -80,7 +80,7 @@ flat = true
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="options_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="options_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2" groups=["pause_menu_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -96,7 +96,7 @@ flat = true
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="main_menu_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="main_menu_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer3" groups=["pause_menu_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -112,7 +112,7 @@ flat = true
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="quit_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+[node name="quit_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer4" groups=["pause_menu_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4

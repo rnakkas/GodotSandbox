@@ -9,23 +9,32 @@ signal no_button_pressed()
 
 var ui_elements_list : Array[Control] = []
 
+
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
 	_create_ui_elements_list()
 
-####
-
-## Helper funcs
-
 func _create_ui_elements_list() -> void:
-	ui_elements_list.append_array(
-		[
-			yes_button,
-			no_button
-		]
-	)
+	for node : Control in get_tree().get_nodes_in_group(UiUtility.confirm_dialog_ui_nodes):
+		if node is Button:
+			ui_elements_list.append(node)
 
-####
 
+
+################################################
+#NOTE: When dialog becomes visible
+################################################
+func _on_visibility_changed() -> void:
+	if self.visible:
+		no_button.grab_focus()
+
+
+
+################################################
+#NOTE: Signal connection: Yes button
+################################################
 func _on_yes_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(yes_button)
 	yes_button_pressed.emit(dialog_label_main.text)
@@ -39,6 +48,10 @@ func _on_yes_button_mouse_entered() -> void:
 	yes_button.grab_focus()
 
 
+
+################################################
+#NOTE: Signal connection: No button
+################################################
 func _on_no_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(no_button)
 	no_button_pressed.emit()
@@ -50,8 +63,3 @@ func _on_no_button_focus_entered() -> void:
 
 func _on_no_button_mouse_entered() -> void:
 	no_button.grab_focus()
-
-
-func _on_visibility_changed() -> void:
-	if self.visible:
-		no_button.grab_focus()

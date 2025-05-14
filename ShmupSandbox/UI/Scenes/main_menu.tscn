@@ -60,7 +60,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/separation = 10
 
-[node name="play_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="play_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" groups=["main_menu_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -81,7 +81,7 @@ flat = true
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="options_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="options_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2" groups=["main_menu_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -102,7 +102,7 @@ flat = true
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="hi_scores_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="hi_scores_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer3" groups=["main_menu_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -122,7 +122,7 @@ flat = true
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="quit_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+[node name="quit_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer4" groups=["main_menu_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8

@@ -12,16 +12,13 @@ signal audio_settings_button_pressed()
 
 var ui_elements_list : Array[Control] = []
 
+
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
 	_create_ui_elements_list()
 
-
-func _on_visibility_changed() -> void:
-	if self.visible:
-		game_settings_button.grab_focus()
-
-
-## Helper funcs
 func _create_ui_elements_list() -> void:
 	for node : Control in get_tree().get_nodes_in_group(UiUtility.options_ui_nodes):
 		ui_elements_list.append(node)
@@ -36,20 +33,35 @@ func _connect_to_group_signals(node : Control) -> void:
 	if node is Button:
 		node.pressed.connect(_on_button_pressed.bind(node))
 
-####
-## Signal connections
 
+################################################
+#NOTE: When options menu becomes visible
+################################################
+func _on_visibility_changed() -> void:
+	if self.visible:
+		game_settings_button.grab_focus()
+
+
+
+################################################
+#NOTE: Signal connection: focused on element
+################################################
 func _on_element_focused() -> void:
 	for element in ui_elements_list:
 		if element.has_focus():
 			UiUtility.highlight_selected_element(ui_elements_list, element)
 			break
 	
-
+################################################
+#NOTE: Signal connection: mouse entered
+################################################
 func _on_element_focused_with_mouse(node : Control) -> void:
 	node.grab_focus()
 
 
+################################################
+#NOTE: Signal connection: button pressed
+################################################
 func _on_button_pressed(node : Button) -> void:
 	await UiUtility.selected_button_element_press_animation(node)
 

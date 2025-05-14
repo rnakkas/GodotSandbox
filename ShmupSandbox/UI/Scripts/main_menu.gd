@@ -12,26 +12,29 @@ signal quit_button_pressed()
 
 var ui_elements_list : Array[Control] = []
 
+
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
 	_create_ui_elements_list()
 
-####
-
-## Helper funcs
-
 func _create_ui_elements_list() -> void:
-	ui_elements_list.append_array(
-		[
-			play_button,
-			options_button,
-			hi_scores_button,
-			quit_button
-		]
-	)
+	for node : Button in get_tree().get_nodes_in_group(UiUtility.main_menu_ui_nodes):
+		ui_elements_list.append(node)
 
-####
 
-## Play button
+################################################
+#NOTE: When main menu becomes visible
+################################################
+func _on_visibility_changed() -> void:
+	if self.visible:
+		play_button.grab_focus()
+
+
+################################################
+#NOTE: Signal connection: Play button
+################################################
 func _on_play_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(play_button)
 	play_button_pressed.emit()
@@ -44,7 +47,9 @@ func _on_play_button_mouse_entered() -> void:
 	play_button.grab_focus()
 
 
-## Options button
+################################################
+#NOTE: Signal connection: Options button
+################################################
 func _on_options_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(options_button)
 	options_button_pressed.emit()
@@ -56,7 +61,9 @@ func _on_options_button_mouse_entered() -> void:
 	options_button.grab_focus()
 
 
-## Hi scores button
+################################################
+#NOTE: Signal connection: High scores button
+################################################
 func _on_hi_scores_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(hi_scores_button)
 	hi_scores_button_pressed.emit()
@@ -68,7 +75,9 @@ func _on_hi_scores_button_mouse_entered() -> void:
 	hi_scores_button.grab_focus()
 
 
-## Quit button
+################################################
+#NOTE: Signal connection: Quit button
+################################################
 func _on_quit_button_pressed() -> void:
 	await UiUtility.selected_button_element_press_animation(quit_button)
 	quit_button_pressed.emit()
@@ -78,9 +87,3 @@ func _on_quit_button_focus_entered() -> void:
 
 func _on_quit_button_mouse_entered() -> void:
 	quit_button.grab_focus()
-
-
-## When main menu becomes visible
-func _on_visibility_changed() -> void:
-	if self.visible:
-		play_button.grab_focus()

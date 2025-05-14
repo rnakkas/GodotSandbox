@@ -5,24 +5,33 @@ class_name PlayerHud extends Control
 @onready var top_score_value : Label = %top_score_value
 @onready var credits_value : Label = %credits_value
 
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
 	_connect_to_signals()
 
-## Helper funcs
 func _connect_to_signals() -> void:
 	SignalsBus.player_score_updated.connect(_on_player_score_updated)
 	SignalsBus.player_lives_updated.connect(_on_player_lives_updated)
 	SignalsBus.player_credits_updated.connect(_on_player_credits_updated)
 
 
+################################################
+#NOTE: When player hud becomes visible
+################################################
+func _on_visibility_changed() -> void:
+	if self.visible:
+		set_score_values_on_hud()
+
 func set_score_values_on_hud() -> void:
 	score_value.text = str(GameManager.player_score).pad_zeros(10)
 	top_score_value.text = str(GameManager.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
 
-####
 
-## Signals connections
-
+################################################
+#NOTE: Signal connections
+################################################
 func _on_player_score_updated() -> void:
 	score_value.text = str(GameManager.player_score).pad_zeros(10)
 
@@ -44,6 +53,4 @@ func _on_player_credits_updated() -> void:
 		credits_value.text = str(GameManager.player_credits)
 
 
-func _on_visibility_changed() -> void:
-	if self.visible:
-		set_score_values_on_hud()
+

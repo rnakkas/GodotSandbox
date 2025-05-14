@@ -25,8 +25,10 @@ var volume_tick : int = 5
 
 signal back_button_pressed()
 
-########################
 
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
 	_create_ui_elements_list()
 
@@ -43,8 +45,10 @@ func _connect_to_group_signals(node : Control) -> void:
 	if node is Button || node is TextureButton:
 		node.pressed.connect(_on_button_pressed.bind(node))
 
-########################
 
+################################################
+#NOTE: When menu becomes visible
+################################################
 func _on_visibility_changed() -> void:
 	if self.visible:
 		master_label.grab_focus()
@@ -55,8 +59,9 @@ func _on_visibility_changed() -> void:
 		music_value.text = str(GameManager.music_volume)
 
 
-########################
-
+################################################
+#NOTE: Input events
+################################################
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("move_left") || event.is_action_pressed("ui_left"):
 		## Decrease master
@@ -91,9 +96,9 @@ func _input(event: InputEvent) -> void:
 			_update_value(music_value, 1)
 
 
-########################
-
-## Only when this menu is visible, show or hide arrow buttons based on the volume values
+################################################
+#NOTE: Only when this menu is visible, show or hide arrow buttons based on the volume values
+################################################
 func _process(_delta: float) -> void:
 	if self.visible:
 		_toggle_arrow_button_visibility()
@@ -136,16 +141,18 @@ func _toggle_arrow_button_visibility() -> void:
 		music_right_button.visible = true
 
 
-########################
-
-
-## Signal connections
+################################################
+#NOTE: Element focused signal connection
+################################################
 func _on_element_focused() -> void:
 	for element in ui_elements_list:
 		if element.has_focus():
 			UiUtility.highlight_selected_element(ui_elements_list, element)
 
 
+################################################
+#NOTE: Mouse hovered and focused on element signal connection
+################################################
 func _on_element_focused_with_mouse(node : Control) -> void:
 	if node == master_left_button || node == master_right_button || node == master_value_hbox:
 		master_label.grab_focus()
@@ -157,6 +164,9 @@ func _on_element_focused_with_mouse(node : Control) -> void:
 		node.grab_focus()
 
 
+################################################
+#NOTE: Button pressed signal connection
+################################################
 func _on_button_pressed(node: Control) -> void:
 	match node:
 		back_button:
@@ -201,18 +211,17 @@ func _on_button_pressed(node: Control) -> void:
 			push_error("Unhandled button pressed: ", node.name)
 
 
+################################################
+#NOTE: Helper func to update volume values
+################################################
 func _update_value(value_to_change : Label, direction : int):
 	var new_value : int = clamp(value_to_change.text.to_int() + (direction * volume_tick), 0, 100)
 	value_to_change.text = str(new_value)
 	
 
-
-########################
-## Save game and data ##
-########################
-
-## SAVE AUDIO SETTINGS
-
+################################################
+#NOTE: Save audio settings to save file
+################################################
 func _save_audio_settings() -> void:
 	GameManager.audio_settings_dictionary["master_volume"] = master_value.text.to_int()
 	GameManager.audio_settings_dictionary["sound_volume"] = sound_value.text.to_int()
@@ -221,7 +230,9 @@ func _save_audio_settings() -> void:
 	SaveManager.save_game()
 
 
-########################
+################################################
+#NOTE: Update game manager with current settings
+################################################
 
 func _update_game_manager() -> void:
 	GameManager.master_volume = master_value.text.to_int()

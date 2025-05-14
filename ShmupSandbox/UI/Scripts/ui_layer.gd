@@ -45,32 +45,34 @@ func _connect_to_signals() -> void:
 	SignalsBus.player_lives_updated.connect(_on_player_lives_depleted)
 	SignalsBus.player_pressed_pause_game.connect(_on_player_pauses_game)
 
-####
 
-## Main function to toggle the different ui's
+################################################
+#NOTE: Main function to toggle the different ui's
+################################################
 func _toggle_ui(ui: Control) -> void:
 	ui.visible = !ui.visible
 	ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 
-####
 
-## Pausing game
+################################################
+#NOTE: Pausing game
+################################################
 func _on_player_pauses_game() -> void:
 	get_tree().paused = true
 	_toggle_ui(pause_menu)
 
 
-####
-
-## Start screen
+################################################
+#NOTE: Start screen
+################################################
 func _on_start_screen_start_pressed() -> void:
 	_toggle_ui(start_screen)
 	_toggle_ui(main_menu)
 
 
-####
-
-## Main menu
+################################################
+#NOTE: Main menu
+################################################
 func _on_main_menu_play_button_pressed() -> void:
 	game_started.emit()
 	is_game_running = true
@@ -89,9 +91,9 @@ func _on_main_menu_quit_button_pressed() -> void:
 	get_tree().call_deferred("quit")
 
 
-####
-
-## Options menu
+################################################
+#NOTE: Options menu
+################################################
 func _on_options_menu_back_button_pressed() -> void:
 	if !is_game_running:
 		_toggle_ui(options_menu)
@@ -112,16 +114,18 @@ func _on_options_menu_audio_settings_button_pressed() -> void:
 	_toggle_ui(options_menu)
 	_toggle_ui(audio_settings)
 
-####
 
-## Game Settings
+################################################
+#NOTE: Game Settings
+################################################
 func _on_game_settings_back_button_pressed() -> void:
 	_toggle_ui(game_settings)
 	_toggle_ui(options_menu)
 
-####
 
-## Display Settings
+################################################
+#NOTE: Display Settings
+################################################
 func _on_display_settings_back_button_pressed() -> void:
 	_toggle_ui(display_settings)
 	_toggle_ui(options_menu)
@@ -129,17 +133,18 @@ func _on_display_settings_back_button_pressed() -> void:
 func _on_display_settings_crt_filter_changed(crt_value: bool) -> void:
 	simple_crt_filter.visible = crt_value
 
-####
 
-## Audio settings
+################################################
+#NOTE: Audio settings
+################################################
 func _on_audio_settings_back_button_pressed() -> void:
 	_toggle_ui(audio_settings)
 	_toggle_ui(options_menu)
 
 
-####
-
-## Pause menu
+################################################
+#NOTE: Pause menu
+################################################
 func _on_pause_menu_resume_button_pressed() -> void:
 	get_tree().paused = false
 	_toggle_ui(pause_menu)
@@ -160,9 +165,9 @@ func _on_pause_menu_quit_button_pressed() -> void:
 	_toggle_ui(confirm_dialog)
 
 
-####
-
-## Confirm return to main menu or quit dialog
+################################################
+#NOTE: Confirm return to main menu or quit dialog
+################################################
 func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 	match dialog_text:
 		UiUtility.dialog_return_to_main_menu:
@@ -184,9 +189,9 @@ func _on_confirm_dialog_no_button_pressed() -> void:
 	pause_menu.resume_button.grab_focus()
 
 
-####
-
-## Continue screen 
+################################################
+#NOTE: Continue screen 
+################################################
 func _on_player_lives_depleted() -> void:
 	if GameManager.player_lives < 0:
 		if GameManager.player_credits > 0:
@@ -199,7 +204,10 @@ func _on_continue_screen_no_button_pressed() -> void:
 	_toggle_ui(continue_screen)
 	_handle_name_entry_or_game_over_logic()
 
-## Helper func to check for player current score vs top 10 hi scores
+
+################################################
+#NOTE: Helper func to check for player current score vs top 10 hi scores
+################################################
 func _is_player_score_in_top_ten() -> bool:
 	var is_in_top_ten : bool
 	var hi_score_list_size : int = GameManager.player_hi_scores_dictionaries.size()
@@ -214,7 +222,10 @@ func _is_player_score_in_top_ten() -> bool:
 	
 	return is_in_top_ten
 
-## Helper func with logic to show name entry dialog or game over screen based on player score
+
+################################################
+#NOTE: Helper func with logic to show name entry dialog or game over screen based on player score
+################################################
 func _handle_name_entry_or_game_over_logic() -> void:
 	if _is_player_score_in_top_ten():
 		_toggle_ui(name_entry_dialog)
@@ -225,31 +236,35 @@ func _handle_name_entry_or_game_over_logic() -> void:
 	kill_game_instance.emit()
 
 
+################################################
+#NOTE: Continue dialog
+################################################
 func _on_continue_screen_yes_button_pressed() -> void:
 	_toggle_ui(continue_screen)
 	player_hud.player_lives_value.text = "x " + str(GameManager._player_max_lives)
 	player_hud.score_value.text = str(GameManager.player_score).pad_zeros(8)
 
-####
 
-## Game over screen
+################################################
+#NOTE: Game over screen
+################################################
 func _on_game_over_screen_game_over_screen_timed_out() -> void:
 	_toggle_ui(game_over_screen)
 	_toggle_ui(player_hud)
 	_toggle_ui(hi_scores_menu)
 
 
-####
-
-## Hi Scores menu
+################################################
+#NOTE: Hi Scores menu
+################################################
 func _on_hi_scores_menu_back_button_pressed() -> void:
 	_toggle_ui(hi_scores_menu)
 	_toggle_ui(main_menu)
 
 
-####
-
-## Name entry dialog
+################################################
+#NOTE: Name entry dialog
+################################################
 func _on_name_entry_dialog_ok_button_pressed() -> void:
 	_toggle_ui(name_entry_dialog)
 	_toggle_ui(game_over_screen)

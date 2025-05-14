@@ -1,26 +1,45 @@
 extends Node
 
-## UI dialog box strings
+################################################
+#NOTE: UI dialog box strings
+################################################
 var dialog_return_to_main_menu = "Return to Main Menu?"
 var dialog_quit = "Exit the game?"
 
-## Colour and hex code references
+
+################################################
+#NOTE: Colour and hex code references
+################################################
 var color_white : Color = "#f0f6f0"
 var color_black : Color = "#222323"
 var color_yellow : Color = "#ffa31f"
 var color_red : Color = "#e24b13"
 var color_transparent : Color = Color(0, 0 , 0, 0)
 
-## UI group names
+################################################
+#NOTE: UI group names
+################################################
 var options_ui_nodes : String = "options_ui_nodes"
 var game_settings_ui_nodes : String = "game_settings_ui_nodes"
 var display_settings_ui_nodes : String = "display_settings_ui_nodes"
 var audio_settings_ui_nodes : String = "audio_settings_ui_nodes"
+var confirm_dialog_ui_nodes : String = "confirm_dialog_ui_nodes"
+var continue_screen_ui_nodes : String = "continue_screen_ui_nodes"
+var main_menu_ui_nodes : String = "main_menu_ui_nodes"
+var pause_menu_ui_nodes : String = "pause_menu_ui_nodes"
 
-## Control node signal names
+
+################################################
+#NOTE: Control node signal names
+################################################
 var signal_focus_entered : String = "focus_entered"
 var signal_mouse_entered : String = "mouse_entered"
 
+
+
+################################################
+#NOTE: Various ui element highlighting and animations
+################################################
 
 func highlight_selected_element(ui_elements_list : Array[Control], selected_element : Control) -> void:
 	for element:int in range(ui_elements_list.size()):

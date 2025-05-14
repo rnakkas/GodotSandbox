@@ -15,106 +15,22 @@ const tick_time : int = 1
 var ui_elements_list : Array[Control] = []
 var current_focused_button : Button
 
+
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
 	_create_ui_elements_list()
 
-####
-
-## Helper funcs
-
 func _create_ui_elements_list() -> void:
-	ui_elements_list.append_array(
-		[
-			yes_button,
-			no_button
-		]
-	)
-
-func start_countdown() -> void:
-	continue_time = max_continue_time
-	continue_time_left.text = str(continue_time)
-	tick_timer.wait_time = tick_time
-	tick_timer.start()
-
-####
+	for node : Control in get_tree().get_nodes_in_group(UiUtility.continue_screen_ui_nodes):
+		if node is Button:
+			ui_elements_list.append(node)
 
 
-func _on_tick_timer_timeout() -> void:
-	continue_time -= tick_time
-	
-	if continue_time <= 0:
-		await get_tree().create_timer(0.2).timeout
-		_handle_countdown_end()
-	
-	continue_time_left.text = str(continue_time)
-		
-####
-
-## Helper funcs
-
-func _handle_countdown_end() -> void:
-	tick_timer.stop()
-
-	## Automatically press the button that is focused
-	match current_focused_button:
-		yes_button:
-			_continue_game()
-		no_button:
-			_end_game()
-
-
-func _continue_game() -> void:
-	## Unpause
-	get_tree().paused = false
-
-	## Turn off the continue screen
-	await UiUtility.selected_button_element_press_animation(yes_button)
-
-	## Set hud values
-	yes_button_pressed.emit()
-
-	## Respawn player
-	SignalsBus.continue_game_player_respawn_event()
-
-
-func _end_game() -> void:
-	get_tree().paused = false # Unpause
-	no_button_pressed.emit()
-
-
-####
-
-## Yes button actions
-
-func _on_yes_button_pressed() -> void:
-	_continue_game()
-
-func _on_yes_button_focus_entered() -> void:
-	UiUtility.highlight_selected_element(ui_elements_list, yes_button)
-	current_focused_button = yes_button
-
-func _on_yes_button_mouse_entered() -> void:
-	yes_button.grab_focus()
-
-
-####
-
-## No button actions
-
-func _on_no_button_pressed() -> void:
-	_end_game()
-
-func _on_no_button_focus_entered() -> void:
-	UiUtility.highlight_selected_element(ui_elements_list, no_button)
-	current_focused_button = no_button
-
-func _on_no_button_mouse_entered() -> void:
-	no_button.grab_focus()
-
-
-####
-
-## When continue screen becomes visibile
+################################################
+#NOTE: When continue screen becomes visible, start countdown
+################################################
 func _on_visibility_changed() -> void:
 	if self.visible:
 		_set_continue_dialog_values()
@@ -132,3 +48,82 @@ func _set_continue_dialog_values() -> void:
 				)
 		)
 	)
+
+func start_countdown() -> void:
+	continue_time = max_continue_time
+	continue_time_left.text = str(continue_time)
+	tick_timer.wait_time = tick_time
+	tick_timer.start()
+
+
+################################################
+#NOTE: Countdown timer and tick
+################################################
+func _on_tick_timer_timeout() -> void:
+	continue_time -= tick_time
+	
+	if continue_time <= 0:
+		await get_tree().create_timer(0.2).timeout
+		_handle_countdown_end()
+	
+	continue_time_left.text = str(continue_time)
+
+func _handle_countdown_end() -> void:
+	tick_timer.stop()
+
+	# Automatically press the button that is focused
+	match current_focused_button:
+		yes_button:
+			_continue_game()
+		no_button:
+			_end_game()
+
+func _continue_game() -> void:
+	# Unpause
+	get_tree().paused = false
+
+	# Turn off the continue screen
+	await UiUtility.selected_button_element_press_animation(yes_button)
+
+	# Set hud values
+	yes_button_pressed.emit()
+
+	# Respawn player
+	SignalsBus.continue_game_player_respawn_event()
+
+
+func _end_game() -> void:
+	get_tree().paused = false # Unpause
+	no_button_pressed.emit()
+
+
+
+################################################
+#NOTE: Signal connection: Yes button
+################################################
+func _on_yes_button_pressed() -> void:
+	_continue_game()
+
+func _on_yes_button_focus_entered() -> void:
+	UiUtility.highlight_selected_element(ui_elements_list, yes_button)
+	current_focused_button = yes_button
+
+func _on_yes_button_mouse_entered() -> void:
+	yes_button.grab_focus()
+
+
+################################################
+#NOTE: Signal connection: No button
+################################################
+func _on_no_button_pressed() -> void:
+	_end_game()
+
+func _on_no_button_focus_entered() -> void:
+	UiUtility.highlight_selected_element(ui_elements_list, no_button)
+	current_focused_button = no_button
+
+func _on_no_button_mouse_entered() -> void:
+	no_button.grab_focus()
+
+
+
