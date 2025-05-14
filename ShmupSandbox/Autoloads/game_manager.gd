@@ -26,9 +26,9 @@ var display_settings_dictionary : Dictionary = {
 }
 
 ## Default Audio settings
-var master_volume : int = 10
-var sound_volume : int = 7
-var music_volume : int = 7
+var master_volume : int = 100
+var sound_volume : int = 75
+var music_volume : int = 75
 
 var audio_settings_dictionary : Dictionary = {
 	"master_volume" : master_volume,
