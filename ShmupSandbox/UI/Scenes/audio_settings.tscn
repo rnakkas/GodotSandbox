@@ -133,7 +133,7 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_w8yk6")
 theme_override_font_sizes/font_size = 30
-text = "100%"
+text = "100"
 horizontal_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_master/HBoxContainer_master_value"]
@@ -234,7 +234,7 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_w8yk6")
 theme_override_font_sizes/font_size = 30
-text = "100%"
+text = "100"
 horizontal_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_sound/HBoxContainer_sound_value"]
@@ -335,7 +335,7 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_w8yk6")
 theme_override_font_sizes/font_size = 30
-text = "100%"
+text = "100"
 horizontal_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_music/HBoxContainer_music_value"]

@@ -26,6 +26,8 @@ var display_settings_dictionary : Dictionary = {
 }
 
 ## Default Audio settings
+var volume_max : int = 100
+var volume_min : int = 0
 var master_volume : int = 100
 var sound_volume : int = 75
 var music_volume : int = 75
@@ -175,6 +177,8 @@ func _on_game_loaded() -> void:
 	_update_high_scores_from_save_data()
 	_update_game_settings_from_save_data()
 	_update_display_settings_from_save_data()
+	_update_audio_settings_from_save_data()
+
 
 ## Update the high scores list from save game data
 func _update_high_scores_from_save_data() -> void:
@@ -239,3 +243,24 @@ func _update_display_settings_from_save_data() -> void:
 	
 	# Update save contents with the latest data after load
 	SaveManager.contents_to_save["settings"]["display_settings"] = SaveManager.loaded_data["settings"]["display_settings"]
+
+## Update the audio settings from the save game data
+func _update_audio_settings_from_save_data() -> void:
+	if !SaveManager.loaded_data.has("settings") || !SaveManager.loaded_data["settings"].has("audio_settings"):
+		push_warning("No settings or audio settings found in save file, using default audio settings")
+		return
+	
+	audio_settings_dictionary.clear()
+	for entry in SaveManager.loaded_data["settings"]["audio_settings"]:
+		var entry_value = SaveManager.loaded_data["settings"]["audio_settings"][entry]
+		if typeof(entry_value) == TYPE_FLOAT:
+			entry_value = int(entry_value)
+			if entry == "master_volume":
+				master_volume = entry_value
+			if entry == "sound_volume":
+				sound_volume = entry_value
+			if entry == "music_volume":
+				music_volume = entry_value
+	
+	# Update save contents with the latest data after load
+	SaveManager.contents_to_save["settings"]["audio_settings"] = SaveManager.loaded_data["settings"]["audio_settings"]
