@@ -26,7 +26,7 @@ func _connect_to_signals() -> void:
 
 ## Connected signal methods
 func _on_player_death() -> void:
-	if PlayerData.player_lives >= 0: # Only respawn if player still has lives
+	if GameManager.player_lives >= 0: # Only respawn if player still has lives
 		spawn_player_sprite("respawn") # Play respawn animation for player
 
 func _on_player_spawn(pos : Vector2, can_be_invincible : bool) -> void:

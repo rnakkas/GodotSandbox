@@ -22,6 +22,9 @@ const allowed_chars : Array[String] = [
 signal ok_button_pressed()
 
 
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
 	_initialize_letters_list()
 	_initialize_letter_containers_list()
@@ -37,6 +40,7 @@ func _initialize_letters_list() -> void:
 			_connect_to_group_signals(node)
 	letter_labels_list.sort()
 
+
 ## Get the list of letter containers and connect to their signals
 func _initialize_letter_containers_list() -> void:
 	for node : Node in get_tree().get_nodes_in_group("name_entry_dialog_letter_containers"):
@@ -51,12 +55,11 @@ func _connect_to_group_signals(node : Control) -> void:
 		node.focus_entered.connect(_on_focus_entered)
 
 
-####
-
 ## Blinking timer properties
 func _set_blink_timer_properties() -> void:
 	blink_timer.wait_time = blink_time
 	blink_timer.one_shot = false
+
 
 ## Idle timer properties
 func _set_idle_timer_properties() -> void:
@@ -64,8 +67,29 @@ func _set_idle_timer_properties() -> void:
 	idle_timer.one_shot = true
 
 
-####
 
+################################################
+#NOTE: When the name entry dialog becomes visible
+################################################
+## When this dialog becomes visible
+func _on_visibility_changed() -> void:
+	if self.visible:
+		score_label.text = str(GameManager.player_score)
+		_reset_name_entry_letters()
+		idle_timer.start()
+
+## To reset the letters back to AAA in the name entry, and ok to be made invisible
+func _reset_name_entry_letters() -> void:
+	ok_button.visible = !ok_button.visible
+	letter_containers_list[0].grab_focus()
+
+	for letter : int in range(letter_labels_list.size()):
+		letter_labels_list[letter].text = allowed_chars[0]
+
+
+################################################
+#NOTE: Input events
+################################################
 ## Selecting letters for name entry
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("move_up") || event.is_action_pressed("ui_up"):
@@ -116,27 +140,9 @@ func _accept_letter() -> void:
 				print("confirmed all letters")
 
 
-
-####
-
-## Signals connections
-
-## When this dialog becomes visible
-func _on_visibility_changed() -> void:
-	if self.visible:
-		score_label.text = str(PlayerData.player_score)
-		_reset_name_entry_letters()
-		idle_timer.start()
-
-## To reset the letters back to AAA in the name entry, and ok to be made invisible
-func _reset_name_entry_letters() -> void:
-	ok_button.visible = !ok_button.visible
-	letter_containers_list[0].grab_focus()
-
-	for letter : int in range(letter_labels_list.size()):
-		letter_labels_list[letter].text = allowed_chars[0]
-
-
+################################################
+#NOTE: Signal connections
+################################################
 ## Focus entered for letter containers
 func _on_focus_entered() -> void:
 	for element : int in range(letter_containers_list.size()):

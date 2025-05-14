@@ -1,15 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://wq32mri3ebiv"]
+[gd_scene load_steps=17 format=3 uid="uid://wq32mri3ebiv"]
 
 [ext_resource type="PackedScene" uid="uid://dw1uu0vpx6e46" path="res://ShmupSandbox/UI/Scenes/main_menu.tscn" id="1_ga2yo"]
 [ext_resource type="Script" uid="uid://s70ghdyj3lk3" path="res://ShmupSandbox/UI/Scripts/ui_layer.gd" id="1_hgdm0"]
 [ext_resource type="PackedScene" uid="uid://dvex6ouhoh1ev" path="res://ShmupSandbox/UI/Scenes/confirm_dialog.tscn" id="2_3gw38"]
 [ext_resource type="PackedScene" uid="uid://ny01qnyexpg2" path="res://ShmupSandbox/UI/Scenes/options_menu.tscn" id="2_hgdm0"]
+[ext_resource type="PackedScene" uid="uid://bitai5y7b0p1h" path="res://ShmupSandbox/UI/Scenes/simple_crt_filter.tscn" id="2_y7ooj"]
 [ext_resource type="PackedScene" uid="uid://bumbgw58q7r1d" path="res://ShmupSandbox/UI/Scenes/pause_menu.tscn" id="3_3gw38"]
 [ext_resource type="PackedScene" uid="uid://bntsd8akyqgiv" path="res://ShmupSandbox/UI/Scenes/start_screen.tscn" id="3_abmpj"]
 [ext_resource type="PackedScene" uid="uid://btcsgnuk4yo61" path="res://ShmupSandbox/UI/Scenes/player_hud.tscn" id="4_dqs3x"]
 [ext_resource type="PackedScene" uid="uid://dn51megt1rye4" path="res://ShmupSandbox/UI/Scenes/continue_screen.tscn" id="6_3gw38"]
+[ext_resource type="PackedScene" uid="uid://d4ccnuy1t5mki" path="res://ShmupSandbox/UI/Scenes/game_settings.tscn" id="6_5mj85"]
 [ext_resource type="PackedScene" uid="uid://v4u6mxfaksoq" path="res://ShmupSandbox/UI/Scenes/parallax_background.tscn" id="6_ga2yo"]
+[ext_resource type="PackedScene" uid="uid://cfb4oxvkojkrw" path="res://ShmupSandbox/UI/Scenes/display_settings.tscn" id="7_y7ooj"]
 [ext_resource type="PackedScene" uid="uid://cwdcwh6sflfw1" path="res://ShmupSandbox/UI/Scenes/game_over_screen.tscn" id="8_dqs3x"]
+[ext_resource type="PackedScene" uid="uid://b0td5yoxb431c" path="res://ShmupSandbox/UI/Scenes/audio_settings.tscn" id="8_x3d84"]
 [ext_resource type="PackedScene" uid="uid://cwajjxolnfu64" path="res://ShmupSandbox/UI/Scenes/hi_scores_menu.tscn" id="9_kbioj"]
 [ext_resource type="PackedScene" uid="uid://dmdtueiex673w" path="res://ShmupSandbox/UI/Scenes/name_entry_dialog.tscn" id="10_dlse4"]
 
@@ -17,42 +21,57 @@
 process_mode = 3
 script = ExtResource("1_hgdm0")
 
-[node name="player_hud" parent="." instance=ExtResource("4_dqs3x")]
+[node name="SimpleCRTFilter" parent="." instance=ExtResource("2_y7ooj")]
+unique_name_in_owner = true
+
+[node name="player_hud" parent="." groups=["ui_layer_nodes"] instance=ExtResource("4_dqs3x")]
 unique_name_in_owner = true
 visible = false
 
-[node name="start_screen" parent="." instance=ExtResource("3_abmpj")]
+[node name="start_screen" parent="." groups=["ui_layer_nodes"] instance=ExtResource("3_abmpj")]
 unique_name_in_owner = true
 
-[node name="main_menu" parent="." instance=ExtResource("1_ga2yo")]
-unique_name_in_owner = true
-visible = false
-
-[node name="options_menu" parent="." instance=ExtResource("2_hgdm0")]
+[node name="main_menu" parent="." groups=["ui_layer_nodes"] instance=ExtResource("1_ga2yo")]
 unique_name_in_owner = true
 visible = false
 
-[node name="pause_menu" parent="." instance=ExtResource("3_3gw38")]
+[node name="options_menu" parent="." groups=["ui_layer_nodes"] instance=ExtResource("2_hgdm0")]
 unique_name_in_owner = true
 visible = false
 
-[node name="continue_screen" parent="." instance=ExtResource("6_3gw38")]
+[node name="game_settings" parent="." groups=["ui_layer_nodes"] instance=ExtResource("6_5mj85")]
 unique_name_in_owner = true
 visible = false
 
-[node name="confirm_dialog" parent="." instance=ExtResource("2_3gw38")]
+[node name="display_settings" parent="." groups=["ui_layer_nodes"] instance=ExtResource("7_y7ooj")]
 unique_name_in_owner = true
 visible = false
 
-[node name="game_over_screen" parent="." instance=ExtResource("8_dqs3x")]
+[node name="audio_settings" parent="." groups=["ui_layer_nodes"] instance=ExtResource("8_x3d84")]
 unique_name_in_owner = true
 visible = false
 
-[node name="hi_scores_menu" parent="." instance=ExtResource("9_kbioj")]
+[node name="pause_menu" parent="." groups=["ui_layer_nodes"] instance=ExtResource("3_3gw38")]
 unique_name_in_owner = true
 visible = false
 
-[node name="name_entry_dialog" parent="." instance=ExtResource("10_dlse4")]
+[node name="continue_screen" parent="." groups=["ui_layer_nodes"] instance=ExtResource("6_3gw38")]
+unique_name_in_owner = true
+visible = false
+
+[node name="confirm_dialog" parent="." groups=["ui_layer_nodes"] instance=ExtResource("2_3gw38")]
+unique_name_in_owner = true
+visible = false
+
+[node name="game_over_screen" parent="." groups=["ui_layer_nodes"] instance=ExtResource("8_dqs3x")]
+unique_name_in_owner = true
+visible = false
+
+[node name="hi_scores_menu" parent="." groups=["ui_layer_nodes"] instance=ExtResource("9_kbioj")]
+unique_name_in_owner = true
+visible = false
+
+[node name="name_entry_dialog" parent="." groups=["ui_layer_nodes"] instance=ExtResource("10_dlse4")]
 unique_name_in_owner = true
 visible = false
 
@@ -63,7 +82,14 @@ visible = false
 [connection signal="options_button_pressed" from="main_menu" to="." method="_on_main_menu_options_button_pressed"]
 [connection signal="play_button_pressed" from="main_menu" to="." method="_on_main_menu_play_button_pressed"]
 [connection signal="quit_button_pressed" from="main_menu" to="." method="_on_main_menu_quit_button_pressed"]
+[connection signal="audio_settings_button_pressed" from="options_menu" to="." method="_on_options_menu_audio_settings_button_pressed"]
 [connection signal="back_button_pressed" from="options_menu" to="." method="_on_options_menu_back_button_pressed"]
+[connection signal="display_settings_button_pressed" from="options_menu" to="." method="_on_options_menu_display_settings_button_pressed"]
+[connection signal="game_settings_button_pressed" from="options_menu" to="." method="_on_options_menu_game_settings_button_pressed"]
+[connection signal="back_button_pressed" from="game_settings" to="." method="_on_game_settings_back_button_pressed"]
+[connection signal="back_button_pressed" from="display_settings" to="." method="_on_display_settings_back_button_pressed"]
+[connection signal="crt_filter_changed" from="display_settings" to="." method="_on_display_settings_crt_filter_changed"]
+[connection signal="back_button_pressed" from="audio_settings" to="." method="_on_audio_settings_back_button_pressed"]
 [connection signal="main_menu_button_pressed" from="pause_menu" to="." method="_on_pause_menu_main_menu_button_pressed"]
 [connection signal="options_button_pressed" from="pause_menu" to="." method="_on_pause_menu_options_button_pressed"]
 [connection signal="quit_button_pressed" from="pause_menu" to="." method="_on_pause_menu_quit_button_pressed"]

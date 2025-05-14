@@ -2,8 +2,8 @@ class_name PlayerCat extends CharacterBody2D
 
 ## Velocity
 @export var _max_speed : float = 450.0
-@export var _acceleration : float = 1800.0
-@export var _damping : float = 2000.0
+# @export var _acceleration : float = 1800.0
+# @export var _damping : float = 2000.0
 
 ## Shooting
 @export var fire_rate : float = 8.0
@@ -38,10 +38,10 @@ func _ready() -> void:
 	shooting_cooldown_time = 1/fire_rate
 	invincibility_timer.wait_time = invincibility_time
 
-func _physics_process(delta):
+func _physics_process(_delta) -> void:
 	if is_dead:
 		return
-	_handle_movement(delta)
+	_handle_movement()
 	move_and_slide()
 
 func _process(_delta: float) -> void:
@@ -58,7 +58,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Helper funcs
 
-func _handle_movement(delta) -> void:
+func _handle_movement() -> void:
 	var input_dir := Vector2.ZERO
 	
 	# Get input direction
@@ -68,18 +68,22 @@ func _handle_movement(delta) -> void:
 	
 	# Acceleration
 	if input_dir != Vector2.ZERO:
-		velocity = velocity.move_toward(input_dir * _max_speed, _acceleration * delta)
+		# velocity = velocity.move_toward(input_dir * _max_speed, _acceleration * delta)
+		velocity = input_dir * _max_speed
 	else:
-		velocity = velocity.move_toward(Vector2.ZERO, _damping * delta)
+		# velocity = velocity.move_toward(Vector2.ZERO, _damping * delta)
+		velocity = Vector2.ZERO
 
 func _clamp_movement_to_screen_bounds() -> void:
 	# Clamp position within bounds
 	var min_bounds : Vector2 = Vector2(0, 0)
 	var max_bounds : Vector2 = viewport_size
-	var offset : float = 20.0
+	var offset_x : float = 60.0
+	var offset_y_screen_bottom : float = 20.0
+	var offset_y_screen_top : float = 100.0
 	
-	position.x = clamp(position.x, offset - min_bounds.x, max_bounds.x - offset)
-	position.y = clamp(position.y, offset - min_bounds.y, max_bounds.y - offset)
+	position.x = clamp(position.x, offset_x - min_bounds.x, max_bounds.x - offset_x)
+	position.y = clamp(position.y, offset_y_screen_top + min_bounds.y, max_bounds.y - offset_y_screen_bottom)
 
 func _handle_shooting() -> void:
 	if is_dead:

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bitai5y7b0p1h"]
+
+[ext_resource type="Shader" uid="uid://dqnjc31qelhqm" path="res://ShmupSandbox/UI/Shaders/simple_crt_shader.gdshader" id="1_1r333"]
+[ext_resource type="Script" uid="uid://dxh3hjpd4svps" path="res://ShmupSandbox/UI/Scripts/simple_crt_filter.gd" id="1_033xs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_033xs"]
+shader = ExtResource("1_1r333")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 0.5
+shader_parameter/warp_amount = 0.05
+shader_parameter/vignette_amount = 0.5
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.05
+shader_parameter/brightness_boost = 1.2
+
+[node name="SimpleCRTFilter" type="CanvasLayer"]
+script = ExtResource("1_033xs")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_033xs")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bof6go348a3m7"
-path="res://.godot/imported/pause_icon.png-eb844d39d51770094d8654ad7e0d8476.ctex"
+uid="uid://qusud1dgnpui"
+path="res://.godot/imported/ui_arrow_normal-v2.png-f7a59fd2f3bddd9b4a3870aa4a459483.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShmupSandbox/Assets/Icons/pause_icon.png"
-dest_files=["res://.godot/imported/pause_icon.png-eb844d39d51770094d8654ad7e0d8476.ctex"]
+source_file="res://ShmupSandbox/Assets/Icons/ui_arrow_normal-v2.png"
+dest_files=["res://.godot/imported/ui_arrow_normal-v2.png-f7a59fd2f3bddd9b4a3870aa4a459483.ctex"]
 
 [params]
 

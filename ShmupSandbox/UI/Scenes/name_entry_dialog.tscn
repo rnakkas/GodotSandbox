@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmdtueiex673w"]
+[gd_scene load_steps=5 format=3 uid="uid://dmdtueiex673w"]
 
 [ext_resource type="Script" uid="uid://c1ek7rm0y40yw" path="res://ShmupSandbox/UI/Scripts/name_entry_dialog.gd" id="1_67rqg"]
-[ext_resource type="FontFile" uid="uid://biycie4kaffui" path="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf" id="1_fmiaw"]
+[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_c6avd"]
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_hha2u"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_s1ksk"]
 
@@ -32,10 +33,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 35
-theme_override_constants/margin_top = 35
-theme_override_constants/margin_right = 35
-theme_override_constants/margin_bottom = 35
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_top = 70
+theme_override_constants/margin_right = 70
+theme_override_constants/margin_bottom = 70
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -47,16 +48,16 @@ layout_mode = 2
 [node name="dialog_label_1" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_fmiaw")
-theme_override_font_sizes/font_size = 45
+theme_override_fonts/font = ExtResource("2_c6avd")
+theme_override_font_sizes/font_size = 75
 text = "New High Score!"
 
 [node name="score_label" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_fmiaw")
-theme_override_font_sizes/font_size = 40
+theme_override_fonts/font = ExtResource("3_hha2u")
+theme_override_font_sizes/font_size = 35
 text = "2215156631548"
 
 [node name="separator2" type="Control" parent="MarginContainer/VBoxContainer"]
@@ -65,15 +66,15 @@ layout_mode = 2
 [node name="dialog_label_2" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_fmiaw")
-theme_override_font_sizes/font_size = 38
+theme_override_fonts/font = ExtResource("3_hha2u")
+theme_override_font_sizes/font_size = 35
 text = "Enter your name:"
 
 [node name="HBoxContainer_letters" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 2
+theme_override_constants/separation = 10
 alignment = 1
 
 [node name="letter_1_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_letters" groups=["name_entry_dialog_letter_containers"]]
@@ -96,7 +97,7 @@ focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
-theme_override_fonts/font = ExtResource("1_fmiaw")
+theme_override_fonts/font = ExtResource("3_hha2u")
 theme_override_font_sizes/font_size = 35
 text = "A"
 horizontal_alignment = 1
@@ -121,7 +122,7 @@ focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
-theme_override_fonts/font = ExtResource("1_fmiaw")
+theme_override_fonts/font = ExtResource("3_hha2u")
 theme_override_font_sizes/font_size = 35
 text = "B"
 horizontal_alignment = 1
@@ -146,7 +147,7 @@ focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
-theme_override_fonts/font = ExtResource("1_fmiaw")
+theme_override_fonts/font = ExtResource("3_hha2u")
 theme_override_font_sizes/font_size = 35
 text = "C"
 horizontal_alignment = 1
@@ -161,8 +162,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("1_fmiaw")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_hha2u")
+theme_override_font_sizes/font_size = 45
 action_mode = 0
 text = "OK"
 flat = true

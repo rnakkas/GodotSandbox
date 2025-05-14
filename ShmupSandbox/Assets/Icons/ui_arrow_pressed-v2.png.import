@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d04yolfqx8m3v"
-path="res://.godot/imported/selctor_icon.png-66f73a960d6bcbd21a144a267ff3485c.ctex"
+uid="uid://dto7f70dxk21"
+path="res://.godot/imported/ui_arrow_pressed-v2.png-f27dfa3936e4d89069692b5090fd440a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShmupSandbox/Assets/Icons/selctor_icon.png"
-dest_files=["res://.godot/imported/selctor_icon.png-66f73a960d6bcbd21a144a267ff3485c.ctex"]
+source_file="res://ShmupSandbox/Assets/Icons/ui_arrow_pressed-v2.png"
+dest_files=["res://.godot/imported/ui_arrow_pressed-v2.png-f27dfa3936e4d89069692b5090fd440a.ctex"]
 
 [params]
 

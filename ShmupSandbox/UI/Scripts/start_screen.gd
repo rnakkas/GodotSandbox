@@ -10,7 +10,6 @@ var input_enabled : bool = false
 
 signal start_pressed()
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_set_blink_timer_properties(idle_blink_time)
 	blink_timer.start()
