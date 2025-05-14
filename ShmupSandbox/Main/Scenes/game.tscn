@@ -25,6 +25,8 @@ limit_bottom = 540
 
 [node name="EnemiesContainer" type="Node2D" parent="."]
 
+[node name="PickupsContainer" type="Node2D" parent="."]
+
 [connection signal="add_enemy_to_game" from="enemy_spawner" to="." method="_on_enemy_spawner_add_enemy_to_game"]
 [connection signal="add_player_spawn_sprite_to_game" from="player_spawner" to="." method="_on_player_spawner_add_player_spawn_sprite_to_game"]
 [connection signal="add_player_to_game" from="player_spawner" to="." method="_on_player_spawner_add_player_to_game"]
