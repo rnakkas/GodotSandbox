@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://boi3x6qa21wtr"]
-
-[node name="PickupsSpawner" type="Node2D"]
-
-[node name="SpawnTimer-FOR_TESTING_ONLY" type="Timer" parent="."]
-wait_time = 3.0
-autostart = true

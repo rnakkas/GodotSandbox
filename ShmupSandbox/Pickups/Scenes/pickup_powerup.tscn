@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://drn1oajqy3684"]
+
+[ext_resource type="Script" uid="uid://85opciapqat8" path="res://ShmupSandbox/Pickups/Scripts/pickup_powerup.gd" id="1_8m5pr"]
+[ext_resource type="Script" uid="uid://dlh7lg7gj4tlp" path="res://ShmupSandbox/Pickups/Scripts/powerup_pathfollow.gd" id="1_glbyy"]
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_lkxkw"]
+
+[sub_resource type="Curve2D" id="Curve2D_glbyy"]
+_data = {
+"points": PackedVector2Array(1.12261, 169.342, -1.12261, -169.342, 55.6854, 63, -91.6888, 2.04904, 91.6888, -2.04904, 0.994382, 131, 2.80651, -164.262, -2.80651, 164.262, -53.6966, 58, 73.3017, 4.81929, -73.3017, -4.81929, 5.96629, 17, -23.616, -34.3519, 23.616, 34.3519, 3.97753, 129, -1.91689, 46.2652, 1.91689, -46.2652, 56.6798, 102, 0, 0, 0, 0, 55.6854, 63)
+}
+point_count = 7
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lkxkw"]
+radius = 26.0192
+
+[node name="PickupPowerup" type="Node2D"]
+script = ExtResource("1_8m5pr")
+speed = 30.0
+
+[node name="path" type="Path2D" parent="."]
+scale = Vector2(1.00565, 1)
+curve = SubResource("Curve2D_glbyy")
+
+[node name="pathfollow" type="PathFollow2D" parent="path"]
+position = Vector2(55.6854, 63)
+rotation = 1.57322
+rotates = false
+script = ExtResource("1_glbyy")
+pathfollow_speed = 0.15
+
+[node name="powerup_area" type="Area2D" parent="path/pathfollow"]
+rotation = -1.5708
+
+[node name="collider" type="CollisionShape2D" parent="path/pathfollow/powerup_area"]
+shape = SubResource("CircleShape2D_lkxkw")
+debug_color = Color(1, 0.639216, 0.121569, 1)
+
+[node name="sprite-od-TESTING_ONLY" type="Sprite2D" parent="path/pathfollow"]
+self_modulate = Color(1, 0.639216, 0.121569, 1)
+rotation = -1.57079
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_lkxkw")
