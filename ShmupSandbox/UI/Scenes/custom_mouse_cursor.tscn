@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cv2r6jgkdhyka"]
+
+[ext_resource type="Texture2D" uid="uid://dsphoacg366q" path="res://ShmupSandbox/Assets/Icons/mouse_cursor-v1.png" id="1_duioo"]
+[ext_resource type="Script" uid="uid://bq86rmy3di17t" path="res://ShmupSandbox/UI/Scripts/custom_mouse_cursor.gd" id="1_k0hda"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0hda"]
+atlas = ExtResource("1_duioo")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5fcc"]
+atlas = ExtResource("1_duioo")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vhsyd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k0hda")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5fcc")
+}],
+"loop": true,
+"name": &"cursor",
+"speed": 12.0
+}]
+
+[node name="CustomMouseCursor" type="CanvasLayer"]
+script = ExtResource("1_k0hda")
+
+[node name="mouse_sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.95, 1.95)
+sprite_frames = SubResource("SpriteFrames_vhsyd")
+animation = &"cursor"
+autoplay = "cursor"
