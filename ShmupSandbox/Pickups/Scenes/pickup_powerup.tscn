@@ -8,7 +8,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_haqd0"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -1, -1, -17.7273, -7.93062, 17.7273, 7.93062, 62, -14, 0.466507, -14.9282, -0.466507, 14.9282, 94, 39, 19.5933, -14.9282, -19.5933, 14.9282, 73, 80, 20.5263, 8.86364, -20.5263, -8.86364, 14, 91, 3.73206, 19.1268, -3.73206, -19.1268, -16, 47, 0, 0, 0, 0, -1, -1)
+"points": PackedVector2Array(0, 0, 0, 0, -1, -1, -20.4187, -2.52876, 20.4187, 2.52876, 45.3676, -17.6719, 0.466507, -14.9282, -0.466507, 14.9282, 94, 39, 19.5933, -14.9282, -19.5933, 14.9282, 73, 80, 20.5263, 8.86364, -20.5263, -8.86364, 14, 91, 3.73206, 19.1268, -3.73206, -19.1268, -16, 47, 0, 0, 0, 0, -1, -1)
 }
 point_count = 7
 
@@ -302,6 +302,7 @@ speed = 30.0
 [node name="powerup_switch_timer" type="Timer" parent="."]
 
 [node name="path" type="Path2D" parent="."]
+self_modulate = Color(1, 1, 0, 1)
 position = Vector2(2.82641, 2.63921)
 scale = Vector2(1.17206, 1.16791)
 curve = SubResource("Curve2D_haqd0")
@@ -344,4 +345,8 @@ sprite_frames = SubResource("SpriteFrames_edng5")
 animation = &"idle"
 autoplay = "idle"
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(158, 51)
+
 [connection signal="timeout" from="powerup_switch_timer" to="." method="_on_powerup_switch_timer_timeout"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

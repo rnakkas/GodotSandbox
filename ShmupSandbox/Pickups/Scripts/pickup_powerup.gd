@@ -80,3 +80,10 @@ func _switch_powerup() -> void:
 
 			current_powerup = sprites_list[powerup]
 			break
+
+
+################################################
+#NOTE: Despawn when exiting screen left
+################################################
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	queue_free()

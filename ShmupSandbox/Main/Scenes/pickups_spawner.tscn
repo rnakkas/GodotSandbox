@@ -4,9 +4,3 @@
 
 [node name="PickupsSpawner" type="Node2D"]
 script = ExtResource("1_tvorm")
-
-[node name="SpawnTimer_FOR_TESTING_ONLY" type="Timer" parent="."]
-wait_time = 3.0
-autostart = true
-
-[connection signal="timeout" from="SpawnTimer_FOR_TESTING_ONLY" to="." method="_on_spawn_timer_for_testing_only_timeout"]
