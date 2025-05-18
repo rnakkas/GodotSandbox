@@ -149,3 +149,7 @@ func _on_invincibility_timer_timeout() -> void:
 	# Return to default animations
 	rocket.visible = true # Contains body and thruster sprites
 	invincible.play("none")
+
+
+## FIXME: Have turned Monitoring and Monitorable off for the hurtbox area for testing
+	## Turn back on after done

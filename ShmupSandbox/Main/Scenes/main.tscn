@@ -1,13 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://betfkrygq2ejo"]
+[gd_scene load_steps=4 format=3 uid="uid://betfkrygq2ejo"]
 
 [ext_resource type="Script" uid="uid://rllceid1ypu1" path="res://ShmupSandbox/Main/Scripts/main.gd" id="1_aucld"]
 [ext_resource type="PackedScene" uid="uid://wq32mri3ebiv" path="res://ShmupSandbox/UI/Scenes/ui_layer.tscn" id="2_aucld"]
+[ext_resource type="PackedScene" uid="uid://idynsjayvj5x" path="res://ShmupSandbox/Debug/Scenes/debug_layer.tscn" id="3_ylyrf"]
 
 [node name="Main" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_aucld")
 
 [node name="UI_layer" parent="." instance=ExtResource("2_aucld")]
+
+[node name="DebugLayer" parent="." instance=ExtResource("3_ylyrf")]
 
 [connection signal="game_started" from="UI_layer" to="." method="_on_ui_layer_game_started"]
 [connection signal="kill_game_instance" from="UI_layer" to="." method="_on_ui_layer_kill_game_instance"]
