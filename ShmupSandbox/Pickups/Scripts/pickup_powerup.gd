@@ -11,6 +11,9 @@ class_name PickupPowerup extends Node2D
 @export var speed : float = 20
 @export var powerup_switch_time : float = 5.5
 
+const idle_anim : String = "idle"
+const collect_anim : String = "collect"
+
 var current_powerup : int
 var current_powerup_sprite : AnimatedSprite2D
 
@@ -48,20 +51,20 @@ func _random_powerup_on_spawn() -> void:
 
 ## Toggle on the selected sprite
 func _toggle_powerup_sprite() -> void:
-	var sprite : AnimatedSprite2D
+	# var sprite : AnimatedSprite2D
 	match current_powerup:
 		0:
-			sprite = sprite_od
+			current_powerup_sprite = sprite_od
 		1:
-			sprite = sprite_ch
+			current_powerup_sprite = sprite_ch
 	
-	for powerup : AnimatedSprite2D in sprites_list:
-		if powerup == sprite:
-			powerup.visible = true
-			powerup.play("idle")
+	for powerup_sprite : AnimatedSprite2D in sprites_list:
+		if powerup_sprite == current_powerup_sprite:
+			powerup_sprite.visible = true
+			powerup_sprite.play(idle_anim)
 		else:
-			powerup.visible = false
-			powerup.stop()
+			powerup_sprite.visible = false
+			powerup_sprite.stop()
 
 ################################################
 #NOTE: Physics process
@@ -112,10 +115,32 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func _on_powerup_area_body_entered(body:Node2D) -> void:
 	if body is PlayerCat:
-		print("player picked up item: ", current_powerup)
+		print("player picked up item: ", GameManager.powerups.find_key(current_powerup))
 		powerup_label.text = GameManager.powerups.find_key(current_powerup)
 		powerup_label.visible = true
 		## TODO: Stop the path follow movement on collection
+		sprites_container.pathfollow_speed = 0.0
+
+		## Turn off powerup switch timer
+		powerup_switch_timer.stop()
+
+		## Play collect animation
+		current_powerup_sprite.play(collect_anim)
+		sprite_fx.play(collect_anim)
+		# await current_powerup_sprite.animation_finished
+
 		## TODO: Tween the label when powerup collected
+		var final_fade_color : Color = Color(0,0,0,0)
+		var final_position : Vector2 = Vector2(powerup_label.position.x, powerup_label.position.y - 30.0)
+
+		var tween = get_tree().create_tween()
+
+		tween.set_parallel(true)
+		tween.tween_property(powerup_label, "self_modulate", UiUtility.color_yellow, 0.3) # Fade to color of powerup
+		tween.tween_property(powerup_label, "position", final_position, 0.3)
+		
+		tween.set_parallel(false)
+		tween.tween_property(powerup_label, "self_modulate", final_fade_color, 1) # Fade out effect
+
 		## TODO: Send a global signal with the powerup type
 		## TODO: Then call deferred to queue_free() the powerup
