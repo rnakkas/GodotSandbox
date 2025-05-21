@@ -7,6 +7,10 @@ const life_extend_score_1 : int = 100000
 const life_extend_score_2 : int = 250000
 const score_penallty_multiplier : float = 0.9
 
+enum powerups {
+	Overdrive, 		## 0
+	Chorus 			## 1
+}
 
 ################################################
 #NOTE: Default game settings
