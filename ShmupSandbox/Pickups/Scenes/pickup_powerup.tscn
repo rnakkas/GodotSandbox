@@ -317,6 +317,7 @@ script = ExtResource("1_glbyy")
 pathfollow_speed = 0.2
 
 [node name="powerup_area" type="Area2D" parent="path/pathfollow"]
+unique_name_in_owner = true
 rotation = -1.5708
 collision_layer = 32
 

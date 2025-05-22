@@ -12,6 +12,7 @@ signal player_hi_score_name_entered(player_name : String)
 signal player_pressed_pause_game()
 signal player_credits_updated()
 signal spawn_powerup(sp : Vector2)
+signal powerup_collected(powerup : int)
 
 
 func score_increased_event(score : int) -> void:
@@ -49,3 +50,7 @@ func player_credits_updated_event() -> void:
 
 func spawn_powerup_event(sp : Vector2) -> void:
 	spawn_powerup.emit(sp)
+
+func powerup_collected_event(powerup : int) -> void:
+	print("emit global signal, powrup collected: ", powerup)
+	powerup_collected.emit(powerup)

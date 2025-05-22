@@ -5,6 +5,7 @@ class_name PickupPowerup extends Node2D
 @onready var sprite_od: AnimatedSprite2D = %sprite_od
 @onready var sprite_ch : AnimatedSprite2D = %sprite_ch
 @onready var powerup_label : Label = %powerup_label
+@onready var collider_area : Area2D = %powerup_area
 
 @onready var sprites_container : PathFollow2D = %pathfollow
 
@@ -113,39 +114,57 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
 
 
+################################################
+#NOTE: Logic for when powerup is collected by player
+################################################
 func _on_powerup_area_body_entered(body:Node2D) -> void:
 	if body is PlayerCat:
-		print("player picked up item: ", GameManager.powerups.find_key(current_powerup))
+		## Disable collider area on collection
+		collider_area.set_deferred("monitorable", false)
+		collider_area.set_deferred("monitoring", false)
 
-		## Labels
-		powerup_label.text = GameManager.powerups.find_key(current_powerup)
-		powerup_label.visible = true
-		
 		## Stop the path follow movement on collection
 		sprites_container.pathfollow_speed = 0.0
 
 		## Turn off powerup switch timer
 		powerup_switch_timer.stop()
 
-		## Play collect animation
-		current_powerup_sprite.play(collect_anim)
-		sprite_fx.play(collect_anim)
+		## Play collect animations
+		_play_collect_anims_for_sprites()
+		var tween : Tween = _play_collect_anims_for_label()
 
-		## TODO: Tween the label when powerup collected
-		var final_position : Vector2 = Vector2(powerup_label.position.x, powerup_label.position.y - 30.0)
+		## Send a global signal with the powerup type
+		SignalsBus.powerup_collected_event(current_powerup)
 
-		var tween = get_tree().create_tween()
-		
-		tween.set_parallel(true)
-		match current_powerup:
-			0: # Overdrive
-				tween.tween_property(powerup_label, "self_modulate", UiUtility.color_yellow, 0.3) # Fade to color of powerup
-			1: # Chorus
-				tween.tween_property(powerup_label, "self_modulate", UiUtility.color_blue, 0.3) # Fade to color of powerup
-		tween.tween_property(powerup_label, "position", final_position, 0.3)
-		
-		tween.set_parallel(false)
-		tween.tween_property(powerup_label, "self_modulate", UiUtility.color_transparent, 1) # Fade out effect
+		## Finally despawn the powerup
+		await current_powerup_sprite.animation_finished
+		await tween.finished
+		call_deferred("queue_free")
 
-		## TODO: Send a global signal with the powerup type
-		## TODO: Then call deferred to queue_free() the powerup
+func _play_collect_anims_for_sprites() -> void:
+	current_powerup_sprite.play(collect_anim)
+	sprite_fx.play(collect_anim)
+
+func _play_collect_anims_for_label() -> Tween:
+	powerup_label.text = GameManager.powerups.find_key(current_powerup)
+	powerup_label.visible = true
+
+	## Tween the label when powerup collected
+	var tween = get_tree().create_tween()
+	var final_position : Vector2 = Vector2(powerup_label.position.x, powerup_label.position.y - 35.0)
+	
+	tween.set_parallel(true)
+
+	match current_powerup:
+		0: # Overdrive
+			tween.tween_property(powerup_label, "self_modulate", UiUtility.color_yellow, 0.3) # Fade to color of powerup
+		1: # Chorus
+			tween.tween_property(powerup_label, "self_modulate", UiUtility.color_blue, 0.3) # Fade to color of powerup
+	
+	tween.tween_property(powerup_label, "position", final_position, 0.3)
+	
+	tween.set_parallel(false)
+
+	tween.tween_property(powerup_label, "self_modulate", UiUtility.color_transparent, 0.7) # Fade out effect
+
+	return tween
