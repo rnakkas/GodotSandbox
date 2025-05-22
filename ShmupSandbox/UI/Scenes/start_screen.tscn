@@ -33,7 +33,7 @@ theme_override_constants/separation = 10
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_yycc1")
 theme_override_font_sizes/font_size = 90
-text = "C A T AC L YZ M"
+text = "K A T A K L YZ M"
 horizontal_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
