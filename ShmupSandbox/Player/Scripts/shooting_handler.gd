@@ -10,12 +10,23 @@ class_name ShootingHandler extends Node2D
 	# - od bullet angles
 	# - od bullets per shot
 	# - global signal connection - powerup type that was picked up
-	# - emit global signal/event - to add bullets to the game when shooting
+	# - emit global signal/event - to add bullets to the game when shooting - done
 
 @export var fire_rate : float = 8.0
 @export var bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/player_bullet.tscn")
 
-@onready var muzzle : Marker2D = $muzzle
+# Default: no powerups, change only when powerup is picked up
+@export var current_powerup : GameManager.powerups = GameManager.powerups.None 
+# Default: 0 for base, only used when powerup is active
+@export var power_up_level: int = 0							
+
+## For overdrive powerup shooting params
+# Level 1 od angle
+@export var od_bullet_angle_deg : float = 5.0	
+# Level 1 od bullets per shot			
+@export var od_bullets_per_shot : int = 3					
+
+@onready var muzzle : Marker2D = $muzzle_base
 
 signal now_shooting()
 signal stopped_shooting()

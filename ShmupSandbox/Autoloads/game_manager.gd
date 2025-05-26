@@ -8,8 +8,9 @@ const life_extend_score_2 : int = 250000
 const score_penallty_multiplier : float = 0.9
 
 enum powerups {
-	Overdrive, 		## 0
-	Chorus 			## 1
+	None,			## 0
+	Overdrive, 		## 1
+	Chorus 			## 2
 }
 
 ################################################

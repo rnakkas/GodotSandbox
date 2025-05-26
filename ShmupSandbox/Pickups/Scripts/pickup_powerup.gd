@@ -15,6 +15,7 @@ class_name PickupPowerup extends Node2D
 const idle_anim : String = "idle"
 const collect_anim : String = "collect"
 
+var powerups_array : Array = []
 var current_powerup : int
 var current_powerup_sprite : AnimatedSprite2D
 
@@ -28,10 +29,15 @@ var sprites_list : Array[AnimatedSprite2D] = []
 func _ready() -> void:
 	viewport_size = get_viewport_rect().size
 	powerup_label.visible = false
+
+	powerups_array = GameManager.powerups.values().slice(1, GameManager.powerups.size())	# Ignore the "None" index in that enum
 	
 	_set_timer_properties()
 	_create_sprites_list()
 	_random_powerup_on_spawn()
+	
+
+	print(powerups_array)
 	
 ## Set timer properties
 func _set_timer_properties() -> void:
@@ -47,16 +53,16 @@ func _create_sprites_list() -> void:
 
 ## Show a random powerup on spawn
 func _random_powerup_on_spawn() -> void:
-	current_powerup = GameManager.powerups.values().pick_random()
+	current_powerup = powerups_array.pick_random()
 	_toggle_powerup_sprite()
 
 ## Toggle on the selected sprite
 func _toggle_powerup_sprite() -> void:
 	# var sprite : AnimatedSprite2D
 	match current_powerup:
-		0:
+		1: # Overdrive
 			current_powerup_sprite = sprite_od
-		1:
+		2: # Chorus
 			current_powerup_sprite = sprite_ch
 	
 	for powerup_sprite : AnimatedSprite2D in sprites_list:
@@ -98,10 +104,10 @@ func _on_powerup_switch_timer_timeout() -> void:
 
 # Iterate through the powerups array and switch to a random powerup from the list
 func _switch_powerup() -> void:
-	for powerup : int in range(GameManager.powerups.values().size()):
-		if current_powerup == GameManager.powerups.values()[powerup]:
-			powerup = (powerup + 1)%GameManager.powerups.values().size()
-			current_powerup = GameManager.powerups.values()[powerup]
+	for powerup : int in range(powerups_array.size()):
+		if current_powerup == powerups_array[powerup]:
+			powerup = (powerup + 1)%powerups_array.size()
+			current_powerup = powerups_array[powerup]
 			break
 
 	_toggle_powerup_sprite()
@@ -156,9 +162,9 @@ func _play_collect_anims_for_label() -> Tween:
 	tween.set_parallel(true)
 
 	match current_powerup:
-		0: # Overdrive
+		1: # Overdrive
 			tween.tween_property(powerup_label, "self_modulate", UiUtility.color_yellow, 0.3) # Fade to color of powerup
-		1: # Chorus
+		2: # Chorus
 			tween.tween_property(powerup_label, "self_modulate", UiUtility.color_blue, 0.3) # Fade to color of powerup
 	
 	tween.tween_property(powerup_label, "position", final_position, 0.3)

@@ -10,7 +10,7 @@ class_name PlayerCat extends CharacterBody2D
 @onready var body: AnimatedSprite2D = %body
 @onready var rocket : AnimatedSprite2D = %rocket
 @onready var thruster : AnimatedSprite2D = %thruster
-@onready var muzzle_flash: AnimatedSprite2D = %muzzle_flash
+@onready var muzzle_flash: AnimatedSprite2D = %base_muzzle_flash
 @onready var death : AnimatedSprite2D = %death
 @onready var invincible : AnimatedSprite2D = %invincible
 
@@ -137,14 +137,12 @@ func _on_invincibility_timer_timeout() -> void:
 #NOTE: Handle shooting signals, used for animations
 ################################################
 func _on_shooting_handler_now_shooting() -> void:
-	print("started shooting")
 	if is_dead:
 		return
 	body.play("shoot")
 	muzzle_flash.play("shoot")
 
 func _on_shooting_handler_stopped_shooting() -> void:
-	print("stopped shooting")
 	body.play("idle")
 	body.frame = rocket.frame
 
