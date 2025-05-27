@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://dsn7ihy5cyj5y"]
+[gd_scene load_steps=13 format=3 uid="uid://dn7pv5a4e3qj5"]
 
 [ext_resource type="Texture2D" uid="uid://bsj5hyt6fhf7v" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_fly-v1.png" id="1_c5yqb"]
+[ext_resource type="Script" uid="uid://dmwv3jrlakeyp" path="res://ShmupSandbox/Player/Scripts/player_bullet.gd" id="1_xrsh6"]
 [ext_resource type="Texture2D" uid="uid://bykysl5evst2w" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_hit-v1.png" id="2_22bka"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_22bka"]
@@ -63,7 +64,7 @@ animations = [{
 "duration": 1.0,
 "texture": null
 }],
-"loop": true,
+"loop": false,
 "name": &"hit",
 "speed": 15.0
 }]
@@ -73,16 +74,22 @@ radius = 6.0
 height = 26.0
 
 [node name="od_bullet" type="Area2D"]
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("1_xrsh6")
 
-[node name="od_bullet_sprite" type="AnimatedSprite2D" parent="."]
+[node name="bullet_sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tbdlw")
 animation = &"fly"
 autoplay = "fly"
 
-[node name="collider" type="CollisionShape2D" parent="."]
+[node name="bullet_collider" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_22bka")
 debug_color = Color(0.79639, 0.423621, 0.0166775, 0.42)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-61, 0)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

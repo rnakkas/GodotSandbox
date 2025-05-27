@@ -13,9 +13,13 @@ class_name ShootingHandler extends Node2D
 	# - emit global signal/event - to add bullets to the game when shooting - done
 
 @export var fire_rate : float = 8.0
-@export var base_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/player_bullet.tscn")
-@export var od_bullet_scene : PackedScene
-@export var ch_bullet_scene: PackedScene
+
+## Bullet scenes
+@export var base_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/base_bullet.tscn")
+@export var od_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/od_bullet.tscn")
+@export var ch_lvl_1_bullet_scene: PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_1.tscn")
+@export var ch_lvl_2_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_2.tscn")
+@export var ch_lvl_3_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_3.tscn")
 
 # Default: no powerups, change only when powerup is picked up
 @export var current_powerup : GameManager.powerups = GameManager.powerups.None 
@@ -30,7 +34,7 @@ class_name ShootingHandler extends Node2D
 
 @onready var muzzle : Marker2D = $muzzle_base
 
-signal now_shooting()
+signal now_shooting(powerup : GameManager.powerups)
 signal stopped_shooting()
 
 var is_dead: bool
@@ -44,7 +48,7 @@ func _ready() -> void:
 func _on_powerup_picked_up(powerup : int) -> void:
 	# Only increase powerup level if the current powerup matches the pickeud up powerup, or if currently don't have a powerup
 	# If picked up powerup is different, keep the powerup level the same
-	if current_powerup == GameManager.powerups.None || powerup == current_powerup:
+	if current_powerup == GameManager.powerups.None || current_powerup == powerup:
 		powerup_level += 1
 
 	# Can't go above 4 for the powerup level
@@ -53,7 +57,32 @@ func _on_powerup_picked_up(powerup : int) -> void:
 	# Switch the current powerup to the picked up powerup (casting powerup as the enum)
 	current_powerup = powerup as GameManager.powerups
 
-	print("Powerup picked up, current powerup is now: ", GameManager.powerups.find_key(current_powerup), "\nPowerup level: ", powerup_level)
+	match current_powerup:
+		GameManager.powerups.Overdrive:
+			fire_rate = 12.0
+			match powerup_level:
+				0:
+					pass
+				1:
+					od_bullets_per_shot = 3
+					od_bullet_angle_deg = 5.0
+				2:
+					od_bullets_per_shot = 5
+					od_bullet_angle_deg = 10.0
+				3:
+					od_bullets_per_shot = 7
+					od_bullet_angle_deg = 15.0
+				4:
+					od_bullets_per_shot = 9
+					od_bullet_angle_deg = 25.0
+		
+		GameManager.powerups.Chorus:
+			fire_rate = 25.0
+
+	shooting_cooldown_time = 1/fire_rate
+
+	print("Powerup picked up, current powerup is now: ", GameManager.powerups.find_key(current_powerup), 
+			"\nPowerup level: ", powerup_level)
 
 func _process(_delta: float) -> void:
 	_handle_shooting()
@@ -63,9 +92,30 @@ func _handle_shooting() -> void:
 		if !on_shooting_cooldown:
 			on_shooting_cooldown = true
 			
-			var locations : Array[Vector2] = [muzzle.global_position]
-			now_shooting.emit()
-			SignalsBus.player_shooting_event(base_bullet_scene, locations)
+			var location : Vector2 = muzzle.global_position
+			var bullet : Area2D
+
+			match current_powerup:
+				GameManager.powerups.None:
+					bullet = base_bullet_scene.instantiate() as PlayerBullet
+				GameManager.powerups.Overdrive:
+					bullet = od_bullet_scene.instantiate() as PlayerBullet
+				GameManager.powerups.Chorus:
+					match powerup_level:
+						0:
+							pass
+						1:
+							bullet = ch_lvl_1_bullet_scene.instantiate() as PlayerBullet
+						2:
+							bullet = ch_lvl_2_bullet_scene.instantiate() as PlayerBullet
+						3:
+							bullet = ch_lvl_3_bullet_scene.instantiate() as PlayerBullet
+				
+			bullet.position = location
+
+			now_shooting.emit(current_powerup)
+
+			SignalsBus.player_shooting_event(bullet)
 			
 			await get_tree().create_timer(shooting_cooldown_time).timeout
 			on_shooting_cooldown = false

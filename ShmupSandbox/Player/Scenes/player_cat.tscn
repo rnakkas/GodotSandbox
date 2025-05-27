@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://diqmrgjokhuyb"]
+[gd_scene load_steps=77 format=3 uid="uid://diqmrgjokhuyb"]
 
 [ext_resource type="Script" uid="uid://dkp2sd4d5myi" path="res://ShmupSandbox/Player/Scripts/player_cat.gd" id="1_m8806"]
 [ext_resource type="Texture2D" uid="uid://cc83l4ep22dak" path="res://ShmupSandbox/Assets/Player/muzzle_flash-v1.png" id="2_4ua8s"]
@@ -7,8 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://de4bx2ufdb8mn" path="res://ShmupSandbox/Assets/Player/player_death-v1.png" id="5_unr50"]
 [ext_resource type="Texture2D" uid="uid://cxtlp1qpmmv15" path="res://ShmupSandbox/Assets/Player/player_cat_sprite-v2.png" id="5_uobwy"]
 [ext_resource type="Texture2D" uid="uid://cxtd1ijs171gs" path="res://ShmupSandbox/Assets/Player/player_respawn_sprite-v1.png" id="6_unr50"]
-[ext_resource type="PackedScene" uid="uid://dsn7ihy5cyj5y" path="res://ShmupSandbox/Player/Scenes/od_bullet.tscn" id="8_r57sr"]
 [ext_resource type="Script" uid="uid://bfn0rv1t8e5kr" path="res://ShmupSandbox/Player/Scripts/shooting_handler.gd" id="8_w8q8f"]
+[ext_resource type="Texture2D" uid="uid://bmdep6yhai2np" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_muzzle_flash-v1.png" id="9_r57sr"]
+[ext_resource type="Texture2D" uid="uid://bjruq8tm2fp1t" path="res://ShmupSandbox/Assets/PlayerPowerupShots/chorus-_muzzle_flash-v1.png" id="10_7hbcm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7idpd"]
 atlas = ExtResource("2_uobwy")
@@ -460,6 +461,100 @@ animations = [{
 "speed": 50.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynd55"]
+atlas = ExtResource("9_r57sr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uoy2w"]
+atlas = ExtResource("9_r57sr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwwow"]
+atlas = ExtResource("9_r57sr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xq3hw"]
+atlas = ExtResource("9_r57sr")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d4l0q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"none",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynd55")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uoy2w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwwow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xq3hw")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 30.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4l0q"]
+atlas = ExtResource("10_7hbcm")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5unb3"]
+atlas = ExtResource("10_7hbcm")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cku0"]
+atlas = ExtResource("10_7hbcm")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5r5sn"]
+atlas = ExtResource("10_7hbcm")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5i5oq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"none",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4l0q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5unb3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6cku0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5r5sn")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 25.0
+}]
+
 [node name="player_cat" type="CharacterBody2D"]
 collision_mask = 28
 motion_mode = 1
@@ -522,7 +617,6 @@ one_shot = true
 
 [node name="shooting_handler" type="Node2D" parent="."]
 script = ExtResource("8_w8q8f")
-od_bullet_scene = ExtResource("8_r57sr")
 
 [node name="muzzle_base" type="Marker2D" parent="shooting_handler"]
 z_index = 1
@@ -533,10 +627,22 @@ unique_name_in_owner = true
 position = Vector2(8, 1)
 scale = Vector2(1.8, 1.8)
 sprite_frames = SubResource("SpriteFrames_gdjmk")
+animation = &"none"
+autoplay = "none"
+
+[node name="od_muzzle_flash" type="AnimatedSprite2D" parent="shooting_handler/muzzle_base"]
+unique_name_in_owner = true
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_d4l0q")
+animation = &"none"
+autoplay = "none"
+
+[node name="ch_muzzle_flash" type="AnimatedSprite2D" parent="shooting_handler/muzzle_base"]
+unique_name_in_owner = true
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_5i5oq")
 animation = &"shoot"
 autoplay = "none"
-frame = 5
-frame_progress = 1.0
 
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="timeout" from="invincibility_timer" to="." method="_on_invincibility_timer_timeout"]

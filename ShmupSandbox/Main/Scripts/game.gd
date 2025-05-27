@@ -16,11 +16,8 @@ func _process(_delta: float) -> void:
 	pass
 
 ## Player shooting
-func _on_player_shooting(bullet_scene: PackedScene, locations: Array[Vector2]) -> void:
-	for i:int in range(locations.size()):
-		var bullet : PlayerBullet = bullet_scene.instantiate()
-		bullet.position = locations[i]
-		player_projectiles_container.add_child(bullet)
+func _on_player_shooting(bullet : Area2D) -> void:
+	player_projectiles_container.add_child(bullet)
 
 
 ## Spawning enemies
