@@ -13,12 +13,14 @@ class_name ShootingHandler extends Node2D
 	# - emit global signal/event - to add bullets to the game when shooting - done
 
 @export var fire_rate : float = 8.0
-@export var bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/player_bullet.tscn")
+@export var base_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/player_bullet.tscn")
+@export var od_bullet_scene : PackedScene
+@export var ch_bullet_scene: PackedScene
 
 # Default: no powerups, change only when powerup is picked up
 @export var current_powerup : GameManager.powerups = GameManager.powerups.None 
 # Default: 0 for base, only used when powerup is active
-@export var power_up_level: int = 0							
+@export var powerup_level: int = 0							
 
 ## For overdrive powerup shooting params
 # Level 1 od angle
@@ -37,6 +39,21 @@ var shooting_cooldown_time : float
 
 func _ready() -> void:
 	shooting_cooldown_time = 1/fire_rate
+	SignalsBus.powerup_collected.connect(_on_powerup_picked_up)
+
+func _on_powerup_picked_up(powerup : int) -> void:
+	# Only increase powerup level if the current powerup matches the pickeud up powerup, or if currently don't have a powerup
+	# If picked up powerup is different, keep the powerup level the same
+	if current_powerup == GameManager.powerups.None || powerup == current_powerup:
+		powerup_level += 1
+
+	# Can't go above 4 for the powerup level
+	powerup_level = clamp(powerup_level, 0, 4)
+	
+	# Switch the current powerup to the picked up powerup (casting powerup as the enum)
+	current_powerup = powerup as GameManager.powerups
+
+	print("Powerup picked up, current powerup is now: ", GameManager.powerups.find_key(current_powerup), "\nPowerup level: ", powerup_level)
 
 func _process(_delta: float) -> void:
 	_handle_shooting()
@@ -48,7 +65,7 @@ func _handle_shooting() -> void:
 			
 			var locations : Array[Vector2] = [muzzle.global_position]
 			now_shooting.emit()
-			SignalsBus.player_shooting_event(bullet_scene, locations)
+			SignalsBus.player_shooting_event(base_bullet_scene, locations)
 			
 			await get_tree().create_timer(shooting_cooldown_time).timeout
 			on_shooting_cooldown = false

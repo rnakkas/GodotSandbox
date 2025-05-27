@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://diqmrgjokhuyb"]
+[gd_scene load_steps=66 format=3 uid="uid://diqmrgjokhuyb"]
 
 [ext_resource type="Script" uid="uid://dkp2sd4d5myi" path="res://ShmupSandbox/Player/Scripts/player_cat.gd" id="1_m8806"]
 [ext_resource type="Texture2D" uid="uid://cc83l4ep22dak" path="res://ShmupSandbox/Assets/Player/muzzle_flash-v1.png" id="2_4ua8s"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://de4bx2ufdb8mn" path="res://ShmupSandbox/Assets/Player/player_death-v1.png" id="5_unr50"]
 [ext_resource type="Texture2D" uid="uid://cxtlp1qpmmv15" path="res://ShmupSandbox/Assets/Player/player_cat_sprite-v2.png" id="5_uobwy"]
 [ext_resource type="Texture2D" uid="uid://cxtd1ijs171gs" path="res://ShmupSandbox/Assets/Player/player_respawn_sprite-v1.png" id="6_unr50"]
+[ext_resource type="PackedScene" uid="uid://dsn7ihy5cyj5y" path="res://ShmupSandbox/Player/Scenes/od_bullet.tscn" id="8_r57sr"]
 [ext_resource type="Script" uid="uid://bfn0rv1t8e5kr" path="res://ShmupSandbox/Player/Scripts/shooting_handler.gd" id="8_w8q8f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7idpd"]
@@ -461,6 +462,7 @@ animations = [{
 
 [node name="player_cat" type="CharacterBody2D"]
 collision_mask = 28
+motion_mode = 1
 script = ExtResource("1_m8806")
 _max_speed = 380.0
 
@@ -520,6 +522,7 @@ one_shot = true
 
 [node name="shooting_handler" type="Node2D" parent="."]
 script = ExtResource("8_w8q8f")
+od_bullet_scene = ExtResource("8_r57sr")
 
 [node name="muzzle_base" type="Marker2D" parent="shooting_handler"]
 z_index = 1

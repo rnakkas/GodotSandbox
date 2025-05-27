@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=3 uid="uid://dsn7ihy5cyj5y"]
+
+[ext_resource type="Texture2D" uid="uid://bsj5hyt6fhf7v" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_fly-v1.png" id="1_c5yqb"]
+[ext_resource type="Texture2D" uid="uid://bykysl5evst2w" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_hit-v1.png" id="2_22bka"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22bka"]
+atlas = ExtResource("1_c5yqb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrsh6"]
+atlas = ExtResource("1_c5yqb")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6t3ak"]
+atlas = ExtResource("1_c5yqb")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_br156"]
+atlas = ExtResource("1_c5yqb")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xi2yw"]
+atlas = ExtResource("2_22bka")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyx1f"]
+atlas = ExtResource("2_22bka")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1yuxo"]
+atlas = ExtResource("2_22bka")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tbdlw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22bka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrsh6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6t3ak")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_br156")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xi2yw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nyx1f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1yuxo")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"hit",
+"speed": 15.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22bka"]
+radius = 6.0
+height = 26.0
+
+[node name="od_bullet" type="Area2D"]
+
+[node name="od_bullet_sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tbdlw")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="collider" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_22bka")
+debug_color = Color(0.79639, 0.423621, 0.0166775, 0.42)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-61, 0)
