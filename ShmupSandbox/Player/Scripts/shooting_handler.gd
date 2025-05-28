@@ -26,11 +26,9 @@ class_name ShootingHandler extends Node2D
 # Default: 0 for base, only used when powerup is active
 @export var powerup_level: int = 0							
 
-## For overdrive powerup shooting params
-# Level 1 od angle
-@export var od_bullet_angle_deg : float = 5.0	
-# Level 1 od bullets per shot			
-@export var od_bullets_per_shot : int = 3					
+# For overdrive powerup shooting params
+@export var od_spread_angle_deg : float
+@export var od_bullets_per_shot : int				
 
 @onready var muzzle : Marker2D = $muzzle_base
 
@@ -40,54 +38,58 @@ signal stopped_shooting()
 var is_dead: bool
 var on_shooting_cooldown : bool
 var shooting_cooldown_time : float
+var angle_step : float
 
 func _ready() -> void:
-	shooting_cooldown_time = 1/fire_rate
+	_update_shooting_properties()
 	SignalsBus.powerup_collected.connect(_on_powerup_picked_up)
+
 
 func _on_powerup_picked_up(powerup : int) -> void:
 	# Only increase powerup level if the current powerup matches the pickeud up powerup, or if currently don't have a powerup
 	# If picked up powerup is different, keep the powerup level the same
+	# Can't go above 4 for the powerup level
+	# Switch the current powerup to the picked up powerup (casting powerup as the enum)
+	# Update shooting properties based on powerup picked up
+
 	if current_powerup == GameManager.powerups.None || current_powerup == powerup:
 		powerup_level += 1
 
-	# Can't go above 4 for the powerup level
 	powerup_level = clamp(powerup_level, 0, 4)
-	
-	# Switch the current powerup to the picked up powerup (casting powerup as the enum)
 	current_powerup = powerup as GameManager.powerups
+	_update_shooting_properties()
 
-	# Update shooting properties based on powerup picked up
+func _update_shooting_properties() -> void:
 	match current_powerup:
 		GameManager.powerups.Overdrive:
-			fire_rate = 12.0
 			match powerup_level:
 				0:
 					pass
 				1:
 					od_bullets_per_shot = 3
-					od_bullet_angle_deg = 5.0
+					od_spread_angle_deg = 8.0
 				2:
 					od_bullets_per_shot = 5
-					od_bullet_angle_deg = 10.0
+					od_spread_angle_deg = 15.0
 				3:
 					od_bullets_per_shot = 7
-					od_bullet_angle_deg = 15.0
+					od_spread_angle_deg = 25.0
 				4:
 					od_bullets_per_shot = 9
-					od_bullet_angle_deg = 25.0
+					od_spread_angle_deg = 30.0
+			
+			angle_step = od_spread_angle_deg/(od_bullets_per_shot-1)
 		
 		GameManager.powerups.Chorus:
 			fire_rate = 25.0
 
 	shooting_cooldown_time = 1/fire_rate
 
-	print("Powerup picked up, current powerup is now: ", GameManager.powerups.find_key(current_powerup), 
-			"\nPowerup level: ", powerup_level)
 
 func _process(_delta: float) -> void:
 	_handle_shooting()
 
+## TODO: Clean up this code a bit
 func _handle_shooting() -> void:
 	if Input.is_action_pressed("shoot"):
 		if !on_shooting_cooldown:
@@ -103,10 +105,17 @@ func _handle_shooting() -> void:
 					bullets_list.append(bullet)
 					bullet.position = location
 				GameManager.powerups.Overdrive: ## TODO: change the angles of the overdrive bullets for cone spread
-					for instance : int in range(0, od_bullets_per_shot):
+					for instance : int in range(od_bullets_per_shot):
 						bullet = od_bullet_scene.instantiate()
 						bullet.position = location
 						bullets_list.append(bullet)
+					
+					var current_bullet_angle : float = -od_spread_angle_deg/2
+					for bullet_instance : int in range(bullets_list.size()):
+						bullets_list[bullet_instance].angle_deg = current_bullet_angle
+						current_bullet_angle += angle_step
+						print("current bullet angele: ", bullets_list[bullet_instance].angle_deg)
+
 				GameManager.powerups.Chorus: ## TODO: need level 4 of chorus to be implemented
 					match powerup_level:
 						0:
