@@ -36,8 +36,6 @@ func _ready() -> void:
 	_create_sprites_list()
 	_random_powerup_on_spawn()
 	
-
-	print(powerups_array)
 	
 ## Set timer properties
 func _set_timer_properties() -> void:

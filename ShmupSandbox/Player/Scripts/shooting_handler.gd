@@ -57,6 +57,7 @@ func _on_powerup_picked_up(powerup : int) -> void:
 	# Switch the current powerup to the picked up powerup (casting powerup as the enum)
 	current_powerup = powerup as GameManager.powerups
 
+	# Update shooting properties based on powerup picked up
 	match current_powerup:
 		GameManager.powerups.Overdrive:
 			fire_rate = 12.0
@@ -93,29 +94,35 @@ func _handle_shooting() -> void:
 			on_shooting_cooldown = true
 			
 			var location : Vector2 = muzzle.global_position
-			var bullet : Area2D
+			var bullet : PlayerBullet
+			var bullets_list : Array[Area2D]
 
 			match current_powerup:
 				GameManager.powerups.None:
-					bullet = base_bullet_scene.instantiate() as PlayerBullet
-				GameManager.powerups.Overdrive:
-					bullet = od_bullet_scene.instantiate() as PlayerBullet
-				GameManager.powerups.Chorus:
+					bullet = base_bullet_scene.instantiate()
+					bullets_list.append(bullet)
+					bullet.position = location
+				GameManager.powerups.Overdrive: ## TODO: change the angles of the overdrive bullets for cone spread
+					for instance : int in range(0, od_bullets_per_shot):
+						bullet = od_bullet_scene.instantiate()
+						bullet.position = location
+						bullets_list.append(bullet)
+				GameManager.powerups.Chorus: ## TODO: need level 4 of chorus to be implemented
 					match powerup_level:
 						0:
 							pass
 						1:
-							bullet = ch_lvl_1_bullet_scene.instantiate() as PlayerBullet
+							bullet = ch_lvl_1_bullet_scene.instantiate()
 						2:
-							bullet = ch_lvl_2_bullet_scene.instantiate() as PlayerBullet
+							bullet = ch_lvl_2_bullet_scene.instantiate()
 						3:
-							bullet = ch_lvl_3_bullet_scene.instantiate() as PlayerBullet
-				
-			bullet.position = location
+							bullet = ch_lvl_3_bullet_scene.instantiate()
+					bullet.position = location
+					bullets_list.append(bullet)
 
 			now_shooting.emit(current_powerup)
 
-			SignalsBus.player_shooting_event(bullet)
+			SignalsBus.player_shooting_event(bullets_list)
 			
 			await get_tree().create_timer(shooting_cooldown_time).timeout
 			on_shooting_cooldown = false
