@@ -97,25 +97,13 @@ func _handle_shooting() -> void:
 			
 			var location : Vector2 = muzzle.global_position
 			var bullet : PlayerBullet
-			var bullets_list : Array[Area2D]
+			var bullets_list : Array[PlayerBullet] = []
 
 			match current_powerup:
 				GameManager.powerups.None:
-					bullet = base_bullet_scene.instantiate()
-					bullets_list.append(bullet)
-					bullet.position = location
-				GameManager.powerups.Overdrive: ## TODO: change the angles of the overdrive bullets for cone spread
-					for instance : int in range(od_bullets_per_shot):
-						bullet = od_bullet_scene.instantiate()
-						bullet.position = location
-						bullets_list.append(bullet)
-					
-					var current_bullet_angle : float = -od_spread_angle_deg/2
-					for bullet_instance : int in range(bullets_list.size()):
-						bullets_list[bullet_instance].angle_deg = current_bullet_angle
-						current_bullet_angle += angle_step
-						print("current bullet angele: ", bullets_list[bullet_instance].angle_deg)
-
+					_base_shooting_behaviour(bullets_list, location)
+				GameManager.powerups.Overdrive:
+					_od_shooting_behaviour(bullets_list, location)
 				GameManager.powerups.Chorus: ## TODO: need level 4 of chorus to be implemented
 					match powerup_level:
 						0:
@@ -129,11 +117,33 @@ func _handle_shooting() -> void:
 					bullet.position = location
 					bullets_list.append(bullet)
 
+			# Emit the necessary signals
 			now_shooting.emit(current_powerup)
-
 			SignalsBus.player_shooting_event(bullets_list)
 			
 			await get_tree().create_timer(shooting_cooldown_time).timeout
 			on_shooting_cooldown = false
 	else:
 		stopped_shooting.emit()
+
+func _base_shooting_behaviour(bullets_list : Array[PlayerBullet], location : Vector2) -> void:
+	var bullet : PlayerBullet
+	bullet = base_bullet_scene.instantiate()
+	bullet.position = location
+	bullets_list.append(bullet)
+
+func _od_shooting_behaviour(bullets_list : Array[PlayerBullet], location : Vector2) -> void:
+	var bullet : PlayerBullet
+
+	# Create the list of instantiated bullets
+	for instance : int in range(od_bullets_per_shot):
+		bullet = od_bullet_scene.instantiate()
+		bullet.position = location
+		bullets_list.append(bullet)
+	
+	# First bullet's angle
+	var current_bullet_angle : float = -od_spread_angle_deg/2
+	
+	for bullet_instance : int in range(bullets_list.size()):
+		bullets_list[bullet_instance].angle_deg = current_bullet_angle
+		current_bullet_angle += angle_step # Increase angle by the step for use in subsequent bullets

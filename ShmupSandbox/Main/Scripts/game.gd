@@ -16,8 +16,8 @@ func _process(_delta: float) -> void:
 	pass
 
 ## Player shooting
-func _on_player_shooting(bullets_list : Array[Area2D]) -> void:
-	for bullet : Area2D in bullets_list:
+func _on_player_shooting(bullets_list : Array[PlayerBullet]) -> void:
+	for bullet : PlayerBullet in bullets_list:
 		player_projectiles_container.add_child(bullet)
 
 
