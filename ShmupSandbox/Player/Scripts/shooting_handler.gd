@@ -1,33 +1,36 @@
 class_name ShootingHandler extends Node2D
 
+## Base fire rate
 @export var fire_rate : float = 8.0
 
-# Bullet scenes
+## Bullet scenes
 @export var base_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/base_bullet.tscn")
 @export var od_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/od_bullet.tscn")
 @export var ch_lvl_1_bullet_scene: PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_1.tscn")
 @export var ch_lvl_2_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_2.tscn")
 @export var ch_lvl_3_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_3.tscn")
 
-# Default: no powerups, change only when powerup is picked up
+## Default: no powerups, change only when powerup is picked up
 @export var current_powerup : GameManager.powerups = GameManager.powerups.None 
-# Default: 0 for base, only used when powerup is active
 @export var powerup_level: int = 0							
 
-# Overdrive powerup shooting params
+## Overdrive powerup shooting params
 @export var od_spread_angle_deg : float
 @export var od_bullets_per_shot : int		
 
-# Chorus powerup shooting params
+## Chorus powerup shooting params
 @export var ch_convergence_angle_deg : float = 6.5
 @export var ch_lvl4_speed_multiplier : float = 0.76
 
+## Muzzles
 @onready var muzzle : Marker2D = $muzzle_base
 @onready var muzzle_ch_1 : Marker2D = %muzzle_ch_1
 @onready var muzzle_ch_2 : Marker2D = %muzzle_ch_2
 
+
 signal now_shooting(powerup : GameManager.powerups, level : int)
 signal stopped_shooting()
+
 
 var is_dead: bool
 var on_shooting_cooldown : bool
@@ -38,11 +41,17 @@ var location_ch_1 : Vector2
 var location_ch_2 : Vector2
 var bullets_list : Array[PlayerBullet] = []
 
+################################################
+# NOTE: Ready
+################################################
 func _ready() -> void:
 	_update_shooting_properties()
 	SignalsBus.powerup_collected.connect(self._on_powerup_picked_up) # Auto disconnects if this node is freed
 
 
+################################################
+# NOTE: Update shooting properties based on powerup
+################################################
 func _update_shooting_properties() -> void:
 	match current_powerup:
 		GameManager.powerups.Overdrive:
@@ -70,6 +79,9 @@ func _update_shooting_properties() -> void:
 	shooting_cooldown_time = 1/fire_rate
 
 
+################################################
+# NOTE: Powerup pickeup signal connection
+################################################
 # NOTE: Only increase powerup level if the current powerup matches the pickeud up powerup, or if currently don't have a powerup
 	# If picked up powerup is different, keep the powerup level the same
 	# Can't go above 4 for the powerup level
@@ -84,9 +96,16 @@ func _on_powerup_picked_up(powerup : int) -> void:
 	_update_shooting_properties()
 
 
+################################################
+# NOTE: Process
+################################################
 func _process(_delta: float) -> void:
 	_handle_shooting()
 
+
+################################################
+# NOTE: Main function for handling shooting
+################################################
 func _handle_shooting() -> void:
 	# Set the muzzle locations every frame
 	location_base = muzzle.global_position
@@ -117,12 +136,14 @@ func _handle_shooting() -> void:
 	else:
 		stopped_shooting.emit()
 
+## Base shooting
 func _base_shooting_behaviour() -> void:
 	var bullet : PlayerBullet
 	bullet = base_bullet_scene.instantiate()
 	bullet.position = location_base
 	bullets_list.append(bullet)
 
+## Overdrive powerup shooting
 func _od_shooting_behaviour() -> void:
 	var bullet : PlayerBullet
 
@@ -139,6 +160,7 @@ func _od_shooting_behaviour() -> void:
 		bullets_list[bullet_instance].angle_deg = current_bullet_angle
 		current_bullet_angle += angle_step # Increase angle by the step value for use in subsequent bullets
 
+## Chorus powerup shooting
 func _ch_shooting_behaviour() -> void:
 	var bullet : PlayerBullet
 	var bullet_ch_1 : PlayerBullet
@@ -160,7 +182,7 @@ func _ch_shooting_behaviour() -> void:
 
 	bullet.position = location_base
 	bullets_list.append(bullet)
-
+	
 	if bullet_ch_1 != null:
 		bullet_ch_1.position = location_ch_1
 		bullet_ch_1.angle_deg = ch_convergence_angle_deg
