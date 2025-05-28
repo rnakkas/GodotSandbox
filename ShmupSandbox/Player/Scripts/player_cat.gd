@@ -13,6 +13,8 @@ class_name PlayerCat extends CharacterBody2D
 @onready var base_muzzle_flash: AnimatedSprite2D = %base_muzzle_flash
 @onready var od_muzzle_flash : AnimatedSprite2D = %od_muzzle_flash
 @onready var ch_muzzle_flash : AnimatedSprite2D = %ch_muzzle_flash
+@onready var ch_muzzle_flash_1 : AnimatedSprite2D = %ch_muzzle_flash_1
+@onready var ch_muzzle_flash_2 : AnimatedSprite2D = %ch_muzzle_flash_2
 @onready var death : AnimatedSprite2D = %death
 @onready var invincible : AnimatedSprite2D = %invincible
 
@@ -138,7 +140,7 @@ func _on_invincibility_timer_timeout() -> void:
 ################################################
 #NOTE: Handle shooting signals, used for animations
 ################################################
-func _on_shooting_handler_now_shooting(powerup : GameManager.powerups) -> void:
+func _on_shooting_handler_now_shooting(powerup : GameManager.powerups, level : int) -> void:
 	if is_dead:
 		return
 	body.play("shoot")
@@ -150,12 +152,17 @@ func _on_shooting_handler_now_shooting(powerup : GameManager.powerups) -> void:
 			od_muzzle_flash.play("shoot")
 		GameManager.powerups.Chorus:
 			ch_muzzle_flash.play("shoot")
+			if level == 4:
+				ch_muzzle_flash_1.play("shoot")
+				ch_muzzle_flash_2.play("shoot")
 
 
 func _on_shooting_handler_stopped_shooting() -> void:
 	base_muzzle_flash.play("none")
 	od_muzzle_flash.play("none")
 	ch_muzzle_flash.play("none")
+	ch_muzzle_flash_1.play("none")
+	ch_muzzle_flash_2.play("none")
 	body.play("idle")
 	body.frame = rocket.frame
 

@@ -4,7 +4,7 @@ class_name PlayerBullet extends Area2D
 
 @onready var bullet_sprite : AnimatedSprite2D = $bullet_sprite
 
-## TODO: use for od bullet shooting spread
+# Use for od bullet shooting spread
 var angle_deg : float = 0.0
 var direction : Vector2 = Vector2.RIGHT
 

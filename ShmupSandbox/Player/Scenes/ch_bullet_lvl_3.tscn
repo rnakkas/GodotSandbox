@@ -64,6 +64,9 @@ animations = [{
 "texture": SubResource("AtlasTexture_rinvn")
 }, {
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_rinvn")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_lj7hh")
 }, {
 "duration": 1.0,
@@ -74,6 +77,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qxpv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rinvn")
 }],
 "loop": true,
 "name": &"fly",
@@ -110,6 +116,8 @@ script = ExtResource("1_fop3o")
 sprite_frames = SubResource("SpriteFrames_tbdlw")
 animation = &"fly"
 autoplay = "fly"
+frame = 3
+frame_progress = 0.830286
 
 [node name="bullet_collider" type="CollisionShape2D" parent="."]
 rotation = 1.5708
