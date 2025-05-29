@@ -3,7 +3,7 @@ extends Node
 signal score_increased(score : int)
 signal player_died()
 signal spawn_player(pos : Vector2, can_be_invincible : bool)
-signal player_shooting(bullet_scene:PackedScene, locations:Array[Vector2])
+signal player_shooting(bullets_list : Array[PlayerBullet])
 signal player_lives_updated()
 signal continue_game_player_respawn()
 signal player_score_updated()
@@ -11,6 +11,8 @@ signal game_loaded()
 signal player_hi_score_name_entered(player_name : String)
 signal player_pressed_pause_game()
 signal player_credits_updated()
+signal spawn_powerup(sp : Vector2)
+signal powerup_collected(powerup : int)
 
 
 func score_increased_event(score : int) -> void:
@@ -22,8 +24,8 @@ func player_death_event() -> void:
 func player_spawn_event(pos : Vector2, can_be_invincible : bool) -> void:
 	spawn_player.emit(pos, can_be_invincible)
 
-func player_shooting_event(bullet_scene:PackedScene, locations:Array[Vector2]) -> void:
-	player_shooting.emit(bullet_scene, locations)
+func player_shooting_event(bullets_list : Array[PlayerBullet]) -> void:
+	player_shooting.emit(bullets_list)
 
 func player_lives_updated_event() -> void:
 	player_lives_updated.emit()
@@ -45,3 +47,9 @@ func player_pressed_pause_game_event() -> void:
 
 func player_credits_updated_event() -> void:
 	player_credits_updated.emit()
+
+func spawn_powerup_event(sp : Vector2) -> void:
+	spawn_powerup.emit(sp)
+
+func powerup_collected_event(powerup : int) -> void:
+	powerup_collected.emit(powerup)

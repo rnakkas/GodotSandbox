@@ -2,23 +2,21 @@ class_name PlayerCat extends CharacterBody2D
 
 ## Velocity
 @export var _max_speed : float = 450.0
-# @export var _acceleration : float = 1800.0
-# @export var _damping : float = 2000.0
 
-## Shooting
-@export var fire_rate : float = 8.0
-@export var bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/player_bullet.tscn")
+## Shooting handler
+@onready var shooting_handler : ShootingHandler = $shooting_handler
 
 ## Sprites
 @onready var body: AnimatedSprite2D = %body
 @onready var rocket : AnimatedSprite2D = %rocket
 @onready var thruster : AnimatedSprite2D = %thruster
-@onready var muzzle_flash: AnimatedSprite2D = %muzzle_flash
+@onready var base_muzzle_flash: AnimatedSprite2D = %base_muzzle_flash
+@onready var od_muzzle_flash : AnimatedSprite2D = %od_muzzle_flash
+@onready var ch_muzzle_flash : AnimatedSprite2D = %ch_muzzle_flash
+@onready var ch_muzzle_flash_1 : AnimatedSprite2D = %ch_muzzle_flash_1
+@onready var ch_muzzle_flash_2 : AnimatedSprite2D = %ch_muzzle_flash_2
 @onready var death : AnimatedSprite2D = %death
 @onready var invincible : AnimatedSprite2D = %invincible
-
-## Muzzle
-@onready var muzzle : Marker2D = %muzzle
 
 ## Hurtbox
 @onready var hurtbox : Area2D = $hurtbox
@@ -28,35 +26,26 @@ class_name PlayerCat extends CharacterBody2D
 @onready var invincibility_timer : Timer = $invincibility_timer
 
 var viewport_size : Vector2
-var shooting_cooldown_time : float
-var on_shooting_cooldown : bool
 var is_dead : bool
 var can_be_invincible : bool
 
+
+################################################
+# NOTE: Ready
+################################################
 func _ready() -> void:
 	viewport_size = get_viewport_rect().size
-	shooting_cooldown_time = 1/fire_rate
 	invincibility_timer.wait_time = invincibility_time
 
+
+################################################
+# NOTE: Physics process
+################################################
 func _physics_process(_delta) -> void:
 	if is_dead:
 		return
 	_handle_movement()
 	move_and_slide()
-
-func _process(_delta: float) -> void:
-	_clamp_movement_to_screen_bounds()
-	_handle_shooting()
-	_handle_invincibility()
-
-## Handle pausing game
-func _unhandled_input(event: InputEvent) -> void: 
-	if event.is_action_pressed("pause"):
-		SignalsBus.player_pressed_pause_game_event()
-
-####
-
-## Helper funcs
 
 func _handle_movement() -> void:
 	var input_dir := Vector2.ZERO
@@ -66,13 +55,18 @@ func _handle_movement() -> void:
 	input_dir.y = Input.get_axis("move_up", "move_down")
 	input_dir = input_dir.normalized()  # Normalize for diagonal movement
 	
-	# Acceleration
+	# Velocity calcs
 	if input_dir != Vector2.ZERO:
-		# velocity = velocity.move_toward(input_dir * _max_speed, _acceleration * delta)
 		velocity = input_dir * _max_speed
 	else:
-		# velocity = velocity.move_toward(Vector2.ZERO, _damping * delta)
 		velocity = Vector2.ZERO
+
+################################################
+# NOTE: Process
+################################################
+func _process(_delta: float) -> void:
+	_clamp_movement_to_screen_bounds()
+	_handle_invincibility()
 
 func _clamp_movement_to_screen_bounds() -> void:
 	# Clamp position within bounds
@@ -85,25 +79,6 @@ func _clamp_movement_to_screen_bounds() -> void:
 	position.x = clamp(position.x, offset_x - min_bounds.x, max_bounds.x - offset_x)
 	position.y = clamp(position.y, offset_y_screen_top + min_bounds.y, max_bounds.y - offset_y_screen_bottom)
 
-func _handle_shooting() -> void:
-	if is_dead:
-		return
-	if Input.is_action_pressed("shoot"):
-		if !on_shooting_cooldown:
-			on_shooting_cooldown = true
-			
-			var locations : Array[Vector2] = [muzzle.global_position]
-			SignalsBus.player_shooting_event(bullet_scene, locations)
-			
-			body.play("shoot")
-			muzzle_flash.play("shoot")
-			
-			await get_tree().create_timer(shooting_cooldown_time).timeout
-			on_shooting_cooldown = false
-	else:
-		body.play("idle")
-		body.frame = rocket.frame
-
 func _handle_invincibility() -> void:
 	if can_be_invincible:
 		can_be_invincible = false
@@ -115,9 +90,20 @@ func _handle_invincibility() -> void:
 		rocket.visible = false # Contains body and thruster sprites
 		invincible.play("invincible")
 
-####
 
-## Hit by enemy or enemy projectiles
+################################################
+# NOTE: Game pause handler
+################################################
+func _unhandled_input(event: InputEvent) -> void: 
+	if event.is_action_pressed("pause"):
+		SignalsBus.player_pressed_pause_game_event()
+
+
+
+################################################
+# NOTE: Hurtbox signal
+# Handle getting hit by enemies or projectiles
+################################################
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	is_dead = true
 	
@@ -138,9 +124,9 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	queue_free()
 	
 
-####
-
-## Stop invincibility
+################################################
+# NOTE: Stop invincibility signal
+################################################
 func _on_invincibility_timer_timeout() -> void:
 	# Re-enable hurtbox
 	hurtbox.set_deferred("monitoring", true)
@@ -149,3 +135,37 @@ func _on_invincibility_timer_timeout() -> void:
 	# Return to default animations
 	rocket.visible = true # Contains body and thruster sprites
 	invincible.play("none")
+
+
+################################################
+#NOTE: Handle shooting signals, used for animations
+################################################
+func _on_shooting_handler_now_shooting(powerup : GameManager.powerups, level : int) -> void:
+	if is_dead:
+		return
+	body.play("shoot")
+
+	match powerup:
+		GameManager.powerups.None:
+			base_muzzle_flash.play("shoot")
+		GameManager.powerups.Overdrive:
+			od_muzzle_flash.play("shoot")
+		GameManager.powerups.Chorus:
+			ch_muzzle_flash.play("shoot")
+			if level == 4:
+				ch_muzzle_flash_1.play("shoot")
+				ch_muzzle_flash_2.play("shoot")
+
+
+func _on_shooting_handler_stopped_shooting() -> void:
+	base_muzzle_flash.play("none")
+	od_muzzle_flash.play("none")
+	ch_muzzle_flash.play("none")
+	ch_muzzle_flash_1.play("none")
+	ch_muzzle_flash_2.play("none")
+	body.play("idle")
+	body.frame = rocket.frame
+
+
+## FIXME: Have turned Monitoring and Monitorable off for the hurtbox area for testing
+	## Turn back on after done

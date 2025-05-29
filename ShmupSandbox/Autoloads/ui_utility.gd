@@ -14,6 +14,7 @@ var color_white : Color = "#f0f6f0"
 var color_black : Color = "#222323"
 var color_yellow : Color = "#ffa31f"
 var color_red : Color = "#e24b13"
+var color_blue: Color = "#adc3e8"
 var color_transparent : Color = Color(0, 0 , 0, 0)
 
 ################################################
