@@ -499,6 +499,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xq3hw")
+}, {
+"duration": 1.0,
+"texture": null
 }],
 "loop": false,
 "name": &"shoot",
@@ -543,6 +546,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5r5sn")
+}, {
+"duration": 1.0,
+"texture": null
 }],
 "loop": false,
 "name": &"shoot",
@@ -705,6 +711,8 @@ one_shot = true
 
 [node name="shooting_handler" type="Node2D" parent="."]
 script = ExtResource("8_w8q8f")
+current_powerup = 2
+powerup_level = 4
 
 [node name="muzzle_base" type="Marker2D" parent="shooting_handler"]
 z_index = 1
