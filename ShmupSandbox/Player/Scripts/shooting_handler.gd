@@ -19,8 +19,8 @@ class_name ShootingHandler extends Node2D
 @export var od_bullets_per_shot : int		
 
 ## Chorus powerup shooting params
-@export var ch_convergence_angle_deg : float = 6.5
-@export var ch_lvl4_speed_multiplier : float = 0.76
+@export var ch_convergence_angle_deg : float = 5.5
+@export var ch_lvl4_speed_multiplier : float = 0.75
 
 ## Muzzles
 @onready var muzzle : Marker2D = $muzzle_base
@@ -74,7 +74,7 @@ func _update_shooting_properties() -> void:
 			angle_step = od_spread_angle_deg/(od_bullets_per_shot-1)
 		
 		GameManager.powerups.Chorus:
-			fire_rate = 25.0
+			fire_rate = 18.0
 
 	shooting_cooldown_time = 1/fire_rate
 

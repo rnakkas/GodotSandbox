@@ -1,23 +1,23 @@
 [gd_scene load_steps=13 format=3 uid="uid://dn7pv5a4e3qj5"]
 
-[ext_resource type="Texture2D" uid="uid://bsj5hyt6fhf7v" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_fly-v1.png" id="1_c5yqb"]
 [ext_resource type="Script" uid="uid://dmwv3jrlakeyp" path="res://ShmupSandbox/Player/Scripts/player_bullet.gd" id="1_xrsh6"]
 [ext_resource type="Texture2D" uid="uid://bykysl5evst2w" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_hit-v1.png" id="2_22bka"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_22bka"]
-atlas = ExtResource("1_c5yqb")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xrsh6"]
-atlas = ExtResource("1_c5yqb")
-region = Rect2(32, 0, 32, 32)
+[ext_resource type="Texture2D" uid="uid://dio5oh8uklhwy" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_fly-v2.png" id="2_xrsh6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6t3ak"]
-atlas = ExtResource("1_c5yqb")
-region = Rect2(64, 0, 32, 32)
+atlas = ExtResource("2_xrsh6")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_br156"]
-atlas = ExtResource("1_c5yqb")
+atlas = ExtResource("2_xrsh6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_okexi"]
+atlas = ExtResource("2_xrsh6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_si2k3"]
+atlas = ExtResource("2_xrsh6")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xi2yw"]
@@ -36,20 +36,20 @@ region = Rect2(64, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_22bka")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xrsh6")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_6t3ak")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_br156")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_okexi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_si2k3")
 }],
 "loop": true,
 "name": &"fly",
-"speed": 15.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,

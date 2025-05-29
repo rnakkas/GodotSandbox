@@ -1,32 +1,32 @@
 [gd_scene load_steps=15 format=3 uid="uid://d4anx1bsavrbf"]
 
 [ext_resource type="Script" uid="uid://dmwv3jrlakeyp" path="res://ShmupSandbox/Player/Scripts/player_bullet.gd" id="1_txvga"]
-[ext_resource type="Texture2D" uid="uid://2q4ayh6boopr" path="res://ShmupSandbox/Assets/PlayerPowerupShots/chorus-_lv2-v1.png" id="2_txvga"]
+[ext_resource type="Texture2D" uid="uid://3q5x776keve8" path="res://ShmupSandbox/Assets/PlayerPowerupShots/chorus-_lv2-v2.png" id="2_txvga"]
 [ext_resource type="Texture2D" uid="uid://bgew5g1nidcdt" path="res://ShmupSandbox/Assets/PlayerPowerupShots/chorus-_hit-v1.png" id="3_0ux44"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ck58x"]
 atlas = ExtResource("2_txvga")
-region = Rect2(0, 0, 48, 32)
+region = Rect2(0, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ux44"]
 atlas = ExtResource("2_txvga")
-region = Rect2(48, 0, 48, 32)
+region = Rect2(64, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_is6ql"]
 atlas = ExtResource("2_txvga")
-region = Rect2(96, 0, 48, 32)
+region = Rect2(128, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6mnuj"]
 atlas = ExtResource("2_txvga")
-region = Rect2(144, 0, 48, 32)
+region = Rect2(192, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o86y5"]
 atlas = ExtResource("2_txvga")
-region = Rect2(192, 0, 48, 32)
+region = Rect2(256, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l4ada"]
 atlas = ExtResource("2_txvga")
-region = Rect2(240, 0, 48, 32)
+region = Rect2(320, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3aqp"]
 atlas = ExtResource("3_0ux44")
@@ -63,7 +63,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"fly",
-"speed": 15.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -84,8 +84,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22bka"]
-radius = 11.0
-height = 32.0
+radius = 12.0
+height = 42.0
 
 [node name="ch_bullet_lvl_2" type="Area2D"]
 collision_layer = 2

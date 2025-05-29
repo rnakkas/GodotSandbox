@@ -1,32 +1,32 @@
 [gd_scene load_steps=15 format=3 uid="uid://c8iofdddseal7"]
 
 [ext_resource type="Script" uid="uid://dmwv3jrlakeyp" path="res://ShmupSandbox/Player/Scripts/player_bullet.gd" id="1_1wvg0"]
-[ext_resource type="Texture2D" uid="uid://dnswhn2v3yuhp" path="res://ShmupSandbox/Assets/PlayerPowerupShots/chorus-_lv1-v1.png" id="2_1wvg0"]
+[ext_resource type="Texture2D" uid="uid://chwi0lyiglwo4" path="res://ShmupSandbox/Assets/PlayerPowerupShots/chorus-_lv1-v2.png" id="2_1wvg0"]
 [ext_resource type="Texture2D" uid="uid://bgew5g1nidcdt" path="res://ShmupSandbox/Assets/PlayerPowerupShots/chorus-_hit-v1.png" id="3_gjjl1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjjl1"]
+atlas = ExtResource("2_1wvg0")
+region = Rect2(0, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m1git"]
 atlas = ExtResource("2_1wvg0")
-region = Rect2(0, 0, 48, 32)
+region = Rect2(64, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mhwai"]
 atlas = ExtResource("2_1wvg0")
-region = Rect2(48, 0, 48, 32)
+region = Rect2(128, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dbvcp"]
 atlas = ExtResource("2_1wvg0")
-region = Rect2(96, 0, 48, 32)
+region = Rect2(192, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yow2h"]
 atlas = ExtResource("2_1wvg0")
-region = Rect2(144, 0, 48, 32)
+region = Rect2(256, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_28qpk"]
 atlas = ExtResource("2_1wvg0")
-region = Rect2(192, 0, 48, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kxvvn"]
-atlas = ExtResource("2_1wvg0")
-region = Rect2(240, 0, 48, 32)
+region = Rect2(320, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3aqp"]
 atlas = ExtResource("3_gjjl1")
@@ -44,6 +44,9 @@ region = Rect2(96, 0, 48, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_gjjl1")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_m1git")
 }, {
 "duration": 1.0,
@@ -57,13 +60,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_28qpk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kxvvn")
 }],
 "loop": true,
 "name": &"fly",
-"speed": 15.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -85,7 +85,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22bka"]
 radius = 6.0
-height = 26.0
+height = 40.0
 
 [node name="ch_bullet_lvl_1" type="Area2D"]
 collision_layer = 2
