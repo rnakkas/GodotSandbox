@@ -40,13 +40,20 @@ var location_base : Vector2
 var location_ch_1 : Vector2
 var location_ch_2 : Vector2
 var bullets_list : Array[PlayerBullet] = []
+var shot_limit_reached : bool
 
 ################################################
 # NOTE: Ready
 ################################################
 func _ready() -> void:
+	_connect_to_signals()
 	_update_shooting_properties()
-	SignalsBus.powerup_collected.connect(self._on_powerup_picked_up) # Auto disconnects if this node is freed
+
+func _connect_to_signals() -> void:
+	# Auto disconnects if this node is freed
+	SignalsBus.powerup_collected.connect(self._on_powerup_picked_up) 
+	SignalsBus.shot_limit_reached.connect(self._on_shot_limit_reached)
+	SignalsBus.shot_limit_refreshed.connect(self._on_shot_limit_refreshed)
 
 
 ################################################
@@ -97,6 +104,16 @@ func _on_powerup_picked_up(powerup : int) -> void:
 
 
 ################################################
+# NOTE: Shot limit reached and refreshed signals connections
+################################################
+func _on_shot_limit_reached() -> void:
+	shot_limit_reached = true
+
+func _on_shot_limit_refreshed() -> void:
+	shot_limit_reached = false
+
+
+################################################
 # NOTE: Process
 ################################################
 func _process(_delta: float) -> void:
@@ -112,7 +129,8 @@ func _handle_shooting() -> void:
 	location_ch_1 = muzzle_ch_1.global_position
 	location_ch_2 = muzzle_ch_2.global_position
 
-	if Input.is_action_pressed("shoot"):
+	# Only allow shooting if shot limit hasn't been reached
+	if Input.is_action_pressed("shoot") && !shot_limit_reached:
 		if !on_shooting_cooldown:
 			on_shooting_cooldown = true
 

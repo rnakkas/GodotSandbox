@@ -499,6 +499,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xq3hw")
+}, {
+"duration": 1.0,
+"texture": null
 }],
 "loop": false,
 "name": &"shoot",
@@ -543,6 +546,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5r5sn")
+}, {
+"duration": 1.0,
+"texture": null
 }],
 "loop": false,
 "name": &"shoot",
