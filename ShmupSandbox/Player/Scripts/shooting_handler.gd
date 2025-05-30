@@ -27,11 +27,23 @@ class_name ShootingHandler extends Node2D
 @onready var muzzle_ch_1 : Marker2D = %muzzle_ch_1
 @onready var muzzle_ch_2 : Marker2D = %muzzle_ch_2
 
+## Shot limits
+@export var base_shot_limit : int = 6
 
+@export var od_lvl_1_shot_limit : int = 21
+@export var od_lvl_2_shot_limit : int = 35
+@export var od_lvl_3_shot_limit : int = 49
+@export var od_lvl_4_shot_limit : int = 63
+
+@export var ch_lvl_1_shot_limit : int = 10
+@export var ch_lvl_2_3_shot_limit : int = 12
+@export var ch_lvl_4_shot_limit : int = 36
+
+## Signals
 signal now_shooting(powerup : GameManager.powerups, level : int)
 signal stopped_shooting()
 
-
+## Misc variables
 var is_dead: bool
 var on_shooting_cooldown : bool
 var shooting_cooldown_time : float
@@ -41,6 +53,7 @@ var location_ch_1 : Vector2
 var location_ch_2 : Vector2
 var bullets_list : Array[PlayerBullet] = []
 var shot_limit_reached : bool
+
 
 ################################################
 # NOTE: Ready
@@ -60,6 +73,8 @@ func _connect_to_signals() -> void:
 # NOTE: Update shooting properties based on powerup
 ################################################
 func _update_shooting_properties() -> void:
+	var shot_limit : int = base_shot_limit
+	
 	match current_powerup:
 		GameManager.powerups.Overdrive:
 			match powerup_level:
@@ -68,22 +83,37 @@ func _update_shooting_properties() -> void:
 				1:
 					od_bullets_per_shot = 3
 					od_spread_angle_deg = 8.0
+					shot_limit = od_lvl_1_shot_limit
 				2:
 					od_bullets_per_shot = 5
 					od_spread_angle_deg = 15.0
+					shot_limit = od_lvl_2_shot_limit
 				3:
 					od_bullets_per_shot = 7
 					od_spread_angle_deg = 25.0
+					shot_limit = od_lvl_3_shot_limit
 				4:
 					od_bullets_per_shot = 9
 					od_spread_angle_deg = 30.0
+					shot_limit = od_lvl_4_shot_limit
 			
 			angle_step = od_spread_angle_deg/(od_bullets_per_shot-1)
 		
 		GameManager.powerups.Chorus:
 			fire_rate = 18.0
+			match powerup_level:
+				0:
+					pass
+				1:
+					shot_limit = ch_lvl_1_shot_limit
+				2, 3:
+					shot_limit = ch_lvl_2_3_shot_limit
+				4:
+					shot_limit = ch_lvl_4_shot_limit
 
 	shooting_cooldown_time = 1/fire_rate
+
+	SignalsBus.shot_limit_updated_event(shot_limit)
 
 
 ################################################

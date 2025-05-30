@@ -9,7 +9,7 @@ class_name Game extends Node2D
 @onready var pickups_container : Node2D = $PickupsContainer
 
 ## Shot limits
-@export var shot_limit : int = 45
+var shot_limit : int = 100
 var active_shots : int
 
 
@@ -17,8 +17,17 @@ var active_shots : int
 # NOTE: Ready
 ################################################
 func _ready() -> void:
-	SignalsBus.player_shooting.connect(self._on_player_shooting)
+	_connect_to_signals()
 	player_spawner_node.spawn_player_sprite("spawn") ## play spawn animation for player
+
+func _connect_to_signals() -> void:
+	SignalsBus.shot_limit_updated.connect(self._on_shot_limit_updated)
+	SignalsBus.player_shooting.connect(self._on_player_shooting)
+
+
+func _on_shot_limit_updated(limit : int) -> void:
+	shot_limit = limit
+
 
 
 ################################################

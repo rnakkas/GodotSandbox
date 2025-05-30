@@ -15,6 +15,7 @@ signal spawn_powerup(sp : Vector2)
 signal powerup_collected(powerup : int)
 signal shot_limit_reached()
 signal shot_limit_refreshed()
+signal shot_limit_updated(shot_limit : int)
 
 
 func score_increased_event(score : int) -> void:
@@ -61,3 +62,6 @@ func shot_limit_reached_event() -> void:
 
 func shot_limit_refreshed_event() -> void:
 	shot_limit_refreshed.emit()
+
+func shot_limit_updated_event(shot_limit : int) -> void:
+	shot_limit_updated.emit(shot_limit)
