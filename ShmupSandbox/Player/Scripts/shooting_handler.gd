@@ -11,7 +11,7 @@ class_name ShootingHandler extends Node2D
 @export var ch_lvl_3_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_3.tscn")
 
 ## Default: no powerups, change only when powerup is picked up
-@export var current_powerup : GameManager.powerups = GameManager.powerups.None 
+@export var current_powerup : GameManager.powerups = GameManager.powerups.None
 @export var powerup_level: int = 0							
 
 ## Overdrive powerup shooting params
@@ -125,6 +125,10 @@ func _update_shooting_properties() -> void:
 	# Switch the current powerup to the picked up powerup (casting powerup as the enum)
 	# Update shooting properties based on powerup picked up
 func _on_powerup_picked_up(powerup : int) -> void:
+	# If powerup picked up is bomb, don't modify shooting
+	if powerup == 3: # Fuzz
+		return
+
 	if current_powerup == GameManager.powerups.None || current_powerup == powerup:
 		powerup_level += 1
 

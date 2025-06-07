@@ -10,6 +10,10 @@ func _ready() -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
+	# Only allow debug commands if using debug build
+	if !OS.is_debug_build():
+		return
+	
 	if event.is_action_pressed("quit"): # quit game
 		get_tree().quit()
 	if event.is_action_pressed("reset"): # reset game

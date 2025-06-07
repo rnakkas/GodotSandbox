@@ -6,11 +6,17 @@ extends Node
 const life_extend_score_1 : int = 100000
 const life_extend_score_2 : int = 250000
 const score_penallty_multiplier : float = 0.9
+const player_default_bombs : int = 3
 
 enum powerups {
 	None,			## 0
+
+	# Shooting powerup
 	Overdrive, 		## 1
-	Chorus 			## 2
+	Chorus, 		## 2
+	
+	# Bombs
+	Fuzz			## 3
 }
 
 ################################################
@@ -61,6 +67,7 @@ var life_extend_2_reached : bool
 
 var player_lives : int
 var player_credits : int
+var player_bombs : int = player_default_bombs
 
 var player_score: int
 
@@ -95,11 +102,12 @@ func _ready() -> void:
 
 ## Connect to global signals
 func _connect_to_signals() -> void:
-	SignalsBus.score_increased.connect(_on_update_current_score)
-	SignalsBus.continue_game_player_respawn.connect(_on_continue_refresh_player_data)
-	SignalsBus.player_died.connect(_on_player_death)
-	SignalsBus.game_loaded.connect(_on_game_loaded)
-	SignalsBus.player_hi_score_name_entered.connect(_on_player_hi_score_name_entered)
+	SignalsBus.score_increased.connect(self._on_update_current_score)
+	SignalsBus.continue_game_player_respawn.connect(self._on_continue_refresh_player_data)
+	SignalsBus.player_died.connect(self._on_player_death)
+	SignalsBus.game_loaded.connect(self._on_game_loaded)
+	SignalsBus.player_hi_score_name_entered.connect(self._on_player_hi_score_name_entered)
+	SignalsBus.powerup_collected.connect(self._on_powerup_bomb_collected)
 
 
 ################################################
@@ -133,7 +141,7 @@ func _save_high_scores() -> void:
 ################################################
 #NOTE: Reset all the of player data for new game, called by Main.gd
 ################################################
-func reset_all_player_data_on_start() -> void:
+func reset_all_player_data_on_start() -> void: ## TODO: Update this with the player bombs
 	player_score = 0
 	enemies_killed = 0
 	player_lives = _player_max_lives - 1
@@ -172,7 +180,7 @@ func _handle_life_extension() -> void:
 ################################################
 #NOTE: Signal connection: Continue game refresh player data
 ################################################
-func _on_continue_refresh_player_data() -> void:
+func _on_continue_refresh_player_data() -> void: ## TODO: Update this with the player bombs
 	player_score = int(round(player_score * score_penallty_multiplier))
 	player_lives = _player_max_lives
 	player_credits -= 1
@@ -203,6 +211,11 @@ func _on_player_hi_score_name_entered(player_name : String) -> void:
 	_save_high_scores()
 
 
+func _on_powerup_bomb_collected(powerup : int) -> void:
+	# Only increase bomb count if the collected powerup is a bomb
+	if powerup == 3: # Fuzz
+		player_bombs += 1
+	print_debug("player bomb count: ", player_bombs)
 
 ################################################
 #NOTE: Signal connection: Load game and set data from the loaded data

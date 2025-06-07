@@ -5,6 +5,8 @@ class_name PlayerHud extends Control
 @onready var top_score_value : Label = %top_score_value
 @onready var credits_value : Label = %credits_value
 
+## TODO: Update this with the player bombs
+
 ################################################
 #NOTE: Ready
 ################################################

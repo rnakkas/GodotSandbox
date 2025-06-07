@@ -4,6 +4,7 @@ class_name PickupPowerup extends Node2D
 @onready var sprite_fx : AnimatedSprite2D = %sprite_fx
 @onready var sprite_od: AnimatedSprite2D = %sprite_od
 @onready var sprite_ch : AnimatedSprite2D = %sprite_ch
+@onready var sprite_fz : AnimatedSprite2D = %sprite_fz
 @onready var powerup_label : Label = %powerup_label
 @onready var collider_area : Area2D = %powerup_area
 
@@ -62,6 +63,8 @@ func _toggle_powerup_sprite() -> void:
 			current_powerup_sprite = sprite_od
 		2: # Chorus
 			current_powerup_sprite = sprite_ch
+		3: # Fuzz
+			current_powerup_sprite = sprite_fz
 	
 	for powerup_sprite : AnimatedSprite2D in sprites_list:
 		if powerup_sprite == current_powerup_sprite:
@@ -164,6 +167,8 @@ func _play_collect_anims_for_label() -> Tween:
 			tween.tween_property(powerup_label, "self_modulate", UiUtility.color_yellow, 0.3) # Fade to color of powerup
 		2: # Chorus
 			tween.tween_property(powerup_label, "self_modulate", UiUtility.color_blue, 0.3) # Fade to color of powerup
+		3: # Fuzz
+			tween.tween_property(powerup_label, "self_modulate", UiUtility.color_white, 0.3) # Fade to color of powerup
 	
 	tween.tween_property(powerup_label, "position", final_position, 0.3)
 	
