@@ -17,6 +17,6 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	if self.animation == "respawn":
 		can_be_invincible = true
 	
-	SignalsBus.player_spawn_event(global_position, can_be_invincible)
+	SignalsBus.player_spawn_event.emit(global_position, can_be_invincible)
 	
 	call_deferred("queue_free")

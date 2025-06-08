@@ -89,7 +89,7 @@ func _continue_game() -> void:
 	yes_button_pressed.emit()
 
 	# Respawn player
-	SignalsBus.continue_game_player_respawn_event()
+	SignalsBus.continue_game_player_respawn_event.emit()
 
 
 func _end_game() -> void:

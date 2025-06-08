@@ -103,12 +103,12 @@ func _ready() -> void:
 
 ## Connect to global signals
 func _connect_to_signals() -> void:
-	SignalsBus.score_increased.connect(self._on_update_current_score)
-	SignalsBus.continue_game_player_respawn.connect(self._on_continue_refresh_player_data)
-	SignalsBus.player_died.connect(self._on_player_death)
-	SignalsBus.game_loaded.connect(self._on_game_loaded)
-	SignalsBus.player_hi_score_name_entered.connect(self._on_player_hi_score_name_entered)
-	SignalsBus.powerup_collected.connect(self._on_powerup_bomb_collected)
+	SignalsBus.score_increased_event.connect(self._on_update_current_score)
+	SignalsBus.continue_game_player_respawn_event.connect(self._on_continue_refresh_player_data)
+	SignalsBus.player_death_event.connect(self._on_player_death)
+	SignalsBus.game_loaded_event.connect(self._on_game_loaded)
+	SignalsBus.player_hi_score_name_entered_event.connect(self._on_player_hi_score_name_entered)
+	SignalsBus.powerup_collected_event.connect(self._on_powerup_bomb_collected)
 
 
 ################################################
@@ -151,9 +151,9 @@ func reset_all_player_data_on_start() -> void:
 	life_extend_2_reached = false
 	player_bombs = player_default_bombs
 
-	SignalsBus.player_score_updated_event()
-	SignalsBus.player_lives_updated_event()
-	SignalsBus.player_credits_updated_event()
+	SignalsBus.player_score_updated_event.emit()
+	SignalsBus.player_lives_updated_event.emit()
+	SignalsBus.player_credits_updated_event.emit()
 
 
 
@@ -164,7 +164,7 @@ func _on_update_current_score(score : int) -> void:
 	player_score += score
 	_handle_life_extension()
 
-	SignalsBus.player_score_updated_event()
+	SignalsBus.player_score_updated_event.emit()
 
 ## Helper func to extend life on reaching extend scores
 func _handle_life_extension() -> void:
@@ -176,7 +176,7 @@ func _handle_life_extension() -> void:
 		life_extend_2_reached = true
 		player_lives += 1
 
-	SignalsBus.player_lives_updated_event()
+	SignalsBus.player_lives_updated_event.emit()
 
 
 ################################################
@@ -188,9 +188,9 @@ func _on_continue_refresh_player_data() -> void:
 	player_credits -= 1
 	player_bombs = player_default_bombs
 
-	SignalsBus.player_score_updated_event()
-	SignalsBus.player_lives_updated_event()
-	SignalsBus.player_credits_updated_event()
+	SignalsBus.player_score_updated_event.emit()
+	SignalsBus.player_lives_updated_event.emit()
+	SignalsBus.player_credits_updated_event.emit()
 
 
 ################################################
@@ -200,7 +200,7 @@ func _on_player_death() -> void:
 	# Extend life before decreasing life on death if the score is higher than extension threshold
 	_handle_life_extension() 
 	player_lives -= 1
-	SignalsBus.player_lives_updated_event()
+	SignalsBus.player_lives_updated_event.emit()
 
 
 ################################################
@@ -225,7 +225,7 @@ func _on_powerup_bomb_collected(powerup : int, score : int) -> void:
 		player_bombs += 1
 		player_bombs = clamp(player_bombs, 0, player_max_bombs)
 
-	SignalsBus.player_bombs_updated.emit()
+	SignalsBus.player_bombs_updated_event.emit()
 
 
 ################################################

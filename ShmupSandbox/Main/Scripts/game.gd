@@ -21,8 +21,8 @@ func _ready() -> void:
 	player_spawner_node.spawn_player_sprite("spawn") ## play spawn animation for player
 
 func _connect_to_signals() -> void:
-	SignalsBus.shot_limit_updated.connect(self._on_shot_limit_updated)
-	SignalsBus.player_shooting.connect(self._on_player_shooting)
+	SignalsBus.shot_limit_updated_event.connect(self._on_shot_limit_updated)
+	SignalsBus.player_shooting_event.connect(self._on_player_shooting)
 
 
 func _on_shot_limit_updated(limit : int) -> void:
@@ -43,14 +43,14 @@ func _on_player_shooting(bullets_list : Array[PlayerBullet]) -> void:
 		
 		# If shot limit reached, send signal to prevent player from shooting
 		if active_shots >= shot_limit:
-			SignalsBus.shot_limit_reached_event()
+			SignalsBus.shot_limit_reached_event.emit()
 			break
 
 ## When bullet is freed, reduce active shot count to allow player to shoot again
 func _on_bullet_freed() -> void:
 	active_shots -= 1
 	if active_shots <= shot_limit*0.2:
-		SignalsBus.shot_limit_refreshed_event()
+		SignalsBus.shot_limit_refreshed_event.emit()
 
 
 ################################################

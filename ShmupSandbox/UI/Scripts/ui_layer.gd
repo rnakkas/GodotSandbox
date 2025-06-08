@@ -43,8 +43,8 @@ func _initialize_ui_scenes() -> void:
 
 
 func _connect_to_signals() -> void:
-	SignalsBus.player_lives_updated.connect(_on_player_lives_depleted)
-	SignalsBus.player_pressed_pause_game.connect(_on_player_pauses_game)
+	SignalsBus.player_lives_updated_event.connect(self._on_player_lives_depleted)
+	SignalsBus.player_pressed_pause_game_event.connect(self._on_player_pauses_game)
 
 
 ################################################
