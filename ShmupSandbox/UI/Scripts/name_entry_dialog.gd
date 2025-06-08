@@ -52,7 +52,7 @@ func _initialize_letter_containers_list() -> void:
 ## Helper function for connecting to group signals for the letters and containers
 func _connect_to_group_signals(node : Control) -> void:
 	if node.has_signal("focus_entered"):
-		node.focus_entered.connect(_on_focus_entered)
+		node.focus_entered.connect(self._on_focus_entered)
 
 
 ## Blinking timer properties
