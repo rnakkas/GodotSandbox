@@ -1,5 +1,8 @@
 class_name ShootingHandler extends Node2D
 
+## Constants
+const powerup_level_max : int = 4
+
 ## Base fire rate
 @export var fire_rate : float = 8.0
 
@@ -12,7 +15,7 @@ class_name ShootingHandler extends Node2D
 
 ## Default: no powerups, change only when powerup is picked up
 @export var current_powerup : GameManager.powerups = GameManager.powerups.None
-@export var powerup_level: int = 0							
+@export_range(0,powerup_level_max) var powerup_level: int = 0 # Powerup level can only be between 0 to 4
 
 ## Overdrive powerup shooting params
 @export var od_spread_angle_deg : float
@@ -124,9 +127,14 @@ func _update_shooting_properties() -> void:
 	# Can't go above 4 for the powerup level
 	# Switch the current powerup to the picked up powerup (casting powerup as the enum)
 	# Update shooting properties based on powerup picked up
-func _on_powerup_picked_up(powerup : int) -> void:
+func _on_powerup_picked_up(powerup : int, score : int) -> void:
 	# If powerup picked up is bomb, don't modify shooting
 	if powerup == 3: # Fuzz
+		return
+
+	# Add score if powerup is at max level
+	if powerup_level == powerup_level_max && current_powerup == powerup:
+		SignalsBus.score_increased.emit(score)
 		return
 
 	if current_powerup == GameManager.powerups.None || current_powerup == powerup:

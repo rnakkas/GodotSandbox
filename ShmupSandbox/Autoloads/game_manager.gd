@@ -7,6 +7,7 @@ const life_extend_score_1 : int = 100000
 const life_extend_score_2 : int = 250000
 const score_penallty_multiplier : float = 0.9
 const player_default_bombs : int = 3
+const player_max_bombs : int = 9
 
 enum powerups {
 	None,			## 0
@@ -141,13 +142,14 @@ func _save_high_scores() -> void:
 ################################################
 #NOTE: Reset all the of player data for new game, called by Main.gd
 ################################################
-func reset_all_player_data_on_start() -> void: ## TODO: Update this with the player bombs
+func reset_all_player_data_on_start() -> void:
 	player_score = 0
 	enemies_killed = 0
 	player_lives = _player_max_lives - 1
 	player_credits = _player_max_credits - 1
 	life_extend_1_reached = false
 	life_extend_2_reached = false
+	player_bombs = player_default_bombs
 
 	SignalsBus.player_score_updated_event()
 	SignalsBus.player_lives_updated_event()
@@ -180,10 +182,11 @@ func _handle_life_extension() -> void:
 ################################################
 #NOTE: Signal connection: Continue game refresh player data
 ################################################
-func _on_continue_refresh_player_data() -> void: ## TODO: Update this with the player bombs
+func _on_continue_refresh_player_data() -> void:
 	player_score = int(round(player_score * score_penallty_multiplier))
 	player_lives = _player_max_lives
 	player_credits -= 1
+	player_bombs = player_default_bombs
 
 	SignalsBus.player_score_updated_event()
 	SignalsBus.player_lives_updated_event()
@@ -211,11 +214,19 @@ func _on_player_hi_score_name_entered(player_name : String) -> void:
 	_save_high_scores()
 
 
-func _on_powerup_bomb_collected(powerup : int) -> void:
+func _on_powerup_bomb_collected(powerup : int, score : int) -> void:
 	# Only increase bomb count if the collected powerup is a bomb
 	if powerup == 3: # Fuzz
+		# If max bombs in stock, add score instead
+		if player_bombs == player_max_bombs:
+			_on_update_current_score(score)
+			return
+		
 		player_bombs += 1
-	print_debug("player bomb count: ", player_bombs)
+		player_bombs = clamp(player_bombs, 0, player_max_bombs)
+
+	SignalsBus.player_bombs_updated.emit()
+
 
 ################################################
 #NOTE: Signal connection: Load game and set data from the loaded data

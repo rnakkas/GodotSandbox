@@ -12,10 +12,11 @@ signal player_hi_score_name_entered(player_name : String)
 signal player_pressed_pause_game()
 signal player_credits_updated()
 signal spawn_powerup(sp : Vector2)
-signal powerup_collected(powerup : int)
+signal powerup_collected(powerup : int, score : int)
 signal shot_limit_reached()
 signal shot_limit_refreshed()
 signal shot_limit_updated(shot_limit : int)
+signal player_bombs_updated()
 
 
 func score_increased_event(score : int) -> void:
@@ -54,8 +55,8 @@ func player_credits_updated_event() -> void:
 func spawn_powerup_event(sp : Vector2) -> void:
 	spawn_powerup.emit(sp)
 
-func powerup_collected_event(powerup : int) -> void:
-	powerup_collected.emit(powerup)
+func powerup_collected_event(powerup : int, score : int) -> void:
+	powerup_collected.emit(powerup, score)
 
 func shot_limit_reached_event() -> void:
 	shot_limit_reached.emit()
@@ -65,3 +66,6 @@ func shot_limit_refreshed_event() -> void:
 
 func shot_limit_updated_event(shot_limit : int) -> void:
 	shot_limit_updated.emit(shot_limit)
+
+func player_bombs_updated_event() -> void:
+	player_bombs_updated.emit()

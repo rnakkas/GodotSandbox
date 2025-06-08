@@ -12,6 +12,7 @@ class_name PickupPowerup extends Node2D
 
 @export var speed : float = 20
 @export var powerup_switch_time : float = 5.5
+@export var powerup_score : int = 1000 # Player gets score if current powerup level is maxed out
 
 const idle_anim : String = "idle"
 const collect_anim : String = "collect"
@@ -141,7 +142,7 @@ func _on_powerup_area_body_entered(body:Node2D) -> void:
 		var tween : Tween = _play_collect_anims_for_label()
 
 		## Send a global signal with the powerup type
-		SignalsBus.powerup_collected_event(current_powerup)
+		SignalsBus.powerup_collected_event(current_powerup, powerup_score)
 
 		## Finally despawn the powerup
 		await current_powerup_sprite.animation_finished

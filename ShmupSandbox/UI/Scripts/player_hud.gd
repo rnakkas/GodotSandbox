@@ -4,6 +4,9 @@ class_name PlayerHud extends Control
 @onready var player_lives_value : Label = %lives_value
 @onready var top_score_value : Label = %top_score_value
 @onready var credits_value : Label = %credits_value
+@onready var bombs_container : HBoxContainer = %HBoxContainer_bombs
+
+var bomb_icons_array : Array[Node] = []
 
 ## TODO: Update this with the player bombs
 
@@ -12,24 +15,36 @@ class_name PlayerHud extends Control
 ################################################
 func _ready() -> void:
 	_connect_to_signals()
+	_initialize_bomb_icons_array()
 
 func _connect_to_signals() -> void:
-	SignalsBus.player_score_updated.connect(_on_player_score_updated)
-	SignalsBus.player_lives_updated.connect(_on_player_lives_updated)
-	SignalsBus.player_credits_updated.connect(_on_player_credits_updated)
+	SignalsBus.player_score_updated.connect(self._on_player_score_updated)
+	SignalsBus.player_lives_updated.connect(self._on_player_lives_updated)
+	SignalsBus.player_credits_updated.connect(self._on_player_credits_updated)
+	SignalsBus.player_bombs_updated.connect(self._on_player_bombs_updated)
 
+func _initialize_bomb_icons_array() -> void:
+	bomb_icons_array = bombs_container.get_children()
+	bomb_icons_array.sort()
+	for icon : int in range(bomb_icons_array.size()):
+		bomb_icons_array[icon].visible = false
 
 ################################################
 #NOTE: When player hud becomes visible
 ################################################
 func _on_visibility_changed() -> void:
 	if self.visible:
-		set_score_values_on_hud()
+		_set_score_values_on_hud()
+		_set_bombs_on_hud()
 
-func set_score_values_on_hud() -> void:
+func _set_score_values_on_hud() -> void:
 	score_value.text = str(GameManager.player_score).pad_zeros(10)
 	top_score_value.text = str(GameManager.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
 
+func _set_bombs_on_hud() -> void:
+	for bomb : int in range(0, GameManager.player_bombs):
+		var icon : TextureRect = bomb_icons_array[bomb] as TextureRect
+		icon.visible = true
 
 ################################################
 #NOTE: Signal connections
@@ -55,4 +70,5 @@ func _on_player_credits_updated() -> void:
 		credits_value.text = str(GameManager.player_credits)
 
 
-
+func _on_player_bombs_updated() -> void:
+	_set_bombs_on_hud()
