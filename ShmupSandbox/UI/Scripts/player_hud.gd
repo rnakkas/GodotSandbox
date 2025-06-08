@@ -18,10 +18,10 @@ func _ready() -> void:
 	_initialize_bomb_icons_array()
 
 func _connect_to_signals() -> void:
-	SignalsBus.player_score_updated.connect(self._on_player_score_updated)
-	SignalsBus.player_lives_updated.connect(self._on_player_lives_updated)
-	SignalsBus.player_credits_updated.connect(self._on_player_credits_updated)
-	SignalsBus.player_bombs_updated.connect(self._on_player_bombs_updated)
+	SignalsBus.player_score_updated_event.connect(self._on_player_score_updated)
+	SignalsBus.player_lives_updated_event.connect(self._on_player_lives_updated)
+	SignalsBus.player_credits_updated_event.connect(self._on_player_credits_updated)
+	SignalsBus.player_bombs_updated_event.connect(self._on_player_bombs_updated)
 
 func _initialize_bomb_icons_array() -> void:
 	bomb_icons_array = bombs_container.get_children()

@@ -96,7 +96,7 @@ func _handle_invincibility() -> void:
 ################################################
 func _unhandled_input(event: InputEvent) -> void: 
 	if event.is_action_pressed("pause"):
-		SignalsBus.player_pressed_pause_game_event()
+		SignalsBus.player_pressed_pause_game_event.emit()
 
 
 
@@ -119,7 +119,7 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	## wait 0.5 seconds before sending signal to player spawner
 	await get_tree().create_timer(0.5).timeout 
 	
-	SignalsBus.player_death_event()
+	SignalsBus.player_death_event.emit()
 	
 	queue_free()
 	

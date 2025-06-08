@@ -142,7 +142,7 @@ func _on_powerup_area_body_entered(body:Node2D) -> void:
 		var tween : Tween = _play_collect_anims_for_label()
 
 		## Send a global signal with the powerup type
-		SignalsBus.powerup_collected_event(current_powerup, powerup_score)
+		SignalsBus.powerup_collected_event.emit(current_powerup, powerup_score)
 
 		## Finally despawn the powerup
 		await current_powerup_sprite.animation_finished

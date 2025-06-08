@@ -173,7 +173,7 @@ func _on_ok_button_pressed() -> void:
 		player_name_string += letter_labels_list[letter].text
 	
 	ok_button_pressed.emit()
-	SignalsBus.player_hi_score_name_entered_event(player_name_string)
+	SignalsBus.player_hi_score_name_entered_event.emit(player_name_string)
 
 
 ## If player is idle for too long, name entry is chosen for them
@@ -198,4 +198,4 @@ func _name_entry_when_idle() -> void:
 	await UiUtility.selected_button_element_press_animation(ok_button)
 
 	ok_button_pressed.emit()
-	SignalsBus.player_hi_score_name_entered_event(player_name_string)
+	SignalsBus.player_hi_score_name_entered_event.emit(player_name_string)

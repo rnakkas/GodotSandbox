@@ -21,4 +21,4 @@ func _input(event: InputEvent) -> void:
 		get_tree().reload_current_scene()
 	if Input.is_key_label_pressed(KEY_1): # Spawn a powerup on mouse position
 		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
-		SignalsBus.spawn_powerup_event(mouse_pos)
+		SignalsBus.spawn_powerup_event.emit(mouse_pos)

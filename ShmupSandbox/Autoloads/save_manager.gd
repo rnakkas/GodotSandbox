@@ -68,7 +68,7 @@ func _restore_from_backup() -> void:
 		dir.copy(backup_file, main_save_path)  # Copy the backup file to the main save location
 
 		loaded_data = load_data  # Store the data
-		SignalsBus.game_loaded_event()  # Trigger the loaded event
+		SignalsBus.game_loaded_event.emit()  # Trigger the loaded event
 	else:
 		push_error("Failed to read from backup, using default data")
 
@@ -79,7 +79,7 @@ func _load_game() -> void:
 	var load_data : Variant = _load_json_file(main_save_path)
 	if load_data != null:
 		loaded_data = load_data  # Store the data
-		SignalsBus.game_loaded_event()  # Trigger the loaded event
+		SignalsBus.game_loaded_event.emit()  # Trigger the loaded event
 	else:
 		push_warning("Failed to parse save file json, using backup save data")
 		_restore_from_backup()  # Restore from backup if the main file fails to load

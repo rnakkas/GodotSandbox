@@ -5,7 +5,7 @@ class_name PickupsSpanwer extends Node2D
 signal add_pickup_to_game(pickup : Node2D)
 
 func _ready() -> void:
-	SignalsBus.spawn_powerup.connect(_on_spawn_powerup_event)
+	SignalsBus.spawn_powerup_event.connect(_on_spawn_powerup_event)
 
 
 func _on_spawn_powerup_event(sp : Vector2) -> void:

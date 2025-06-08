@@ -67,9 +67,9 @@ func _ready() -> void:
 
 func _connect_to_signals() -> void:
 	# Auto disconnects if this node is freed
-	SignalsBus.powerup_collected.connect(self._on_powerup_picked_up) 
-	SignalsBus.shot_limit_reached.connect(self._on_shot_limit_reached)
-	SignalsBus.shot_limit_refreshed.connect(self._on_shot_limit_refreshed)
+	SignalsBus.powerup_collected_event.connect(self._on_powerup_picked_up) 
+	SignalsBus.shot_limit_reached_event.connect(self._on_shot_limit_reached)
+	SignalsBus.shot_limit_refreshed_event.connect(self._on_shot_limit_refreshed)
 
 
 ################################################
@@ -116,7 +116,7 @@ func _update_shooting_properties() -> void:
 
 	shooting_cooldown_time = 1/fire_rate
 
-	SignalsBus.shot_limit_updated_event(shot_limit)
+	SignalsBus.shot_limit_updated_event.emit(shot_limit)
 
 
 ################################################
@@ -134,7 +134,7 @@ func _on_powerup_picked_up(powerup : int, score : int) -> void:
 
 	# Add score if powerup is at max level
 	if powerup_level == powerup_level_max && current_powerup == powerup:
-		SignalsBus.score_increased.emit(score)
+		SignalsBus.score_increased_event.emit(score)
 		return
 
 	if current_powerup == GameManager.powerups.None || current_powerup == powerup:
@@ -189,7 +189,7 @@ func _handle_shooting() -> void:
 
 			# Emit the necessary signals
 			now_shooting.emit(current_powerup, powerup_level)
-			SignalsBus.player_shooting_event(bullets_list)
+			SignalsBus.player_shooting_event.emit(bullets_list)
 			
 			await get_tree().create_timer(shooting_cooldown_time).timeout
 			on_shooting_cooldown = false
