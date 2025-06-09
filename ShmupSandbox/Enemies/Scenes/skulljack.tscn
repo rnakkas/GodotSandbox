@@ -123,7 +123,7 @@ animations = [{
 
 [node name="skulljack" type="Area2D"]
 collision_layer = 8
-collision_mask = 3
+collision_mask = 67
 script = ExtResource("1_xkdqo")
 speed = 400.0
 
