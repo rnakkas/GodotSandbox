@@ -8,6 +8,8 @@ signal player_spawn_event(pos : Vector2, can_be_invincible : bool)
 
 signal player_shooting_event(bullets_list : Array[PlayerBullet])
 
+signal player_bombing_event(bomb : Area2D)
+
 signal player_lives_updated_event()
 
 signal player_bombs_updated_event()

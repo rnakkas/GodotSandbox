@@ -9,14 +9,14 @@ class_name DebugLayer extends Node2D
 func _ready() -> void:
 	pass
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	# Only allow debug commands if using debug build
 	if !OS.is_debug_build():
 		return
 	
-	if event.is_action_pressed("quit"): # quit game
+	if Input.is_key_label_pressed(KEY_Q): # quit game
 		get_tree().quit()
-	if event.is_action_pressed("reset"): # reset game
+	if Input.is_key_label_pressed(KEY_R): # reset game
 		get_tree().paused = false
 		get_tree().reload_current_scene()
 	if Input.is_key_label_pressed(KEY_1): # Spawn a powerup on mouse position

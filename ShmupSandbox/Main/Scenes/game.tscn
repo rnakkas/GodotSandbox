@@ -26,6 +26,8 @@ limit_bottom = 540
 
 [node name="PlayerProjectilesContainer" type="Node2D" parent="."]
 
+[node name="PlayerBombsContainer" type="Node2D" parent="."]
+
 [node name="EnemiesContainer" type="Node2D" parent="."]
 
 [node name="PickupsContainer" type="Node2D" parent="."]

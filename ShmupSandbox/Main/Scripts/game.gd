@@ -5,6 +5,7 @@ class_name Game extends Node2D
 
 ## Containers
 @onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
+@onready var player_bombs_container : Node2D = $PlayerBombsContainer
 @onready var enemies_container : Node2D = $EnemiesContainer
 @onready var pickups_container : Node2D = $PickupsContainer
 
@@ -23,6 +24,7 @@ func _ready() -> void:
 func _connect_to_signals() -> void:
 	SignalsBus.shot_limit_updated_event.connect(self._on_shot_limit_updated)
 	SignalsBus.player_shooting_event.connect(self._on_player_shooting)
+	SignalsBus.player_bombing_event.connect(self._on_player_bombing)
 
 
 func _on_shot_limit_updated(limit : int) -> void:
@@ -51,6 +53,15 @@ func _on_bullet_freed() -> void:
 	active_shots -= 1
 	if active_shots <= shot_limit*0.2:
 		SignalsBus.shot_limit_refreshed_event.emit()
+
+
+
+################################################
+# NOTE: Player Bombing
+################################################
+func _on_player_bombing(bomb : Area2D) -> void:
+	player_bombs_container.add_child(bomb)
+
 
 
 ################################################

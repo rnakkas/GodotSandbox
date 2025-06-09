@@ -42,6 +42,10 @@ func _set_score_values_on_hud() -> void:
 	top_score_value.text = str(GameManager.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
 
 func _set_bombs_on_hud() -> void:
+	for bomb : int in range(bomb_icons_array.size()):
+		bomb_icons_array[bomb].visible = false
+
+	# Only display the number of bombs that are currently in stock
 	for bomb : int in range(0, GameManager.player_bombs):
 		var icon : TextureRect = bomb_icons_array[bomb] as TextureRect
 		icon.visible = true

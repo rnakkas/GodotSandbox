@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://sg00ko55vk0j"]
+[gd_scene load_steps=28 format=3 uid="uid://sg00ko55vk0j"]
 
 [ext_resource type="Texture2D" uid="uid://dtf7ocr68myxo" path="res://ShmupSandbox/Assets/PlayerPowerupShots/bomb_attack-v1.png" id="1_gkeql"]
+[ext_resource type="Script" uid="uid://c45cek6xk5a8k" path="res://ShmupSandbox/Player/Scripts/bomb_fuzz.gd" id="1_qcojm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkeql"]
 radius = 70.0643
@@ -180,6 +181,11 @@ animations = [{
 }]
 
 [node name="bomb_fuzz" type="Area2D"]
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_qcojm")
+detonation_time = 1.5
 
 [node name="bomb_collider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gkeql")
@@ -187,7 +193,9 @@ debug_color = Color(0.842575, 0.813215, 0.7766, 0.42)
 
 [node name="bomb_sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_a0frw")
-animation = &"explode"
+animation = &"fly"
 autoplay = "fly"
 
 [node name="detonation_timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="detonation_timer" to="." method="_on_detonation_timer_timeout"]
