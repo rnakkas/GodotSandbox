@@ -770,7 +770,7 @@ script = ExtResource("11_63x5m")
 
 [node name="muzzle_bomb" type="Marker2D" parent="bomb_handler"]
 self_modulate = Color(0.0430392, 0.0430392, 0.0430392, 1)
-position = Vector2(16, -14)
+position = Vector2(32, -14)
 gizmo_extents = 43.8
 
 [node name="bomb_cooldown_timer" type="Timer" parent="bomb_handler"]
