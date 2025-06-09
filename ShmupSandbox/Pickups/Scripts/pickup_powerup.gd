@@ -139,6 +139,7 @@ func _on_powerup_area_body_entered(body:Node2D) -> void:
 
 		## Play collect animations
 		_play_collect_anims_for_sprites()
+		_set_label_properties()
 		var tween : Tween = _play_collect_anims_for_label()
 
 		## Send a global signal with the powerup type
@@ -153,10 +154,19 @@ func _play_collect_anims_for_sprites() -> void:
 	current_powerup_sprite.play(collect_anim)
 	sprite_fx.play(collect_anim)
 
-func _play_collect_anims_for_label() -> Tween:
-	powerup_label.text = GameManager.powerups.find_key(current_powerup)
+func _set_label_properties() -> void:
+	var powerup_maxed : bool = (GameManager.powerup_max_reached && GameManager.current_powerup == current_powerup)
+	var bombs_maxed : bool = (GameManager.player_bombs == GameManager.player_max_bombs && current_powerup == GameManager.powerups.Fuzz)
+	
+	var show_score : bool = powerup_maxed || bombs_maxed
+
+	# Show score if powerup or bomb maxed conditions met, else display powerup text
+	# Ternary condition: trurhy_value if condition else falsy_value
+	powerup_label.text = str(powerup_score) if show_score else GameManager.powerups.find_key(current_powerup)
+	
 	powerup_label.visible = true
 
+func _play_collect_anims_for_label() -> Tween:
 	## Tween the label when powerup collected
 	var tween = get_tree().create_tween()
 	var final_position : Vector2 = Vector2(powerup_label.position.x, powerup_label.position.y - 35.0)

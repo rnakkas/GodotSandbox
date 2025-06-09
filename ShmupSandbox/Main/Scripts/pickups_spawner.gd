@@ -15,4 +15,3 @@ func _instantiate_powerup(sp : Vector2) -> void:
 	var powerup : PickupPowerup = powerup_packed_scene.instantiate()
 	powerup.global_position = Vector2(sp)
 	add_pickup_to_game.emit(powerup)
-

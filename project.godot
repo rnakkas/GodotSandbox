@@ -34,6 +34,10 @@ window/stretch/mode="viewport"
 
 project/assembly_name="Sandbox"
 
+[global_group]
+
+DEBUG_player_group="global group for player, FOR DEBUG"
+
 [input]
 
 ui_left={

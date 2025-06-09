@@ -650,7 +650,7 @@ animations = [{
 "speed": 50.0
 }]
 
-[node name="player_cat" type="CharacterBody2D"]
+[node name="player_cat" type="CharacterBody2D" groups=["DEBUG_player_group"]]
 collision_mask = 28
 motion_mode = 1
 script = ExtResource("1_m8806")
@@ -699,8 +699,6 @@ shape = SubResource("CapsuleShape2D_gdjmk")
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_mask = 24
-monitoring = false
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(-1, -10)

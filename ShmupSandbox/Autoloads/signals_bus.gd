@@ -30,6 +30,8 @@ signal spawn_powerup_event(sp : Vector2)
 
 signal powerup_collected_event(powerup : int, score : int)
 
+signal powerup_max_level_event(powerup : int)
+
 signal shot_limit_reached_event()
 
 signal shot_limit_refreshed_event()

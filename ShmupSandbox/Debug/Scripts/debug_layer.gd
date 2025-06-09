@@ -30,3 +30,24 @@ func _input(_event: InputEvent) -> void:
 			return
 		GameManager.player_bombs += 1
 		SignalsBus.player_bombs_updated_event.emit()
+	
+	if Input.is_key_label_pressed(KEY_3): # Turn off player collisions
+		print_debug("player hurtbox: OFF")
+		
+		var player : PlayerCat = get_tree().get_first_node_in_group("DEBUG_player_group")
+		
+		if player != null:
+			var player_hurtbox : Area2D =  player.get_node("hurtbox")
+			player_hurtbox.set_deferred("monitorable", false)
+			player_hurtbox.set_deferred("monitoring", false)
+	
+	if Input.is_key_label_pressed(KEY_4): # Turn on player collisions
+		print_debug("player hurtbox: ON")
+
+		var player : PlayerCat = get_tree().get_first_node_in_group("DEBUG_player_group")
+		
+		if player != null:
+			var player_hurtbox : Area2D =  player.get_node("hurtbox")
+			player_hurtbox.set_deferred("monitorable", true)
+			player_hurtbox.set_deferred("monitoring", true)
+		

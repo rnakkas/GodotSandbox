@@ -137,11 +137,16 @@ func _on_powerup_picked_up(powerup : int, score : int) -> void:
 		SignalsBus.score_increased_event.emit(score)
 		return
 
+	# Increase powerup level if same type picked up
 	if current_powerup == GameManager.powerups.None || current_powerup == powerup:
 		powerup_level += 1
 
 	powerup_level = clamp(powerup_level, 0, 4)
 	current_powerup = powerup as GameManager.powerups
+
+	if powerup_level == powerup_level_max:
+		SignalsBus.powerup_max_level_event.emit(current_powerup)
+
 	_update_shooting_properties()
 
 
