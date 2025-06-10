@@ -6,6 +6,9 @@ class_name PlayerCat extends CharacterBody2D
 ## Shooting handler
 @onready var shooting_handler : ShootingHandler = $shooting_handler
 
+## Bomb handler
+@onready var bomb_handler : BombHandler = $bomb_handler
+
 ## Sprites
 @onready var body: AnimatedSprite2D = %body
 @onready var rocket : AnimatedSprite2D = %rocket
@@ -73,7 +76,7 @@ func _clamp_movement_to_screen_bounds() -> void:
 	var min_bounds : Vector2 = Vector2(0, 0)
 	var max_bounds : Vector2 = viewport_size
 	var offset_x : float = 60.0
-	var offset_y_screen_bottom : float = 20.0
+	var offset_y_screen_bottom : float = 60.0
 	var offset_y_screen_top : float = 100.0
 	
 	position.x = clamp(position.x, offset_x - min_bounds.x, max_bounds.x - offset_x)
@@ -96,7 +99,7 @@ func _handle_invincibility() -> void:
 ################################################
 func _unhandled_input(event: InputEvent) -> void: 
 	if event.is_action_pressed("pause"):
-		SignalsBus.player_pressed_pause_game_event()
+		SignalsBus.player_pressed_pause_game_event.emit()
 
 
 
@@ -105,7 +108,10 @@ func _unhandled_input(event: InputEvent) -> void:
 # Handle getting hit by enemies or projectiles
 ################################################
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
+	# To prevent moving, shooting or bombing when dead
 	is_dead = true
+	shooting_handler.is_dead = true
+	bomb_handler.is_dead = true
 	
 	velocity = Vector2.ZERO
 	hurtbox.set_deferred("monitoring", false)
@@ -119,7 +125,7 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	## wait 0.5 seconds before sending signal to player spawner
 	await get_tree().create_timer(0.5).timeout 
 	
-	SignalsBus.player_death_event()
+	SignalsBus.player_death_event.emit()
 	
 	queue_free()
 	

@@ -1,5 +1,8 @@
 class_name ShootingHandler extends Node2D
 
+## Constants
+const powerup_level_max : int = 4
+
 ## Base fire rate
 @export var fire_rate : float = 8.0
 
@@ -11,8 +14,8 @@ class_name ShootingHandler extends Node2D
 @export var ch_lvl_3_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_3.tscn")
 
 ## Default: no powerups, change only when powerup is picked up
-@export var current_powerup : GameManager.powerups = GameManager.powerups.None 
-@export var powerup_level: int = 0							
+@export var current_powerup : GameManager.powerups = GameManager.powerups.None
+@export_range(0,powerup_level_max) var powerup_level: int = 0 # Powerup level can only be between 0 to 4
 
 ## Overdrive powerup shooting params
 @export var od_spread_angle_deg : float
@@ -64,9 +67,9 @@ func _ready() -> void:
 
 func _connect_to_signals() -> void:
 	# Auto disconnects if this node is freed
-	SignalsBus.powerup_collected.connect(self._on_powerup_picked_up) 
-	SignalsBus.shot_limit_reached.connect(self._on_shot_limit_reached)
-	SignalsBus.shot_limit_refreshed.connect(self._on_shot_limit_refreshed)
+	SignalsBus.powerup_collected_event.connect(self._on_powerup_picked_up) 
+	SignalsBus.shot_limit_reached_event.connect(self._on_shot_limit_reached)
+	SignalsBus.shot_limit_refreshed_event.connect(self._on_shot_limit_refreshed)
 
 
 ################################################
@@ -113,7 +116,7 @@ func _update_shooting_properties() -> void:
 
 	shooting_cooldown_time = 1/fire_rate
 
-	SignalsBus.shot_limit_updated_event(shot_limit)
+	SignalsBus.shot_limit_updated_event.emit(shot_limit)
 
 
 ################################################
@@ -124,12 +127,26 @@ func _update_shooting_properties() -> void:
 	# Can't go above 4 for the powerup level
 	# Switch the current powerup to the picked up powerup (casting powerup as the enum)
 	# Update shooting properties based on powerup picked up
-func _on_powerup_picked_up(powerup : int) -> void:
+func _on_powerup_picked_up(powerup : int, score : int) -> void:
+	# If powerup picked up is bomb, don't modify shooting
+	if powerup == 3: # Fuzz
+		return
+
+	# Add score if powerup is at max level
+	if powerup_level == powerup_level_max && current_powerup == powerup:
+		SignalsBus.score_increased_event.emit(score)
+		return
+
+	# Increase powerup level if same type picked up
 	if current_powerup == GameManager.powerups.None || current_powerup == powerup:
 		powerup_level += 1
 
 	powerup_level = clamp(powerup_level, 0, 4)
 	current_powerup = powerup as GameManager.powerups
+
+	if powerup_level == powerup_level_max:
+		SignalsBus.powerup_max_level_event.emit(current_powerup)
+
 	_update_shooting_properties()
 
 
@@ -147,6 +164,8 @@ func _on_shot_limit_refreshed() -> void:
 # NOTE: Process
 ################################################
 func _process(_delta: float) -> void:
+	if is_dead:
+		return
 	_handle_shooting()
 
 
@@ -177,7 +196,7 @@ func _handle_shooting() -> void:
 
 			# Emit the necessary signals
 			now_shooting.emit(current_powerup, powerup_level)
-			SignalsBus.player_shooting_event(bullets_list)
+			SignalsBus.player_shooting_event.emit(bullets_list)
 			
 			await get_tree().create_timer(shooting_cooldown_time).timeout
 			on_shooting_cooldown = false

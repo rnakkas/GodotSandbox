@@ -17,9 +17,9 @@ func _ready() -> void:
 
 
 func _connect_to_signals() -> void:
-	SignalsBus.player_died.connect(_on_player_death)
-	SignalsBus.spawn_player.connect(_on_player_spawn)
-	SignalsBus.continue_game_player_respawn.connect(_on_continue_game_player_respawn)
+	SignalsBus.player_death_event.connect(self._on_player_death)
+	SignalsBus.player_spawn_event.connect(self._on_player_spawn)
+	SignalsBus.continue_game_player_respawn_event.connect(self._on_continue_game_player_respawn)
 
 
 ####

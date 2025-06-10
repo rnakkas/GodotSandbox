@@ -34,9 +34,9 @@ func _deactivate_self() -> void:
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
 
-## Hit by player's bullets
+## Hit by player's bullets or bombs
 func _on_area_entered(_area: Area2D) -> void:
 	hp -= 1
-	SignalsBus.score_increased_event(hit_score)
+	SignalsBus.score_increased_event.emit(hit_score)
 	if hp <= 0:
-		SignalsBus.score_increased_event(kill_score)
+		SignalsBus.score_increased_event.emit(kill_score)

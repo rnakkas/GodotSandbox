@@ -26,12 +26,12 @@ func _create_ui_elements_list() -> void:
 
 func _connect_to_group_signals(node : Control) -> void:
 	if node.has_signal(UiUtility.signal_focus_entered):
-		node.focus_entered.connect(_on_element_focused)
+		node.focus_entered.connect(self._on_element_focused)
 	if node.has_signal(UiUtility.signal_mouse_entered):
 		# Use 'bind' to know which node emitted the mouse_entered signal
-		node.mouse_entered.connect(_on_element_focused_with_mouse.bind(node)) 
+		node.mouse_entered.connect(self._on_element_focused_with_mouse.bind(node)) 
 	if node is Button:
-		node.pressed.connect(_on_button_pressed.bind(node))
+		node.pressed.connect(self._on_button_pressed.bind(node))
 
 
 ################################################

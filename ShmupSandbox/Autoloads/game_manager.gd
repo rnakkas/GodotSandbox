@@ -6,11 +6,18 @@ extends Node
 const life_extend_score_1 : int = 100000
 const life_extend_score_2 : int = 250000
 const score_penallty_multiplier : float = 0.9
+const player_default_bombs : int = 3
+const player_max_bombs : int = 9
 
 enum powerups {
 	None,			## 0
+
+	# Shooting powerup
 	Overdrive, 		## 1
-	Chorus 			## 2
+	Chorus, 		## 2
+	
+	# Bombs
+	Fuzz			## 3
 }
 
 ################################################
@@ -61,8 +68,12 @@ var life_extend_2_reached : bool
 
 var player_lives : int
 var player_credits : int
+var player_bombs : int = player_default_bombs
 
 var player_score: int
+
+var current_powerup : powerups
+var powerup_max_reached : bool
 
 var enemies_killed: int
 
@@ -95,11 +106,14 @@ func _ready() -> void:
 
 ## Connect to global signals
 func _connect_to_signals() -> void:
-	SignalsBus.score_increased.connect(_on_update_current_score)
-	SignalsBus.continue_game_player_respawn.connect(_on_continue_refresh_player_data)
-	SignalsBus.player_died.connect(_on_player_death)
-	SignalsBus.game_loaded.connect(_on_game_loaded)
-	SignalsBus.player_hi_score_name_entered.connect(_on_player_hi_score_name_entered)
+	SignalsBus.score_increased_event.connect(self._on_update_current_score)
+	SignalsBus.continue_game_player_respawn_event.connect(self._on_continue_refresh_player_data)
+	SignalsBus.player_death_event.connect(self._on_player_death)
+	SignalsBus.player_spawn_event.connect(self._on_player_respawn)
+	SignalsBus.game_loaded_event.connect(self._on_game_loaded)
+	SignalsBus.player_hi_score_name_entered_event.connect(self._on_player_hi_score_name_entered)
+	SignalsBus.powerup_collected_event.connect(self._on_powerup_bomb_collected)
+	SignalsBus.powerup_max_level_event.connect(self._on_powerup_max_reached)
 
 
 ################################################
@@ -140,10 +154,13 @@ func reset_all_player_data_on_start() -> void:
 	player_credits = _player_max_credits - 1
 	life_extend_1_reached = false
 	life_extend_2_reached = false
+	player_bombs = player_default_bombs
+	current_powerup = GameManager.powerups.None
+	powerup_max_reached = false
 
-	SignalsBus.player_score_updated_event()
-	SignalsBus.player_lives_updated_event()
-	SignalsBus.player_credits_updated_event()
+	SignalsBus.player_score_updated_event.emit()
+	SignalsBus.player_lives_updated_event.emit()
+	SignalsBus.player_credits_updated_event.emit()
 
 
 
@@ -154,7 +171,7 @@ func _on_update_current_score(score : int) -> void:
 	player_score += score
 	_handle_life_extension()
 
-	SignalsBus.player_score_updated_event()
+	SignalsBus.player_score_updated_event.emit()
 
 ## Helper func to extend life on reaching extend scores
 func _handle_life_extension() -> void:
@@ -166,7 +183,7 @@ func _handle_life_extension() -> void:
 		life_extend_2_reached = true
 		player_lives += 1
 
-	SignalsBus.player_lives_updated_event()
+	SignalsBus.player_lives_updated_event.emit()
 
 
 ################################################
@@ -176,10 +193,14 @@ func _on_continue_refresh_player_data() -> void:
 	player_score = int(round(player_score * score_penallty_multiplier))
 	player_lives = _player_max_lives
 	player_credits -= 1
+	player_bombs = player_default_bombs
+	current_powerup = GameManager.powerups.None
+	powerup_max_reached = false
 
-	SignalsBus.player_score_updated_event()
-	SignalsBus.player_lives_updated_event()
-	SignalsBus.player_credits_updated_event()
+	SignalsBus.player_score_updated_event.emit()
+	SignalsBus.player_lives_updated_event.emit()
+	SignalsBus.player_credits_updated_event.emit()
+	SignalsBus.player_bombs_updated_event.emit()
 
 
 ################################################
@@ -189,7 +210,23 @@ func _on_player_death() -> void:
 	# Extend life before decreasing life on death if the score is higher than extension threshold
 	_handle_life_extension() 
 	player_lives -= 1
-	SignalsBus.player_lives_updated_event()
+
+	SignalsBus.player_lives_updated_event.emit()
+
+	# Reset bombs to default when respawning after death, but only if continue screen is not shown
+	if player_lives >= 0:
+		player_bombs = player_default_bombs
+		SignalsBus.player_bombs_updated_event.emit()
+
+
+################################################
+#NOTE: Signal connection: player respawn event
+################################################
+func _on_player_respawn(_pos : Vector2, _can_be_invincible : bool) -> void:
+	# Reset player bombs to default when respawning after continue screen
+	player_bombs = player_default_bombs
+	SignalsBus.player_bombs_updated_event.emit()
+
 
 
 ################################################
@@ -202,6 +239,30 @@ func _on_player_hi_score_name_entered(player_name : String) -> void:
 	sort_high_scores()
 	_save_high_scores()
 
+
+################################################
+#NOTE: Signal connection: for when player picks up bomb
+################################################
+func _on_powerup_bomb_collected(powerup : int, score : int) -> void:
+	# Only increase bomb count if the collected powerup is a bomb
+	if powerup == 3: # Fuzz
+		# If max bombs in stock, add score instead
+		if player_bombs == player_max_bombs:
+			_on_update_current_score(score)
+			return
+		
+		player_bombs += 1
+		player_bombs = clamp(player_bombs, 0, player_max_bombs)
+
+	SignalsBus.player_bombs_updated_event.emit()
+
+
+################################################
+#NOTE: Signal connection: for when a powerup is maxed out
+################################################
+func _on_powerup_max_reached(powerup : int) -> void:
+	current_powerup = powerup as powerups
+	powerup_max_reached = true
 
 
 ################################################

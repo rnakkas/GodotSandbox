@@ -4,6 +4,7 @@ class_name PickupPowerup extends Node2D
 @onready var sprite_fx : AnimatedSprite2D = %sprite_fx
 @onready var sprite_od: AnimatedSprite2D = %sprite_od
 @onready var sprite_ch : AnimatedSprite2D = %sprite_ch
+@onready var sprite_fz : AnimatedSprite2D = %sprite_fz
 @onready var powerup_label : Label = %powerup_label
 @onready var collider_area : Area2D = %powerup_area
 
@@ -11,6 +12,7 @@ class_name PickupPowerup extends Node2D
 
 @export var speed : float = 20
 @export var powerup_switch_time : float = 5.5
+@export var powerup_score : int = 1000 # Player gets score if current powerup level is maxed out
 
 const idle_anim : String = "idle"
 const collect_anim : String = "collect"
@@ -62,6 +64,8 @@ func _toggle_powerup_sprite() -> void:
 			current_powerup_sprite = sprite_od
 		2: # Chorus
 			current_powerup_sprite = sprite_ch
+		3: # Fuzz
+			current_powerup_sprite = sprite_fz
 	
 	for powerup_sprite : AnimatedSprite2D in sprites_list:
 		if powerup_sprite == current_powerup_sprite:
@@ -135,10 +139,11 @@ func _on_powerup_area_body_entered(body:Node2D) -> void:
 
 		## Play collect animations
 		_play_collect_anims_for_sprites()
+		_set_label_properties()
 		var tween : Tween = _play_collect_anims_for_label()
 
 		## Send a global signal with the powerup type
-		SignalsBus.powerup_collected_event(current_powerup)
+		SignalsBus.powerup_collected_event.emit(current_powerup, powerup_score)
 
 		## Finally despawn the powerup
 		await current_powerup_sprite.animation_finished
@@ -149,10 +154,19 @@ func _play_collect_anims_for_sprites() -> void:
 	current_powerup_sprite.play(collect_anim)
 	sprite_fx.play(collect_anim)
 
-func _play_collect_anims_for_label() -> Tween:
-	powerup_label.text = GameManager.powerups.find_key(current_powerup)
+func _set_label_properties() -> void:
+	var powerup_maxed : bool = (GameManager.powerup_max_reached && GameManager.current_powerup == current_powerup)
+	var bombs_maxed : bool = (GameManager.player_bombs == GameManager.player_max_bombs && current_powerup == GameManager.powerups.Fuzz)
+	
+	var show_score : bool = powerup_maxed || bombs_maxed
+
+	# Show score if powerup or bomb maxed conditions met, else display powerup text
+	# Ternary condition: trurhy_value if condition else falsy_value
+	powerup_label.text = str(powerup_score) if show_score else GameManager.powerups.find_key(current_powerup)
+	
 	powerup_label.visible = true
 
+func _play_collect_anims_for_label() -> Tween:
 	## Tween the label when powerup collected
 	var tween = get_tree().create_tween()
 	var final_position : Vector2 = Vector2(powerup_label.position.x, powerup_label.position.y - 35.0)
@@ -164,6 +178,8 @@ func _play_collect_anims_for_label() -> Tween:
 			tween.tween_property(powerup_label, "self_modulate", UiUtility.color_yellow, 0.3) # Fade to color of powerup
 		2: # Chorus
 			tween.tween_property(powerup_label, "self_modulate", UiUtility.color_blue, 0.3) # Fade to color of powerup
+		3: # Fuzz
+			tween.tween_property(powerup_label, "self_modulate", UiUtility.color_white, 0.3) # Fade to color of powerup
 	
 	tween.tween_property(powerup_label, "position", final_position, 0.3)
 	

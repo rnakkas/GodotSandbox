@@ -1,10 +1,11 @@
-[gd_scene load_steps=46 format=3 uid="uid://drn1oajqy3684"]
+[gd_scene load_steps=61 format=3 uid="uid://drn1oajqy3684"]
 
 [ext_resource type="Script" uid="uid://85opciapqat8" path="res://ShmupSandbox/Pickups/Scripts/pickup_powerup.gd" id="1_8m5pr"]
 [ext_resource type="Script" uid="uid://dlh7lg7gj4tlp" path="res://ShmupSandbox/Pickups/Scripts/powerup_pathfollow.gd" id="1_glbyy"]
 [ext_resource type="Texture2D" uid="uid://banrdqkgowv87" path="res://ShmupSandbox/Assets/Pickups/od-v1.png" id="3_8m5pr"]
 [ext_resource type="Texture2D" uid="uid://bvjfrhgvvsyed" path="res://ShmupSandbox/Assets/Pickups/ch-v1.png" id="4_haqd0"]
 [ext_resource type="Texture2D" uid="uid://cd0otonekhged" path="res://ShmupSandbox/Assets/Pickups/fx-v1.png" id="4_p0ehi"]
+[ext_resource type="Texture2D" uid="uid://cpct0bw2yeirq" path="res://ShmupSandbox/Assets/Pickups/fz-v1.png" id="5_67wdi"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="6_aa45h"]
 
 [sub_resource type="Curve2D" id="Curve2D_haqd0"]
@@ -224,6 +225,110 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_60c7r"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ifi1b"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2521"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwnnw"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3kuqa"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(128, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cu70m"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sten8"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmj8q"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbrtf"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xencn"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dts2s"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwagh"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t30x1"]
+atlas = ExtResource("5_67wdi")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_60c7r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60c7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ifi1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2521")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwnnw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3kuqa")
+}],
+"loop": false,
+"name": &"collect",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cu70m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sten8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wmj8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbrtf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xencn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dts2s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwagh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t30x1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_t0yqe"]
 atlas = ExtResource("4_p0ehi")
 region = Rect2(0, 32, 32, 32)
@@ -299,6 +404,7 @@ animations = [{
 [node name="PickupPowerup" type="Node2D"]
 script = ExtResource("1_8m5pr")
 speed = 30.0
+powerup_switch_time = 2.0
 
 [node name="powerup_switch_timer" type="Timer" parent="."]
 
@@ -337,7 +443,15 @@ unique_name_in_owner = true
 visible = false
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_cu70m")
-animation = &"idle"
+animation = &"collect"
+autoplay = "idle"
+
+[node name="sprite_fz" type="AnimatedSprite2D" parent="path/pathfollow"]
+unique_name_in_owner = true
+visible = false
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_60c7r")
+animation = &"collect"
 autoplay = "idle"
 
 [node name="sprite_fx" type="AnimatedSprite2D" parent="path/pathfollow"]
@@ -356,9 +470,11 @@ offset_bottom = -17.6464
 theme_override_fonts/font = ExtResource("6_aa45h")
 theme_override_font_sizes/font_size = 16
 text = "Overdrive"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(158, 51)
+position = Vector2(126, 51)
 
 [connection signal="timeout" from="powerup_switch_timer" to="." method="_on_powerup_switch_timer_timeout"]
 [connection signal="body_entered" from="path/pathfollow/powerup_area" to="." method="_on_powerup_area_body_entered"]

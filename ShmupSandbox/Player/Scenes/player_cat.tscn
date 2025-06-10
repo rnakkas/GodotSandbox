@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://diqmrgjokhuyb"]
+[gd_scene load_steps=88 format=3 uid="uid://diqmrgjokhuyb"]
 
 [ext_resource type="Script" uid="uid://dkp2sd4d5myi" path="res://ShmupSandbox/Player/Scripts/player_cat.gd" id="1_m8806"]
 [ext_resource type="Texture2D" uid="uid://cc83l4ep22dak" path="res://ShmupSandbox/Assets/Player/muzzle_flash-v1.png" id="2_4ua8s"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://bfn0rv1t8e5kr" path="res://ShmupSandbox/Player/Scripts/shooting_handler.gd" id="8_w8q8f"]
 [ext_resource type="Texture2D" uid="uid://bmdep6yhai2np" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_muzzle_flash-v1.png" id="9_r57sr"]
 [ext_resource type="Texture2D" uid="uid://bjruq8tm2fp1t" path="res://ShmupSandbox/Assets/PlayerPowerupShots/chorus-_muzzle_flash-v1.png" id="10_7hbcm"]
+[ext_resource type="Script" uid="uid://6sn4db34buxk" path="res://ShmupSandbox/Player/Scripts/bomb_handler.gd" id="11_63x5m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7idpd"]
 atlas = ExtResource("2_uobwy")
@@ -649,7 +650,7 @@ animations = [{
 "speed": 50.0
 }]
 
-[node name="player_cat" type="CharacterBody2D"]
+[node name="player_cat" type="CharacterBody2D" groups=["DEBUG_player_group"]]
 collision_mask = 28
 motion_mode = 1
 script = ExtResource("1_m8806")
@@ -698,8 +699,6 @@ shape = SubResource("CapsuleShape2D_gdjmk")
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_mask = 24
-monitoring = false
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(-1, -10)
@@ -764,7 +763,18 @@ sprite_frames = SubResource("SpriteFrames_63x5m")
 animation = &"shoot"
 autoplay = "none"
 
+[node name="bomb_handler" type="Node2D" parent="."]
+script = ExtResource("11_63x5m")
+
+[node name="muzzle_bomb" type="Marker2D" parent="bomb_handler"]
+self_modulate = Color(0.0430392, 0.0430392, 0.0430392, 1)
+position = Vector2(30, -14)
+gizmo_extents = 43.8
+
+[node name="bomb_cooldown_timer" type="Timer" parent="bomb_handler"]
+
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="timeout" from="invincibility_timer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="now_shooting" from="shooting_handler" to="." method="_on_shooting_handler_now_shooting"]
 [connection signal="stopped_shooting" from="shooting_handler" to="." method="_on_shooting_handler_stopped_shooting"]
+[connection signal="timeout" from="bomb_handler/bomb_cooldown_timer" to="bomb_handler" method="_on_bomb_cooldown_timer_timeout"]
