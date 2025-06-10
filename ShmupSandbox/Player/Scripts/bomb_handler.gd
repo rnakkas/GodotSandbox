@@ -7,6 +7,7 @@ class_name BombHandler extends Node2D
 @export var bomb_cooldown_time : float = 2.0
 
 var on_cooldown : bool
+var is_dead : bool
 
 ################################################
 # NOTE: Ready
@@ -20,8 +21,12 @@ func _ready() -> void:
 # NOTE: Input event for bombing
 ################################################
 func _input(event: InputEvent) -> void:
+	if is_dead:
+		return
+	
 	if GameManager.player_bombs <= 0:
 		return
+	
 	if event.is_action_pressed("bomb") && !on_cooldown:
 		on_cooldown = true
 		bomb_cooldown_timer.start()

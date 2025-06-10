@@ -16,12 +16,18 @@ var viewport_size : Vector2
 func _ready() -> void:
 	viewport_size = get_viewport_rect().size
 	_set_timer_properties()
+	_play_animations()
 
 func _set_timer_properties() -> void:
 	detonation_timer.one_shot = true
 	detonation_timer.wait_time = detonation_time
 	detonation_timer.start()
 
+func _play_animations() -> void:
+	bomb_sprite.play("spawn")
+	await bomb_sprite.animation_finished
+	set_deferred("z_index", 0)
+	bomb_sprite.play("fly")
 
 ################################################
 # NOTE: Physics process
@@ -57,3 +63,11 @@ func _on_detonation_timer_timeout() -> void:
 	await bomb_sprite.animation_finished
 	set_deferred("monitorable", false)
 	call_deferred("queue_free")
+
+
+################################################
+# NOTE: Signal connection for on screen notifier
+################################################
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	# When bomb reaches right edge of screen, set speed to 0
+	speed = 0

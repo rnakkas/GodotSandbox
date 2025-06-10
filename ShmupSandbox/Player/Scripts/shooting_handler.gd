@@ -164,6 +164,8 @@ func _on_shot_limit_refreshed() -> void:
 # NOTE: Process
 ################################################
 func _process(_delta: float) -> void:
+	if is_dead:
+		return
 	_handle_shooting()
 
 

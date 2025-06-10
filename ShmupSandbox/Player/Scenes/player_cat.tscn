@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://bfn0rv1t8e5kr" path="res://ShmupSandbox/Player/Scripts/shooting_handler.gd" id="8_w8q8f"]
 [ext_resource type="Texture2D" uid="uid://bmdep6yhai2np" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_muzzle_flash-v1.png" id="9_r57sr"]
 [ext_resource type="Texture2D" uid="uid://bjruq8tm2fp1t" path="res://ShmupSandbox/Assets/PlayerPowerupShots/chorus-_muzzle_flash-v1.png" id="10_7hbcm"]
-[ext_resource type="Script" uid="uid://6sn4db34buxk" path="res://ShmupSandbox/Player/Scripts/bomb_handler.gd" id="11_63x5m"]
+[ext_resource type="Script" path="res://ShmupSandbox/Player/Scripts/bomb_handler.gd" id="11_63x5m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7idpd"]
 atlas = ExtResource("2_uobwy")
@@ -768,7 +768,7 @@ script = ExtResource("11_63x5m")
 
 [node name="muzzle_bomb" type="Marker2D" parent="bomb_handler"]
 self_modulate = Color(0.0430392, 0.0430392, 0.0430392, 1)
-position = Vector2(32, -14)
+position = Vector2(30, -14)
 gizmo_extents = 43.8
 
 [node name="bomb_cooldown_timer" type="Timer" parent="bomb_handler"]
