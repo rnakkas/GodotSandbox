@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=3 uid="uid://dfre8yniuwyt4"]
+
+[ext_resource type="Script" uid="uid://stp67ytvmlks" path="res://ShmupSandbox/Pickups/Scripts/pickup_score.gd" id="1_8a424"]
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_yvjqo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yvjqo"]
+radius = 29.4279
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8a424"]
+atlas = ExtResource("1_yvjqo")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ijbi"]
+atlas = ExtResource("1_yvjqo")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3pego"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8a424")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8a424")
+}],
+"loop": false,
+"name": &"collect",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ijbi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="pickup_score" type="Area2D"]
+collision_layer = 32
+script = ExtResource("1_8a424")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yvjqo")
+debug_color = Color(0, 0.649289, 0.149823, 0.42)
+
+[node name="sprite_small" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0.0389765, 0.714681, 0, 1)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_3pego")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="sprite_medium" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0.601951, 0.553251, 1, 1)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_3pego")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="sprite_large" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 0.138911, 0.376033, 1)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_3pego")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(40, 0)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

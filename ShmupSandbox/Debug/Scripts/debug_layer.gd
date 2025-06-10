@@ -51,3 +51,6 @@ func _input(_event: InputEvent) -> void:
 			player_hurtbox.set_deferred("monitorable", true)
 			player_hurtbox.set_deferred("monitoring", true)
 		
+	if Input.is_key_label_pressed(KEY_5):
+		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
+		SignalsBus.spawn_score_item_event.emit(mouse_pos)
