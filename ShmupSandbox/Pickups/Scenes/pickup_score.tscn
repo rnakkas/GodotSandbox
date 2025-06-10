@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfre8yniuwyt4"]
+[gd_scene load_steps=8 format=3 uid="uid://dfre8yniuwyt4"]
 
 [ext_resource type="Script" uid="uid://stp67ytvmlks" path="res://ShmupSandbox/Pickups/Scripts/pickup_score.gd" id="1_8a424"]
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_yvjqo"]
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_1ijbi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yvjqo"]
 radius = 29.4279
@@ -50,21 +51,26 @@ script = ExtResource("1_8a424")
 shape = SubResource("CircleShape2D_yvjqo")
 debug_color = Color(0, 0.649289, 0.149823, 0.42)
 
-[node name="sprite_small" type="AnimatedSprite2D" parent="."]
+[node name="sprites_container" type="Node2D" parent="."]
+
+[node name="sprite_small" type="AnimatedSprite2D" parent="sprites_container"]
+unique_name_in_owner = true
 self_modulate = Color(0.0389765, 0.714681, 0, 1)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_3pego")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="sprite_medium" type="AnimatedSprite2D" parent="."]
+[node name="sprite_medium" type="AnimatedSprite2D" parent="sprites_container"]
+unique_name_in_owner = true
 self_modulate = Color(0.601951, 0.553251, 1, 1)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_3pego")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="sprite_large" type="AnimatedSprite2D" parent="."]
+[node name="sprite_large" type="AnimatedSprite2D" parent="sprites_container"]
+unique_name_in_owner = true
 self_modulate = Color(1, 0.138911, 0.376033, 1)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_3pego")
@@ -74,4 +80,17 @@ autoplay = "idle"
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(40, 0)
 
+[node name="score_label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -39.5818
+offset_top = -40.6464
+offset_right = 40.4182
+offset_bottom = -17.6464
+theme_override_fonts/font = ExtResource("3_1ijbi")
+theme_override_font_sizes/font_size = 16
+text = "1500"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
