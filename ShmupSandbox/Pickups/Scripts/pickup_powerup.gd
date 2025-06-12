@@ -1,6 +1,7 @@
 class_name PickupPowerup extends Node2D
 
 @onready var powerup_switch_timer : Timer = $powerup_switch_timer
+@onready var collect_fx : AnimatedSprite2D = %collect_fx
 @onready var sprite_fx : AnimatedSprite2D = %sprite_fx
 @onready var sprite_od: AnimatedSprite2D = %sprite_od
 @onready var sprite_ch : AnimatedSprite2D = %sprite_ch
@@ -30,7 +31,9 @@ var sprites_list : Array[AnimatedSprite2D] = []
 ################################################
 func _ready() -> void:
 	viewport_size = get_viewport_rect().size
+
 	powerup_label.visible = false
+	collect_fx.visible = false
 
 	powerups_array = GameManager.powerups.values().slice(1, GameManager.powerups.size())	# Ignore the "None" index in that enum
 	
@@ -48,8 +51,9 @@ func _set_timer_properties() -> void:
 ## Create the array of powerups, ignore the fx sprite
 func _create_sprites_list() -> void:
 	for node : Node in sprites_container.get_children():
-		if node is AnimatedSprite2D && node != sprite_fx:
+		if node is AnimatedSprite2D && node != sprite_fx && node != collect_fx:
 			sprites_list.append(node)
+	print_debug(sprites_list)
 
 ## Show a random powerup on spawn
 func _random_powerup_on_spawn() -> void:
@@ -58,7 +62,6 @@ func _random_powerup_on_spawn() -> void:
 
 ## Toggle on the selected sprite
 func _toggle_powerup_sprite() -> void:
-	# var sprite : AnimatedSprite2D
 	match current_powerup:
 		1: # Overdrive
 			current_powerup_sprite = sprite_od
@@ -79,7 +82,7 @@ func _toggle_powerup_sprite() -> void:
 #NOTE: Physics process
 ################################################
 func _physics_process(delta: float) -> void:
-	global_position.x -= speed * delta
+	global_position += speed * delta * Vector2.LEFT
 
 
 ################################################
@@ -139,8 +142,10 @@ func _on_powerup_area_body_entered(body:Node2D) -> void:
 
 		## Play collect animations
 		_play_collect_anims_for_sprites()
-		_set_label_properties()
-		var tween : Tween = _play_collect_anims_for_label()
+		var maxed : bool = _set_powerup_maxed()
+		_set_label_properties(maxed)
+
+		var tween : Tween = _play_collect_fx_animation() if maxed else _play_collect_anims_for_label()
 
 		## Send a global signal with the powerup type
 		SignalsBus.powerup_collected_event.emit(current_powerup, powerup_score)
@@ -150,21 +155,25 @@ func _on_powerup_area_body_entered(body:Node2D) -> void:
 		await tween.finished
 		call_deferred("queue_free")
 
+
 func _play_collect_anims_for_sprites() -> void:
 	current_powerup_sprite.play(collect_anim)
 	sprite_fx.play(collect_anim)
 
-func _set_label_properties() -> void:
+
+func _set_powerup_maxed() -> bool:
 	var powerup_maxed : bool = (GameManager.powerup_max_reached && GameManager.current_powerup == current_powerup)
 	var bombs_maxed : bool = (GameManager.player_bombs == GameManager.player_max_bombs && current_powerup == GameManager.powerups.Fuzz)
 	
-	var show_score : bool = powerup_maxed || bombs_maxed
+	var maxed : bool = powerup_maxed || bombs_maxed
 
-	# Show score if powerup or bomb maxed conditions met, else display powerup text
-	# Ternary condition: trurhy_value if condition else falsy_value
-	powerup_label.text = str(powerup_score) if show_score else GameManager.powerups.find_key(current_powerup)
-	
-	powerup_label.visible = true
+	return maxed
+
+
+func _set_label_properties(maxed : bool) -> void:
+	powerup_label.text = GameManager.powerups.find_key(current_powerup)
+	powerup_label.visible = false if maxed else true
+
 
 func _play_collect_anims_for_label() -> Tween:
 	## Tween the label when powerup collected
@@ -186,5 +195,20 @@ func _play_collect_anims_for_label() -> Tween:
 	tween.set_parallel(false)
 
 	tween.tween_property(powerup_label, "self_modulate", UiUtility.color_transparent, 0.7) # Fade out effect
+
+	return tween
+
+func _play_collect_fx_animation() -> Tween:
+	# Play collect animation for collect fx
+	collect_fx.visible = true
+	collect_fx.play(collect_anim)
+
+	# Tween the sprite when powerup collected
+	var tween = get_tree().create_tween()
+	var final_position : Vector2 = Vector2(collect_fx.position.x, collect_fx.position.y - 35.0)
+
+	tween.tween_property(collect_fx, "position", final_position, 0.3)
+
+	tween.tween_property(collect_fx, "self_modulate", UiUtility.color_transparent, 0.7) # Fade out effect
 
 	return tween
