@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://drn1oajqy3684"]
+[gd_scene load_steps=61 format=3 uid="uid://drn1oajqy3684"]
 
 [ext_resource type="Script" uid="uid://85opciapqat8" path="res://ShmupSandbox/Pickups/Scripts/pickup_powerup.gd" id="1_8m5pr"]
 [ext_resource type="Script" uid="uid://dlh7lg7gj4tlp" path="res://ShmupSandbox/Pickups/Scripts/powerup_pathfollow.gd" id="1_glbyy"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://cd0otonekhged" path="res://ShmupSandbox/Assets/Pickups/fx-v1.png" id="4_p0ehi"]
 [ext_resource type="Texture2D" uid="uid://cpct0bw2yeirq" path="res://ShmupSandbox/Assets/Pickups/fz-v1.png" id="5_67wdi"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="6_aa45h"]
-[ext_resource type="Texture2D" uid="uid://cmwchcldqreet" path="res://ShmupSandbox/Assets/Pickups/score_item_small_collect-v1.png" id="7_r127s"]
 
 [sub_resource type="Curve2D" id="Curve2D_haqd0"]
 _data = {
@@ -402,70 +401,6 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_omvt8"]
-atlas = ExtResource("7_r127s")
-region = Rect2(0, 0, 96, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cdg3d"]
-atlas = ExtResource("7_r127s")
-region = Rect2(96, 0, 96, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8mqoa"]
-atlas = ExtResource("7_r127s")
-region = Rect2(192, 0, 96, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0wsri"]
-atlas = ExtResource("7_r127s")
-region = Rect2(288, 0, 96, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3miqw"]
-atlas = ExtResource("7_r127s")
-region = Rect2(384, 0, 96, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lj0qt"]
-atlas = ExtResource("7_r127s")
-region = Rect2(480, 0, 96, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p43dw"]
-atlas = ExtResource("7_r127s")
-region = Rect2(576, 0, 96, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tk6yw"]
-atlas = ExtResource("7_r127s")
-region = Rect2(672, 0, 96, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_67wdi"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_omvt8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cdg3d")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8mqoa")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0wsri")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3miqw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lj0qt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p43dw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tk6yw")
-}],
-"loop": false,
-"name": &"collect",
-"speed": 15.15
-}]
-
 [node name="PickupPowerup" type="Node2D"]
 script = ExtResource("1_8m5pr")
 speed = 30.0
@@ -500,7 +435,7 @@ debug_color = Color(1, 0.639216, 0.121569, 0.172549)
 unique_name_in_owner = true
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_t0yqe")
-animation = &"idle"
+animation = &"collect"
 autoplay = "idle"
 
 [node name="sprite_ch" type="AnimatedSprite2D" parent="path/pathfollow"]
@@ -537,12 +472,6 @@ theme_override_font_sizes/font_size = 25
 text = "Overdrive"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="collect_fx" type="AnimatedSprite2D" parent="path/pathfollow"]
-unique_name_in_owner = true
-position = Vector2(0, -28.2556)
-sprite_frames = SubResource("SpriteFrames_67wdi")
-animation = &"collect"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(126, 51)
