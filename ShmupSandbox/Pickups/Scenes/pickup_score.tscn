@@ -1,10 +1,11 @@
-[gd_scene load_steps=47 format=3 uid="uid://dfre8yniuwyt4"]
+[gd_scene load_steps=50 format=3 uid="uid://dfre8yniuwyt4"]
 
 [ext_resource type="Script" uid="uid://stp67ytvmlks" path="res://ShmupSandbox/Pickups/Scripts/pickup_score.gd" id="1_8a424"]
 [ext_resource type="Texture2D" uid="uid://cmwchcldqreet" path="res://ShmupSandbox/Assets/Pickups/score_item_small_collect-v1.png" id="2_3pego"]
 [ext_resource type="Texture2D" uid="uid://mq36mjnbuqe" path="res://ShmupSandbox/Assets/Pickups/score_item_small_idle-v1.png" id="3_3pego"]
 [ext_resource type="Texture2D" uid="uid://1yeg6fd6am4y" path="res://ShmupSandbox/Assets/Pickups/score_item_large_collect-v1.png" id="4_ky1jo"]
 [ext_resource type="Texture2D" uid="uid://1u7s4yyhnfd6" path="res://ShmupSandbox/Assets/Pickups/score_item_large_idle-v2.png" id="5_6p5x8"]
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="6_ky1jo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yvjqo"]
 radius = 45.0444
@@ -153,6 +154,11 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 15.15
+}, {
+"frames": [],
+"loop": false,
+"name": &"spawn",
+"speed": 15.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2bk1v"]
@@ -299,6 +305,47 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 15.15
+}, {
+"frames": [],
+"loop": false,
+"name": &"spawn",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ky1jo"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"collect",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"spawn",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aixns"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"collect",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"spawn",
+"speed": 5.0
 }]
 
 [node name="pickup_score" type="Area2D"]
@@ -312,17 +359,43 @@ debug_color = Color(0, 0.649289, 0.149823, 0.42)
 
 [node name="sprites_container" type="Node2D" parent="."]
 
-[node name="sprite_small" type="AnimatedSprite2D" parent="sprites_container"]
+[node name="sprite_level_1" type="AnimatedSprite2D" parent="sprites_container"]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_3pego")
 animation = &"collect"
 autoplay = "idle"
 
-[node name="sprite_large" type="AnimatedSprite2D" parent="sprites_container"]
+[node name="sprite_level_2" type="AnimatedSprite2D" parent="sprites_container"]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_6p5x8")
+animation = &"spawn"
+autoplay = "idle"
+
+[node name="sprite_level_3" type="AnimatedSprite2D" parent="sprites_container"]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_ky1jo")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="sprite_level_4" type="AnimatedSprite2D" parent="sprites_container"]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_aixns")
 animation = &"collect"
 autoplay = "idle"
+
+[node name="score_label" type="Label" parent="sprites_container"]
+unique_name_in_owner = true
+offset_left = -61.6403
+offset_top = -40.6464
+offset_right = 62.3597
+offset_bottom = -9.6464
+theme_override_colors/font_outline_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("6_ky1jo")
+theme_override_font_sizes/font_size = 25
+text = "4000"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(37, 0)
