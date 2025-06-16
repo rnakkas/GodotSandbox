@@ -33,7 +33,7 @@ var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
 	# 4 levels
 	# Always spawns as level 1
 	# When player kills enemy, soul fragments travel to nearest non maxed item and item level +1
-	# If player dies without picking up item, item despawns
+	# If player dies without picking up item, item despawns - DONE
 	# Need new spritesheets for level 1-4 spawn, idle, despawn and collect animations
 	# Need scene and sprites for soul fragments
 	# Create a new container in Game scene specifically for score items: - DONE
@@ -46,14 +46,19 @@ var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
 func _ready() -> void:
 	_create_item_collider_map()
 	_set_current_item()
-
 	score_label.visible = false
+
+	_connect_to_signals()
 
 	# Play spawn animation then play idle
 	current_item.play("spawn")
 	await current_item.animation_finished
 	current_item.play("idle")
 
+
+################################################
+#NOTE: Helper func to create item and collider map
+################################################
 func _create_item_collider_map() -> void:
 	item_collider_map = {
 	item_level_1 : collider_level_1,
@@ -84,7 +89,7 @@ func _set_current_item() -> void:
 		_:
 			push_error("invalid item level, level should be between 1 to 4")
 
-	# Enable sprite and collision shape for current item level, disable all others
+	# Enable sprite and collider for current item level, disable all others
 	for item : AnimatedSprite2D in item_collider_map.keys():
 		if item == current_item:
 			item.visible = true
@@ -93,6 +98,18 @@ func _set_current_item() -> void:
 			item.visible = false
 			item.stop()
 			item_collider_map[item].set_deferred("disabled", true)
+
+
+################################################
+#NOTE: Signal connections and funcs
+################################################
+func _connect_to_signals() -> void:
+	SignalsBus.player_death_event.connect(_on_player_death_event)
+
+func _on_player_death_event() -> void:
+	# Despawn on player death
+	# TODO: Despawn animations
+	call_deferred("queue_free")
 
 
 ################################################
