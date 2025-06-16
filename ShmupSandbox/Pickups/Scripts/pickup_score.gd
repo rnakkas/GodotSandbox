@@ -181,3 +181,13 @@ func _play_collect_animation_for_label() -> Tween:
 	tween.tween_property(score_label, "self_modulate", UiUtility.color_transparent, 0.5)
 
 	return tween
+
+
+################################################
+#NOTE: Signal connection, logic for when soul fragment hits the score item
+################################################
+func _on_area_entered(area:Area2D) -> void:
+	if area is ScoreFragment:
+		# Clamp level between 1 and 4
+		level = clamp(level+1, 1, 4)
+		_set_current_item()

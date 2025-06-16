@@ -2,6 +2,7 @@ class_name PickupsSpanwer extends Node2D
 
 @export var powerup_packed_scene : PackedScene = preload("res://ShmupSandbox/Pickups/Scenes/pickup_powerup.tscn")
 @export var sccore_item_packed_scene : PackedScene = preload("res://ShmupSandbox/Pickups/Scenes/pickup_score.tscn")
+@export var score_fragment_packed_scene : PackedScene = preload("res://ShmupSandbox/Pickups/Scenes/score_fragment.tscn")
 
 signal add_powerup_to_game(powerup : Node2D)
 signal add_score_item_to_game(score_item : Area2D)

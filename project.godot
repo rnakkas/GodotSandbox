@@ -121,6 +121,7 @@ pause={
 2d_physics/layer_5="enemy_bullet"
 2d_physics/layer_6="pickups"
 2d_physics/layer_7="player_bomb"
+2d_physics/layer_8="score_fragment"
 
 [rendering]
 
