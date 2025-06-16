@@ -1,21 +1,32 @@
 class_name PickupScore extends Area2D
 
+@onready var collider_level_1 : CollisionShape2D = $collider_level_1
+@onready var collider_level_2 : CollisionShape2D = $collider_level_2
+@onready var collider_level_3 : CollisionShape2D = $collider_level_3
+@onready var collider_level_4 : CollisionShape2D = $collider_level_4
+
 @onready var items_container : Node2D = $sprites_container
+
 @onready var item_level_1 : AnimatedSprite2D = %sprite_level_1
 @onready var item_level_2 : AnimatedSprite2D = %sprite_level_2
 @onready var item_level_3 : AnimatedSprite2D = %sprite_level_3
 @onready var item_level_4 : AnimatedSprite2D = %sprite_level_4
+
 @onready var score_label : Label = %score_label
 
-@export var speed : float = 200.0
-
-var items_list : Array[AnimatedSprite2D] = []
-var current_item : AnimatedSprite2D
+@export var speed : float = 90.0
+@export_range(1,4) var level : int = 1
 
 const score_level_1 : int = 500
 const score_level_2 : int = 1000
 const score_level_3 : int = 2000
 const score_level_4 : int = 4000
+
+var items_list : Array[AnimatedSprite2D] = []
+var current_item : AnimatedSprite2D
+var current_score : int
+
+var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
 
 
 ## TODO Score item pickup:
@@ -25,36 +36,63 @@ const score_level_4 : int = 4000
 	# If player dies without picking up item, item despawns
 	# Need new spritesheets for level 1-4 spawn, idle, despawn and collect animations
 	# Need scene and sprites for soul fragments
-	# Create a new container in Game scene specifically for score items:
+	# Create a new container in Game scene specifically for score items: - DONE
 		# - this should make it easier to find the nearest non max item
-		# - do i need to have an int in pickup_score.gd to track current level?
+		# - do i need to have an int in pickup_score.gd to track current level? - DONE
 
 ################################################
 #NOTE: Ready and its helper funcs
 ################################################
 func _ready() -> void:
-	_create_items_list()
+	_create_item_collider_map()
 	_set_current_item()
+
+	score_label.visible = false
 
 	# Play spawn animation then play idle
 	current_item.play("spawn")
 	await current_item.animation_finished
 	current_item.play("idle")
 
-func _create_items_list() -> void:
-	for node : Node in items_container.get_children():
-		if node is AnimatedSprite2D:
-			items_list.append(node)
+func _create_item_collider_map() -> void:
+	item_collider_map = {
+	item_level_1 : collider_level_1,
+	item_level_2 : collider_level_2,
+	item_level_3 : collider_level_3,
+	item_level_4 : collider_level_4,
+}
 
+
+################################################
+#NOTE: Helper func to set current item sprite, score and collider
+################################################
 func _set_current_item() -> void:
-	current_item = item_level_1
+	# Set current item sprite and score as per level
+	match level:
+		1:
+			current_item = item_level_1
+			current_score = score_level_1
+		2:
+			current_item = item_level_2
+			current_score = score_level_2
+		3:
+			current_item = item_level_3
+			current_score = score_level_3
+		4:
+			current_item = item_level_4
+			current_score = score_level_4
+		_:
+			push_error("invalid item level, level should be between 1 to 4")
 
-	for item_sprite : AnimatedSprite2D in items_list:
-		if item_sprite == current_item:
-			item_sprite.visible = true
+	# Enable sprite and collision shape for current item level, disable all others
+	for item : AnimatedSprite2D in item_collider_map.keys():
+		if item == current_item:
+			item.visible = true
+			item_collider_map[item].set_deferred("disabled", false)
 		else:
-			item_sprite.visible = false
-			item_sprite.stop()
+			item.visible = false
+			item.stop()
+			item_collider_map[item].set_deferred("disabled", true)
 
 
 ################################################
@@ -76,9 +114,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 ################################################
 func _on_body_entered(body: Node2D) -> void:
 	if body is PlayerCat:
-		print_debug("player picked up item, add score!")
-
-		# Disable collider area
+		# Disable area to prevent further pickups
 		set_deferred("monitorable", false)
 		set_deferred("monitoring", false)
 
@@ -90,7 +126,7 @@ func _on_body_entered(body: Node2D) -> void:
 		var tween : Tween = _play_collect_animation_for_label()
 
 		# Send global signal that item was picked up
-		SignalsBus.score_increased_event.emit(_item_score())
+		SignalsBus.score_increased_event.emit(current_score)
 
 		# Despawn pickup
 		await current_item.animation_finished
@@ -100,7 +136,10 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _play_collect_animation_for_label() -> Tween:
 	# Set label value
-	score_label.text = str(_item_score())
+	score_label.text = str(current_score)
+
+	# Make label visible
+	score_label.visible = true
 
 	# Tween the label when powerup collected
 	var tween = get_tree().create_tween()
@@ -125,18 +164,3 @@ func _play_collect_animation_for_label() -> Tween:
 	tween.tween_property(score_label, "self_modulate", UiUtility.color_transparent, 0.5)
 
 	return tween
-
-
-func _item_score() -> int:
-	var score : int
-	match current_item:
-		item_level_1:
-			score = score_level_1
-		item_level_2:
-			score = score_level_2
-		item_level_3:
-			score = score_level_3
-		item_level_4:
-			score = score_level_4
-	
-	return score

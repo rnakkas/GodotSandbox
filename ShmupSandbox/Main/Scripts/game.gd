@@ -7,7 +7,10 @@ class_name Game extends Node2D
 @onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
 @onready var player_bombs_container : Node2D = $PlayerBombsContainer
 @onready var enemies_container : Node2D = $EnemiesContainer
-@onready var pickups_container : Node2D = $PickupsContainer
+@onready var powerups_container : Node2D = $PowerupsContainer
+@onready var score_items_container : Node2D = $ScoreItemsContainer
+@onready var score_fragments_container : Node2D = $ScoreFragmentsContainer
+
 
 ## Shot limits
 var shot_limit : int = 100
@@ -88,5 +91,8 @@ func _on_player_spawner_add_player_to_game(player: PlayerCat) -> void:
 ################################################
 # NOTE:Spawning pickups
 ################################################
-func _on_pickups_spawner_add_pickup_to_game(pickup:Node2D) -> void:
-	pickups_container.add_child(pickup)
+func _on_pickups_spawner_add_powerup_to_game(powerup:Node2D) -> void:
+	powerups_container.add_child(powerup)
+
+func _on_pickups_spawner_add_score_item_to_game(score_item:Area2D) -> void:
+	score_items_container.add_child(score_item)
