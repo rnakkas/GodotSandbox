@@ -40,3 +40,6 @@ func _on_area_entered(_area: Area2D) -> void:
 	SignalsBus.score_increased_event.emit(hit_score)
 	if hp <= 0:
 		SignalsBus.score_increased_event.emit(kill_score)
+
+		# Signal to score fragments on death
+		SignalsBus.spawn_score_fragment_event.emit(self.global_position)
