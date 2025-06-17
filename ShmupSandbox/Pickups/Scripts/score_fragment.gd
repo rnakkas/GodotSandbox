@@ -3,8 +3,9 @@ class_name ScoreFragment extends Area2D
 @onready var sprite : AnimatedSprite2D = $sprite
 @onready var course_correction_timer : Timer = $course_correction_timer
 
-@export var speed : float = 650.0
+@export var speed : float = 900.0
 @export var course_correction_time : float = 0.3
+@export var overscore : int = 25
 
 var non_maxed_score_items_list : Array[PickupScore] = []
 var direction : Vector2
@@ -57,9 +58,15 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 ## Despawn if it reaches the score pickup item
+## Add 50 points just in case it reaches an already maxed item
 func _on_area_entered(area:Area2D) -> void:
-	if area is PickupScore && area == nearest_non_maxed_score_item:
-		call_deferred("queue_free")
+	if area is PickupScore:
+		if area == nearest_non_maxed_score_item:
+			if area.level < area.max_level:
+				call_deferred("queue_free")
+			else:
+				SignalsBus.score_increased_event.emit(overscore)
+				call_deferred("queue_free")
 
 
 func _on_course_correction_timer_timeout() -> void:

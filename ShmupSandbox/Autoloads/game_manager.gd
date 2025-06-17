@@ -1,7 +1,7 @@
 extends Node
 
 ################################################
-#NOTE: Constant game settings, will not be changed
+#NOTE: Constant game settings, will NOT be changed at runtime
 ################################################
 const life_extend_score_1 : int = 100000
 const life_extend_score_2 : int = 250000
@@ -19,6 +19,12 @@ enum powerups {
 	# Bombs
 	Fuzz			## 3
 }
+
+################################################
+#NOTE: Node group names
+################################################
+const score_items_container_group_name : String = "Game_ScoreItemsContainer"
+
 
 ################################################
 #NOTE: Default game settings

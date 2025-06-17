@@ -32,7 +32,7 @@ limit_bottom = 540
 
 [node name="PowerupsContainer" type="Node2D" parent="."]
 
-[node name="ScoreItemsContainer" type="Node2D" parent="."]
+[node name="ScoreItemsContainer" type="Node2D" parent="." groups=["Game_ScoreItemsContainer"]]
 
 [node name="ScoreFragmentsContainer" type="Node2D" parent="."]
 
