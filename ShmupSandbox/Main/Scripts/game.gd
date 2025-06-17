@@ -100,33 +100,10 @@ func _on_pickups_spawner_add_score_item_to_game(score_item:PickupScore) -> void:
 func _on_pickups_spawner_add_score_fragment_to_game(score_fragment:ScoreFragment) -> void:
 	# TODO: Get the nearest score item to the spawning score_fragment
 	var score_items_list : Array[Node] = score_items_container.get_children()
-	var distance_to_score_item : float
-	var score_item_distances_list : Array[float] = []
-	var score_item_and_distance_map : Dictionary[Node, float] = {}
-	var nearest_score_item : Area2D
 	
 	if score_items_list == []:
-		print_debug("No score items on screen")
 		return
 
-	for score_item : Node in score_items_list:
-		if score_item is Area2D:
-			distance_to_score_item = score_fragment.global_position.distance_to(score_item.global_position)
-			score_item_distances_list.append(distance_to_score_item)
-			score_item_and_distance_map[score_item] = distance_to_score_item
-
-	score_item_distances_list.sort()
-
-	print_debug("item distances list: ", score_item_distances_list, "\n")
-	print_debug("item and distance map : ", score_item_and_distance_map, "\n")
-	print_debug("nearest item's distance : ", score_item_distances_list[0], "\n")
-	
-	for item : Node in score_item_and_distance_map.keys():
-		if score_item_and_distance_map[item] == score_item_distances_list[0]:
-			nearest_score_item = item as Area2D
-			print_debug("nearest item: ", nearest_score_item)
-			break
-	
-	score_fragment.nearest_score_item = nearest_score_item
+	score_fragment.score_items_list = score_items_list
 
 	score_fragments_container.add_child(score_fragment)
