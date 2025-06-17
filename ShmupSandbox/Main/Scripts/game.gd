@@ -1,7 +1,8 @@
 class_name Game extends Node2D
 
 ## Spawners
-@onready var player_spawner_node : PlayerSpawner = $player_spawner 
+@onready var player_spawner_node : PlayerSpawner = $player_spawner
+@onready var pickups_spanwer_node : PickupsSpanwer = $PickupsSpawner
 
 ## Containers
 @onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
@@ -105,5 +106,8 @@ func _on_pickups_spawner_add_score_item_to_game(score_item:PickupScore) -> void:
 ################################################
 # NOTE:Spawning score fragments
 ################################################
+func _on_pickups_spawner_request_score_items_container() -> void:
+	pickups_spanwer_node.score_items_container = score_items_container
+
 func _on_pickups_spawner_add_score_fragment_to_game(score_fragment:ScoreFragment) -> void:
 	score_fragments_container.add_child(score_fragment)

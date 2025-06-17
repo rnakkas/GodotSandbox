@@ -40,5 +40,6 @@ limit_bottom = 540
 [connection signal="add_powerup_to_game" from="PickupsSpawner" to="." method="_on_pickups_spawner_add_powerup_to_game"]
 [connection signal="add_score_fragment_to_game" from="PickupsSpawner" to="." method="_on_pickups_spawner_add_score_fragment_to_game"]
 [connection signal="add_score_item_to_game" from="PickupsSpawner" to="." method="_on_pickups_spawner_add_score_item_to_game"]
+[connection signal="request_score_items_container" from="PickupsSpawner" to="." method="_on_pickups_spawner_request_score_items_container"]
 [connection signal="add_player_spawn_sprite_to_game" from="player_spawner" to="." method="_on_player_spawner_add_player_spawn_sprite_to_game"]
 [connection signal="add_player_to_game" from="player_spawner" to="." method="_on_player_spawner_add_player_to_game"]

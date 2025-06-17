@@ -6,7 +6,10 @@ class_name PickupsSpanwer extends Node2D
 
 signal add_powerup_to_game(powerup : PickupPowerup)
 signal add_score_item_to_game(score_item : PickupScore)
+signal request_score_items_container()
 signal add_score_fragment_to_game(score_fragment : ScoreFragment)
+
+var score_items_container : Node2D
 
 func _ready() -> void:
 	SignalsBus.spawn_powerup_event.connect(self._on_spawn_powerup_event)
@@ -42,10 +45,12 @@ func _instantiate_score_item(sp : Vector2) -> void:
 # NOTE:Spawning score fragments
 ################################################
 func _on_spawn_score_frament_event(sp : Vector2) -> void:
+	# Request score items container, parent node Game will set the score_items_container variable
+	#	which will be used during instantiation of score fragment
+	request_score_items_container.emit()
 	_instantiate_score_fragment(sp)
 
 func _instantiate_score_fragment(sp: Vector2) -> void:
-	var score_items_container : Node2D = get_tree().get_first_node_in_group(GameManager.score_items_container_group_name)
 	var score_items_list : Array[Node] = score_items_container.get_children()
 	var non_maxed_score_items_list : Array[PickupScore]
 	
@@ -65,6 +70,7 @@ func _instantiate_score_fragment(sp: Vector2) -> void:
 	# Instantiate score fragment if there are non maxed score items on screen
 	var score_fragment : ScoreFragment = score_fragment_packed_scene.instantiate()
 	score_fragment.global_position = sp
+	
 	# Only pass the non max item list to score fragment
 	score_fragment.non_maxed_score_items_list = non_maxed_score_items_list
 

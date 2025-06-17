@@ -20,11 +20,6 @@ enum powerups {
 	Fuzz			## 3
 }
 
-################################################
-#NOTE: Node group names
-################################################
-const score_items_container_group_name : String = "Game_ScoreItemsContainer"
-
 
 ################################################
 #NOTE: Default game settings

@@ -61,12 +61,14 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 ## Add 50 points just in case it reaches an already maxed item
 func _on_area_entered(area:Area2D) -> void:
 	if area is PickupScore:
-		if area == nearest_non_maxed_score_item:
-			if area.level < area.max_level:
-				call_deferred("queue_free")
-			else:
-				SignalsBus.score_increased_event.emit(overscore)
-				call_deferred("queue_free")
+		if area != nearest_non_maxed_score_item:
+			return
+			
+		if area.level < area.max_level:
+			call_deferred("queue_free")
+		else:
+			SignalsBus.score_increased_event.emit(overscore)
+			call_deferred("queue_free")
 
 
 func _on_course_correction_timer_timeout() -> void:
