@@ -14,13 +14,15 @@ class_name PickupScore extends Area2D
 
 @onready var score_label : Label = %score_label
 
-@export var speed : float = 90.0
-@export_range(1,4) var level : int = 1
-
+const min_level : int = 1
+const max_level : int = 4
 const score_level_1 : int = 500
 const score_level_2 : int = 1000
 const score_level_3 : int = 2000
 const score_level_4 : int = 4000
+
+@export var speed : float = 50.0
+@export_range(min_level,max_level) var level : int = 1
 
 var items_list : Array[AnimatedSprite2D] = []
 var current_item : AnimatedSprite2D
@@ -35,7 +37,8 @@ var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
 	# When player kills enemy, soul fragments travel to nearest non maxed item and item level +1
 	# If player dies without picking up item, item despawns - DONE
 	# Need new spritesheets for level 1-4 spawn, idle, despawn and collect animations
-	# Need scene and sprites for soul fragments
+	# Need scene for score fragments- DONE
+	# Need sprites for score framents
 	# Create a new container in Game scene specifically for score items: - DONE
 		# - this should make it easier to find the nearest non max item
 		# - do i need to have an int in pickup_score.gd to track current level? - DONE

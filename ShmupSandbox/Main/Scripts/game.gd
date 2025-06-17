@@ -89,21 +89,42 @@ func _on_player_spawner_add_player_to_game(player: PlayerCat) -> void:
 
 
 ################################################
-# NOTE:Spawning pickups and score fragments
+# NOTE:Spawning powerups
 ################################################
 func _on_pickups_spawner_add_powerup_to_game(powerup:PickupPowerup) -> void:
 	powerups_container.add_child(powerup)
 
+
+################################################
+# NOTE:Spawning score items
+################################################
 func _on_pickups_spawner_add_score_item_to_game(score_item:PickupScore) -> void:
 	score_items_container.add_child(score_item)
 
+
+################################################
+# NOTE:Spawning score fragments
+################################################
 func _on_pickups_spawner_add_score_fragment_to_game(score_fragment:ScoreFragment) -> void:
-	# TODO: Get the nearest score item to the spawning score_fragment
+	_create_list_of_non_maxed_score_items(score_fragment)
+	score_fragments_container.add_child(score_fragment)
+
+func _create_list_of_non_maxed_score_items(score_fragment:ScoreFragment) -> void:
 	var score_items_list : Array[Node] = score_items_container.get_children()
+	var non_maxed_score_items_list : Array[PickupScore]
 	
 	if score_items_list == []:
 		return
 
-	score_fragment.score_items_list = score_items_list
+	# Create a list of all the non max items
+	for item : Node in score_items_list:
+		if item is PickupScore:
+			if item.level < item.max_level:
+				non_maxed_score_items_list.append(item)
 
-	score_fragments_container.add_child(score_fragment)
+
+	if non_maxed_score_items_list == []:
+		return
+
+	# Only pass the non max item list to score fragment
+	score_fragment.score_items_list = non_maxed_score_items_list
