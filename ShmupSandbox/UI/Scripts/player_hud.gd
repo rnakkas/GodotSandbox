@@ -8,7 +8,6 @@ class_name PlayerHud extends Control
 
 var bomb_icons_array : Array[Node] = []
 
-## TODO: Update this with the player bombs
 
 ################################################
 #NOTE: Ready

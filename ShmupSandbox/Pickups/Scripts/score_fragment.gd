@@ -11,6 +11,14 @@ var non_maxed_score_items_list : Array[PickupScore] = []
 var direction : Vector2
 var nearest_non_maxed_score_item : PickupScore
 
+
+## TODO: Score framents:
+	# - need spritesheets for score fragment animations
+
+
+################################################
+#NOTE: Ready and its helper funcs
+################################################
 func _ready() -> void:
 	_get_nearest_non_maxed_score_item()
 	_set_direction_to_nearest_non_maxed_score_item()
@@ -48,28 +56,38 @@ func _set_timer_properties() -> void:
 	course_correction_timer.start()
 
 
+################################################
+#NOTE: Physics process
+################################################
 func _physics_process(delta: float) -> void:
 	global_position += speed * delta * direction
 
 
-## Despawn if it goes offscreen
+################################################
+#NOTE: Signal connection: Despawn if it goes offscreen
+################################################
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	call_deferred("queue_free")
 
 
-## Despawn if it reaches the score pickup item
-## Add 50 points just in case it reaches an already maxed item
+################################################
+#NOTE: Signal connection: Despawn if it reaches the score pickup item
+################################################
 func _on_area_entered(area:Area2D) -> void:
 	if area is PickupScore:
 		if area != nearest_non_maxed_score_item:
 			return
-			
+
 		if area.level < area.max_level:
 			call_deferred("queue_free")
 		else:
+			# Add small amount of points just in case it reaches an already maxed item
 			SignalsBus.score_increased_event.emit(overscore)
 			call_deferred("queue_free")
 
 
+################################################
+#NOTE: Signal connection: Course correct to home in on score item
+################################################
 func _on_course_correction_timer_timeout() -> void:
 	_set_direction_to_nearest_non_maxed_score_item()

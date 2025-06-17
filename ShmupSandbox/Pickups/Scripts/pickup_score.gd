@@ -32,16 +32,7 @@ var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
 
 
 ## TODO Score item pickup:
-	# 4 levels
-	# Always spawns as level 1
-	# When player kills enemy, soul fragments travel to nearest non maxed item and item level +1
-	# If player dies without picking up item, item despawns - DONE
-	# Need new spritesheets for level 1-4 spawn, idle, despawn and collect animations
-	# Need scene for score fragments- DONE
-	# Need sprites for score framents
-	# Create a new container in Game scene specifically for score items: - DONE
-		# - this should make it easier to find the nearest non max item
-		# - do i need to have an int in pickup_score.gd to track current level? - DONE
+	# Need spritesheets for score item levels 1-4
 
 ################################################
 #NOTE: Ready and its helper funcs
