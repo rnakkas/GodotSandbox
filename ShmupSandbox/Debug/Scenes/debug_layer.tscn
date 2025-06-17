@@ -7,16 +7,17 @@ script = ExtResource("1_0saqs")
 
 [node name="info_label" type="Label" parent="."]
 offset_left = 26.0
-offset_top = 308.0
-offset_right = 210.0
-offset_bottom = 487.0
+offset_top = 280.0
+offset_right = 216.0
+offset_bottom = 485.0
 text = "Debug mode
 Keybindings:
 1: spawn powerup
 2: add +1 bomb to stock
 3: player collisions OFF
 4: player collisions ON
-5: spawn score item"
+5: spawn score item
+6: spawn score fragment"
 
 [node name="player_collisions_label" type="Label" parent="."]
 offset_left = 252.0

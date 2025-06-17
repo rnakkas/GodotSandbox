@@ -188,6 +188,8 @@ func _play_collect_animation_for_label() -> Tween:
 ################################################
 func _on_area_entered(area:Area2D) -> void:
 	if area is ScoreFragment:
-		# Clamp level between 1 and 4
-		level = clamp(level+1, 1, 4)
-		_set_current_item()
+		# Only accept soul fragment that is meant for this instance of score item
+		if area.nearest_score_item == self:
+			# Clamp level between 1 and 4
+			level = clamp(level+1, 1, 4)
+			_set_current_item()

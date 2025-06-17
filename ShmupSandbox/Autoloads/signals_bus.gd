@@ -28,7 +28,9 @@ signal player_credits_updated_event()
 
 signal spawn_powerup_event(sp : Vector2)
 
-signal spawn_score_item_event(sp: Vector2)
+signal spawn_score_item_event(sp : Vector2)
+
+signal spawn_score_fragment_event(sp : Vector2)
 
 signal powerup_collected_event(powerup : int, score : int)
 

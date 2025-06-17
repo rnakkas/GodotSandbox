@@ -63,6 +63,10 @@ func _input(_event: InputEvent) -> void:
 			player_hurtbox.set_deferred("monitoring", true)
 			player_collisions_label.text = "Player Collisions: ON"
 		
-	if Input.is_key_label_pressed(KEY_5):
+	if Input.is_key_label_pressed(KEY_5): # Spawn score item
 		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
 		SignalsBus.spawn_score_item_event.emit(mouse_pos)
+
+	if Input.is_key_label_pressed(KEY_6): # Spawn score fragment
+		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
+		SignalsBus.spawn_score_fragment_event.emit(mouse_pos)
