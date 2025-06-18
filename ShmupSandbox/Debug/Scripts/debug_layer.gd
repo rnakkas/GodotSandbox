@@ -6,17 +6,26 @@ class_name DebugLayer extends Node2D
 	# For testing features quickly #
 ################################################
 
+@onready var debug_label : Label = $debug_label
 @onready var info_label: Label = $info_label
 @onready var player_collisions_label : Label = $player_collisions_label
 
 func _ready() -> void:
-	_show_debug()
+	_show_debug_label()
+	_hide_debug_console()
 
-func _show_debug() -> void:
+func _show_debug_label() -> void:
 	if !OS.is_debug_build():
-		info_label.visible = false
-		player_collisions_label.visible = false
+		debug_label.visible = false
 
+
+func _show_debug_console() -> void:
+	info_label.visible = true
+	player_collisions_label.visible = true
+
+func _hide_debug_console() -> void:
+	info_label.visible = false
+	player_collisions_label.visible = false
 
 
 func _input(_event: InputEvent) -> void:
@@ -24,6 +33,14 @@ func _input(_event: InputEvent) -> void:
 	if !OS.is_debug_build():
 		return
 	
+	# Show or hide debug console info
+	if Input.is_key_label_pressed(KEY_QUOTELEFT):
+		get_tree().paused = !get_tree().paused
+		if get_tree().paused:
+			_show_debug_console()
+		else:
+			_hide_debug_console()
+
 	if Input.is_key_label_pressed(KEY_Q): # quit game
 		get_tree().quit()
 	
@@ -70,3 +87,7 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_key_label_pressed(KEY_6): # Spawn score fragment
 		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
 		SignalsBus.spawn_score_fragment_event.emit(mouse_pos)
+	
+	if Input.is_key_label_pressed(KEY_7): # Spawn enemy - Doom Board
+		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
+		SignalsBus.spawn_enemy_doomboard_event.emit(mouse_pos)

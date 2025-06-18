@@ -1,7 +1,15 @@
 class_name EnemySpawner extends Node2D
 
+################################################################################################################
+#
+## FIXME: This enemy spawner be cleaned up once I figure out creating spawn schedules using json or resources
+#
+################################################################################################################
+
 @export var enemy_scenes : Array[PackedScene] = []
 @export var sp_tolerance : float = 128
+
+@export var doomboard_packed_scene : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/doomboard.tscn")
 
 ## Timer
 @onready var spawn_timer : Timer = $enemy_spawn_timer
@@ -16,9 +24,26 @@ var prev_sp_list : Array[float] = []
 var viewport_size : Vector2 
 
 func _ready() -> void:
+	_connect_to_signals()
+
 	viewport_size = get_viewport_rect().size
 	prev_sp_list.resize(5)
 	sp_x = viewport_size.x + 50.0
+
+
+func _connect_to_signals() -> void:
+	SignalsBus.spawn_enemy_doomboard_event.connect(self._on_spawn_doomboard_event)
+
+
+func _on_spawn_doomboard_event(sp : Vector2) -> void:
+	var doomboard : Area2D = doomboard_packed_scene.instantiate()
+	doomboard.global_position = sp
+	add_enemy_to_game.emit(doomboard)
+
+
+
+####################################
+####################################
 
 func spawn_enemy() -> void:
 	var enemy : Area2D = enemy_scenes.pick_random().instantiate()

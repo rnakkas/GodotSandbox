@@ -171,7 +171,4 @@ func _on_shooting_handler_stopped_shooting() -> void:
 	ch_muzzle_flash_2.play("none")
 	body.play("idle")
 	body.frame = rocket.frame
-
-
-## FIXME: Have turned Monitoring and Monitorable off for the hurtbox area for testing
-	## Turn back on after done
+	
