@@ -435,7 +435,7 @@ debug_color = Color(1, 0.639216, 0.121569, 0.172549)
 unique_name_in_owner = true
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_t0yqe")
-animation = &"idle"
+animation = &"collect"
 autoplay = "idle"
 
 [node name="sprite_ch" type="AnimatedSprite2D" parent="path/pathfollow"]
@@ -463,12 +463,14 @@ autoplay = "idle"
 
 [node name="powerup_label" type="Label" parent="path/pathfollow"]
 unique_name_in_owner = true
-offset_left = -39.5818
+offset_left = -61.6403
 offset_top = -40.6464
-offset_right = 40.4182
-offset_bottom = -17.6464
+offset_right = 62.3597
+offset_bottom = -9.6464
+theme_override_colors/font_outline_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("6_aa45h")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 25
 text = "Overdrive"
 horizontal_alignment = 1
 vertical_alignment = 1

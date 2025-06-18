@@ -1,0 +1,159 @@
+[gd_scene load_steps=9 format=3 uid="uid://dfre8yniuwyt4"]
+
+[ext_resource type="Script" uid="uid://stp67ytvmlks" path="res://ShmupSandbox/Pickups/Scripts/pickup_score.gd" id="1_8a424"]
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="2_6p5x8"]
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="6_ky1jo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yvjqo"]
+radius = 28.0179
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ijbi"]
+radius = 36.6742
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3pego"]
+radius = 46.2709
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6p5x8"]
+radius = 56.2939
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3pego"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6p5x8")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6p5x8")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6p5x8")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6p5x8")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"collect",
+"speed": 15.15
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6p5x8")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6p5x8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6p5x8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6p5x8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 15.15
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6p5x8")
+}],
+"loop": false,
+"name": &"spawn",
+"speed": 15.0
+}]
+
+[node name="pickup_score" type="Area2D"]
+collision_layer = 32
+collision_mask = 129
+script = ExtResource("1_8a424")
+
+[node name="collider_level_1" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yvjqo")
+debug_color = Color(0, 0.649289, 0.149823, 0.42)
+
+[node name="collider_level_2" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1ijbi")
+debug_color = Color(0.495094, 0.582855, 0, 0.42)
+
+[node name="collider_level_3" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3pego")
+debug_color = Color(0.831448, 0.392105, 0, 0.42)
+
+[node name="collider_level_4" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6p5x8")
+debug_color = Color(0.945051, 0.235709, 0, 0.42)
+
+[node name="sprites_container" type="Node2D" parent="."]
+
+[node name="sprite_level_1" type="AnimatedSprite2D" parent="sprites_container"]
+unique_name_in_owner = true
+self_modulate = Color(0.0505551, 0.934928, 0.782339, 1)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_3pego")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="sprite_level_2" type="AnimatedSprite2D" parent="sprites_container"]
+unique_name_in_owner = true
+self_modulate = Color(0.519132, 0.730251, 3.85046e-07, 1)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_3pego")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="sprite_level_3" type="AnimatedSprite2D" parent="sprites_container"]
+unique_name_in_owner = true
+self_modulate = Color(0.982585, 0.462927, 0, 1)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_3pego")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="sprite_level_4" type="AnimatedSprite2D" parent="sprites_container"]
+unique_name_in_owner = true
+self_modulate = Color(1, 0.135846, 0.309247, 1)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_3pego")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="score_label" type="Label" parent="sprites_container"]
+unique_name_in_owner = true
+offset_left = -61.6403
+offset_top = -40.6464
+offset_right = 62.3597
+offset_bottom = -9.6464
+theme_override_colors/font_outline_color = Color(0.133333, 0.137255, 0.137255, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("6_ky1jo")
+theme_override_font_sizes/font_size = 25
+text = "4000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(37, 0)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

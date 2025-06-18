@@ -6,8 +6,18 @@ class_name DebugLayer extends Node2D
 	# For testing features quickly #
 ################################################
 
+@onready var info_label: Label = $info_label
+@onready var player_collisions_label : Label = $player_collisions_label
+
 func _ready() -> void:
-	pass
+	_show_debug()
+
+func _show_debug() -> void:
+	if !OS.is_debug_build():
+		info_label.visible = false
+		player_collisions_label.visible = false
+
+
 
 func _input(_event: InputEvent) -> void:
 	# Only allow debug commands if using debug build
@@ -40,6 +50,7 @@ func _input(_event: InputEvent) -> void:
 			var player_hurtbox : Area2D =  player.get_node("hurtbox")
 			player_hurtbox.set_deferred("monitorable", false)
 			player_hurtbox.set_deferred("monitoring", false)
+			player_collisions_label.text = "Player Collisions: OFF"
 	
 	if Input.is_key_label_pressed(KEY_4): # Turn on player collisions
 		print_debug("player hurtbox: ON")
@@ -50,4 +61,12 @@ func _input(_event: InputEvent) -> void:
 			var player_hurtbox : Area2D =  player.get_node("hurtbox")
 			player_hurtbox.set_deferred("monitorable", true)
 			player_hurtbox.set_deferred("monitoring", true)
+			player_collisions_label.text = "Player Collisions: ON"
 		
+	if Input.is_key_label_pressed(KEY_5): # Spawn score item
+		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
+		SignalsBus.spawn_score_item_event.emit(mouse_pos)
+
+	if Input.is_key_label_pressed(KEY_6): # Spawn score fragment
+		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
+		SignalsBus.spawn_score_fragment_event.emit(mouse_pos)

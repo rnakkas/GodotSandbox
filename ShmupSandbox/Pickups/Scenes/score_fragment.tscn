@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgouaynwloxbt"]
+
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_pnys3"]
+[ext_resource type="Script" uid="uid://deiornvhvpb62" path="res://ShmupSandbox/Pickups/Scripts/score_fragment.gd" id="1_sxojs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pnys3"]
+radius = 12.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sxojs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_pnys3")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_pnys3")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.15
+}]
+
+[node name="score_fragment" type="Area2D"]
+collision_layer = 128
+collision_mask = 32
+script = ExtResource("1_sxojs")
+
+[node name="collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pnys3")
+debug_color = Color(0.878431, 0.827451, 0.0117647, 1)
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0.748765, 0.748142, 7.70092e-07, 1)
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_sxojs")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="course_correction_timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="course_correction_timer" to="." method="_on_course_correction_timer_timeout"]

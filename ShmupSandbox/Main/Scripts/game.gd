@@ -1,13 +1,17 @@
 class_name Game extends Node2D
 
 ## Spawners
-@onready var player_spawner_node : PlayerSpawner = $player_spawner 
+@onready var player_spawner_node : PlayerSpawner = $player_spawner
+@onready var pickups_spanwer_node : PickupsSpanwer = $PickupsSpawner
 
 ## Containers
 @onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
 @onready var player_bombs_container : Node2D = $PlayerBombsContainer
 @onready var enemies_container : Node2D = $EnemiesContainer
-@onready var pickups_container : Node2D = $PickupsContainer
+@onready var powerups_container : Node2D = $PowerupsContainer
+@onready var score_items_container : Node2D = $ScoreItemsContainer
+@onready var score_fragments_container : Node2D = $ScoreFragmentsContainer
+
 
 ## Shot limits
 var shot_limit : int = 100
@@ -86,7 +90,24 @@ func _on_player_spawner_add_player_to_game(player: PlayerCat) -> void:
 
 
 ################################################
-# NOTE:Spawning pickups
+# NOTE:Spawning powerups
 ################################################
-func _on_pickups_spawner_add_pickup_to_game(pickup:Node2D) -> void:
-	pickups_container.add_child(pickup)
+func _on_pickups_spawner_add_powerup_to_game(powerup:PickupPowerup) -> void:
+	powerups_container.add_child(powerup)
+
+
+################################################
+# NOTE:Spawning score items
+################################################
+func _on_pickups_spawner_add_score_item_to_game(score_item:PickupScore) -> void:
+	score_items_container.add_child(score_item)
+
+
+################################################
+# NOTE:Spawning score fragments
+################################################
+func _on_pickups_spawner_request_score_items_container() -> void:
+	pickups_spanwer_node.score_items_container = score_items_container
+
+func _on_pickups_spawner_add_score_fragment_to_game(score_fragment:ScoreFragment) -> void:
+	score_fragments_container.add_child(score_fragment)
