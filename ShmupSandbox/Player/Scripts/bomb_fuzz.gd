@@ -6,6 +6,7 @@ class_name BombFuzz extends Area2D
 
 @export var speed : float = 150.0
 @export var detonation_time : float = 1.0
+@export var damage : int = 10
 
 var viewport_size : Vector2
 

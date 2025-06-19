@@ -28,6 +28,9 @@ class_name PlayerCat extends CharacterBody2D
 @export var invincibility_time : float = 2.0
 @onready var invincibility_timer : Timer = $invincibility_timer
 
+## Damage
+@export var damage : int = 25
+
 var viewport_size : Vector2
 var is_dead : bool
 var can_be_invincible : bool
