@@ -15,7 +15,7 @@ class_name EnemySpawner extends Node2D
 @onready var spawn_timer : Timer = $enemy_spawn_timer
 
 ## Custom signals
-signal add_enemy_to_game(enemy : Area2D)
+signal add_enemy_to_game(enemy : Node2D)
 
 var sp_x : float
 var prev_sp : float
@@ -36,7 +36,7 @@ func _connect_to_signals() -> void:
 
 
 func _on_spawn_doomboard_event(sp : Vector2) -> void:
-	var doomboard : Area2D = doomboard_packed_scene.instantiate()
+	var doomboard : Node2D = doomboard_packed_scene.instantiate()
 	doomboard.global_position = sp
 	add_enemy_to_game.emit(doomboard)
 

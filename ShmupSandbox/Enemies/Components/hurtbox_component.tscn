@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpc11ea4g1lap"]
+
+[ext_resource type="Script" uid="uid://cmyx2yernfjrf" path="res://ShmupSandbox/Enemies/ComponentsScripts/hurtbox_component.gd" id="1_i1rsf"]
+
+[node name="hurtbox_component" type="Area2D"]
+script = ExtResource("1_i1rsf")
