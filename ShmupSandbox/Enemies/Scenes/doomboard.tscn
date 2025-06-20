@@ -116,14 +116,21 @@ initial_velocity_min = 151.08
 initial_velocity_max = 287.77
 scale_amount_max = 1.6
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D_right" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(171, 0)
 
+[node name="VisibleOnScreenNotifier2D_left" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-145, 0)
+
 [node name="dot_timer" type="Timer" parent="."]
+
+[node name="movement_timer" type="Timer" parent="."]
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D_right" to="." method="_on_visible_on_screen_notifier_2d_right_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D_right" to="." method="_on_visible_on_screen_notifier_2d_right_screen_exited"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D_left" to="." method="_on_visible_on_screen_notifier_2d_left_screen_exited"]
 [connection signal="timeout" from="dot_timer" to="." method="_on_dot_timer_timeout"]
+[connection signal="timeout" from="movement_timer" to="." method="_on_movement_timer_timeout"]

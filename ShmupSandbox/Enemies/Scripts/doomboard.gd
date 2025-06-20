@@ -3,10 +3,12 @@ class_name Doomboard extends Area2D
 @onready var sprite : AnimatedSprite2D = $sprite
 @onready var particles : CPUParticles2D = $CPUParticles2D
 @onready var dot_timer : Timer = $dot_timer
+@onready var movement_timer : Timer = $movement_timer
 
 const offscreen_speed : float = 200.0
 const onscreen_speed : float = 45.0
 const dot_time : float = 0.3
+const move_time : float = 6.0
 
 @export var speed : float = offscreen_speed
 @export var max_hp : int = 30
@@ -18,39 +20,46 @@ var hp : int = max_hp
 var low_hp_threshold : int = round((max_hp as float)/3)
 var damage_from_bomb: int
 var can_die : bool
-
-## TODO:
-	# - timer: on timeout move towards center of player's y coordinates
+var viewport_size : Vector2
+var direction : Vector2 = Vector2.LEFT
 
 
 ################################################
 # NOTE: Ready
 ################################################
 func _ready() -> void:
+	viewport_size = get_viewport_rect().size
+
 	# Disable collisions when spawned, will be enabled when it enters screen
 	# To prevent being prematurely killed
 	set_deferred("monitorable", false)
 	set_deferred("monitoring", false)
 
-	_set_timer_properties()
+	_set_dot_timer_properties()
+	_set_movement_timer_properties()
 
-func _set_timer_properties() -> void:
+func _set_dot_timer_properties() -> void:
 	dot_timer.one_shot = false
 	dot_timer.wait_time = dot_time
+
+func _set_movement_timer_properties() -> void:
+	movement_timer.one_shot = true
+	movement_timer.wait_time = move_time
 
 
 ################################################
 # NOTE: Physics process, movement
 ################################################
 func _physics_process(delta: float) -> void:
-	global_position += speed * delta * Vector2.LEFT
+	global_position += speed * delta * direction
 
 
 ################################################
 # NOTE: Signal connection, move slower when on screen, allow being hurt
 ################################################
-func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+func _on_visible_on_screen_notifier_2d_right_screen_entered() -> void:
 	speed = onscreen_speed
+	movement_timer.start()
 
 	# Enable collisions when on screen, to be able to be hurt/killed
 	set_deferred("monitorable", true)
@@ -60,7 +69,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 ################################################
 # NOTE: Despawn after leaving screen
 ################################################
-func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+func _on_visible_on_screen_notifier_2d_right_screen_exited() -> void:
 	# Despawn when it leaves screen
 	call_deferred("queue_free")
 
@@ -143,3 +152,28 @@ func _handle_death() -> void:
 	await sprite.animation_finished
 
 	call_deferred("queue_free")
+
+
+################################################
+# NOTE: Ready
+################################################
+func _on_movement_timer_timeout() -> void:
+	_movement_variation()
+
+func _movement_variation() -> void:
+	var dist_to_top : float = abs(self.global_position.y - 0)
+	var dist_to_bot : float = abs(self.global_position.y - viewport_size.y)
+
+	# If further from top of screen, move towards top, else move towards bottom
+	if dist_to_top > dist_to_bot:
+		direction = Vector2(-viewport_size.x, -viewport_size.y).normalized()
+	else:
+		direction = Vector2(-viewport_size.x, viewport_size.y).normalized()
+
+
+func _on_visible_on_screen_notifier_2d_left_screen_exited() -> void:
+	# Cannot be hurt/killed when flying offscreen to the left
+	set_deferred("monitorable", false)
+	set_deferred("monitoring", false)
+	
+	speed = offscreen_speed
