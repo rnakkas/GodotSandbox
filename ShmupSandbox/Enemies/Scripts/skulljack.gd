@@ -8,12 +8,8 @@ class_name Skulljack extends Area2D
 @onready var enemy_sprite : AnimatedSprite2D = $animated_sprite
 @onready var particles : CPUParticles2D = $CPUParticles2D
 
-
-## TODO: change to using hurtbox component
-
-
+## FIXME: This is just for testing, will remove this later
 func _ready() -> void:
-	## FIXME: This is just for testing, will remove this later
 	speed = randf_range(speed, speed*1.5)
 
 func _physics_process(delta: float) -> void:
@@ -28,7 +24,7 @@ func _handle_dying() -> void:
 		enemy_sprite.play("death")
 		particles.emitting = true
 		await enemy_sprite.animation_finished
-		call_deferred("queue_free")
+		queue_free()
 
 func _deactivate_self() -> void:
 	speed = 0.0

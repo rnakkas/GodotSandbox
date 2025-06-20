@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://l4m3k6e05qvm"]
+[gd_scene load_steps=5 format=3 uid="uid://l4m3k6e05qvm"]
 
 [ext_resource type="Script" uid="uid://c145dl75kkwr6" path="res://ShmupSandbox/Enemies/Scripts/doomboard.gd" id="1_oipf2"]
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_wu6fn"]
-[ext_resource type="PackedScene" uid="uid://dpc11ea4g1lap" path="res://ShmupSandbox/Enemies/Components/hurtbox_component.tscn" id="2_1uky2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wu6fn"]
 radius = 39.0
@@ -77,29 +76,22 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="doomboard" type="Node2D"]
-script = ExtResource("1_oipf2")
-
-[node name="hurtbox_component" parent="." node_paths=PackedStringArray("dot_timer", "sprite", "particles") instance=ExtResource("2_1uky2")]
+[node name="doomboard" type="Area2D"]
 collision_layer = 8
 collision_mask = 67
-dot_timer = NodePath("dot_timer")
-sprite = NodePath("../sprite")
-particles = NodePath("../CPUParticles2D")
+script = ExtResource("1_oipf2")
 
-[node name="collider" type="CollisionShape2D" parent="hurtbox_component"]
+[node name="collider" type="CollisionShape2D" parent="."]
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_wu6fn")
 debug_color = Color(0.913725, 0, 0.823529, 0.419608)
-
-[node name="dot_timer" type="Timer" parent="hurtbox_component"]
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(0.950488, 0, 0.458181, 1)
 position = Vector2(0, 1)
 scale = Vector2(2.0375, 0.421875)
 sprite_frames = SubResource("SpriteFrames_vwxqj")
-animation = &"damaged"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="debug_label" type="Label" parent="."]
@@ -127,11 +119,11 @@ scale_amount_max = 1.6
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(171, 0)
 
-[connection signal="area_entered" from="hurtbox_component" to="hurtbox_component" method="_on_area_entered"]
-[connection signal="area_exited" from="hurtbox_component" to="hurtbox_component" method="_on_area_exited"]
-[connection signal="body_entered" from="hurtbox_component" to="hurtbox_component" method="_on_body_entered"]
-[connection signal="health_depleted" from="hurtbox_component" to="." method="_on_hurtbox_component_health_depleted"]
-[connection signal="timeout" from="hurtbox_component/dot_timer" to="hurtbox_component" method="_on_dot_timer_timeout"]
+[node name="dot_timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
-[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="hurtbox_component" method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="dot_timer" to="." method="_on_dot_timer_timeout"]
