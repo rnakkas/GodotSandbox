@@ -1,6 +1,8 @@
 class_name PlayerBullet extends Area2D
 
 @export var speed : float = 950.0
+@export var damage : int = 1
+
 @onready var bullet_sprite : AnimatedSprite2D = $bullet_sprite
 
 # Use for od bullet shooting spread

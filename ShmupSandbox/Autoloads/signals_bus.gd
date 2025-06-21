@@ -43,3 +43,9 @@ signal shot_limit_refreshed_event()
 signal shot_limit_updated_event(shot_limit : int)
 
 
+
+################################################
+#NOTE:Spawning enemies
+################################################
+
+signal spawn_enemy_doomboard_event(sp : Vector2)

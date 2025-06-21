@@ -1,0 +1,133 @@
+[gd_scene load_steps=5 format=3 uid="uid://l4m3k6e05qvm"]
+
+[ext_resource type="Script" uid="uid://c145dl75kkwr6" path="res://ShmupSandbox/Enemies/Scripts/doomboard.gd" id="1_oipf2"]
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_wu6fn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wu6fn"]
+radius = 39.0
+height = 284.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vwxqj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 15.15
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"death",
+"speed": 15.15
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wu6fn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 15.0
+}]
+
+[node name="doomboard" type="Area2D"]
+collision_layer = 8
+collision_mask = 67
+script = ExtResource("1_oipf2")
+
+[node name="collider" type="CollisionShape2D" parent="."]
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_wu6fn")
+debug_color = Color(0.913725, 0, 0.823529, 0.419608)
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0.950488, 0, 0.458181, 1)
+position = Vector2(0, 1)
+scale = Vector2(2.0375, 0.421875)
+sprite_frames = SubResource("SpriteFrames_vwxqj")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="debug_label" type="Label" parent="."]
+offset_left = -88.0
+offset_top = -65.0
+offset_right = 81.0
+offset_bottom = -42.0
+text = "Enemy - Doom Board"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 100
+lifetime = 0.41
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 151.08
+initial_velocity_max = 287.77
+scale_amount_max = 1.6
+
+[node name="VisibleOnScreenNotifier2D_right" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(171, 0)
+
+[node name="VisibleOnScreenNotifier2D_left" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-254, 0)
+
+[node name="dot_timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D_right" to="." method="_on_visible_on_screen_notifier_2d_right_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D_right" to="." method="_on_visible_on_screen_notifier_2d_right_screen_exited"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D_left" to="." method="_on_visible_on_screen_notifier_2d_left_screen_exited"]
+[connection signal="timeout" from="dot_timer" to="." method="_on_dot_timer_timeout"]

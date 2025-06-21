@@ -45,7 +45,7 @@ func _on_player_shooting(bullets_list : Array[PlayerBullet]) -> void:
 		active_shots += 1
 		bullet.tree_exited.connect(self._on_bullet_freed)
 		
-		player_projectiles_container.add_child(bullet)
+		player_projectiles_container.call_deferred("add_child", bullet)
 		
 		# If shot limit reached, send signal to prevent player from shooting
 		if active_shots >= shot_limit:
@@ -64,7 +64,7 @@ func _on_bullet_freed() -> void:
 # NOTE: Player Bombing
 ################################################
 func _on_player_bombing(bomb : Area2D) -> void:
-	player_bombs_container.add_child(bomb)
+	player_bombs_container.call_deferred("add_child", bomb)
 
 
 
@@ -72,7 +72,7 @@ func _on_player_bombing(bomb : Area2D) -> void:
 # NOTE: Spawning enemies
 ################################################
 func _on_enemy_spawner_add_enemy_to_game(enemy: Area2D) -> void:
-	enemies_container.add_child(enemy)
+	enemies_container.call_deferred("add_child", enemy)
 
 
 ################################################
@@ -93,14 +93,14 @@ func _on_player_spawner_add_player_to_game(player: PlayerCat) -> void:
 # NOTE:Spawning powerups
 ################################################
 func _on_pickups_spawner_add_powerup_to_game(powerup:PickupPowerup) -> void:
-	powerups_container.add_child(powerup)
+	powerups_container.call_deferred("add_child", powerup)
 
 
 ################################################
 # NOTE:Spawning score items
 ################################################
 func _on_pickups_spawner_add_score_item_to_game(score_item:PickupScore) -> void:
-	score_items_container.add_child(score_item)
+	score_items_container.call_deferred("add_child", score_item)
 
 
 ################################################
@@ -110,4 +110,4 @@ func _on_pickups_spawner_request_score_items_container() -> void:
 	pickups_spanwer_node.score_items_container = score_items_container
 
 func _on_pickups_spawner_add_score_fragment_to_game(score_fragment:ScoreFragment) -> void:
-	score_fragments_container.add_child(score_fragment)
+	score_fragments_container.call_deferred("add_child", score_fragment)
