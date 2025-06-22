@@ -650,7 +650,7 @@ animations = [{
 "speed": 50.0
 }]
 
-[node name="player_cat" type="CharacterBody2D" groups=["DEBUG_player_group"]]
+[node name="player_cat" type="CharacterBody2D" groups=["player_group"]]
 collision_mask = 28
 motion_mode = 1
 script = ExtResource("1_m8806")

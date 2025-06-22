@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://xwrfbo75ygd6"]
+[gd_scene load_steps=5 format=3 uid="uid://xwrfbo75ygd6"]
 
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_3oxp0"]
+[ext_resource type="Script" uid="uid://bx2s3f5y3kq3h" path="res://ShmupSandbox/Enemies/Scripts/boomer.gd" id="1_yjgq2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3oxp0"]
 radius = 27.7308
@@ -45,6 +46,7 @@ animations = [{
 [node name="boomer" type="Area2D"]
 collision_layer = 8
 collision_mask = 67
+script = ExtResource("1_yjgq2")
 
 [node name="collider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3oxp0")
@@ -54,9 +56,38 @@ debug_color = Color(0.808198, 0, 0, 0.419608)
 self_modulate = Color(1, 0, 0, 1)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_1qxde")
-animation = &"explode"
-frame = 6
-frame_progress = 1.0
+animation = &"fly"
+autoplay = "fly"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(39, 0)
+
+[node name="debug_label" type="Label" parent="."]
+offset_left = -58.0
+offset_top = -40.0
+offset_right = 70.0
+offset_bottom = -17.0
+text = "Enemy - Boomer"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 100
+lifetime = 0.41
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 151.08
+initial_velocity_max = 287.77
+scale_amount_max = 1.6
+
+[node name="tracker_timer" type="Timer" parent="."]
+
+[node name="chase_timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="tracker_timer" to="." method="_on_tracker_timer_timeout"]
+[connection signal="timeout" from="chase_timer" to="." method="_on_chase_timer_timeout"]

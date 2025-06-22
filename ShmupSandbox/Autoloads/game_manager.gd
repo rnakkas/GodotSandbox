@@ -1,6 +1,12 @@
 extends Node
 
 ################################################
+#NOTE: Global node groups
+################################################
+const player_group : String = "player_group"
+
+
+################################################
 #NOTE: Constant game settings, will NOT be changed at runtime
 ################################################
 const life_extend_score_1 : int = 100000
