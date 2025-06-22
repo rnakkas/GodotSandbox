@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://xwrfbo75ygd6"]
+
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_3oxp0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3oxp0"]
+radius = 27.7308
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1qxde"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3oxp0")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_3oxp0")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_3oxp0")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3oxp0")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.15
+}]
+
+[node name="boomer" type="Area2D"]
+collision_layer = 8
+collision_mask = 67
+
+[node name="collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3oxp0")
+debug_color = Color(0.808198, 0, 0, 0.419608)
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_1qxde")
+animation = &"explode"
+frame = 6
+frame_progress = 1.0
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(39, 0)

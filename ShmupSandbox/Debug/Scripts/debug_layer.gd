@@ -91,3 +91,7 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_key_label_pressed(KEY_7): # Spawn enemy - Doom Board
 		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
 		SignalsBus.spawn_enemy_doomboard_event.emit(mouse_pos)
+
+	if Input.is_key_label_pressed(KEY_8): # Spawn enemy - Boomer
+		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
+		SignalsBus.spawn_enemy_boomer_event.emit(mouse_pos)
