@@ -34,6 +34,7 @@ func _on_player_spawn(pos : Vector2, can_be_invincible : bool) -> void:
 	player.global_position = Vector2(pos.x + x_offset, pos.y + y_offset)
 	player.can_be_invincible = can_be_invincible
 	add_player_to_game.emit(player)
+	GameManager.player = player
 
 func _on_continue_game_player_respawn() -> void:
 	spawn_player_sprite("respawn")

@@ -1,9 +1,11 @@
 extends Node
 
 ################################################
-#NOTE: Global node groups
+#NOTE: Player
+# Can be accessed by enemies
+# Used to track player locaiton for attacks
 ################################################
-const player_group : String = "player_group"
+var player : PlayerCat
 
 
 ################################################
