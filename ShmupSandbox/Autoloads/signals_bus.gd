@@ -49,3 +49,5 @@ signal shot_limit_updated_event(shot_limit : int)
 ################################################
 
 signal spawn_enemy_doomboard_event(sp : Vector2)
+
+signal spawn_enemy_boomer_event(sp : Vector2)

@@ -18,9 +18,9 @@ text = "DEBUG BUILD"
 
 [node name="info_label" type="Label" parent="."]
 offset_left = 26.0
-offset_top = 177.0
+offset_top = 153.0
 offset_right = 262.0
-offset_bottom = 486.0
+offset_bottom = 488.0
 text = "DEBUG MODE
 Keybindings:
 ` : show/hide debug console
@@ -32,7 +32,8 @@ R : reset game
 4: player collisions ON
 5: spawn score item
 6: spawn score fragment
-7: spawn enemy - Doom Board"
+7: spawn enemy - Doom Board
+8: spawn enemy - Boomer"
 
 [node name="player_collisions_label" type="Label" parent="."]
 offset_left = 306.0

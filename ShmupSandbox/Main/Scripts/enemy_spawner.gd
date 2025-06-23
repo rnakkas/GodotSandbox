@@ -4,12 +4,26 @@ class_name EnemySpawner extends Node2D
 #
 ## FIXME: This enemy spawner be cleaned up once I figure out creating spawn schedules using json or resources
 #
+# Currently thinking to design in this way:
+	# - enemy spawner holds packed scenes for all the enemies in the game
+	# - will have a function like spawn_enemy(enemy_scene : PackedScene)
+	# - this function instantiates the enemy, sets its initial position etc
+	# - it then emits signal to Game to add enemy to enemies container in game
+	# - When i have enemy schedules ready for each level (either a json or resource file)
+	#		- enemy spawner will read that schedule
+	#		- based on the schdule it will run the spawn_enemy(enemy_scene) function to instantiate enemies
+	# - will also connect to a global signal to spawn enemies: SignalsBus.spawn_enemy_x_event(sp: Vector2)
 ################################################################################################################
 
 @export var enemy_scenes : Array[PackedScene] = []
 @export var sp_tolerance : float = 128
 
+
+################################################
+#NOTE: Packed scenes for enemies
+################################################
 @export var doomboard_packed_scene : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/doomboard.tscn")
+@export var boomer_packed_scene : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/boomer.tscn")
 
 ## Timer
 @onready var spawn_timer : Timer = $enemy_spawn_timer
@@ -33,13 +47,20 @@ func _ready() -> void:
 
 func _connect_to_signals() -> void:
 	SignalsBus.spawn_enemy_doomboard_event.connect(self._on_spawn_doomboard_event)
+	SignalsBus.spawn_enemy_boomer_event.connect(self._on_spawn_boomer_event)
 
 
 func _on_spawn_doomboard_event(sp : Vector2) -> void:
-	var doomboard : Area2D = doomboard_packed_scene.instantiate()
-	doomboard.global_position = sp
-	add_enemy_to_game.emit(doomboard)
+	_instantiate_enemy(doomboard_packed_scene, sp)
 
+func _on_spawn_boomer_event(sp : Vector2) -> void:
+	_instantiate_enemy(boomer_packed_scene, sp)
+
+
+func _instantiate_enemy(enemy_scene: PackedScene, sp : Vector2) -> void:
+	var enemy_instance : Area2D = enemy_scene.instantiate()
+	enemy_instance.global_position = sp
+	add_enemy_to_game.emit(enemy_instance)
 
 
 ####################################
