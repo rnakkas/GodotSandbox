@@ -6,24 +6,22 @@ class_name Boomer extends Area2D
 @onready var chase_timer : Timer = $chase_timer
 @onready var screen_notifier : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
-@export var speed : float = 250.0
+@export var speed : float = 150.0
 @export var tracking_time : float = 0.13
 @export var chase_time : float = 2.5
 @export var kill_score : int = 100
 
-var player : CharacterBody2D
+var player : PlayerCat
 var direction : Vector2 = Vector2.LEFT
 
-## TODO:
-	# Movement:
-	# - when spawns, get player's position
-	# - home in on player's position
-	# - every 0.5 seconds, get player's updated position
-	# - after chase time elapses, stop tracking and fly offscreen
 
+################################################
+# NOTE: Ready
+################################################
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group(GameManager.player_group)
-	direction = self.global_position.direction_to(player.global_position)
+	if player != null:
+		direction = self.global_position.direction_to(player.global_position).normalized()
 
 	_set_tracker_timer_properties()
 	_set_chase_timer_properties()
@@ -41,36 +39,65 @@ func _set_chase_timer_properties() -> void:
 	chase_timer.wait_time = chase_time
 
 
+################################################
+# NOTE: Process, flip sprite based on movement direction 
+################################################
+func _process(_delta: float) -> void:
+	if direction.x < 0:
+		sprite.flip_h = false
+	elif direction.x > 0:
+		sprite.flip_h = true
+
+
+################################################
+# NOTE: Physics process, movement
+################################################
 func _physics_process(delta: float) -> void:
 	global_position += speed * delta * direction
 
 
+################################################
+# NOTE: Despawn when offscreen
+################################################
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	call_deferred("queue_free")
 
 
+################################################
+# NOTE: Player tracking logic
+################################################
 func _on_tracker_timer_timeout() -> void:
-	direction = self.global_position.direction_to(player.global_position)
+	if player != null:
+		if !player.is_dead:
+			direction = self.global_position.direction_to(player.global_position).normalized()
 
 
+################################################
+# NOTE: Stop tracking/chasing player
+################################################
 func _on_chase_timer_timeout() -> void:
 	tracker_timer.stop()
 
 
-func _on_area_entered(area: Area2D) -> void:
-	if area is PlayerBullet || area is BombFuzz:
-		set_deferred("monitorable", false)
-		set_deferred("monitoring", false)
+################################################
+# NOTE: Hit by player's bullets/bombs or player
+################################################
+func _on_area_entered(_area: Area2D) -> void:
+	_handle_death()
 
-		tracker_timer.stop()
-		chase_timer.stop()
-		
-		speed = speed/2
+func _handle_death() -> void:
+	set_deferred("monitorable", false)
+	set_deferred("monitoring", false)
 
-		sprite.play("explode")
-		particles.emitting = true
+	tracker_timer.stop()
+	chase_timer.stop()
+	
+	speed = speed/2
 
-		SignalsBus.score_increased_event.emit(kill_score)
+	sprite.play("explode")
+	particles.emitting = true
 
-		await sprite.animation_finished
-		call_deferred("queue_free")
+	SignalsBus.score_increased_event.emit(kill_score)
+
+	await sprite.animation_finished
+	call_deferred("queue_free")

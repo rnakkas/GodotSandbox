@@ -397,9 +397,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gdjmk"]
-radius = 5.0
-height = 14.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_63x5m"]
+radius = 9.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uobwy"]
 radius = 9.0
@@ -693,15 +692,14 @@ animation = &"none"
 autoplay = "none"
 
 [node name="collider_body" type="CollisionShape2D" parent="."]
-position = Vector2(-1.19209e-07, -16)
-scale = Vector2(2.1, 2.1)
-shape = SubResource("CapsuleShape2D_gdjmk")
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_63x5m")
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_mask = 24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
-position = Vector2(-1, -10)
+position = Vector2(0, -10)
 shape = SubResource("CircleShape2D_uobwy")
 debug_color = Color(0.994007, 0, 0.228904, 0.42)
 
