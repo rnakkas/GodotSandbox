@@ -31,7 +31,7 @@ class_name EnemySpawner extends Node2D
 @onready var spawn_timer : Timer = $enemy_spawn_timer
 
 ## Custom signals
-signal add_enemy_to_game(enemy : Area2D)
+signal add_enemy_to_game(enemy : Node2D)
 
 var sp_x : float
 var prev_sp : float
@@ -50,6 +50,8 @@ func _ready() -> void:
 func _connect_to_signals() -> void:
 	SignalsBus.spawn_enemy_doomboard_event.connect(self._on_spawn_doomboard_event)
 	SignalsBus.spawn_enemy_boomer_event.connect(self._on_spawn_boomer_event)
+	SignalsBus.spawn_enemy_screamer_1_event.connect(self._on_spawn_screamer_1_event)
+	SignalsBus.spawn_enemy_screamer_2_event.connect(self._on_spawn_screamer_2_event)
 
 
 func _on_spawn_doomboard_event(sp : Vector2) -> void:
@@ -58,9 +60,15 @@ func _on_spawn_doomboard_event(sp : Vector2) -> void:
 func _on_spawn_boomer_event(sp : Vector2) -> void:
 	_instantiate_enemy(boomer_PS, sp)
 
+func _on_spawn_screamer_1_event(sp : Vector2) -> void:
+	_instantiate_enemy(screamer_1_PS, sp)
+
+func _on_spawn_screamer_2_event(sp : Vector2) -> void:
+	_instantiate_enemy(screamer_2_PS, sp)
+
 
 func _instantiate_enemy(enemy_scene: PackedScene, sp : Vector2) -> void:
-	var enemy_instance : Area2D = enemy_scene.instantiate()
+	var enemy_instance : Node2D = enemy_scene.instantiate()
 	enemy_instance.global_position = sp
 	add_enemy_to_game.emit(enemy_instance)
 

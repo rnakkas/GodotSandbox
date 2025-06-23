@@ -1,7 +1,10 @@
-class_name ScreamerVar2 extends Area2D
+class_name ScreamerVar2 extends Node2D
 
-@onready var sprite : AnimatedSprite2D = $sprite
-@onready var particles : CPUParticles2D = $CPUParticles2D
+@onready var sprite : AnimatedSprite2D = %sprite
+@onready var particles : CPUParticles2D = %CPUParticles2D
 
-@export var speed : float = 210.0
 @export var kill_score : int = 100
+
+## TODO: Behaviour
+# Variant 2: Fly in a sine wave path from right to left 
+# while shooting single projectile straight forward

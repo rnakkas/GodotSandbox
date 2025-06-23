@@ -1,12 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3afq3v72lc0a"]
+[gd_scene load_steps=7 format=3 uid="uid://d3afq3v72lc0a"]
 
 [ext_resource type="Script" uid="uid://b860kkv38ilk7" path="res://ShmupSandbox/Enemies/Scripts/screamer_var_2.gd" id="1_patts"]
+[ext_resource type="PackedScene" uid="uid://csbgvaxupxds5" path="res://ShmupSandbox/Enemies/enemy_pathfollow_component.tscn" id="2_ia6iw"]
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="2_ronh6"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qtyhs"]
+[sub_resource type="Curve2D" id="Curve2D_patts"]
+_data = {
+"points": PackedVector2Array(77.333, 88.303, -77.333, -88.303, 1080, 0, 0, 0, 0, 0, 900, 0, 87.846, 79.86, -87.846, -79.86, 720, 0, 1.19976, -1.95981, -1.19976, 1.95981, 540, 0, 91.839, 85.184, -91.839, -85.184, 360, 0, 0.778311, -0.980765, -0.778311, 0.980765, 180, 0, 99.825, 97.163, -99.825, -97.163, 0, 0, 1.46601, -0.874008, -1.46601, 0.874008, -180, 0)
+}
+point_count = 8
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bxwr7"]
 radius = 27.7308
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_gsm1g"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_0yovi"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -43,33 +50,31 @@ animations = [{
 "speed": 15.15
 }]
 
-[node name="screamer_var_2" type="Area2D"]
-collision_layer = 8
-collision_mask = 67
+[node name="screamer_var_2" type="Node2D"]
 script = ExtResource("1_patts")
 
-[node name="collider" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_qtyhs")
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_patts")
+
+[node name="enemy_pathfollow_component" parent="Path2D" instance=ExtResource("2_ia6iw")]
+position = Vector2(1080, 0)
+
+[node name="enemy_box" type="Area2D" parent="Path2D/enemy_pathfollow_component"]
+
+[node name="collider" type="CollisionShape2D" parent="Path2D/enemy_pathfollow_component/enemy_box"]
+shape = SubResource("CircleShape2D_bxwr7")
 debug_color = Color(0, 0.792157, 0.858824, 0.380392)
 
-[node name="sprite" type="AnimatedSprite2D" parent="."]
+[node name="sprite" type="AnimatedSprite2D" parent="Path2D/enemy_pathfollow_component/enemy_box"]
+unique_name_in_owner = true
 self_modulate = Color(0, 0.79056, 0.858813, 1)
 scale = Vector2(0.3, 0.3)
-sprite_frames = SubResource("SpriteFrames_gsm1g")
+sprite_frames = SubResource("SpriteFrames_0yovi")
 animation = &"fly"
 autoplay = "fly"
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-
-[node name="debug_label" type="Label" parent="."]
-offset_left = -93.0
-offset_top = -40.0
-offset_right = 89.0
-offset_bottom = 9.0
-text = "Enemy - Screamer var 1
-"
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Path2D/enemy_pathfollow_component/enemy_box"]
+unique_name_in_owner = true
 emitting = false
 amount = 25
 lifetime = 0.41
@@ -83,3 +88,14 @@ gravity = Vector2(0, 0)
 initial_velocity_min = 151.08
 initial_velocity_max = 287.77
 scale_amount_max = 2.5
+
+[node name="debug_label" type="Label" parent="Path2D/enemy_pathfollow_component/enemy_box"]
+offset_left = -897.0
+offset_top = 1.0
+offset_right = -715.0
+offset_bottom = 50.0
+text = "Enemy - Screamer var 2
+"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Path2D/enemy_pathfollow_component/enemy_box"]
+self_modulate = Color(1, 0.124572, 0.0864938, 1)

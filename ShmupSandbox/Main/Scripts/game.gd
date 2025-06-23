@@ -71,7 +71,7 @@ func _on_player_bombing(bomb : Area2D) -> void:
 ################################################
 # NOTE: Spawning enemies
 ################################################
-func _on_enemy_spawner_add_enemy_to_game(enemy: Area2D) -> void:
+func _on_enemy_spawner_add_enemy_to_game(enemy:Node2D) -> void:
 	enemies_container.call_deferred("add_child", enemy)
 
 
