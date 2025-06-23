@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=3 uid="uid://dt0s5ksc8jx0a"]
+
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_gc5qm"]
+[ext_resource type="Script" uid="uid://cpyx786v7e4kt" path="res://ShmupSandbox/Enemies/Scripts/screamer_var_1.gd" id="1_qtyhs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qtyhs"]
+radius = 27.7308
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gsm1g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gc5qm")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_gc5qm")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_gc5qm")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gc5qm")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.15
+}]
+
+[node name="screamer_var_1" type="Area2D"]
+collision_layer = 8
+collision_mask = 67
+script = ExtResource("1_qtyhs")
+
+[node name="collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qtyhs")
+debug_color = Color(0.306551, 0.275169, 1, 0.419608)
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0.472827, 0.439253, 1, 1)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_gsm1g")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="debug_label" type="Label" parent="."]
+offset_left = -93.0
+offset_top = -40.0
+offset_right = 89.0
+offset_bottom = 9.0
+text = "Enemy - Screamer var 1
+"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 25
+lifetime = 0.41
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 151.08
+initial_velocity_max = 287.77
+scale_amount_max = 2.5

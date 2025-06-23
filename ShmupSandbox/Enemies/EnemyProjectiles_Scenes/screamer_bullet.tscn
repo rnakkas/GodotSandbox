@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bbfhd7y4k5cbl"]
+
+[node name="screamer_bullet" type="Area2D"]
+collision_layer = 16
+collision_mask = 65
