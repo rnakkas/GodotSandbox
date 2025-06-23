@@ -20,10 +20,12 @@ class_name EnemySpawner extends Node2D
 
 
 ################################################
-#NOTE: Packed scenes for enemies
+#NOTE: Packed Scenes for enemies
 ################################################
-@export var doomboard_packed_scene : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/doomboard.tscn")
-@export var boomer_packed_scene : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/boomer.tscn")
+@export var doomboard_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/doomboard.tscn")
+@export var boomer_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/boomer.tscn")
+@export var screamer_1_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_1.tscn")
+@export var screamer_2_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_2.tscn")
 
 ## Timer
 @onready var spawn_timer : Timer = $enemy_spawn_timer
@@ -51,10 +53,10 @@ func _connect_to_signals() -> void:
 
 
 func _on_spawn_doomboard_event(sp : Vector2) -> void:
-	_instantiate_enemy(doomboard_packed_scene, sp)
+	_instantiate_enemy(doomboard_PS, sp)
 
 func _on_spawn_boomer_event(sp : Vector2) -> void:
-	_instantiate_enemy(boomer_packed_scene, sp)
+	_instantiate_enemy(boomer_PS, sp)
 
 
 func _instantiate_enemy(enemy_scene: PackedScene, sp : Vector2) -> void:

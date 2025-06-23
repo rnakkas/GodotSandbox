@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://btyleweedl4wn" path="res://ShmupSandbox/Debug/Scripts/debug_layer.gd" id="1_0saqs"]
 
 [node name="DebugLayer" type="Node2D"]
+z_index = 500
 script = ExtResource("1_0saqs")
 
 [node name="debug_label" type="Label" parent="."]
@@ -18,9 +19,12 @@ text = "DEBUG BUILD"
 
 [node name="info_label" type="Label" parent="."]
 offset_left = 26.0
-offset_top = 153.0
+offset_top = 104.0
 offset_right = 262.0
-offset_bottom = 488.0
+offset_bottom = 491.0
+theme_override_colors/font_color = Color(0.270588, 0.498039, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.270588, 0.498039, 1, 1)
+theme_override_colors/font_outline_color = Color(0.270588, 0.498039, 1, 1)
 text = "DEBUG MODE
 Keybindings:
 ` : show/hide debug console
@@ -33,11 +37,16 @@ R : reset game
 5: spawn score item
 6: spawn score fragment
 7: spawn enemy - Doom Board
-8: spawn enemy - Boomer"
+8: spawn enemy - Boomer
+9: spawn enemy - Screamer 1
+0: spawn enemy - Screamer 2"
 
 [node name="player_collisions_label" type="Label" parent="."]
 offset_left = 306.0
 offset_top = 464.0
 offset_right = 502.0
 offset_bottom = 487.0
+theme_override_colors/font_color = Color(0.270588, 0.498039, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.270588, 0.498039, 1, 1)
+theme_override_colors/font_outline_color = Color(0.270588, 0.498039, 1, 1)
 text = "Player Collisions: ON"
