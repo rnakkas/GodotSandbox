@@ -6,7 +6,7 @@ class_name Boomer extends Area2D
 @onready var chase_timer : Timer = $chase_timer
 @onready var screen_notifier : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
-@export var speed : float = 150.0
+@export var speed : float = 210.0
 @export var tracking_time : float = 0.13
 @export var chase_time : float = 2.5
 @export var kill_score : int = 100
@@ -20,8 +20,8 @@ var direction : Vector2 = Vector2.LEFT
 ################################################
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group(GameManager.player_group)
-	if player != null:
-		direction = self.global_position.direction_to(player.global_position).normalized()
+	
+	_get_direction_to_player()
 
 	_set_tracker_timer_properties()
 	_set_chase_timer_properties()
@@ -29,6 +29,12 @@ func _ready() -> void:
 	tracker_timer.start()
 	chase_timer.start()
 
+func _get_direction_to_player() -> void:
+	if player == null:
+		return
+	if player.is_dead:
+		return
+	direction = self.global_position.direction_to(player.global_position).normalized()
 
 func _set_tracker_timer_properties() -> void:
 	tracker_timer.one_shot = false
@@ -67,9 +73,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 # NOTE: Player tracking logic
 ################################################
 func _on_tracker_timer_timeout() -> void:
-	if player != null:
-		if !player.is_dead:
-			direction = self.global_position.direction_to(player.global_position).normalized()
+	_get_direction_to_player()
 
 
 ################################################
