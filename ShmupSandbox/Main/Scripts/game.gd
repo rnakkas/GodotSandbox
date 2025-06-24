@@ -1,17 +1,30 @@
 class_name Game extends Node2D
 
-## Spawners
+################################################
+# NOTE: Spawners
+################################################
 @onready var player_spawner_node : PlayerSpawner = $player_spawner
 @onready var pickups_spanwer_node : PickupsSpanwer = $PickupsSpawner
 
-## Containers
+################################################
+# NOTE: Containers
+################################################
 @onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
 @onready var player_bombs_container : Node2D = $PlayerBombsContainer
 @onready var enemies_container : Node2D = $EnemiesContainer
-@onready var enemy_paths_container : Node2D = %EnemyPathsContainer
 @onready var powerups_container : Node2D = $PowerupsContainer
 @onready var score_items_container : Node2D = $ScoreItemsContainer
 @onready var score_fragments_container : Node2D = $ScoreFragmentsContainer
+
+################################################
+# NOTE: Enemy paths
+################################################
+@onready var enemy_path_sine_wave_1 : Path2D = %enemy_path_sine_wave_1
+@onready var enemy_path_sine_wave_2 : Path2D = %enemy_path_sine_wave_2
+@onready var enemy_path_sine_wave_3 : Path2D = %enemy_path_sine_wave_3
+@onready var enemy_path_sine_wave_4 : Path2D = %enemy_path_sine_wave_4
+@onready var enemy_path_sine_wave_5 : Path2D = %enemy_path_sine_wave_5
+@onready var enemy_path_sine_wave_6 : Path2D = %enemy_path_sine_wave_6
 
 
 ## Shot limits
@@ -23,8 +36,10 @@ var active_shots : int
 # NOTE: Ready
 ################################################
 func _ready() -> void:
-	_connect_to_signals()
 	player_spawner_node.spawn_player_sprite("spawn") ## play spawn animation for player
+	_connect_to_signals()
+	_register_enemy_paths()
+
 
 func _connect_to_signals() -> void:
 	SignalsBus.shot_limit_updated_event.connect(self._on_shot_limit_updated)
@@ -32,14 +47,22 @@ func _connect_to_signals() -> void:
 	SignalsBus.player_bombing_event.connect(self._on_player_bombing)
 
 
-func _on_shot_limit_updated(limit : int) -> void:
-	shot_limit = limit
-
+func _register_enemy_paths() -> void:
+	GameManager.enemy_path_sine_wave_1 = enemy_path_sine_wave_1
+	GameManager.enemy_path_sine_wave_2 = enemy_path_sine_wave_2
+	GameManager.enemy_path_sine_wave_3 = enemy_path_sine_wave_3
+	GameManager.enemy_path_sine_wave_4 = enemy_path_sine_wave_4
+	GameManager.enemy_path_sine_wave_5 = enemy_path_sine_wave_5
+	GameManager.enemy_path_sine_wave_6 = enemy_path_sine_wave_6
 
 
 ################################################
 # NOTE: Player shooting
 ################################################
+func _on_shot_limit_updated(limit : int) -> void:
+	shot_limit = limit
+
+
 func _on_player_shooting(bullets_list : Array[PlayerBullet]) -> void:
 	for bullet : PlayerBullet in bullets_list:
 		# Track the active shots and use this to enforce shot limit
@@ -75,12 +98,8 @@ func _on_player_bombing(bomb : Area2D) -> void:
 func _on_enemy_spawner_add_enemy_to_game(enemy:Node2D) -> void:
 	enemies_container.call_deferred("add_child", enemy)
 
-
-################################################
-# NOTE: Spawning enemy paths
-################################################
-func _on_enemy_spawner_add_path_to_game(path:Path2D) -> void:
-	enemy_paths_container.call_deferred("add_child", path)
+func _on_enemy_spawner_add_pathfollow_enemy_to_game(enemy:PathFollow2D, path:Path2D) -> void:
+	path.call_deferred("add_child", enemy)
 
 
 ################################################

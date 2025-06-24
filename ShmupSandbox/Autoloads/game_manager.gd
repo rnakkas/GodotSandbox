@@ -9,6 +9,17 @@ var player : PlayerCat
 
 
 ################################################
+#NOTE: Enemy paths
+################################################
+var enemy_path_sine_wave_1 : Path2D
+var enemy_path_sine_wave_2 : Path2D
+var enemy_path_sine_wave_3 : Path2D
+var enemy_path_sine_wave_4 : Path2D
+var enemy_path_sine_wave_5 : Path2D
+var enemy_path_sine_wave_6 : Path2D
+
+
+################################################
 #NOTE: Constant game settings, will NOT be changed at runtime
 ################################################
 const life_extend_score_1 : int = 100000

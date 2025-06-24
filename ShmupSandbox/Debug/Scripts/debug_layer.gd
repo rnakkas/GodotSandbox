@@ -93,10 +93,13 @@ func _input(_event: InputEvent) -> void:
 		SignalsBus.spawn_enemy_screamer_1_event.emit(mouse_pos)
 	
 	if Input.is_key_label_pressed(KEY_0): # Spawn enemy - Screamer var 2
-		# Keep x the same for this enemy since it follows a set path
-		var mouse_pos : Vector2 = Vector2(140.0, get_viewport().get_mouse_position().y)
-		SignalsBus.spawn_enemy_screamer_2_event.emit(mouse_pos)
-	
-	if Input.is_key_label_pressed(KEY_F1): # Spawn enemy path - Sine
-		var mouse_pos : Vector2 = Vector2(140.0, get_viewport().get_mouse_position().y)
-		SignalsBus.spawn_enemy_path_sine_event.emit(mouse_pos)
+		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_1)
+		await get_tree().create_timer(0.5).timeout
+		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_2)
+		await get_tree().create_timer(0.5).timeout
+		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_3)
+		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_4)
+		await get_tree().create_timer(0.5).timeout
+		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_5)
+		await get_tree().create_timer(0.5).timeout
+		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_6)

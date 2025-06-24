@@ -43,10 +43,16 @@ animations = [{
 "speed": 15.15
 }]
 
-[node name="screamer_var_2" type="Area2D"]
+[node name="screamer_var_2" type="PathFollow2D"]
+rotates = false
+loop = false
 script = ExtResource("1_patts")
 
-[node name="collider" type="CollisionShape2D" parent="."]
+[node name="hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 67
+
+[node name="collider" type="CollisionShape2D" parent="hurtbox"]
 shape = SubResource("CircleShape2D_bxwr7")
 debug_color = Color(0, 0.792157, 0.858824, 0.380392)
 
