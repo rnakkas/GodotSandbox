@@ -55,3 +55,11 @@ signal spawn_enemy_boomer_event(sp : Vector2)
 signal spawn_enemy_screamer_1_event(sp : Vector2)
 
 signal spawn_enemy_screamer_2_event(sp : Vector2)
+
+
+
+################################################
+#NOTE:Spawning enemy paths
+################################################
+
+signal spawn_enemy_path_sine_event(sp : Vector2)

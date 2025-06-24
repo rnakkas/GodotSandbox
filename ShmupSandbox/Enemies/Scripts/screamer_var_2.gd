@@ -1,4 +1,4 @@
-class_name ScreamerVar2 extends Node2D
+class_name ScreamerVar2 extends Area2D
 
 @onready var sprite : AnimatedSprite2D = %sprite
 @onready var particles : CPUParticles2D = %CPUParticles2D

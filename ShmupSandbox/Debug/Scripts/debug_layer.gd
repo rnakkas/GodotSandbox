@@ -96,3 +96,7 @@ func _input(_event: InputEvent) -> void:
 		# Keep x the same for this enemy since it follows a set path
 		var mouse_pos : Vector2 = Vector2(140.0, get_viewport().get_mouse_position().y)
 		SignalsBus.spawn_enemy_screamer_2_event.emit(mouse_pos)
+	
+	if Input.is_key_label_pressed(KEY_F1): # Spawn enemy path - Sine
+		var mouse_pos : Vector2 = Vector2(140.0, get_viewport().get_mouse_position().y)
+		SignalsBus.spawn_enemy_path_sine_event.emit(mouse_pos)

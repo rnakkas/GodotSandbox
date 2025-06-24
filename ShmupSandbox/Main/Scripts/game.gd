@@ -8,6 +8,7 @@ class_name Game extends Node2D
 @onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
 @onready var player_bombs_container : Node2D = $PlayerBombsContainer
 @onready var enemies_container : Node2D = $EnemiesContainer
+@onready var enemy_paths_container : Node2D = %EnemyPathsContainer
 @onready var powerups_container : Node2D = $PowerupsContainer
 @onready var score_items_container : Node2D = $ScoreItemsContainer
 @onready var score_fragments_container : Node2D = $ScoreFragmentsContainer
@@ -73,6 +74,13 @@ func _on_player_bombing(bomb : Area2D) -> void:
 ################################################
 func _on_enemy_spawner_add_enemy_to_game(enemy:Node2D) -> void:
 	enemies_container.call_deferred("add_child", enemy)
+
+
+################################################
+# NOTE: Spawning enemy paths
+################################################
+func _on_enemy_spawner_add_path_to_game(path:Path2D) -> void:
+	enemy_paths_container.call_deferred("add_child", path)
 
 
 ################################################

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0cxs131x4b0l"]
+
+[ext_resource type="PackedScene" uid="uid://csbgvaxupxds5" path="res://ShmupSandbox/Enemies/EnemyPaths/enemy_pathfollow_component.tscn" id="1_d21xr"]
+
+[sub_resource type="Curve2D" id="Curve2D_uj4bj"]
+_data = {
+"points": PackedVector2Array(77.333, 88.303, -77.333, -88.303, 1080, 0, 0, 0, 0, 0, 900, 0, 87.846, 79.86, -87.846, -79.86, 720, 0, 1.19976, -1.95981, -1.19976, 1.95981, 540, 0, 91.839, 85.184, -91.839, -85.184, 360, 0, 0.778311, -0.980765, -0.778311, 0.980765, 180, 0, 99.825, 97.163, -99.825, -97.163, 0, 0, 1.46601, -0.874008, -1.46601, 0.874008, -180, 0)
+}
+point_count = 8
+
+[node name="enemy_path_sine_wave" type="Path2D"]
+curve = SubResource("Curve2D_uj4bj")
+
+[node name="enemy_pathfollow_component" parent="." instance=ExtResource("1_d21xr")]
+position = Vector2(1080, 0)

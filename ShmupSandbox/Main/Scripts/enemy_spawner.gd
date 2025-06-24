@@ -12,7 +12,11 @@ class_name EnemySpawner extends Node2D
 	# - When i have enemy schedules ready for each level (either a json or resource file)
 	#		- enemy spawner will read that schedule
 	#		- based on the schdule it will run the spawn_enemy(enemy_scene) function to instantiate enemies
-	# - will also connect to a global signal to spawn enemies: SignalsBus.spawn_enemy_x_event(sp: Vector2)
+	# - will also connect to global signals to spawn enemies: SignalsBus.spawn_enemy_x_event(sp: Vector2)
+	#
+	# - Will also hold packed scenes for all enemy paths
+	# - will have a function like spawn_path(path_scene : PackedScene)
+	# - will connect to global signals to spawn paths
 ################################################################################################################
 
 @export var enemy_scenes : Array[PackedScene] = []
@@ -27,11 +31,19 @@ class_name EnemySpawner extends Node2D
 @export var screamer_1_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_1.tscn")
 @export var screamer_2_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_2.tscn")
 
+
+################################################
+#NOTE: Packed Scenes for enemy paths
+################################################
+@export var enemy_path_sine_PS : PackedScene = preload("res://ShmupSandbox/Enemies/EnemyPaths/enemy_path_sine_wave.tscn")
+
+
 ## Timer
 @onready var spawn_timer : Timer = $enemy_spawn_timer
 
 ## Custom signals
 signal add_enemy_to_game(enemy : Node2D)
+signal add_path_to_game(path : Path2D)
 
 var sp_x : float
 var prev_sp : float
@@ -53,6 +65,8 @@ func _connect_to_signals() -> void:
 	SignalsBus.spawn_enemy_screamer_1_event.connect(self._on_spawn_screamer_1_event)
 	SignalsBus.spawn_enemy_screamer_2_event.connect(self._on_spawn_screamer_2_event)
 
+	SignalsBus.spawn_enemy_path_sine_event.connect(self._on_spawn_enemy_path_sine_event)
+
 
 func _on_spawn_doomboard_event(sp : Vector2) -> void:
 	_instantiate_enemy(doomboard_PS, sp)
@@ -67,11 +81,20 @@ func _on_spawn_screamer_2_event(sp : Vector2) -> void:
 	_instantiate_enemy(screamer_2_PS, sp)
 
 
+func _on_spawn_enemy_path_sine_event(sp : Vector2) -> void:
+	_instantiate_enemy_path(enemy_path_sine_PS, sp)
+	
+
 func _instantiate_enemy(enemy_scene: PackedScene, sp : Vector2) -> void:
 	var enemy_instance : Node2D = enemy_scene.instantiate()
 	enemy_instance.global_position = sp
 	add_enemy_to_game.emit(enemy_instance)
 
+
+func _instantiate_enemy_path(path_scene : PackedScene, sp : Vector2) -> void:
+	var path_instance : Path2D = path_scene.instantiate()
+	path_instance.global_position = sp
+	add_path_to_game.emit(path_instance)
 
 ####################################
 ####################################
