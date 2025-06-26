@@ -197,6 +197,20 @@ offset_bottom = 143.0
 theme_override_font_sizes/font_size = 12
 text = "OK"
 
+[node name="x_max" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 900.0
+offset_top = 7.0
+offset_right = 954.0
+offset_bottom = 30.0
+text = "x = 960"
+
+[node name="y_max" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 900.0
+offset_top = 510.0
+offset_right = 954.0
+offset_bottom = 533.0
+text = "y = 540"
+
 [connection signal="item_selected" from="player_debug_options" to="." method="_on_player_debug_options_item_selected"]
 [connection signal="item_selected" from="enemy_spawn_debug_options" to="." method="_on_enemy_spawn_debug_options_item_selected"]
 [connection signal="item_selected" from="enemy_paths_options" to="." method="_on_enemy_paths_options_item_selected"]
