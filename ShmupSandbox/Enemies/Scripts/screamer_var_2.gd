@@ -11,7 +11,7 @@ class_name ScreamerVar2 extends PathFollow2D
 # while shooting single projectile straight forward
 
 func _ready() -> void:
-	progress_ratio = 0.1
+	progress_ratio = 0.0
 
 func _process(delta: float) -> void:
 	progress_ratio += pathfollow_speed * delta

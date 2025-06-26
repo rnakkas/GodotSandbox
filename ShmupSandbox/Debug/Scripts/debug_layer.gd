@@ -1,4 +1,4 @@
-class_name DebugLayer extends Node2D
+class_name DebugLayer extends CanvasLayer
 
 ################################################
 #NOTE:
@@ -9,25 +9,53 @@ class_name DebugLayer extends Node2D
 @onready var debug_label : Label = $debug_label
 @onready var info_label: Label = $info_label
 @onready var player_collisions_label : Label = $player_collisions_label
+@onready var x_coord : TextEdit = $x_coord
+@onready var y_coord : TextEdit = $y_coord
+@onready var enemy_paths_options : OptionButton = $enemy_paths_options
 
+var debug_ui_elements : Array[Node] = []
+var enemy_paths_list : Array[Path2D] = []
+var pos : Vector2
+var current_player_debug_option : int
+var current_enemy_spawn_option : int
+var current_enemy_path_option : int
+
+
+################################################
+#NOTE: Ready
+################################################
 func _ready() -> void:
 	_show_debug_label()
+	_get_debug_ui_elements()
 	_hide_debug_console()
 
 func _show_debug_label() -> void:
 	if !OS.is_debug_build():
 		debug_label.visible = false
 
+func _get_debug_ui_elements() -> void:
+	if !OS.is_debug_build():
+		return
+	debug_ui_elements = get_tree().get_nodes_in_group("DEBUG_ui_group")
 
+
+################################################
+#NOTE: Helpers to show or hide debug console
+################################################
 func _show_debug_console() -> void:
-	info_label.visible = true
-	player_collisions_label.visible = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	for element : Node in debug_ui_elements:
+		element.visible = true
 
 func _hide_debug_console() -> void:
-	info_label.visible = false
-	player_collisions_label.visible = false
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	for element : Node in debug_ui_elements:
+		element.visible = false
 
 
+################################################
+#NOTE: Input processing
+################################################
 func _input(_event: InputEvent) -> void:
 	# Only allow debug commands if using debug build
 	if !OS.is_debug_build():
@@ -35,6 +63,8 @@ func _input(_event: InputEvent) -> void:
 	
 	# Show or hide debug console info
 	if Input.is_key_label_pressed(KEY_QUOTELEFT):
+		_create_enemy_paths_list()
+		
 		get_tree().paused = !get_tree().paused
 		if get_tree().paused:
 			_show_debug_console()
@@ -47,59 +77,135 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_key_label_pressed(KEY_R): # reset game
 		get_tree().paused = false
 		get_tree().reload_current_scene()
+
+
+func _create_enemy_paths_list() -> void:
+	enemy_paths_list = [
+		GameManager.enemy_path_sine_wave_1,
+		GameManager.enemy_path_sine_wave_2,
+		GameManager.enemy_path_sine_wave_3,
+		GameManager.enemy_path_sine_wave_4,
+		GameManager.enemy_path_sine_wave_5,
+		GameManager.enemy_path_sine_wave_6,
+	]
+
+	enemy_paths_list.sort()
+
+	if enemy_paths_options.item_count == (enemy_paths_list.size()+1):
+		return
 	
-	if Input.is_key_label_pressed(KEY_1): # Spawn a powerup on mouse position
-		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
-		SignalsBus.spawn_powerup_event.emit(mouse_pos)
-	
-	if Input.is_key_label_pressed(KEY_2): # Add 1 bomb to stock
-		if GameManager.player_bombs == GameManager.player_max_bombs:
+	for i : int in range(enemy_paths_list.size()):
+		enemy_paths_options.add_item(enemy_paths_list[i].name)
+
+
+################################################
+#NOTE: Signals for selecting items in the drop down option menus
+################################################
+func _on_player_debug_options_item_selected(index:int) -> void:
+	current_player_debug_option = index
+
+
+func _on_enemy_spawn_debug_options_item_selected(index:int) -> void:
+	current_enemy_spawn_option = index
+
+
+func _on_enemy_paths_options_item_selected(index: int) -> void:
+	current_enemy_path_option = index
+
+
+################################################
+#NOTE: Signal for OK button to confirm options
+################################################
+func _on_ok_button_pressed() -> void:
+	pos = Vector2(x_coord.text.to_float(), y_coord.text.to_float())
+	_player_debug_actions()
+	_enemy_spawn_actions()
+
+
+################################################
+#NOTE: Action the player debug options
+################################################
+func _player_debug_actions() -> void:
+	match current_player_debug_option:
+		0: # None
 			return
-		GameManager.player_bombs += 1
-		SignalsBus.player_bombs_updated_event.emit()
-	
-	if Input.is_key_label_pressed(KEY_3): # Turn off player collisions
-		if GameManager.player != null:
-			var player_hurtbox : Area2D =  GameManager.player.get_node("hurtbox")
-			player_hurtbox.set_deferred("monitorable", false)
-			player_hurtbox.set_deferred("monitoring", false)
-			player_collisions_label.text = "Player Collisions: OFF"
-	
-	if Input.is_key_label_pressed(KEY_4): # Turn on player collisions
-		if GameManager.player != null:
-			var player_hurtbox : Area2D =  GameManager.player.get_node("hurtbox")
-			player_hurtbox.set_deferred("monitorable", true)
-			player_hurtbox.set_deferred("monitoring", true)
-			player_collisions_label.text = "Player Collisions: ON"
 		
-	if Input.is_key_label_pressed(KEY_5): # Spawn score item
-		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
-		SignalsBus.spawn_score_item_event.emit(mouse_pos)
+		1: # Spawn poerup
+			SignalsBus.spawn_powerup_event.emit(pos)
+		
+		2: # Add 1 bomb to stock
+			if GameManager.player_bombs == GameManager.player_max_bombs:
+				return
+			GameManager.player_bombs += 1
+			SignalsBus.player_bombs_updated_event.emit()
+		
+		3: # Player collisions OFF
+			if GameManager.player != null:
+				var player_hurtbox : Area2D =  GameManager.player.get_node("hurtbox")
+				player_hurtbox.set_deferred("monitorable", false)
+				player_hurtbox.set_deferred("monitoring", false)
+				player_collisions_label.text = "Player Collisions: OFF"
+		
+		4: # Player collisions ON
+			if GameManager.player != null:
+				var player_hurtbox : Area2D =  GameManager.player.get_node("hurtbox")
+				player_hurtbox.set_deferred("monitorable", true)
+				player_hurtbox.set_deferred("monitoring", true)
+				player_collisions_label.text = "Player Collisions: ON"
 
-	if Input.is_key_label_pressed(KEY_6): # Spawn score fragment
-		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
-		SignalsBus.spawn_score_fragment_event.emit(mouse_pos)
-	
-	if Input.is_key_label_pressed(KEY_7): # Spawn enemy - Doom Board
-		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
-		SignalsBus.spawn_enemy_doomboard_event.emit(mouse_pos)
+		5: # Spawn score item
+			SignalsBus.spawn_score_item_event.emit(pos)
+		
+		6: # Spawn score fragment
+			SignalsBus.spawn_score_fragment_event.emit(pos)
+		
 
-	if Input.is_key_label_pressed(KEY_8): # Spawn enemy - Boomer
-		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
-		SignalsBus.spawn_enemy_boomer_event.emit(mouse_pos)
-	
-	if Input.is_key_label_pressed(KEY_9): # Spawn enemy - Screamer var 1
-		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
-		SignalsBus.spawn_enemy_screamer_1_event.emit(mouse_pos)
-	
-	if Input.is_key_label_pressed(KEY_0): # Spawn enemy - Screamer var 2
-		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_1)
-		await get_tree().create_timer(0.5).timeout
-		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_2)
-		await get_tree().create_timer(0.5).timeout
-		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_3)
-		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_4)
-		await get_tree().create_timer(0.5).timeout
-		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_5)
-		await get_tree().create_timer(0.5).timeout
-		SignalsBus.spawn_enemy_screamer_2_event.emit(GameManager.enemy_path_sine_wave_6)
+################################################
+#NOTE: Action the enemy spawn debug actions
+################################################
+func _enemy_spawn_actions() -> void:
+	match current_enemy_spawn_option:
+		0: # None
+			return
+		
+		1: # Spawn Doomboard
+			SignalsBus.spawn_enemy_doomboard_event.emit(pos)
+		
+		2: # Spawn Boomer
+			SignalsBus.spawn_enemy_boomer_event.emit(pos)
+		
+		3: # Spawn Screamer variant 1
+			SignalsBus.spawn_enemy_screamer_1_event.emit(pos)
+		
+		4: # Spawn Screamer variant 2
+			SignalsBus.spawn_enemy_screamer_2_event.emit(_get_enemy_path())
+
+
+################################################
+#NOTE: Helper to get the enemy path value
+################################################
+func _get_enemy_path() -> Path2D:
+	match current_enemy_path_option:
+		0: # None
+			return
+		
+		1: # Sine wave 1
+			return GameManager.enemy_path_sine_wave_1
+		
+		2: # Sine wave 2
+			return GameManager.enemy_path_sine_wave_2
+
+		3: # Sine wave 3
+			return GameManager.enemy_path_sine_wave_3
+		
+		4: # Sine wave 4
+			return GameManager.enemy_path_sine_wave_4
+		
+		5: # Sine wave 5
+			return GameManager.enemy_path_sine_wave_5
+		
+		6: # Sine wave 6
+			return GameManager.enemy_path_sine_wave_6
+
+		_:
+			return

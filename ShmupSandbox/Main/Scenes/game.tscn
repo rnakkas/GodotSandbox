@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0ndt0kisoyg3"]
+[gd_scene load_steps=8 format=3 uid="uid://b0ndt0kisoyg3"]
 
 [ext_resource type="Script" uid="uid://cj0ffr545wyhi" path="res://ShmupSandbox/Main/Scripts/game.gd" id="1_f5mi8"]
 [ext_resource type="PackedScene" uid="uid://bxfke2pw5vqm1" path="res://ShmupSandbox/Main/Scenes/enemy_spawner.tscn" id="2_f46ya"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://boi3x6qa21wtr" path="res://ShmupSandbox/Main/Scenes/pickups_spawner.tscn" id="4_f46ya"]
 [ext_resource type="PackedScene" uid="uid://cd36pie1fwh40" path="res://ShmupSandbox/Main/Scenes/player_spawner.tscn" id="5_qwfjg"]
 [ext_resource type="PackedScene" uid="uid://c0cxs131x4b0l" path="res://ShmupSandbox/Enemies/EnemyPaths/enemy_path_sine_wave.tscn" id="6_qwfjg"]
+[ext_resource type="PackedScene" uid="uid://idynsjayvj5x" path="res://ShmupSandbox/Debug/Scenes/debug_layer.tscn" id="7_8njv8"]
 
 [node name="Game" type="Node2D"]
 process_mode = 1
@@ -63,6 +64,9 @@ position = Vector2(107, 400)
 [node name="ScoreItemsContainer" type="Node2D" parent="." groups=["Game_ScoreItemsContainer"]]
 
 [node name="ScoreFragmentsContainer" type="Node2D" parent="."]
+
+[node name="DebugLayer" parent="." instance=ExtResource("7_8njv8")]
+process_mode = 3
 
 [connection signal="add_enemy_to_game" from="enemy_spawner" to="." method="_on_enemy_spawner_add_enemy_to_game"]
 [connection signal="add_pathfollow_enemy_to_game" from="enemy_spawner" to="." method="_on_enemy_spawner_add_pathfollow_enemy_to_game"]

@@ -1,10 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://idynsjayvj5x"]
+[gd_scene load_steps=3 format=3 uid="uid://idynsjayvj5x"]
 
 [ext_resource type="Script" uid="uid://btyleweedl4wn" path="res://ShmupSandbox/Debug/Scripts/debug_layer.gd" id="1_0saqs"]
 
-[node name="DebugLayer" type="Node2D"]
-z_index = 500
+[sub_resource type="CanvasTexture" id="CanvasTexture_0saqs"]
+
+[node name="DebugLayer" type="CanvasLayer"]
 script = ExtResource("1_0saqs")
+
+[node name="TextureRect" type="TextureRect" parent="." groups=["DEBUG_ui_group"]]
+self_modulate = Color(0.356863, 0.313726, 0.764706, 0.643137)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_0saqs")
 
 [node name="debug_label" type="Label" parent="."]
 offset_left = 133.0
@@ -17,36 +27,177 @@ theme_override_colors/font_outline_color = Color(0.886275, 0.294118, 0.0745098, 
 theme_override_font_sizes/font_size = 20
 text = "DEBUG BUILD"
 
-[node name="info_label" type="Label" parent="."]
-offset_left = 26.0
-offset_top = 104.0
-offset_right = 262.0
-offset_bottom = 491.0
-theme_override_colors/font_color = Color(0.270588, 0.498039, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.270588, 0.498039, 1, 1)
-theme_override_colors/font_outline_color = Color(0.270588, 0.498039, 1, 1)
-text = "DEBUG MODE
-Keybindings:
-` : show/hide debug console
-Q : quit game
-R : reset game
-1: spawn powerup
-2: add +1 bomb to stock
-3: player collisions OFF
-4: player collisions ON
-5: spawn score item
-6: spawn score fragment
-7: spawn enemy - Doom Board
-8: spawn enemy - Boomer
-9: spawn enemy - Screamer 1
-0: spawn enemy - Screamer 2"
+[node name="player_debugs" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 28.0
+offset_top = 77.0
+offset_right = 139.0
+offset_bottom = 105.0
+theme_override_colors/font_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_shadow_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_outline_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_font_sizes/font_size = 16
+text = "Player stuff"
 
-[node name="player_collisions_label" type="Label" parent="."]
-offset_left = 306.0
-offset_top = 464.0
-offset_right = 502.0
-offset_bottom = 487.0
-theme_override_colors/font_color = Color(0.270588, 0.498039, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.270588, 0.498039, 1, 1)
-theme_override_colors/font_outline_color = Color(0.270588, 0.498039, 1, 1)
+[node name="player_debugs2" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 240.0
+offset_top = 77.0
+offset_right = 351.0
+offset_bottom = 105.0
+theme_override_colors/font_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_shadow_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_outline_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_font_sizes/font_size = 16
+text = "Spawn enemies"
+
+[node name="player_debugs3" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 424.0
+offset_top = 77.0
+offset_right = 545.0
+offset_bottom = 105.0
+theme_override_colors/font_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_shadow_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_outline_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_font_sizes/font_size = 16
+text = "X position"
+
+[node name="player_debugs4" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 580.0
+offset_top = 77.0
+offset_right = 701.0
+offset_bottom = 105.0
+theme_override_colors/font_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_shadow_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_outline_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_font_sizes/font_size = 16
+text = "Y position"
+
+[node name="info_label" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 35.0
+offset_top = 215.0
+offset_right = 271.0
+offset_bottom = 241.0
+text = "Current player debug states:"
+
+[node name="player_collisions_label" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 39.0
+offset_top = 251.0
+offset_right = 235.0
+offset_bottom = 274.0
 text = "Player Collisions: ON"
+
+[node name="player_debug_options" type="OptionButton" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 28.0
+offset_top = 112.0
+offset_right = 218.0
+offset_bottom = 143.0
+theme_override_font_sizes/font_size = 12
+selected = 0
+allow_reselect = true
+item_count = 7
+popup/item_0/id = 6
+popup/item_1/text = "spawn powerup"
+popup/item_1/id = 0
+popup/item_2/text = "add 1 bomb to stock"
+popup/item_2/id = 1
+popup/item_3/text = "player collisions OFF"
+popup/item_3/id = 2
+popup/item_4/text = "player collisions ON"
+popup/item_4/id = 3
+popup/item_5/text = "spawn score item"
+popup/item_5/id = 4
+popup/item_6/text = "spawn score fragment"
+popup/item_6/id = 5
+
+[node name="enemy_spawn_debug_options" type="OptionButton" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 237.0
+offset_top = 113.0
+offset_right = 400.0
+offset_bottom = 144.0
+theme_override_font_sizes/font_size = 12
+selected = 0
+allow_reselect = true
+item_count = 5
+popup/item_0/id = 4
+popup/item_1/text = "spawn: doomboard"
+popup/item_1/id = 0
+popup/item_2/text = "spawn: boomer"
+popup/item_2/id = 1
+popup/item_3/text = "spawn: screamer var 1"
+popup/item_3/id = 2
+popup/item_4/text = "spawn: screamer var 2"
+popup/item_4/id = 3
+
+[node name="player_debugs5" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 425.0
+offset_top = 181.0
+offset_right = 546.0
+offset_bottom = 209.0
+theme_override_colors/font_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_shadow_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_outline_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_font_sizes/font_size = 16
+text = "Enemy paths"
+
+[node name="enemy_paths_options" type="OptionButton" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 423.0
+offset_top = 212.0
+offset_right = 586.0
+offset_bottom = 243.0
+theme_override_font_sizes/font_size = 12
+selected = 0
+allow_reselect = true
+item_count = 1
+popup/item_0/id = 4
+
+[node name="label_x" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 423.0
+offset_top = 116.0
+offset_right = 463.0
+offset_bottom = 139.0
+theme_override_font_sizes/font_size = 12
+text = "X"
+
+[node name="Panel" type="Panel" parent="label_x" groups=["DEBUG_ui_group"]]
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 24.0
+
+[node name="label_y" type="Label" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 582.0
+offset_top = 116.0
+offset_right = 622.0
+offset_bottom = 139.0
+theme_override_font_sizes/font_size = 12
+text = "Y"
+
+[node name="Panel" type="Panel" parent="label_y" groups=["DEBUG_ui_group"]]
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 24.0
+
+[node name="x_coord" type="TextEdit" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 471.0
+offset_top = 116.0
+offset_right = 553.0
+offset_bottom = 141.0
+text = "960"
+
+[node name="y_coord" type="TextEdit" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 630.0
+offset_top = 116.0
+offset_right = 712.0
+offset_bottom = 141.0
+text = "270"
+
+[node name="ok_button" type="Button" parent="." groups=["DEBUG_ui_group"]]
+offset_left = 754.0
+offset_top = 112.0
+offset_right = 848.0
+offset_bottom = 143.0
+theme_override_font_sizes/font_size = 12
+text = "OK"
+
+[connection signal="item_selected" from="player_debug_options" to="." method="_on_player_debug_options_item_selected"]
+[connection signal="item_selected" from="enemy_spawn_debug_options" to="." method="_on_enemy_spawn_debug_options_item_selected"]
+[connection signal="item_selected" from="enemy_paths_options" to="." method="_on_enemy_paths_options_item_selected"]
+[connection signal="pressed" from="ok_button" to="." method="_on_ok_button_pressed"]
