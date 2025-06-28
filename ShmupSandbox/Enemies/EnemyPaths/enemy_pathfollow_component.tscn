@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://csbgvaxupxds5"]
 
-[ext_resource type="Script" uid="uid://dal37i1xhbtbk" path="res://ShmupSandbox/Enemies/enemy_pathfollow_component.gd" id="1_8ww73"]
+[ext_resource type="Script" uid="uid://dal37i1xhbtbk" path="res://ShmupSandbox/Enemies/EnemyPaths/enemy_pathfollow_component.gd" id="1_8ww73"]
 
 [node name="enemy_pathfollow_component" type="PathFollow2D"]
 rotates = false
