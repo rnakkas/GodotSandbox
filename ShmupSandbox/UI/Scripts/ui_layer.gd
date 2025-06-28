@@ -243,7 +243,7 @@ func _handle_name_entry_or_game_over_logic() -> void:
 func _on_continue_screen_yes_button_pressed() -> void:
 	_toggle_ui(continue_screen)
 	player_hud.player_lives_value.text = "x " + str(GameManager._player_max_lives)
-	player_hud.score_value.text = str(GameManager.player_score).pad_zeros(8)
+	player_hud.score_value.text = str(GameManager.player_score)
 
 
 ################################################

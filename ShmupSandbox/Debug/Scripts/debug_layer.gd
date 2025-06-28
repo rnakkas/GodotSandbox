@@ -111,7 +111,14 @@ func _on_player_debug_options_item_selected(index:int) -> void:
 
 func _on_enemy_spawn_debug_options_item_selected(index:int) -> void:
 	current_enemy_spawn_option = index
-
+	
+	# Choose default path if no path selected for the pathed enemies
+	match current_enemy_spawn_option:
+		0, 1, 2, 3:
+			pass
+		4:
+			current_enemy_path_option = 1
+		
 
 func _on_enemy_paths_options_item_selected(index: int) -> void:
 	current_enemy_path_option = index

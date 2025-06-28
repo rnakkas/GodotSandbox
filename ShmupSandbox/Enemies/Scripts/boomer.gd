@@ -105,6 +105,7 @@ func _handle_death() -> void:
 	particles.emitting = true
 
 	SignalsBus.score_increased_event.emit(kill_score)
+	SignalsBus.spawn_score_fragment_event.emit(self.global_position)
 
 	await sprite.animation_finished
 	call_deferred("queue_free")

@@ -31,7 +31,7 @@ animations = [{
 "texture": ExtResource("2_ronh6")
 }],
 "loop": false,
-"name": &"explode",
+"name": &"death",
 "speed": 15.0
 }, {
 "frames": [{
@@ -61,7 +61,7 @@ unique_name_in_owner = true
 self_modulate = Color(0, 0.79056, 0.858813, 1)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_0yovi")
-animation = &"fly"
+animation = &"death"
 autoplay = "fly"
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
@@ -91,3 +91,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 self_modulate = Color(1, 0.124572, 0.0864938, 1)
+
+[connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
