@@ -58,6 +58,8 @@ position = Vector2(0, 400)
 unique_name_in_owner = true
 position = Vector2(107, 400)
 
+[node name="EnemyProjectilesContainer" type="Node2D" parent="."]
+
 [node name="PowerupsContainer" type="Node2D" parent="."]
 
 [node name="ScoreItemsContainer" type="Node2D" parent="." groups=["Game_ScoreItemsContainer"]]

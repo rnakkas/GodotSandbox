@@ -56,3 +56,10 @@ signal spawn_enemy_screamer_1_event(sp : Vector2)
 
 signal spawn_enemy_screamer_2_event(path : Path2D)
 
+
+
+################################################
+#NOTE:Enemy stuff
+################################################
+
+signal enemy_shooting_event(bullets_list : Array[Area2D])

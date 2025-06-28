@@ -12,6 +12,7 @@ class_name Game extends Node2D
 @onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
 @onready var player_bombs_container : Node2D = $PlayerBombsContainer
 @onready var enemies_container : Node2D = $EnemiesContainer
+@onready var enemy_projectiles_container : Node2D = $EnemyProjectilesContainer
 @onready var powerups_container : Node2D = $PowerupsContainer
 @onready var score_items_container : Node2D = $ScoreItemsContainer
 @onready var score_fragments_container : Node2D = $ScoreFragmentsContainer
@@ -45,6 +46,7 @@ func _connect_to_signals() -> void:
 	SignalsBus.shot_limit_updated_event.connect(self._on_shot_limit_updated)
 	SignalsBus.player_shooting_event.connect(self._on_player_shooting)
 	SignalsBus.player_bombing_event.connect(self._on_player_bombing)
+	SignalsBus.enemy_shooting_event.connect(self._on_enemy_shooting)
 
 
 func _register_enemy_paths() -> void:
@@ -103,17 +105,26 @@ func _on_enemy_spawner_add_pathfollow_enemy_to_game(enemy:PathFollow2D, path:Pat
 
 
 ################################################
+# NOTE: Enemy shooting
+################################################
+func _on_enemy_shooting(bullets_list : Array[Area2D]) -> void:
+	for bullet : Area2D in bullets_list:
+		enemy_projectiles_container.call_deferred("add_child", bullet)
+
+
+
+################################################
 # NOTE: Spawning player's spawn sprite
 ################################################
 func _on_player_spawner_add_player_spawn_sprite_to_game(spawn_sprite: AnimatedSprite2D) -> void:
-	add_child(spawn_sprite)
+	call_deferred("add_child", spawn_sprite)
 
 
 ################################################
 # NOTE:Spawning player
 ################################################
 func _on_player_spawner_add_player_to_game(player: PlayerCat) -> void:
-	add_child(player)
+	call_deferred("add_child", player)
 
 
 ################################################

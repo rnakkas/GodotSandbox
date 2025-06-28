@@ -1,5 +1,73 @@
-[gd_scene format=3 uid="uid://bbfhd7y4k5cbl"]
+[gd_scene load_steps=5 format=3 uid="uid://bbfhd7y4k5cbl"]
+
+[ext_resource type="Script" uid="uid://b0tnrm0yrs5h7" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.gd" id="1_fyijd"]
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_jabtu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fyijd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jabtu")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jabtu")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_jabtu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_jabtu")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_jabtu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_jabtu")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"hit",
+"speed": 15.15
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jabtu"]
+radius = 5.0
+height = 32.0
 
 [node name="screamer_bullet" type="Area2D"]
 collision_layer = 16
 collision_mask = 65
+script = ExtResource("1_fyijd")
+speed = 350.0
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 0, 0, 1)
+rotation = 0.383972
+scale = Vector2(0.15, 0.15)
+skew = 0.785398
+sprite_frames = SubResource("SpriteFrames_fyijd")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="collider" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_jabtu")
+debug_color = Color(1, 0, 0, 0.137255)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(32, 0)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

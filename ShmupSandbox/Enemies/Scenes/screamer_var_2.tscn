@@ -47,6 +47,8 @@ animations = [{
 rotates = false
 loop = false
 script = ExtResource("1_patts")
+fire_rate = 0.5
+first_shot_wait_time = 0.4
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_layer = 8
@@ -92,6 +94,10 @@ metadata/_edit_use_anchors_ = true
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 self_modulate = Color(1, 0.124572, 0.0864938, 1)
 
+[node name="shooting_timer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="shooting_timer" to="." method="_on_shooting_timer_timeout"]
