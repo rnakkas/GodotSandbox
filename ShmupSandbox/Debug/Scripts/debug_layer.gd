@@ -31,7 +31,9 @@ func _ready() -> void:
 
 func _show_debug_label() -> void:
 	if !OS.is_debug_build():
-		debug_label.visible = false
+		return
+	debug_label.visible = true
+	self.visible = true
 
 func _get_debug_ui_elements() -> void:
 	if !OS.is_debug_build():
@@ -95,6 +97,8 @@ func _create_enemy_paths_list() -> void:
 		return
 	
 	for i : int in range(enemy_paths_list.size()):
+		if enemy_paths_list[i] == null:
+			return
 		enemy_paths_options.add_item(enemy_paths_list[i].name)
 
 
