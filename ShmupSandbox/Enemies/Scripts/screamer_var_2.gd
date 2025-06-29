@@ -6,25 +6,28 @@ class_name ScreamerVar2 extends PathFollow2D
 @onready var shooting_timer : Timer = $shooting_timer
 
 @export var kill_score : int = 100
-@export var pathfollow_speed : float = 0.13
-@export var fire_rate : float = 1.0
-@export var first_shot_wait_time : float =  0.2
+@export var pathfollow_speed : float = 0.28
+@export var shoot_time : float = 0.3
 @export var bullet_scene : PackedScene = preload("res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn")
 
-## TODO: Behaviour
-# Tweak the shooting behavior so that it only shoots once when on screen, maybe when on the right 1/3rd of the screen
+## TODO: Spritesheets
 
+################################################
+# NOTE: Ready
+################################################
 func _ready() -> void:
 	progress_ratio = 0.0
 	_set_timer_properties()
 
 func _set_timer_properties() -> void:
-	shooting_timer.one_shot = false
-	var cooldown_time = 1/fire_rate
-	shooting_timer.wait_time = cooldown_time
+	shooting_timer.one_shot = true
+	shooting_timer.wait_time = shoot_time
 
 
-func _process(delta: float) -> void:
+################################################
+# NOTE: Physics process for moving in path
+################################################
+func _physics_process(delta: float) -> void:
 	progress_ratio += pathfollow_speed * delta
 
 
@@ -32,8 +35,6 @@ func _process(delta: float) -> void:
 # NOTE: Start shooting timer when onscreen
 ################################################
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
-	await get_tree().create_timer(first_shot_wait_time).timeout
-	_handle_shooting()
 	shooting_timer.start()
 
 

@@ -6,5 +6,5 @@
 script = ExtResource("1_rof5w")
 
 [node name="spawn_point" type="Marker2D" parent="."]
-position = Vector2(-18, 180)
+position = Vector2(-18, 270)
 gizmo_extents = 25.0

@@ -51,7 +51,7 @@ height = 32.0
 collision_layer = 16
 collision_mask = 65
 script = ExtResource("1_fyijd")
-speed = 350.0
+speed = 430.0
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(1, 0, 0, 1)

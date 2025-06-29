@@ -14,7 +14,7 @@ class_name DebugLayer extends CanvasLayer
 @onready var enemy_paths_options : OptionButton = $enemy_paths_options
 
 var debug_ui_elements : Array[Node] = []
-var enemy_paths_list : Array[Path2D] = []
+# var enemy_paths_list : Array[Path2D] = []
 var pos : Vector2
 var current_player_debug_option : int
 var current_enemy_spawn_option : int
@@ -82,24 +82,27 @@ func _input(_event: InputEvent) -> void:
 
 
 func _create_enemy_paths_list() -> void:
-	enemy_paths_list = [
-		GameManager.enemy_path_sine_wave_1,
-		GameManager.enemy_path_sine_wave_2,
-		GameManager.enemy_path_sine_wave_3,
-		GameManager.enemy_path_sine_wave_4,
-		GameManager.enemy_path_sine_wave_5,
-		GameManager.enemy_path_sine_wave_6,
-	]
+	# enemy_paths_list = [
+	# 	GameManager.enemy_path_sine_wave_1,
+	# 	GameManager.enemy_path_sine_wave_2,
+	# 	GameManager.enemy_path_sine_wave_3,
+	# 	GameManager.enemy_path_sine_wave_4,
+	# 	GameManager.enemy_path_sine_wave_5,
+	# 	GameManager.enemy_path_sine_wave_6,
+	# 	GameManager.enemy_path_sine_wave_v2_1,
+	# ]
 
-	enemy_paths_list.sort()
+	# enemy_paths_list.sort()
 
-	if enemy_paths_options.item_count == (enemy_paths_list.size()+1):
+	GameManager.enemy_paths_list.sort()
+
+	if enemy_paths_options.item_count == (GameManager.enemy_paths_list.size()+1):
 		return
 	
-	for i : int in range(enemy_paths_list.size()):
-		if enemy_paths_list[i] == null:
+	for i : int in range(GameManager.enemy_paths_list.size()):
+		if GameManager.enemy_paths_list[i] == null:
 			return
-		enemy_paths_options.add_item(enemy_paths_list[i].name)
+		enemy_paths_options.add_item(GameManager.enemy_paths_list[i].name)
 
 
 ################################################
@@ -201,22 +204,24 @@ func _get_enemy_path() -> Path2D:
 			return
 		
 		1: # Sine wave 1
-			return GameManager.enemy_path_sine_wave_1
+			return _get_path_from_list(GameManager.enemy_path_sine_wave_1)
 		
 		2: # Sine wave 2
-			return GameManager.enemy_path_sine_wave_2
+			return _get_path_from_list(GameManager.enemy_path_sine_wave_2)
 
 		3: # Sine wave 3
-			return GameManager.enemy_path_sine_wave_3
+			return _get_path_from_list(GameManager.enemy_path_sine_wave_3)
 		
 		4: # Sine wave 4
-			return GameManager.enemy_path_sine_wave_4
-		
-		5: # Sine wave 5
-			return GameManager.enemy_path_sine_wave_5
-		
-		6: # Sine wave 6
-			return GameManager.enemy_path_sine_wave_6
+			return _get_path_from_list(GameManager.enemy_path_sine_wave_4)
 
 		_:
 			return
+
+func _get_path_from_list(path_name : String) -> Path2D:
+	var enemy_path: Path2D
+	for path : Path2D in GameManager.enemy_paths_list:
+		if path.name == path_name:
+			enemy_path = path
+			break
+	return enemy_path

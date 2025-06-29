@@ -2,8 +2,8 @@ extends Node
 
 ################################################
 #NOTE: Player
-# Can be accessed by enemies
-# Used to track player locaiton for attacks
+# To be accessed by enemies
+# Used to track player location for attacks
 ################################################
 var player : PlayerCat
 
@@ -11,12 +11,12 @@ var player : PlayerCat
 ################################################
 #NOTE: Enemy paths
 ################################################
-var enemy_path_sine_wave_1 : Path2D
-var enemy_path_sine_wave_2 : Path2D
-var enemy_path_sine_wave_3 : Path2D
-var enemy_path_sine_wave_4 : Path2D
-var enemy_path_sine_wave_5 : Path2D
-var enemy_path_sine_wave_6 : Path2D
+const enemy_path_sine_wave_1 : String = "enemy_path_sine_wave_1"
+const enemy_path_sine_wave_2 : String = "enemy_path_sine_wave_2"
+const enemy_path_sine_wave_3 : String = "enemy_path_sine_wave_3"
+const enemy_path_sine_wave_4 : String = "enemy_path_sine_wave_4"
+
+var enemy_paths_list : Array[Path2D] = []
 
 
 ################################################

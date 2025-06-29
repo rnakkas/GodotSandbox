@@ -47,8 +47,6 @@ animations = [{
 rotates = false
 loop = false
 script = ExtResource("1_patts")
-fire_rate = 0.5
-first_shot_wait_time = 0.4
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_layer = 8

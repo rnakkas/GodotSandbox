@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://0pabuti51c45" path="res://ShmupSandbox/Enemies/Scenes/skulljack.tscn" id="3_f46ya"]
 [ext_resource type="PackedScene" uid="uid://boi3x6qa21wtr" path="res://ShmupSandbox/Main/Scenes/pickups_spawner.tscn" id="4_f46ya"]
 [ext_resource type="PackedScene" uid="uid://cd36pie1fwh40" path="res://ShmupSandbox/Main/Scenes/player_spawner.tscn" id="5_qwfjg"]
-[ext_resource type="PackedScene" uid="uid://c0cxs131x4b0l" path="res://ShmupSandbox/Enemies/EnemyPaths/enemy_path_sine_wave.tscn" id="6_qwfjg"]
+[ext_resource type="PackedScene" uid="uid://d2sig773kfqx0" path="res://ShmupSandbox/Enemies/EnemyPaths/enemy_path_sine_wave.tscn" id="6_8njv8"]
 
 [node name="Game" type="Node2D"]
 process_mode = 1
@@ -33,30 +33,23 @@ limit_bottom = 540
 [node name="EnemiesContainer" type="Node2D" parent="."]
 
 [node name="EnemyPathsContainer" type="Node2D" parent="EnemiesContainer"]
+unique_name_in_owner = true
 
-[node name="enemy_path_sine_wave_1" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_qwfjg")]
+[node name="enemy_path_sine_wave_1" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
 unique_name_in_owner = true
 position = Vector2(0, 160)
 
-[node name="enemy_path_sine_wave_2" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_qwfjg")]
+[node name="enemy_path_sine_wave_2" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
 unique_name_in_owner = true
-position = Vector2(107, 160)
+position = Vector2(0, 240)
 
-[node name="enemy_path_sine_wave_3" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_qwfjg")]
+[node name="enemy_path_sine_wave_3" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
 unique_name_in_owner = true
-position = Vector2(0, 280)
+position = Vector2(0, 320)
 
-[node name="enemy_path_sine_wave_4" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_qwfjg")]
-unique_name_in_owner = true
-position = Vector2(182, 280)
-
-[node name="enemy_path_sine_wave_5" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_qwfjg")]
+[node name="enemy_path_sine_wave_4" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
 unique_name_in_owner = true
 position = Vector2(0, 400)
-
-[node name="enemy_path_sine_wave_6" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_qwfjg")]
-unique_name_in_owner = true
-position = Vector2(107, 400)
 
 [node name="EnemyProjectilesContainer" type="Node2D" parent="."]
 

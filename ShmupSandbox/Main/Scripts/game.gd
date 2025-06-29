@@ -12,20 +12,11 @@ class_name Game extends Node2D
 @onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
 @onready var player_bombs_container : Node2D = $PlayerBombsContainer
 @onready var enemies_container : Node2D = $EnemiesContainer
+@onready var enemy_paths_container : Node2D = %EnemyPathsContainer
 @onready var enemy_projectiles_container : Node2D = $EnemyProjectilesContainer
 @onready var powerups_container : Node2D = $PowerupsContainer
 @onready var score_items_container : Node2D = $ScoreItemsContainer
 @onready var score_fragments_container : Node2D = $ScoreFragmentsContainer
-
-################################################
-# NOTE: Enemy paths
-################################################
-@onready var enemy_path_sine_wave_1 : Path2D = %enemy_path_sine_wave_1
-@onready var enemy_path_sine_wave_2 : Path2D = %enemy_path_sine_wave_2
-@onready var enemy_path_sine_wave_3 : Path2D = %enemy_path_sine_wave_3
-@onready var enemy_path_sine_wave_4 : Path2D = %enemy_path_sine_wave_4
-@onready var enemy_path_sine_wave_5 : Path2D = %enemy_path_sine_wave_5
-@onready var enemy_path_sine_wave_6 : Path2D = %enemy_path_sine_wave_6
 
 
 ## Shot limits
@@ -50,12 +41,16 @@ func _connect_to_signals() -> void:
 
 
 func _register_enemy_paths() -> void:
-	GameManager.enemy_path_sine_wave_1 = enemy_path_sine_wave_1
-	GameManager.enemy_path_sine_wave_2 = enemy_path_sine_wave_2
-	GameManager.enemy_path_sine_wave_3 = enemy_path_sine_wave_3
-	GameManager.enemy_path_sine_wave_4 = enemy_path_sine_wave_4
-	GameManager.enemy_path_sine_wave_5 = enemy_path_sine_wave_5
-	GameManager.enemy_path_sine_wave_6 = enemy_path_sine_wave_6
+	var paths_list : Array[Node] = enemy_paths_container.get_children()
+	
+	# Clear list so no duplicates
+	GameManager.enemy_paths_list.clear()
+	
+	# Append to paths list in game manager
+	for path : Node in paths_list:
+		if path is Path2D:
+			path = path as Path2D
+			GameManager.enemy_paths_list.append(path)
 
 
 ################################################
