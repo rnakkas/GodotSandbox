@@ -13,6 +13,13 @@ class_name ScreamerVar2 extends PathFollow2D
 ## TODO: Spritesheets
 
 ################################################
+# NOTE: Screamer Variant 2
+# Popcorn enemy
+# Flies in a set path from right to left
+# Shoots once in a straight line to the left when on screen
+################################################
+
+################################################
 # NOTE: Ready
 ################################################
 func _ready() -> void:

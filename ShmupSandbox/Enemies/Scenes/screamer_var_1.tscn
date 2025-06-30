@@ -31,7 +31,7 @@ animations = [{
 "texture": ExtResource("1_gc5qm")
 }],
 "loop": false,
-"name": &"explode",
+"name": &"death",
 "speed": 15.0
 }, {
 "frames": [{
@@ -56,10 +56,14 @@ debug_color = Color(0.306551, 0.275169, 1, 0.419608)
 self_modulate = Color(0.472827, 0.439253, 1, 1)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_gsm1g")
-animation = &"fly"
+animation = &"death"
 autoplay = "fly"
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="onscreen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(47, 0)
+
+[node name="offscreen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-40, 0)
 
 [node name="debug_label" type="Label" parent="."]
 offset_left = -93.0
@@ -83,3 +87,12 @@ gravity = Vector2(0, 0)
 initial_velocity_min = 151.08
 initial_velocity_max = 287.77
 scale_amount_max = 2.5
+
+[node name="move_timer" type="Timer" parent="."]
+
+[node name="shoot_timer" type="Timer" parent="."]
+
+[connection signal="screen_entered" from="onscreen_notifier" to="." method="_on_onscreen_notifier_screen_entered"]
+[connection signal="screen_exited" from="offscreen_notifier" to="." method="_on_offscreen_notifier_screen_exited"]
+[connection signal="timeout" from="move_timer" to="." method="_on_move_timer_timeout"]
+[connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]

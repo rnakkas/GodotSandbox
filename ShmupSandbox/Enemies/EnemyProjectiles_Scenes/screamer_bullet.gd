@@ -4,9 +4,14 @@ class_name ScreamerBullet extends Area2D
 
 @export var speed : float = 300.0
 
-func _physics_process(delta: float) -> void:
-	global_position += speed * delta * Vector2.LEFT
+var direction : Vector2 = Vector2.LEFT
 
+## TODO: 
+	# Spritesheet
+	# Animations
+
+func _physics_process(delta: float) -> void:
+	global_position += speed * delta * direction
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
