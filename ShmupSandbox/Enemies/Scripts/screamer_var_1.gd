@@ -98,9 +98,39 @@ func _on_shoot_timer_timeout() -> void:
 	SignalsBus.enemy_shooting_event.emit(bullets_list)
 
 
-
 ################################################
 # NOTE: Despawn after going offscreen
 ################################################
 func _on_offscreen_notifier_screen_exited() -> void:
+	call_deferred("queue_free")
+
+
+################################################
+# NOTE: Hit by player's bullets, bombs or player
+################################################
+func _on_area_entered(_area:Area2D) -> void:
+	_handle_death()
+
+func _on_body_entered(body:Node2D) -> void:
+	if body is PlayerCat:
+		if body.is_dead:
+			return
+		_handle_death()
+
+func _handle_death():
+	shoot_timer.stop()
+
+	set_deferred("monitorable", false)
+	set_deferred("monitoring", false)
+
+	speed = speed/2
+
+	sprite.play("death")
+	particles.emitting = true
+
+	SignalsBus.score_increased_event.emit(kill_score)
+	SignalsBus.spawn_score_fragment_event.emit(self.global_position)
+
+	await sprite.animation_finished
+
 	call_deferred("queue_free")
