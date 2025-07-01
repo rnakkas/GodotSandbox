@@ -1,9 +1,5 @@
 class_name PickupsSpanwer extends Node2D
 
-@export var powerup_packed_scene : PackedScene = preload("res://ShmupSandbox/Pickups/Scenes/pickup_powerup.tscn")
-@export var score_item_packed_scene : PackedScene = preload("res://ShmupSandbox/Pickups/Scenes/pickup_score.tscn")
-@export var score_fragment_packed_scene : PackedScene = preload("res://ShmupSandbox/Pickups/Scenes/score_fragment.tscn")
-
 signal add_powerup_to_game(powerup : PickupPowerup)
 signal add_score_item_to_game(score_item : PickupScore)
 signal request_score_items_container()
@@ -24,7 +20,7 @@ func _on_spawn_powerup_event(sp : Vector2) -> void:
 	_instantiate_powerup(sp)
 
 func _instantiate_powerup(sp : Vector2) -> void:
-	var powerup : PickupPowerup = powerup_packed_scene.instantiate()
+	var powerup : PickupPowerup = SceneManager.powerup_packed_scene.instantiate()
 	powerup.global_position = sp
 	add_powerup_to_game.emit(powerup)
 
@@ -36,7 +32,7 @@ func _on_spawn_score_item_event(sp: Vector2) -> void:
 	_instantiate_score_item(sp)
 
 func _instantiate_score_item(sp : Vector2) -> void:
-	var score_item : PickupScore = score_item_packed_scene.instantiate()
+	var score_item : PickupScore = SceneManager.score_item_packed_scene.instantiate()
 	score_item.global_position = sp
 	add_score_item_to_game.emit(score_item)
 
@@ -68,7 +64,7 @@ func _instantiate_score_fragment(sp: Vector2) -> void:
 		return
 	
 	# Instantiate score fragment if there are non maxed score items on screen
-	var score_fragment : ScoreFragment = score_fragment_packed_scene.instantiate()
+	var score_fragment : ScoreFragment = SceneManager.score_fragment_packed_scene.instantiate()
 	score_fragment.global_position = sp
 	
 	# Only pass the non max item list to score fragment

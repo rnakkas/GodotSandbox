@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://coy1q1l1nkimg"]
+[gd_scene load_steps=5 format=3 uid="uid://coy1q1l1nkimg"]
 
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_aj1v5"]
+[ext_resource type="Script" uid="uid://b2fgakpvprrjh" path="res://ShmupSandbox/Enemies/Scripts/screamer_var_3.gd" id="1_nl2lu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nl2lu"]
 radius = 27.7308
@@ -43,6 +44,7 @@ animations = [{
 }]
 
 [node name="screamer_var_3" type="Area2D"]
+script = ExtResource("1_nl2lu")
 
 [node name="collider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_nl2lu")

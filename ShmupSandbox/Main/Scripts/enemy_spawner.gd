@@ -22,14 +22,6 @@ class_name EnemySpawner extends Node2D
 @export var enemy_scenes : Array[PackedScene] = []
 @export var sp_tolerance : float = 128
 
-################################################
-#NOTE: Packed Scenes for enemies
-################################################
-@export var doomboard_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/doomboard.tscn")
-@export var boomer_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/boomer.tscn")
-@export var screamer_1_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_1.tscn")
-@export var screamer_2_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_2.tscn")
-
 ## Timer
 @onready var spawn_timer : Timer = $enemy_spawn_timer
 
@@ -59,16 +51,16 @@ func _connect_to_signals() -> void:
 
 
 func _on_spawn_doomboard_event(sp : Vector2) -> void:
-	_instantiate_enemy(doomboard_PS, sp)
+	_instantiate_enemy(SceneManager.doomboard_PS, sp)
 
 func _on_spawn_boomer_event(sp : Vector2) -> void:
-	_instantiate_enemy(boomer_PS, sp)
+	_instantiate_enemy(SceneManager.boomer_PS, sp)
 
 func _on_spawn_screamer_1_event(sp : Vector2) -> void:
-	_instantiate_enemy(screamer_1_PS, sp)
+	_instantiate_enemy(SceneManager.screamer_1_PS, sp)
 
 func _on_spawn_screamer_2_event(path : Path2D) -> void:
-	_instantiate_pathfollow_enemy(screamer_2_PS, path)
+	_instantiate_pathfollow_enemy(SceneManager.screamer_2_PS, path)
 
 
 func _instantiate_enemy(enemy_scene: PackedScene, sp : Vector2) -> void:

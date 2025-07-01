@@ -8,7 +8,6 @@ class_name ScreamerVar2 extends PathFollow2D
 @export var kill_score : int = 100
 @export var pathfollow_speed : float = 0.28
 @export var shoot_time : float = 0.3
-@export var bullet_scene : PackedScene = preload("res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn")
 
 ## TODO: Spritesheets
 
@@ -90,7 +89,7 @@ func _on_shooting_timer_timeout() -> void:
 
 func _handle_shooting() -> void:
 	var bullets_list : Array[Area2D]
-	var bullet : ScreamerBullet = bullet_scene.instantiate()
+	var bullet : ScreamerBullet = SceneManager.screamer_bullet_scene.instantiate()
 	bullet.global_position = self.global_position
 	bullets_list.append(bullet)
 	
