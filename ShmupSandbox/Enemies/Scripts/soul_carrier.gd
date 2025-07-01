@@ -9,18 +9,14 @@ class_name SoulCarrier extends Area2D
 @export var max_move_time : float = 0.8
 @export var min_move_time : float = 0.5
 @export var kill_score : int = 100
-
-
-enum drop_state {
-	STANDARD,
-	HIGH
-}
+@export var standard_drop : int = 1
+@export var high_drop : int = 3
 
 var speed : float
 var move_time : float
 var direction : Vector2 = Vector2.LEFT
 var velocity : Vector2
-var current_state = drop_state.STANDARD
+var current_drop : int
 
 ## TODO: Spritesheets
 
@@ -33,9 +29,13 @@ var current_state = drop_state.STANDARD
 # When flying back to right, state 2: drops 4-5 items
 ################################################
 
+################################################
+# NOTE: Ready
+################################################
 func _ready() -> void:
 	speed = base_speed
 	move_time = randf_range(min_move_time, max_move_time)
+	current_drop = standard_drop
 	_set_timer_properties()
 
 func _set_timer_properties() -> void:
@@ -43,6 +43,9 @@ func _set_timer_properties() -> void:
 	move_timer.wait_time = move_time
 
 
+################################################
+# NOTE: Movement logic
+################################################
 func _physics_process(delta: float) -> void:
 	if direction == Vector2.RIGHT:
 		velocity = velocity.move_toward(speed * direction, acceleration * delta)
@@ -52,18 +55,27 @@ func _physics_process(delta: float) -> void:
 	global_position += velocity * delta
 
 
+################################################
+# NOTE: Start timer for flying back to right
+################################################
 func _on_onscreen_notifier_screen_entered() -> void:
 	move_timer.start()
 
 
+################################################
+# NOTE: Despawn after leaving screen
+################################################
 func _on_offscreen_notifier_screen_exited() -> void:
 	call_deferred("queue_free")
 
 
+################################################
+# NOTE: Set flying back direction and drop state change
+################################################
 func _on_move_timer_timeout() -> void:
 	direction = Vector2.RIGHT
 	await get_tree().create_timer(1.2).timeout # Will also need an animation here
-	current_state = drop_state.HIGH
+	current_drop = high_drop
 
 
 ################################################
@@ -88,13 +100,10 @@ func _handle_death():
 	particles.emitting = true
 
 	SignalsBus.score_increased_event.emit(kill_score)
-	SignalsBus.spawn_score_item_event.emit(self.global_position)
-
-	match current_state:
-		drop_state.STANDARD:
-			print_debug("standard drop")
-		drop_state.HIGH:
-			print_debug("high drop")
+	
+	# Spawn score items based on current drop state, either standard or high
+	for i : int in range(current_drop):
+		SignalsBus.spawn_score_item_event.emit(self.global_position)
 
 	await sprite.animation_finished
 
