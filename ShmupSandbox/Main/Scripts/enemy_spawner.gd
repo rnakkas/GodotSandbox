@@ -49,6 +49,7 @@ func _connect_to_signals() -> void:
 	SignalsBus.spawn_enemy_screamer_1_event.connect(self._on_spawn_screamer_1_event)
 	SignalsBus.spawn_enemy_screamer_2_event.connect(self._on_spawn_screamer_2_event)
 	SignalsBus.spawn_enemy_screamer_3_event.connect(self._on_spawn_screamer_3_event)
+	SignalsBus.spawn_enemy_soul_carrier_event.connect(self._on_spawn_soul_carrier_event)
 
 
 func _on_spawn_doomboard_event(sp : Vector2) -> void:
@@ -65,6 +66,9 @@ func _on_spawn_screamer_2_event(path : Path2D) -> void:
 
 func _on_spawn_screamer_3_event(sp: Vector2) -> void:
 	_instantiate_enemy(SceneManager.screamer_3_PS, sp)
+
+func _on_spawn_soul_carrier_event(sp : Vector2) -> void:
+	_instantiate_enemy(SceneManager.soul_carrier_PS, sp)
 
 
 func _instantiate_enemy(enemy_scene: PackedScene, sp : Vector2) -> void:
