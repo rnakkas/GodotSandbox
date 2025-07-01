@@ -2,7 +2,7 @@ class_name ScreamerBullet extends Area2D
 
 @onready var sprite : AnimatedSprite2D = $sprite
 
-@export var speed : float = 300.0
+@export var speed : float = 325.0
 
 var direction : Vector2 = Vector2.LEFT
 

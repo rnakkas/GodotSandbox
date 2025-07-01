@@ -116,7 +116,7 @@ offset_bottom = 144.0
 theme_override_font_sizes/font_size = 12
 selected = 0
 allow_reselect = true
-item_count = 5
+item_count = 6
 popup/item_0/id = 4
 popup/item_1/text = "spawn: doomboard"
 popup/item_1/id = 0
@@ -126,6 +126,8 @@ popup/item_3/text = "spawn: screamer var 1"
 popup/item_3/id = 2
 popup/item_4/text = "spawn: screamer var 2"
 popup/item_4/id = 3
+popup/item_5/text = "spawn: screamer var 3"
+popup/item_5/id = 5
 
 [node name="player_debugs5" type="Label" parent="." groups=["DEBUG_ui_group"]]
 offset_left = 425.0

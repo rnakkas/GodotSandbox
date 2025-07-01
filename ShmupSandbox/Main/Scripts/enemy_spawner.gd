@@ -48,6 +48,7 @@ func _connect_to_signals() -> void:
 	SignalsBus.spawn_enemy_boomer_event.connect(self._on_spawn_boomer_event)
 	SignalsBus.spawn_enemy_screamer_1_event.connect(self._on_spawn_screamer_1_event)
 	SignalsBus.spawn_enemy_screamer_2_event.connect(self._on_spawn_screamer_2_event)
+	SignalsBus.spawn_enemy_screamer_3_event.connect(self._on_spawn_screamer_3_event)
 
 
 func _on_spawn_doomboard_event(sp : Vector2) -> void:
@@ -61,6 +62,9 @@ func _on_spawn_screamer_1_event(sp : Vector2) -> void:
 
 func _on_spawn_screamer_2_event(path : Path2D) -> void:
 	_instantiate_pathfollow_enemy(SceneManager.screamer_2_PS, path)
+
+func _on_spawn_screamer_3_event(sp: Vector2) -> void:
+	_instantiate_enemy(SceneManager.screamer_3_PS, sp)
 
 
 func _instantiate_enemy(enemy_scene: PackedScene, sp : Vector2) -> void:

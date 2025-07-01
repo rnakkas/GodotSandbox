@@ -36,6 +36,7 @@ const doomboard_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/do
 const boomer_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/boomer.tscn")
 const screamer_1_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_1.tscn")
 const screamer_2_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_2.tscn")
+const screamer_3_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_3.tscn")
 
 ## Enemy bullets
 const screamer_bullet_scene : PackedScene = preload("res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn")

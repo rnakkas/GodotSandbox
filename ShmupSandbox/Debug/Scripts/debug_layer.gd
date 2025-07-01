@@ -117,7 +117,7 @@ func _on_enemy_spawn_debug_options_item_selected(index:int) -> void:
 	
 	# Choose default path if no path selected for the pathed enemies
 	match current_enemy_spawn_option:
-		0, 1, 2, 3:
+		0, 1, 2, 3, 5:
 			pass
 		4:
 			current_enemy_path_option = 1
@@ -193,6 +193,9 @@ func _enemy_spawn_actions() -> void:
 		
 		4: # Spawn Screamer variant 2
 			SignalsBus.spawn_enemy_screamer_2_event.emit(_get_enemy_path())
+		
+		5: # Spawn Screamer variant 3
+			SignalsBus.spawn_enemy_screamer_3_event.emit(pos)
 
 
 ################################################
