@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0ndt0kisoyg3"]
+[gd_scene load_steps=7 format=3 uid="uid://b0ndt0kisoyg3"]
 
 [ext_resource type="Script" uid="uid://cj0ffr545wyhi" path="res://ShmupSandbox/Main/Scripts/game.gd" id="1_f5mi8"]
 [ext_resource type="PackedScene" uid="uid://bxfke2pw5vqm1" path="res://ShmupSandbox/Main/Scenes/enemy_spawner.tscn" id="2_f46ya"]
 [ext_resource type="PackedScene" uid="uid://0pabuti51c45" path="res://ShmupSandbox/Enemies/Scenes/skulljack.tscn" id="3_f46ya"]
 [ext_resource type="PackedScene" uid="uid://boi3x6qa21wtr" path="res://ShmupSandbox/Main/Scenes/pickups_spawner.tscn" id="4_f46ya"]
 [ext_resource type="PackedScene" uid="uid://cd36pie1fwh40" path="res://ShmupSandbox/Main/Scenes/player_spawner.tscn" id="5_qwfjg"]
+[ext_resource type="PackedScene" uid="uid://d2sig773kfqx0" path="res://ShmupSandbox/Enemies/EnemyPaths/enemy_path_sine_wave.tscn" id="6_8njv8"]
 
 [node name="Game" type="Node2D"]
 process_mode = 1
@@ -31,6 +32,27 @@ limit_bottom = 540
 
 [node name="EnemiesContainer" type="Node2D" parent="."]
 
+[node name="EnemyPathsContainer" type="Node2D" parent="EnemiesContainer"]
+unique_name_in_owner = true
+
+[node name="enemy_path_sine_wave_1" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
+unique_name_in_owner = true
+position = Vector2(0, 160)
+
+[node name="enemy_path_sine_wave_2" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
+unique_name_in_owner = true
+position = Vector2(0, 240)
+
+[node name="enemy_path_sine_wave_3" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
+unique_name_in_owner = true
+position = Vector2(0, 320)
+
+[node name="enemy_path_sine_wave_4" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
+unique_name_in_owner = true
+position = Vector2(0, 400)
+
+[node name="EnemyProjectilesContainer" type="Node2D" parent="."]
+
 [node name="PowerupsContainer" type="Node2D" parent="."]
 
 [node name="ScoreItemsContainer" type="Node2D" parent="." groups=["Game_ScoreItemsContainer"]]
@@ -38,6 +60,7 @@ limit_bottom = 540
 [node name="ScoreFragmentsContainer" type="Node2D" parent="."]
 
 [connection signal="add_enemy_to_game" from="enemy_spawner" to="." method="_on_enemy_spawner_add_enemy_to_game"]
+[connection signal="add_pathfollow_enemy_to_game" from="enemy_spawner" to="." method="_on_enemy_spawner_add_pathfollow_enemy_to_game"]
 [connection signal="add_powerup_to_game" from="PickupsSpawner" to="." method="_on_pickups_spawner_add_powerup_to_game"]
 [connection signal="add_score_fragment_to_game" from="PickupsSpawner" to="." method="_on_pickups_spawner_add_score_fragment_to_game"]
 [connection signal="add_score_item_to_game" from="PickupsSpawner" to="." method="_on_pickups_spawner_add_score_item_to_game"]

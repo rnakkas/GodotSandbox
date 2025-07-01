@@ -3,7 +3,6 @@ class_name BombHandler extends Node2D
 @onready var bomb_muzzle : Marker2D = $muzzle_bomb
 @onready var bomb_cooldown_timer : Timer = $bomb_cooldown_timer
 
-@export var bomb_fuzz_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/bomb_fuzz.tscn")
 @export var bomb_cooldown_time : float = 2.0
 
 var on_cooldown : bool
@@ -40,7 +39,7 @@ func _bombing_behaviour() -> void:
 	
 	SignalsBus.player_bombs_updated_event.emit()
 
-	var bomb_fuzz : BombFuzz = bomb_fuzz_scene.instantiate()
+	var bomb_fuzz : BombFuzz = SceneManager.bomb_fuzz_scene.instantiate()
 	bomb_fuzz.position = bomb_muzzle.global_position
 	
 	SignalsBus.player_bombing_event.emit(bomb_fuzz)

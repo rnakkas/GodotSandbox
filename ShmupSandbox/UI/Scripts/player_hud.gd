@@ -37,8 +37,8 @@ func _on_visibility_changed() -> void:
 		_set_bombs_on_hud()
 
 func _set_score_values_on_hud() -> void:
-	score_value.text = str(GameManager.player_score).pad_zeros(10)
-	top_score_value.text = str(GameManager.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
+	score_value.text = str(GameManager.player_score)
+	top_score_value.text = str(GameManager.player_hi_scores_dictionaries[0]["score"])
 
 func _set_bombs_on_hud() -> void:
 	for bomb : int in range(bomb_icons_array.size()):
@@ -53,14 +53,14 @@ func _set_bombs_on_hud() -> void:
 #NOTE: Signal connections
 ################################################
 func _on_player_score_updated() -> void:
-	score_value.text = str(GameManager.player_score).pad_zeros(10)
+	score_value.text = str(GameManager.player_score)
 
 	## If cuurent score is higher than top, show current score in Top
 	if GameManager.player_score > GameManager.player_hi_scores_dictionaries[0]["score"]:
-		top_score_value.text = str(GameManager.player_score).pad_zeros(10)
+		top_score_value.text = str(GameManager.player_score)
 	## If current score is lower than top, show Top
 	elif GameManager.player_score <= GameManager.player_hi_scores_dictionaries[0]["score"]:
-		top_score_value.text = str(GameManager.player_hi_scores_dictionaries[0]["score"]).pad_zeros(10)
+		top_score_value.text = str(GameManager.player_hi_scores_dictionaries[0]["score"])
 
 
 func _on_player_lives_updated() -> void:

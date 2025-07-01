@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2sig773kfqx0"]
+
+[sub_resource type="Curve2D" id="Curve2D_uj4bj"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1020, 0, 269.716, 97.0011, -269.716, -97.0011, 480, 0, 0, 0, 0, 0, -60, 0)
+}
+point_count = 3
+
+[node name="enemy_path_sine_wave" type="Path2D"]
+curve = SubResource("Curve2D_uj4bj")

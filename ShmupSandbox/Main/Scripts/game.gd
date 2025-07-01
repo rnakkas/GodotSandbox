@@ -1,13 +1,19 @@
 class_name Game extends Node2D
 
-## Spawners
+################################################
+# NOTE: Spawners
+################################################
 @onready var player_spawner_node : PlayerSpawner = $player_spawner
 @onready var pickups_spanwer_node : PickupsSpanwer = $PickupsSpawner
 
-## Containers
+################################################
+# NOTE: Containers
+################################################
 @onready var player_projectiles_container : Node2D = $PlayerProjectilesContainer
 @onready var player_bombs_container : Node2D = $PlayerBombsContainer
 @onready var enemies_container : Node2D = $EnemiesContainer
+@onready var enemy_paths_container : Node2D = %EnemyPathsContainer
+@onready var enemy_projectiles_container : Node2D = $EnemyProjectilesContainer
 @onready var powerups_container : Node2D = $PowerupsContainer
 @onready var score_items_container : Node2D = $ScoreItemsContainer
 @onready var score_fragments_container : Node2D = $ScoreFragmentsContainer
@@ -22,23 +28,38 @@ var active_shots : int
 # NOTE: Ready
 ################################################
 func _ready() -> void:
-	_connect_to_signals()
 	player_spawner_node.spawn_player_sprite("spawn") ## play spawn animation for player
+	_connect_to_signals()
+	_register_enemy_paths()
+
 
 func _connect_to_signals() -> void:
 	SignalsBus.shot_limit_updated_event.connect(self._on_shot_limit_updated)
 	SignalsBus.player_shooting_event.connect(self._on_player_shooting)
 	SignalsBus.player_bombing_event.connect(self._on_player_bombing)
+	SignalsBus.enemy_shooting_event.connect(self._on_enemy_shooting)
 
 
-func _on_shot_limit_updated(limit : int) -> void:
-	shot_limit = limit
-
+func _register_enemy_paths() -> void:
+	var paths_list : Array[Node] = enemy_paths_container.get_children()
+	
+	# Clear list so no duplicates
+	GameManager.enemy_paths_list.clear()
+	
+	# Append to paths list in game manager
+	for path : Node in paths_list:
+		if path is Path2D:
+			path = path as Path2D
+			GameManager.enemy_paths_list.append(path)
 
 
 ################################################
 # NOTE: Player shooting
 ################################################
+func _on_shot_limit_updated(limit : int) -> void:
+	shot_limit = limit
+
+
 func _on_player_shooting(bullets_list : Array[PlayerBullet]) -> void:
 	for bullet : PlayerBullet in bullets_list:
 		# Track the active shots and use this to enforce shot limit
@@ -71,22 +92,34 @@ func _on_player_bombing(bomb : Area2D) -> void:
 ################################################
 # NOTE: Spawning enemies
 ################################################
-func _on_enemy_spawner_add_enemy_to_game(enemy: Area2D) -> void:
+func _on_enemy_spawner_add_enemy_to_game(enemy:Node2D) -> void:
 	enemies_container.call_deferred("add_child", enemy)
+
+func _on_enemy_spawner_add_pathfollow_enemy_to_game(enemy:PathFollow2D, path:Path2D) -> void:
+	path.call_deferred("add_child", enemy)
+
+
+################################################
+# NOTE: Enemy shooting
+################################################
+func _on_enemy_shooting(bullets_list : Array[Area2D]) -> void:
+	for bullet : Area2D in bullets_list:
+		enemy_projectiles_container.call_deferred("add_child", bullet)
+
 
 
 ################################################
 # NOTE: Spawning player's spawn sprite
 ################################################
 func _on_player_spawner_add_player_spawn_sprite_to_game(spawn_sprite: AnimatedSprite2D) -> void:
-	add_child(spawn_sprite)
+	call_deferred("add_child", spawn_sprite)
 
 
 ################################################
 # NOTE:Spawning player
 ################################################
 func _on_player_spawner_add_player_to_game(player: PlayerCat) -> void:
-	add_child(player)
+	call_deferred("add_child", player)
 
 
 ################################################

@@ -6,12 +6,11 @@ class_name Boomer extends Area2D
 @onready var chase_timer : Timer = $chase_timer
 @onready var screen_notifier : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
-@export var speed : float = 210.0
+@export var speed : float = 250.0
 @export var tracking_time : float = 0.13
-@export var chase_time : float = 2.5
+@export var chase_time : float = 2.0
 @export var kill_score : int = 100
 
-var player : PlayerCat
 var direction : Vector2 = Vector2.LEFT
 
 
@@ -19,8 +18,6 @@ var direction : Vector2 = Vector2.LEFT
 # NOTE: Ready
 ################################################
 func _ready() -> void:
-	player = get_tree().get_first_node_in_group(GameManager.player_group)
-	
 	_get_direction_to_player()
 
 	_set_tracker_timer_properties()
@@ -30,11 +27,11 @@ func _ready() -> void:
 	chase_timer.start()
 
 func _get_direction_to_player() -> void:
-	if player == null:
+	if GameManager.player == null:
 		return
-	if player.is_dead:
+	if GameManager.player.is_dead:
 		return
-	direction = self.global_position.direction_to(player.global_position).normalized()
+	direction = self.global_position.direction_to(GameManager.player.global_position).normalized()
 
 func _set_tracker_timer_properties() -> void:
 	tracker_timer.one_shot = false
@@ -89,6 +86,12 @@ func _on_chase_timer_timeout() -> void:
 func _on_area_entered(_area: Area2D) -> void:
 	_handle_death()
 
+func _on_body_entered(body:Node2D) -> void:
+	if body is PlayerCat:
+		if body.is_dead:
+			return
+		_handle_death()
+
 func _handle_death() -> void:
 	set_deferred("monitorable", false)
 	set_deferred("monitoring", false)
@@ -102,6 +105,7 @@ func _handle_death() -> void:
 	particles.emitting = true
 
 	SignalsBus.score_increased_event.emit(kill_score)
+	SignalsBus.spawn_score_fragment_event.emit(self.global_position)
 
 	await sprite.animation_finished
 	call_deferred("queue_free")

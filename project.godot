@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://ShmupSandbox/Autoloads/game_manager.gd"
 SaveManager="*res://ShmupSandbox/Autoloads/save_manager.gd"
+SceneManager="*res://ShmupSandbox/Autoloads/scene_manager.gd"
 SignalsBus="*res://ShmupSandbox/Autoloads/signals_bus.gd"
 UiUtility="*res://ShmupSandbox/Autoloads/ui_utility.gd"
 
@@ -33,10 +34,6 @@ window/stretch/mode="viewport"
 [dotnet]
 
 project/assembly_name="Sandbox"
-
-[global_group]
-
-player_group="global group for player"
 
 [input]
 

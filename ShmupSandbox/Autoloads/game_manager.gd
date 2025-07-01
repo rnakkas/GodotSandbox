@@ -1,9 +1,22 @@
 extends Node
 
 ################################################
-#NOTE: Global node groups
+#NOTE: Player
+# To be accessed by enemies
+# Used to track player location for attacks
 ################################################
-const player_group : String = "player_group"
+var player : PlayerCat
+
+
+################################################
+#NOTE: Enemy paths
+################################################
+const enemy_path_sine_wave_1 : String = "enemy_path_sine_wave_1"
+const enemy_path_sine_wave_2 : String = "enemy_path_sine_wave_2"
+const enemy_path_sine_wave_3 : String = "enemy_path_sine_wave_3"
+const enemy_path_sine_wave_4 : String = "enemy_path_sine_wave_4"
+
+var enemy_paths_list : Array[Path2D] = []
 
 
 ################################################

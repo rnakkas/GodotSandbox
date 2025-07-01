@@ -1,0 +1,101 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3afq3v72lc0a"]
+
+[ext_resource type="Script" uid="uid://b860kkv38ilk7" path="res://ShmupSandbox/Enemies/Scripts/screamer_var_2.gd" id="1_patts"]
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="2_ronh6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bxwr7"]
+radius = 27.7308
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0yovi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ronh6")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ronh6")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ronh6")
+}],
+"loop": false,
+"name": &"death",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ronh6")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.15
+}]
+
+[node name="screamer_var_2" type="PathFollow2D"]
+rotates = false
+loop = false
+script = ExtResource("1_patts")
+
+[node name="hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 67
+
+[node name="collider" type="CollisionShape2D" parent="hurtbox"]
+shape = SubResource("CircleShape2D_bxwr7")
+debug_color = Color(0, 0.792157, 0.858824, 0.380392)
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+self_modulate = Color(0, 0.79056, 0.858813, 1)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_0yovi")
+animation = &"death"
+autoplay = "fly"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 25
+lifetime = 0.41
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 151.08
+initial_velocity_max = 287.77
+scale_amount_max = 2.5
+
+[node name="debug_label" type="Label" parent="."]
+offset_left = -73.0
+offset_top = -43.0
+offset_right = 109.0
+offset_bottom = 6.0
+text = "Enemy - Screamer var 2
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+self_modulate = Color(1, 0.124572, 0.0864938, 1)
+
+[node name="shooting_timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="shooting_timer" to="." method="_on_shooting_timer_timeout"]

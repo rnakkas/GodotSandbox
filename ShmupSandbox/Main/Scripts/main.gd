@@ -1,7 +1,6 @@
 class_name Main extends Node2D
 
 
-var game_scene : PackedScene = preload("res://ShmupSandbox/Main/Scenes/game.tscn")
 var game_instance : Node
 
 
@@ -20,7 +19,7 @@ func _on_ui_layer_game_started() -> void:
 
 func _start_game() -> void:
 	GameManager.reset_all_player_data_on_start()
-	game_instance = game_scene.instantiate()
+	game_instance = SceneManager.game_scene.instantiate()
 	add_child(game_instance)
 
 
@@ -29,4 +28,3 @@ func _start_game() -> void:
 ################################################
 func _on_ui_layer_kill_game_instance() -> void:
 	game_instance.call_deferred("queue_free")
-

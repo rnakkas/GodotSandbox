@@ -6,13 +6,6 @@ const powerup_level_max : int = 4
 ## Base fire rate
 @export var fire_rate : float = 8.0
 
-## Bullet scenes
-@export var base_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/base_bullet.tscn")
-@export var od_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/od_bullet.tscn")
-@export var ch_lvl_1_bullet_scene: PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_1.tscn")
-@export var ch_lvl_2_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_2.tscn")
-@export var ch_lvl_3_bullet_scene : PackedScene = preload("res://ShmupSandbox/Player/Scenes/ch_bullet_lvl_3.tscn")
-
 ## Default: no powerups, change only when powerup is picked up
 @export var current_powerup : GameManager.powerups = GameManager.powerups.None
 @export_range(0,powerup_level_max) var powerup_level: int = 0 # Powerup level can only be between 0 to 4
@@ -206,7 +199,7 @@ func _handle_shooting() -> void:
 ## Base shooting
 func _base_shooting_behaviour() -> void:
 	var bullet : PlayerBullet
-	bullet = base_bullet_scene.instantiate()
+	bullet = SceneManager.base_bullet_scene.instantiate()
 	bullet.position = location_base
 	bullets_list.append(bullet)
 
@@ -216,7 +209,7 @@ func _od_shooting_behaviour() -> void:
 
 	# Create the list of instantiated bullets
 	for instance : int in range(od_bullets_per_shot):
-		bullet = od_bullet_scene.instantiate()
+		bullet = SceneManager.od_bullet_scene.instantiate()
 		bullet.position = location_base
 		bullets_list.append(bullet)
 	
@@ -237,15 +230,15 @@ func _ch_shooting_behaviour() -> void:
 		0:
 			pass
 		1:
-			bullet = ch_lvl_1_bullet_scene.instantiate()
+			bullet = SceneManager.ch_lvl_1_bullet_scene.instantiate()
 		2:
-			bullet = ch_lvl_2_bullet_scene.instantiate()
+			bullet = SceneManager.ch_lvl_2_bullet_scene.instantiate()
 		3:
-			bullet = ch_lvl_3_bullet_scene.instantiate()
+			bullet = SceneManager.ch_lvl_3_bullet_scene.instantiate()
 		4:
-			bullet = ch_lvl_3_bullet_scene.instantiate()
-			bullet_ch_1 = ch_lvl_1_bullet_scene.instantiate()
-			bullet_ch_2 = ch_lvl_1_bullet_scene.instantiate()
+			bullet = SceneManager.ch_lvl_3_bullet_scene.instantiate()
+			bullet_ch_1 = SceneManager.ch_lvl_1_bullet_scene.instantiate()
+			bullet_ch_2 = SceneManager.ch_lvl_1_bullet_scene.instantiate()
 
 	bullet.position = location_base
 	bullets_list.append(bullet)

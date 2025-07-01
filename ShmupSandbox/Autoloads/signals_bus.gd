@@ -51,3 +51,16 @@ signal shot_limit_updated_event(shot_limit : int)
 signal spawn_enemy_doomboard_event(sp : Vector2)
 
 signal spawn_enemy_boomer_event(sp : Vector2)
+
+signal spawn_enemy_screamer_1_event(sp : Vector2)
+
+signal spawn_enemy_screamer_2_event(path : Path2D)
+
+signal spawn_enemy_screamer_3_event(sp : Vector2)
+
+
+################################################
+#NOTE:Enemy stuff
+################################################
+
+signal enemy_shooting_event(bullets_list : Array[Area2D])
