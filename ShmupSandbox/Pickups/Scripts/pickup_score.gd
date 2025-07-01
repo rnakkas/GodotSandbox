@@ -34,6 +34,13 @@ var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
 ## TODO Score item pickup:
 	# Need spritesheets for score item levels 1-4
 
+## TODO: 
+	# Create the following logic:
+		# On spawn move towards the center of viewport
+		# Move very fast for a very short amount of time like an explosion
+		# Have a deceleration var and use move_toward to have smooth slowdown of movement
+		# First try with random y values to minimise overlap with other score items on screen
+
 ################################################
 #NOTE: Ready and its helper funcs
 ################################################
