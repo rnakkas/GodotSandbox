@@ -71,19 +71,8 @@ func _handle_movement() -> void:
 # NOTE: Process
 ################################################
 func _process(_delta: float) -> void:
-	_clamp_movement_to_screen_bounds()
+	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position, true, true)
 	_handle_invincibility()
-
-func _clamp_movement_to_screen_bounds() -> void:
-	# Clamp position within bounds
-	var min_bounds : Vector2 = Vector2(0, 0)
-	var max_bounds : Vector2 = viewport_size
-	var offset_x : float = 60.0
-	var offset_y_screen_bottom : float = 60.0
-	var offset_y_screen_top : float = 100.0
-	
-	position.x = clamp(position.x, offset_x - min_bounds.x, max_bounds.x - offset_x)
-	position.y = clamp(position.y, offset_y_screen_top + min_bounds.y, max_bounds.y - offset_y_screen_bottom)
 
 func _handle_invincibility() -> void:
 	if can_be_invincible:

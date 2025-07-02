@@ -23,11 +23,7 @@ class_name ScreamerVar2 extends PathFollow2D
 ################################################
 func _ready() -> void:
 	progress_ratio = 0.0
-	_set_timer_properties()
-
-func _set_timer_properties() -> void:
-	shooting_timer.one_shot = true
-	shooting_timer.wait_time = shoot_time
+	Helper.set_timer_properties(shooting_timer, true, shoot_time)
 
 
 ################################################

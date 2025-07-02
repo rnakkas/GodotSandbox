@@ -34,11 +34,7 @@ var direction : Vector2
 func _ready() -> void:
     speed = base_speed
     velocity = speed * Vector2.LEFT
-    _set_timer_properties()
-
-func _set_timer_properties() -> void:
-    shoot_timer.one_shot = true
-    shoot_timer.wait_time = shoot_time
+    Helper.set_timer_properties(shoot_timer, true, shoot_time)
 
 
 ################################################

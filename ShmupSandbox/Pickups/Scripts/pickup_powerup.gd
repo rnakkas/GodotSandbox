@@ -34,16 +34,11 @@ func _ready() -> void:
 
 	powerups_array = GameManager.powerups.values().slice(1, GameManager.powerups.size())	# Ignore the "None" index in that enum
 	
-	_set_timer_properties()
+	Helper.set_timer_properties(powerup_switch_timer, false, powerup_switch_time)
+	powerup_switch_timer.start()
+
 	_create_sprites_list()
 	_random_powerup_on_spawn()
-	
-	
-## Set timer properties
-func _set_timer_properties() -> void:
-	powerup_switch_timer.one_shot = false
-	powerup_switch_timer.wait_time = powerup_switch_time
-	powerup_switch_timer.start()
 
 ## Create the array of powerups, ignore the fx sprite
 func _create_sprites_list() -> void:

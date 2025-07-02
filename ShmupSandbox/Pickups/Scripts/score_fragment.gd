@@ -22,7 +22,10 @@ var nearest_non_maxed_score_item : PickupScore
 func _ready() -> void:
 	_get_nearest_non_maxed_score_item()
 	_set_direction_to_nearest_non_maxed_score_item()
-	_set_timer_properties()
+	
+	Helper.set_timer_properties(course_correction_timer, false, course_correction_time)
+	course_correction_timer.start()
+	
 	sprite.play("fly")
 
 
@@ -48,12 +51,6 @@ func _set_direction_to_nearest_non_maxed_score_item() -> void:
 	if nearest_non_maxed_score_item == null:
 		return
 	direction = self.global_position.direction_to(nearest_non_maxed_score_item.global_position)
-
-
-func _set_timer_properties() -> void:
-	course_correction_timer.one_shot = false
-	course_correction_timer.wait_time = course_correction_time
-	course_correction_timer.start()
 
 
 ################################################

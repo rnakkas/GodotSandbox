@@ -12,8 +12,7 @@ var is_dead : bool
 # NOTE: Ready
 ################################################
 func _ready() -> void:
-	bomb_cooldown_timer.one_shot = true
-	bomb_cooldown_timer.wait_time = bomb_cooldown_time
+	Helper.set_timer_properties(bomb_cooldown_timer, true, bomb_cooldown_time)
 
 
 ################################################

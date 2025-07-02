@@ -11,14 +11,10 @@ var input_enabled : bool = false
 signal start_pressed()
 
 func _ready() -> void:
-	_set_blink_timer_properties(idle_blink_time)
+	Helper.set_timer_properties(blink_timer, false, idle_blink_time)
 	blink_timer.start()
 	await get_tree().create_timer(0.7).timeout
 	input_enabled = true
-
-func _set_blink_timer_properties(blink_time : float) -> void:
-	blink_timer.wait_time = blink_time
-	blink_timer.one_shot = false
 
 
 func _input(event: InputEvent) -> void:
@@ -28,7 +24,7 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_pressed() && input_enabled:
 		input_enabled = false
-		_set_blink_timer_properties(pressed_blink_time)
+		Helper.set_timer_properties(blink_timer, false, pressed_blink_time)
 		await get_tree().create_timer(1.0).timeout
 		start_pressed.emit()
 

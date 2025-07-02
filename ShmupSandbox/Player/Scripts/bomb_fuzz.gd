@@ -16,13 +16,9 @@ var viewport_size : Vector2
 ################################################
 func _ready() -> void:
 	viewport_size = get_viewport_rect().size
-	_set_timer_properties()
-	_play_animations()
-
-func _set_timer_properties() -> void:
-	detonation_timer.one_shot = true
-	detonation_timer.wait_time = detonation_time
+	Helper.set_timer_properties(detonation_timer, true, detonation_time)
 	detonation_timer.start()
+	_play_animations()
 
 func _play_animations() -> void:
 	bomb_sprite.play("spawn")
@@ -41,18 +37,7 @@ func _physics_process(delta: float) -> void:
 # NOTE: Process
 ################################################
 func _process(_delta: float) -> void:
-	_clamp_movement_to_screen_bounds()
-
-func _clamp_movement_to_screen_bounds() -> void:
-	# Clamp position within bounds
-	var min_bounds : Vector2 = Vector2(0, 0)
-	var max_bounds : Vector2 = viewport_size
-	var offset_x : float = 60.0
-	var offset_y_screen_bottom : float = 20.0
-	var offset_y_screen_top : float = 100.0
-	
-	position.x = clamp(position.x, offset_x - min_bounds.x, max_bounds.x - offset_x)
-	position.y = clamp(position.y, offset_y_screen_top + min_bounds.y, max_bounds.y - offset_y_screen_bottom)
+	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position, true, true)
 
 
 ################################################

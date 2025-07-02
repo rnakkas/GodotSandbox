@@ -58,6 +58,8 @@ signal spawn_enemy_screamer_2_event(path : Path2D)
 
 signal spawn_enemy_screamer_3_event(sp : Vector2)
 
+signal spawn_enemy_soul_carrier_event(sp : Vector2)
+
 
 ################################################
 #NOTE:Enemy stuff

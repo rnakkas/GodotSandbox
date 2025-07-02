@@ -20,8 +20,8 @@ var direction : Vector2 = Vector2.LEFT
 func _ready() -> void:
 	_get_direction_to_player()
 
-	_set_tracker_timer_properties()
-	_set_chase_timer_properties()
+	Helper.set_timer_properties(tracker_timer, false, tracking_time)
+	Helper.set_timer_properties(chase_timer, true, chase_time)
 
 	tracker_timer.start()
 	chase_timer.start()
@@ -32,14 +32,6 @@ func _get_direction_to_player() -> void:
 	if GameManager.player.is_dead:
 		return
 	direction = self.global_position.direction_to(GameManager.player.global_position).normalized()
-
-func _set_tracker_timer_properties() -> void:
-	tracker_timer.one_shot = false
-	tracker_timer.wait_time = tracking_time
-
-func _set_chase_timer_properties() -> void:
-	chase_timer.one_shot = true
-	chase_timer.wait_time = chase_time
 
 
 ################################################
