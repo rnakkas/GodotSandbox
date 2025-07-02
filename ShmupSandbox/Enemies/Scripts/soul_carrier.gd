@@ -26,8 +26,8 @@ var is_dead : bool
 # Score item dropper enemy
 # Flies in from the right
 # After a certain period of time flies back to the right
-# If flying to the left, state 1: only drops 2-3 items
-# When flying back to right, state 2: drops 4-5 items
+# If flying to the left, state 1: only drops 1 item
+# When flying back to right, state 2: drops 3 items
 ################################################
 
 ################################################
