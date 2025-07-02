@@ -165,7 +165,7 @@ func _on_body_entered(body: Node2D) -> void:
 			return
 
 		# Disable area to prevent further pickups
-		set_deferred("monitorable", false)
+		# Keep monitorable as true to prevent weird bouny behaviour with score fragments
 		set_deferred("monitoring", false)
 
 		# Stop moving
