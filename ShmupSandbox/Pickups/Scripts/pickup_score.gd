@@ -41,11 +41,6 @@ var velocity : Vector2
 ## TODO Score item pickup:
 	# Need spritesheets for score item levels 1-4
 
-## TODO: 
-	# check for overlap with other score items
-	# if overlapping, make it move so that they are no longer overlapping
-		
-
 ################################################
 #NOTE: Ready and its helper funcs
 ################################################
@@ -222,7 +217,8 @@ func _play_collect_animation_for_label() -> Tween:
 
 
 ################################################
-#NOTE: Signal connection, logic for when soul fragment hits the score item
+#NOTE: Signal connection:
+	# logic for when soul fragment hits the score item
 ################################################
 func _on_area_entered(area:Area2D) -> void:
 	if area is ScoreFragment:

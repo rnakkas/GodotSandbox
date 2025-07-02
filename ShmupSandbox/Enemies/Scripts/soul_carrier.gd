@@ -17,6 +17,7 @@ var move_time : float
 var direction : Vector2 = Vector2.LEFT
 var velocity : Vector2
 var current_drop : int
+var is_dead : bool
 
 ## TODO: Spritesheets
 
@@ -82,12 +83,16 @@ func _on_move_timer_timeout() -> void:
 # NOTE: Hit by player's bullets, bombs or player
 ################################################
 func _on_area_entered(_area:Area2D) -> void:
+	if self.is_dead: # To prevent simultaneous coliisions with player's bullets
+		return
+	self.is_dead = true
 	_handle_death()
 
 func _on_body_entered(body:Node2D) -> void:
 	if body is PlayerCat:
-		if body.is_dead:
+		if body.is_dead || self.is_dead: # To prevent colliding with dead player and simultaneous collisions
 			return
+		self.is_dead = true
 		_handle_death()
 
 func _handle_death():
