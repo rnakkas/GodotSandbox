@@ -37,11 +37,7 @@ func _ready() -> void:
 	speed = base_speed
 	move_time = randf_range(min_move_time, max_move_time)
 	current_drop = standard_drop
-	_set_timer_properties()
-
-func _set_timer_properties() -> void:
-	move_timer.one_shot = true
-	move_timer.wait_time = move_time
+	Helper.set_timer_properties(move_timer, true, move_time)
 
 
 ################################################

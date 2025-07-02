@@ -7,8 +7,7 @@ class_name GameOverScreen extends Control
 signal game_over_screen_timed_out()
 
 func _ready() -> void:
-	game_over_timer.one_shot = true
-	game_over_timer.wait_time = game_over_screen_time
+	Helper.set_timer_properties(game_over_timer, true, game_over_screen_time)
 
 
 func _on_game_over_timer_timeout() -> void:

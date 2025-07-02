@@ -28,8 +28,8 @@ signal ok_button_pressed()
 func _ready() -> void:
 	_initialize_letters_list()
 	_initialize_letter_containers_list()
-	_set_blink_timer_properties()
-	_set_idle_timer_properties()
+	Helper.set_timer_properties(blink_timer, false, blink_time)
+	Helper.set_timer_properties(idle_timer, true, idle_time)
 
 
 ## Get the list of letters and connect to their signals
@@ -53,19 +53,6 @@ func _initialize_letter_containers_list() -> void:
 func _connect_to_group_signals(node : Control) -> void:
 	if node.has_signal("focus_entered"):
 		node.focus_entered.connect(self._on_focus_entered)
-
-
-## Blinking timer properties
-func _set_blink_timer_properties() -> void:
-	blink_timer.wait_time = blink_time
-	blink_timer.one_shot = false
-
-
-## Idle timer properties
-func _set_idle_timer_properties() -> void:
-	idle_timer.wait_time = idle_time
-	idle_timer.one_shot = true
-
 
 
 ################################################

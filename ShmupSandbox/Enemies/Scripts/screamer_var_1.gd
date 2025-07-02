@@ -37,13 +37,8 @@ var shot_count : int
 func _ready() -> void:
 	speed = base_speed
 	move_time = randf_range(min_move_time, max_move_time)
-	_set_timer_properties()
-
-func _set_timer_properties() -> void:
-	move_timer.one_shot = true
-	move_timer.wait_time = move_time
-	shoot_timer.one_shot = false
-	shoot_timer.wait_time = shoot_time
+	Helper.set_timer_properties(move_timer, true, move_time)
+	Helper.set_timer_properties(shoot_timer, false, shoot_time)
 
 
 ################################################

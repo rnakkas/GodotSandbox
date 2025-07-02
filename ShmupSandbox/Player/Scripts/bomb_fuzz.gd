@@ -16,13 +16,9 @@ var viewport_size : Vector2
 ################################################
 func _ready() -> void:
 	viewport_size = get_viewport_rect().size
-	_set_timer_properties()
-	_play_animations()
-
-func _set_timer_properties() -> void:
-	detonation_timer.one_shot = true
-	detonation_timer.wait_time = detonation_time
+	Helper.set_timer_properties(detonation_timer, true, detonation_time)
 	detonation_timer.start()
+	_play_animations()
 
 func _play_animations() -> void:
 	bomb_sprite.play("spawn")

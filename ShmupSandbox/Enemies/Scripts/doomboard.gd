@@ -44,16 +44,12 @@ func _ready() -> void:
 	set_deferred("monitorable", false)
 	set_deferred("monitoring", false)
 
-	_set_dot_timer_properties()
+	Helper.set_timer_properties(dot_timer, false, dot_time)
 
 func _set_movement_thresholds() -> void:
 	viewport_size = get_viewport_rect().size
 	screen_top_thresh = 0 + offset_y_screen_top
 	screen_bot_thresh = viewport_size.y - offset_y_screen_bottom
-
-func _set_dot_timer_properties() -> void:
-	dot_timer.one_shot = false
-	dot_timer.wait_time = dot_time
 
 func _set_direction() -> void:
 	if global_position.y <= screen_top_thresh:
