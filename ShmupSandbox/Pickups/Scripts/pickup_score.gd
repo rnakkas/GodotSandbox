@@ -14,6 +14,8 @@ class_name PickupScore extends Area2D
 
 @onready var score_label : Label = %score_label
 
+@onready var move_timer : Timer = $move_timer
+
 const min_level : int = 1
 const max_level : int = 4
 const score_level_1 : int = 500
@@ -22,13 +24,14 @@ const score_level_3 : int = 2000
 const score_level_4 : int = 4000
 
 @export var speed : float = 50.0
+@export var spawn_speed : float = 400.0
+@export var deceleration : float = 250.0
 @export_range(min_level,max_level) var level : int = 1
 
-var items_list : Array[AnimatedSprite2D] = []
 var current_item : AnimatedSprite2D
 var current_score : int
-
 var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
+var viewport_size : Vector2
 
 
 ## TODO Score item pickup:
@@ -36,7 +39,8 @@ var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
 
 ## TODO: 
 	# Create the following logic:
-		# On spawn move towards the center of viewport
+		# On spawn move in a random direction
+		# Clamp position to be within viewport bounds
 		# Move very fast for a very short amount of time like an explosion
 		# Have a deceleration var and use move_toward to have smooth slowdown of movement
 		# First try with random y values to minimise overlap with other score items on screen
@@ -47,9 +51,11 @@ var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
 func _ready() -> void:
 	_create_item_collider_map()
 	_set_current_item()
+	_connect_to_signals()
+	
 	score_label.visible = false
 
-	_connect_to_signals()
+	viewport_size = get_viewport_rect().size
 
 	# Play spawn animation then play idle
 	current_item.play("spawn")
@@ -114,6 +120,13 @@ func _on_player_death_event() -> void:
 
 
 ################################################
+#NOTE: Process, limit movement to screen bounds
+################################################
+func _process(_delta: float) -> void:
+	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position)
+
+
+################################################
 #NOTE: Physics process
 ################################################
 func _physics_process(delta: float) -> void:
@@ -132,6 +145,10 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 ################################################
 func _on_body_entered(body: Node2D) -> void:
 	if body is PlayerCat:
+		# If player is dead, do nothin
+		if body.is_dead:
+			return
+
 		# Disable area to prevent further pickups
 		set_deferred("monitorable", false)
 		set_deferred("monitoring", false)
