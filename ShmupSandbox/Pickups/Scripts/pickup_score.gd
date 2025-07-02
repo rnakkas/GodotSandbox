@@ -23,40 +23,45 @@ const score_level_2 : int = 1000
 const score_level_3 : int = 2000
 const score_level_4 : int = 4000
 
-@export var speed : float = 50.0
-@export var spawn_speed : float = 400.0
-@export var deceleration : float = 250.0
+@export var base_speed : float = 55.0
+@export var spawn_speed : float = 350.0
+@export var deceleration : float = 900.0
 @export_range(min_level,max_level) var level : int = 1
+@export var move_time : float = 0.1
 
 var current_item : AnimatedSprite2D
 var current_score : int
 var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
 var viewport_size : Vector2
+var direction : Vector2
+var speed : float
+var velocity : Vector2
 
 
 ## TODO Score item pickup:
 	# Need spritesheets for score item levels 1-4
 
 ## TODO: 
-	# Create the following logic:
-		# On spawn move in a random direction
-		# Clamp position to be within viewport bounds
-		# Move very fast for a very short amount of time like an explosion
-		# Have a deceleration var and use move_toward to have smooth slowdown of movement
-		# First try with random y values to minimise overlap with other score items on screen
+	# check for overlap with other score items
+	# if overlapping, make it move so that they are no longer overlapping
+		
 
 ################################################
 #NOTE: Ready and its helper funcs
 ################################################
 func _ready() -> void:
+	viewport_size = get_viewport_rect().size
+	score_label.visible = false
+	speed = spawn_speed
+
 	_create_item_collider_map()
 	_set_current_item()
 	_connect_to_signals()
+	_set_initial_direction()
 	
-	score_label.visible = false
-
-	viewport_size = get_viewport_rect().size
-
+	Helper.set_timer_properties(move_timer, true, move_time)
+	move_timer.start()
+	
 	# Play spawn animation then play idle
 	current_item.play("spawn")
 	await current_item.animation_finished
@@ -120,17 +125,32 @@ func _on_player_death_event() -> void:
 
 
 ################################################
+#NOTE: Set direction to move on spawn
+################################################
+func _set_initial_direction() -> void:
+	var rand_x : float = randf_range(0, viewport_size.x)
+	var rand_y : float = randf_range(0, viewport_size.y)
+	var rand_vector : Vector2 = Vector2(rand_x, rand_y)
+	direction = self.global_position.direction_to(rand_vector).normalized()
+
+
+################################################
 #NOTE: Process, limit movement to screen bounds
 ################################################
 func _process(_delta: float) -> void:
-	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position)
+	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position, false, true)
 
 
 ################################################
 #NOTE: Physics process
 ################################################
 func _physics_process(delta: float) -> void:
-	global_position += speed * delta * Vector2.LEFT
+	if direction == Vector2.LEFT:
+		velocity = velocity.move_toward(speed * direction, deceleration * delta)
+	else:
+		velocity = speed * direction
+	
+	global_position += velocity * delta
 
 
 ################################################
@@ -211,3 +231,11 @@ func _on_area_entered(area:Area2D) -> void:
 			# Clamp level between 1 and 4
 			level = clamp(level+1, min_level, max_level)
 			_set_current_item()
+
+
+################################################
+#NOTE: Signal connection, logic for setting movement vars after initial spawn
+################################################
+func _on_move_timer_timeout() -> void:
+	speed = base_speed
+	direction = Vector2.LEFT

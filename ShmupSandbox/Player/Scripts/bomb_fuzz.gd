@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 # NOTE: Process
 ################################################
 func _process(_delta: float) -> void:
-	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position)
+	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position, true, true)
 
 
 ################################################

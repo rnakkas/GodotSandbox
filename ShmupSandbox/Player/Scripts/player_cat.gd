@@ -71,7 +71,7 @@ func _handle_movement() -> void:
 # NOTE: Process
 ################################################
 func _process(_delta: float) -> void:
-	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position)
+	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position, true, true)
 	_handle_invincibility()
 
 func _handle_invincibility() -> void:
