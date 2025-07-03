@@ -1,18 +1,11 @@
-[gd_scene load_steps=61 format=3 uid="uid://drn1oajqy3684"]
+[gd_scene load_steps=59 format=3 uid="uid://drn1oajqy3684"]
 
 [ext_resource type="Script" uid="uid://85opciapqat8" path="res://ShmupSandbox/Pickups/Scripts/pickup_powerup.gd" id="1_8m5pr"]
-[ext_resource type="Script" uid="uid://dlh7lg7gj4tlp" path="res://ShmupSandbox/Pickups/Scripts/powerup_pathfollow.gd" id="1_glbyy"]
 [ext_resource type="Texture2D" uid="uid://banrdqkgowv87" path="res://ShmupSandbox/Assets/Pickups/od-v1.png" id="3_8m5pr"]
 [ext_resource type="Texture2D" uid="uid://bvjfrhgvvsyed" path="res://ShmupSandbox/Assets/Pickups/ch-v1.png" id="4_haqd0"]
 [ext_resource type="Texture2D" uid="uid://cd0otonekhged" path="res://ShmupSandbox/Assets/Pickups/fx-v1.png" id="4_p0ehi"]
 [ext_resource type="Texture2D" uid="uid://cpct0bw2yeirq" path="res://ShmupSandbox/Assets/Pickups/fz-v1.png" id="5_67wdi"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="6_aa45h"]
-
-[sub_resource type="Curve2D" id="Curve2D_haqd0"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, -1, -1, -20.4187, -2.52876, 20.4187, 2.52876, 45.3676, -17.6719, 0.466507, -14.9282, -0.466507, 14.9282, 94, 39, 19.5933, -14.9282, -19.5933, 14.9282, 73, 80, 20.5263, 8.86364, -20.5263, -8.86364, 14, 91, 3.73206, 19.1268, -3.73206, -19.1268, -16, 47, 0, 0, 0, 0, -1, -1)
-}
-point_count = 7
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lkxkw"]
 radius = 32.0
@@ -401,72 +394,59 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="PickupPowerup" type="Node2D"]
+[node name="PickupPowerup" type="Area2D"]
+collision_layer = 32
 script = ExtResource("1_8m5pr")
 speed = 30.0
 powerup_switch_time = 2.0
 
-[node name="powerup_switch_timer" type="Timer" parent="."]
-
-[node name="path" type="Path2D" parent="."]
-self_modulate = Color(1, 1, 0, 1)
-position = Vector2(2.82641, 2.63921)
-scale = Vector2(1.17206, 1.16791)
-curve = SubResource("Curve2D_haqd0")
-
-[node name="pathfollow" type="PathFollow2D" parent="path"]
-unique_name_in_owner = true
-position = Vector2(-1, -1)
-scale = Vector2(1.00565, 1)
-rotates = false
-script = ExtResource("1_glbyy")
-pathfollow_speed = 0.2
-
-[node name="powerup_area" type="Area2D" parent="path/pathfollow"]
-unique_name_in_owner = true
+[node name="collider" type="CollisionShape2D" parent="."]
+position = Vector2(1.65435, 1.4713)
 rotation = -1.5708
-collision_layer = 32
-
-[node name="collider" type="CollisionShape2D" parent="path/pathfollow/powerup_area"]
+scale = Vector2(1.16791, 1.17868)
 shape = SubResource("CircleShape2D_lkxkw")
 debug_color = Color(1, 0.639216, 0.121569, 0.172549)
 
-[node name="sprite_od" type="AnimatedSprite2D" parent="path/pathfollow"]
+[node name="sprite_od" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-scale = Vector2(1.5, 1.5)
+position = Vector2(1.65435, 1.4713)
+scale = Vector2(1.76802, 1.75186)
 sprite_frames = SubResource("SpriteFrames_t0yqe")
 animation = &"collect"
 autoplay = "idle"
 
-[node name="sprite_ch" type="AnimatedSprite2D" parent="path/pathfollow"]
+[node name="sprite_ch" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 visible = false
-scale = Vector2(1.5, 1.5)
+position = Vector2(1.65435, 1.4713)
+scale = Vector2(1.76802, 1.75186)
 sprite_frames = SubResource("SpriteFrames_cu70m")
 animation = &"collect"
 autoplay = "idle"
 
-[node name="sprite_fz" type="AnimatedSprite2D" parent="path/pathfollow"]
+[node name="sprite_fz" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 visible = false
-scale = Vector2(1.5, 1.5)
+position = Vector2(1.65435, 1.4713)
+scale = Vector2(1.76802, 1.75186)
 sprite_frames = SubResource("SpriteFrames_60c7r")
 animation = &"collect"
 autoplay = "idle"
 
-[node name="sprite_fx" type="AnimatedSprite2D" parent="path/pathfollow"]
+[node name="sprite_fx" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-scale = Vector2(1.5, 1.5)
+position = Vector2(1.65435, 1.4713)
+scale = Vector2(1.76802, 1.75186)
 sprite_frames = SubResource("SpriteFrames_edng5")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="powerup_label" type="Label" parent="path/pathfollow"]
+[node name="powerup_label" type="Label" parent="."]
 unique_name_in_owner = true
-offset_left = -61.6403
-offset_top = -40.6464
-offset_right = 62.3597
-offset_bottom = -9.6464
+offset_left = -71.0
+offset_top = -46.0
+offset_right = 53.0
+offset_bottom = -15.0
 theme_override_colors/font_outline_color = Color(0.133333, 0.137255, 0.137255, 1)
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("6_aa45h")
@@ -475,9 +455,11 @@ text = "Overdrive"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(126, 51)
+[node name="powerup_switch_timer" type="Timer" parent="."]
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(64, 0)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="powerup_switch_timer" to="." method="_on_powerup_switch_timer_timeout"]
-[connection signal="body_entered" from="path/pathfollow/powerup_area" to="." method="_on_powerup_area_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

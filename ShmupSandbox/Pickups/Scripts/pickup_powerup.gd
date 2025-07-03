@@ -1,4 +1,4 @@
-class_name PickupPowerup extends Node2D
+class_name PickupPowerup extends Area2D
 
 @onready var powerup_switch_timer : Timer = $powerup_switch_timer
 @onready var sprite_fx : AnimatedSprite2D = %sprite_fx
@@ -7,8 +7,6 @@ class_name PickupPowerup extends Node2D
 @onready var sprite_fz : AnimatedSprite2D = %sprite_fz
 @onready var powerup_label : Label = %powerup_label
 @onready var collider_area : Area2D = %powerup_area
-
-@onready var sprites_container : PathFollow2D = %pathfollow
 
 @export var speed : float = 20
 @export var powerup_switch_time : float = 5.5
@@ -48,7 +46,7 @@ func _ready() -> void:
 
 ## Create the array of powerups, ignore the fx sprite
 func _create_sprites_list() -> void:
-	for node : Node in sprites_container.get_children():
+	for node : Node in get_children():
 		if node is AnimatedSprite2D && node != sprite_fx:
 			sprites_list.append(node)
 
@@ -117,23 +115,27 @@ func _switch_powerup() -> void:
 
 
 ################################################
-#NOTE: Despawn when exiting screen left
+#NOTE: Despawn after exiting screen
 ################################################
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	queue_free()
+	call_deferred("queue_free")
 
 
 ################################################
 #NOTE: Logic for when powerup is collected by player
 ################################################
-func _on_powerup_area_body_entered(body:Node2D) -> void:
+func _on_body_entered(body:Node2D) -> void:
 	if body is PlayerCat:
+		## Do nothing if the player is dead
+		if body.is_dead:
+			return
+		
 		## Disable collider area on collection
-		collider_area.set_deferred("monitorable", false)
-		collider_area.set_deferred("monitoring", false)
+		set_deferred("monitorable", false)
+		set_deferred("monitoring", false)
 
-		## Stop the path follow movement on collection
-		sprites_container.pathfollow_speed = 0.0
+		## Stop on collection
+		speed = 0
 
 		## Turn off powerup switch timer
 		powerup_switch_timer.stop()
