@@ -94,7 +94,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		SignalsBus.player_pressed_pause_game_event.emit()
 
 
-
+## TODO: Add signal to spawn a powerup
 ################################################
 # NOTE: Hurtbox signal
 # Handle getting hit by enemies or projectiles

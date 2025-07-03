@@ -29,7 +29,10 @@ static func clamp_movement_to_screen_bounds(
 
     return position
 
-## TODO: update all scripts that set timer properties to use this func
+
+################################################
+# NOTE: Setting timer properties
+################################################
 static func set_timer_properties(timer : Timer, one_shot : bool, wait_time: float) -> void:
     timer.one_shot = one_shot
     timer.wait_time = wait_time

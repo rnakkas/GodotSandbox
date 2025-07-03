@@ -24,6 +24,12 @@ var current_powerup_sprite : AnimatedSprite2D
 var viewport_size : Vector2
 var sprites_list : Array[AnimatedSprite2D] = []
 
+## TODO: Update movement logic
+	# Initial spawn: use similar logic to score item:
+		# - explode towards center of screen
+	# Get rid of path, make it an area2d
+	# Move vertically up and down the screen within y bounds
+	# Move horizontally from right to left
 
 ################################################
 #NOTE: Ready
