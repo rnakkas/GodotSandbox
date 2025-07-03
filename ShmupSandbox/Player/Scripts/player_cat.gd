@@ -94,7 +94,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		SignalsBus.player_pressed_pause_game_event.emit()
 
 
-## TODO: Add signal to spawn a powerup
 ################################################
 # NOTE: Hurtbox signal
 # Handle getting hit by enemies or projectiles
@@ -111,6 +110,8 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	
 	rocket.visible = false # Contains body and thruster sprites
 	death.play("death")
+
+	SignalsBus.spawn_powerup_event.emit(self.global_position)	
 	
 	await death.animation_finished
 	
