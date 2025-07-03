@@ -1,6 +1,7 @@
-class_name PickupPowerup extends Node2D
+class_name PickupPowerup extends Area2D
 
 @onready var powerup_switch_timer : Timer = $powerup_switch_timer
+@onready var move_timer : Timer = $move_timer
 @onready var sprite_fx : AnimatedSprite2D = %sprite_fx
 @onready var sprite_od: AnimatedSprite2D = %sprite_od
 @onready var sprite_ch : AnimatedSprite2D = %sprite_ch
@@ -8,10 +9,12 @@ class_name PickupPowerup extends Node2D
 @onready var powerup_label : Label = %powerup_label
 @onready var collider_area : Area2D = %powerup_area
 
-@onready var sprites_container : PathFollow2D = %pathfollow
-
-@export var speed : float = 20
+@export var base_speed_x: float = 7.5
+@export var base_speed_y : float = 50
+@export var spawn_speed : float = 500.0
+@export var deceleration : float = 1000.0
 @export var powerup_switch_time : float = 5.5
+@export var move_time : float = 0.1
 @export var powerup_score : int = 1000 # Player gets score if current powerup level is maxed out
 
 const idle_anim : String = "idle"
@@ -24,25 +27,47 @@ var current_powerup_sprite : AnimatedSprite2D
 var viewport_size : Vector2
 var sprites_list : Array[AnimatedSprite2D] = []
 
+var direction : Vector2
+var velocity : Vector2
+var idle_state : bool
+
 
 ################################################
 #NOTE: Ready
 ################################################
 func _ready() -> void:
+	# Get viewport size
 	viewport_size = get_viewport_rect().size
+	
+	# Set powerup label to be invisible
 	powerup_label.visible = false
 
+	# Create poowerups list/array
 	powerups_array = GameManager.powerups.values().slice(1, GameManager.powerups.size())	# Ignore the "None" index in that enum
 	
+	# Set timer properties and start timers
 	Helper.set_timer_properties(powerup_switch_timer, false, powerup_switch_time)
+	Helper.set_timer_properties(move_timer, true, move_time)
 	powerup_switch_timer.start()
+	move_timer.start()
 
+	# Create list of sprites
 	_create_sprites_list()
+
+	# Select a random powerup to be active on spawn
 	_random_powerup_on_spawn()
+
+	# Set initial spawn movement direction
+	var screen_ceter : Vector2 = Vector2(viewport_size.x/2, viewport_size.y/2)
+	direction = Helper.set_direction(viewport_size, self.global_position, screen_ceter, false)
+	
+	# Set spawn velocity
+	velocity = spawn_speed * direction
+
 
 ## Create the array of powerups, ignore the fx sprite
 func _create_sprites_list() -> void:
-	for node : Node in sprites_container.get_children():
+	for node : Node in get_children():
 		if node is AnimatedSprite2D && node != sprite_fx:
 			sprites_list.append(node)
 
@@ -70,27 +95,33 @@ func _toggle_powerup_sprite() -> void:
 			powerup_sprite.visible = false
 			powerup_sprite.stop()
 
+
 ################################################
 #NOTE: Physics process
 ################################################
 func _physics_process(delta: float) -> void:
-	global_position.x -= speed * delta
+	if idle_state:
+		# Movement when in idle state
+		# Move slowly from right to left while moving up and down the screen
+		var vel_x : float = base_speed_x * Vector2.LEFT.x
+		var vel_y : float = base_speed_y * direction.y
+		var vel : Vector2 = Vector2(vel_x, vel_y)
+		velocity = velocity.move_toward(vel, deceleration * delta)
+	
+	global_position += velocity * delta
 
 
 ################################################
 #NOTE: Process
 ################################################
 func _process(_delta: float) -> void:
-	_clamp_movement_to_screen_y_bounds()
+	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position, false, true)
 
-func _clamp_movement_to_screen_y_bounds() -> void:
-	# Clamp position within bounds
-	var min_bounds : Vector2 = Vector2(0, 0)
-	var max_bounds : Vector2 = viewport_size
-	var offset_y_screen_bottom : float = 50.0
-	var offset_y_screen_top : float = 50.0
-	
-	position.y = clamp(position.y, offset_y_screen_top + min_bounds.y, max_bounds.y - offset_y_screen_bottom)
+	# Switch y direction if hitting upper or lower screen bounds
+	if position.y <= GameManager.offset_y_screen_top:
+		direction = Vector2.DOWN
+	elif position.y >= viewport_size.y - GameManager.offset_y_screen_bottom:
+		direction = Vector2.UP
 
 
 ################################################
@@ -111,23 +142,27 @@ func _switch_powerup() -> void:
 
 
 ################################################
-#NOTE: Despawn when exiting screen left
+#NOTE: Despawn after exiting screen
 ################################################
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	queue_free()
+	call_deferred("queue_free")
 
 
 ################################################
 #NOTE: Logic for when powerup is collected by player
 ################################################
-func _on_powerup_area_body_entered(body:Node2D) -> void:
+func _on_body_entered(body:Node2D) -> void:
 	if body is PlayerCat:
+		## Do nothing if the player is dead
+		if body.is_dead:
+			return
+		
 		## Disable collider area on collection
-		collider_area.set_deferred("monitorable", false)
-		collider_area.set_deferred("monitoring", false)
+		set_deferred("monitorable", false)
+		set_deferred("monitoring", false)
 
-		## Stop the path follow movement on collection
-		sprites_container.pathfollow_speed = 0.0
+		## Stop on collection
+		direction = Vector2.ZERO
 
 		## Turn off powerup switch timer
 		powerup_switch_timer.stop()
@@ -183,3 +218,11 @@ func _play_collect_anims_for_label() -> Tween:
 	tween.tween_property(powerup_label, "self_modulate", UiUtility.color_transparent, 0.7) # Fade out effect
 
 	return tween
+
+
+################################################
+#NOTE: Set to idle state after initial spawn explosion movement
+################################################
+func _on_move_timer_timeout() -> void:
+	idle_state = true
+	direction = Vector2.UP

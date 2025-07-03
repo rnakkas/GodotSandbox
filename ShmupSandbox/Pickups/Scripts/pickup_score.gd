@@ -52,7 +52,7 @@ func _ready() -> void:
 	_create_item_collider_map()
 	_set_current_item()
 	_connect_to_signals()
-	_set_initial_direction()
+	direction = Helper.set_direction(viewport_size, self.global_position)
 	
 	Helper.set_timer_properties(move_timer, true, move_time)
 	move_timer.start()
@@ -117,16 +117,6 @@ func _on_player_death_event() -> void:
 	# Despawn on player death
 	# TODO: Despawn animations
 	call_deferred("queue_free")
-
-
-################################################
-#NOTE: Set direction to move on spawn
-################################################
-func _set_initial_direction() -> void:
-	var rand_x : float = randf_range(0, viewport_size.x)
-	var rand_y : float = randf_range(0, viewport_size.y)
-	var rand_vector : Vector2 = Vector2(rand_x, rand_y)
-	direction = self.global_position.direction_to(rand_vector).normalized()
 
 
 ################################################
