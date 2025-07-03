@@ -60,6 +60,8 @@ signal spawn_enemy_screamer_3_event(sp : Vector2)
 
 signal spawn_enemy_soul_carrier_event(sp : Vector2)
 
+signal spawn_enemy_rumbler_event(sp : Vector2)
+
 
 ################################################
 #NOTE:Enemy stuff

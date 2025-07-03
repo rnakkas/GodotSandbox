@@ -8,10 +8,8 @@ class_name Doomboard extends Area2D
 @export var onscreen_speed_x : float = 12.5
 @export var onscreen_speed_y : float = 20.0
 @export var max_hp : int = 30
-@export var hit_score : int = 10
 @export var kill_score : int = 250
 @export var dot_time : float = 0.3
-@export var dot_score : int = 2
 @export var offset_y_screen_bottom : float = 120.0
 @export var offset_y_screen_top : float = 120.0
 
@@ -105,7 +103,7 @@ func _on_visible_on_screen_notifier_2d_right_screen_exited() -> void:
 func _on_area_entered(area:Area2D) -> void:
 	if area is PlayerBullet: 
 		hp -= area.damage
-		SignalsBus.score_increased_event.emit(hit_score)
+		SignalsBus.score_increased_event.emit(GameManager.bullet_hit_score)
 	
 	elif area is BombFuzz:
 		damage_from_bomb = area.damage
@@ -128,7 +126,7 @@ func _on_area_exited(area:Area2D) -> void:
 ################################################
 func _on_dot_timer_timeout() -> void:
 	hp -= damage_from_bomb
-	SignalsBus.score_increased_event.emit(dot_score)
+	SignalsBus.score_increased_event.emit(GameManager.bomb_dot_score)
 
 	_health_based_actions()
 
@@ -139,7 +137,7 @@ func _on_dot_timer_timeout() -> void:
 func _on_body_entered(body:Node2D) -> void:
 	if body is PlayerCat:
 		hp -= body.damage
-		SignalsBus.score_increased_event.emit(hit_score)
+		SignalsBus.score_increased_event.emit(GameManager.bullet_hit_score)
 	
 	_health_based_actions()
 

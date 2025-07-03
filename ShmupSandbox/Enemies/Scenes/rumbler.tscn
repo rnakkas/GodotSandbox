@@ -1,0 +1,88 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj48h6cme32is"]
+
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_6qg21"]
+[ext_resource type="Script" uid="uid://cjgsadr8gaseh" path="res://ShmupSandbox/Enemies/Scripts/rumbler.gd" id="1_coak3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_coak3"]
+radius = 59.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bh4jk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}],
+"loop": false,
+"name": &"death",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.15
+}]
+
+[node name="rumbler" type="Area2D"]
+script = ExtResource("1_coak3")
+
+[node name="collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_coak3")
+debug_color = Color(0.972549, 0.384314, 0, 0.580392)
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 0.843137, 0, 1)
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_bh4jk")
+animation = &"death"
+autoplay = "fly"
+
+[node name="screen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(86, 0)
+
+[node name="debug_label" type="Label" parent="."]
+offset_left = -62.0
+offset_top = -68.0
+offset_right = 76.0
+offset_bottom = -19.0
+text = "Enemy - Rumbler
+"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 25
+lifetime = 0.41
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 151.08
+initial_velocity_max = 287.77
+scale_amount_max = 2.5
+
+[node name="move_timer" type="Timer" parent="."]
+
+[node name="shoot_timer" type="Timer" parent="."]
