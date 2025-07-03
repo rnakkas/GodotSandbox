@@ -27,6 +27,12 @@ const life_extend_score_2 : int = 250000
 const score_penallty_multiplier : float = 0.9
 const player_default_bombs : int = 3
 const player_max_bombs : int = 9
+const min_bounds : Vector2 = Vector2(0, 0)
+
+## Offsets for screen bounds
+const offset_x : float = 60.0
+const offset_y_screen_bottom : float = 60.0
+const offset_y_screen_top : float = 100.0
 
 enum powerups {
 	None,			## 0
