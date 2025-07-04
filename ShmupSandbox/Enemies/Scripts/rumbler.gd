@@ -1,4 +1,4 @@
-class_name Rumbler extends Area2D
+class_name Rumbler extends Node2D
 
 @onready var sprite : AnimatedSprite2D = $sprite
 @onready var particles : CPUParticles2D = $CPUParticles2D
@@ -19,7 +19,6 @@ var activated : bool
 
 ## TODO: Spritesheets
 ## TODO: Shooting logic
-## TODO: Getting hit by player, bullets and bombs logic
 
 ################################################
 # NOTE: Rumbler
@@ -84,3 +83,28 @@ func _on_shoot_timer_timeout() -> void:
 	if GameManager.player.is_dead:
 		return
 	print_debug("shoot at player: ", GameManager.player.global_position)
+
+
+
+################################################
+# NOTE: Getting hit by player attacks logic:
+	# Signal connections from damage taker component
+################################################
+func _on_damage_taker_component_damage_taken() -> void:
+	SignalsBus.score_increased_event.emit(GameManager.attack_hit_score)
+
+func _on_damage_taker_component_low_health() -> void:
+	sprite.play("damaged")
+
+func _on_damage_taker_component_health_depleted() -> void:
+	sprite.play("death")
+	particles.emitting = true
+
+	SignalsBus.score_increased_event.emit(kill_score)
+	
+	# Signal to spawn score fragments on death
+	SignalsBus.spawn_score_fragment_event.emit(self.global_position)
+
+	await sprite.animation_finished
+
+	call_deferred("queue_free")

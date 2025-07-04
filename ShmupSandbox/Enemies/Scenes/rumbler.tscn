@@ -1,13 +1,46 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj48h6cme32is"]
+[gd_scene load_steps=6 format=3 uid="uid://cj48h6cme32is"]
 
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_6qg21"]
 [ext_resource type="Script" uid="uid://cjgsadr8gaseh" path="res://ShmupSandbox/Enemies/Scripts/rumbler.gd" id="1_coak3"]
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_bh4jk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_coak3"]
 radius = 59.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bh4jk"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 15.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_6qg21")
@@ -43,14 +76,21 @@ animations = [{
 "speed": 15.15
 }]
 
-[node name="rumbler" type="Area2D"]
-collision_layer = 8
-collision_mask = 67
+[node name="rumbler" type="Node2D"]
 script = ExtResource("1_coak3")
 
-[node name="collider" type="CollisionShape2D" parent="."]
+[node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
+collision_layer = 8
+collision_mask = 67
+script = ExtResource("2_bh4jk")
+dot_timer = NodePath("dot_timer")
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
 shape = SubResource("CircleShape2D_coak3")
 debug_color = Color(0.972549, 0.384314, 0, 0.580392)
+
+[node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(1, 0.843137, 0, 1)
@@ -89,6 +129,10 @@ scale_amount_max = 2.5
 
 [node name="shoot_timer" type="Timer" parent="."]
 
+[connection signal="damage_taken" from="DamageTakerComponent" to="." method="_on_damage_taker_component_damage_taken"]
+[connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
+[connection signal="low_health" from="DamageTakerComponent" to="." method="_on_damage_taker_component_low_health"]
+[connection signal="timeout" from="DamageTakerComponent/dot_timer" to="DamageTakerComponent" method="_on_dot_timer_timeout"]
 [connection signal="screen_entered" from="screen_notifier" to="." method="_on_screen_notifier_screen_entered"]
 [connection signal="screen_exited" from="screen_notifier" to="." method="_on_screen_notifier_screen_exited"]
 [connection signal="timeout" from="onscreen_timer" to="." method="_on_onscreen_timer_timeout"]
