@@ -1,12 +1,12 @@
 class_name DamageTakerComponent extends Area2D
 
-@export var max_hp : int = 20
+@export var max_hp : int = 1
 @export var dot_timer : Timer
 
-const dot_time : float = 0.4
+const dot_time : float = 0.35
 
-var hp : int = max_hp
-var low_hp_threshold : int = round((max_hp as float)/3)
+var hp : int
+var low_hp_threshold : int
 var damage_from_bomb: int
 
 signal damage_taken()
@@ -15,13 +15,25 @@ signal health_depleted()
 
 func _ready() -> void:
 	_connect_to_own_signals()
-	Helper.set_timer_properties(dot_timer, false, dot_time)
+	
+	hp = max_hp
+	low_hp_threshold = round((max_hp as float)/3)
+
+	# Default collision layer and mask values
+	collision_layer = 8 # Layer name: enemy
+	collision_mask = 67 # Mask names: player, player_bullet, player_bomb
+
+	if dot_timer:
+		Helper.set_timer_properties(dot_timer, false, dot_time)
 
 
 func _connect_to_own_signals() -> void:
 	area_entered.connect(self._on_area_entered)
 	area_exited.connect(self._on_area_exited)
 	body_entered.connect(self._on_body_entered)
+
+	if dot_timer:
+		dot_timer.timeout.connect(self._on_dot_timer_timeout)
 
 
 func _on_area_entered(area:Area2D) -> void:
@@ -32,14 +44,17 @@ func _on_area_entered(area:Area2D) -> void:
 	elif area is BombFuzz:
 		damage_from_bomb = area.damage
 		hp -= damage_from_bomb
-		dot_timer.start()
+
+		if dot_timer:
+			dot_timer.start()
 	
 	_health_based_actions()
 
 
 func _on_area_exited(area:Area2D) -> void:
 	if area is BombFuzz:
-		dot_timer.stop()
+		if dot_timer:
+			dot_timer.stop()
 
 
 func _on_dot_timer_timeout() -> void:
@@ -61,7 +76,7 @@ func _health_based_actions() -> void:
 	if hp > 0 && hp <= low_hp_threshold:
 		low_health.emit()
 	elif hp <= 0:
-		if !dot_timer.is_stopped():
+		if dot_timer && !dot_timer.is_stopped():
 			dot_timer.stop()
 		set_deferred("monitorable", false)
 		set_deferred("monitoring", false)

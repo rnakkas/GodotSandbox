@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://xwrfbo75ygd6"]
+[gd_scene load_steps=6 format=3 uid="uid://xwrfbo75ygd6"]
 
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_3oxp0"]
 [ext_resource type="Script" uid="uid://bx2s3f5y3kq3h" path="res://ShmupSandbox/Enemies/Scripts/boomer.gd" id="1_yjgq2"]
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_uaepe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3oxp0"]
 radius = 27.7308
@@ -31,7 +32,7 @@ animations = [{
 "texture": ExtResource("1_3oxp0")
 }],
 "loop": false,
-"name": &"explode",
+"name": &"death",
 "speed": 15.0
 }, {
 "frames": [{
@@ -43,12 +44,16 @@ animations = [{
 "speed": 15.15
 }]
 
-[node name="boomer" type="Area2D"]
-collision_layer = 8
-collision_mask = 67
+[node name="boomer" type="Node2D"]
 script = ExtResource("1_yjgq2")
 
-[node name="collider" type="CollisionShape2D" parent="."]
+[node name="DamageTakerComponent" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 67
+script = ExtResource("2_uaepe")
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
 shape = SubResource("CircleShape2D_3oxp0")
 debug_color = Color(0.808198, 0, 0, 0.419608)
 
@@ -56,7 +61,7 @@ debug_color = Color(0.808198, 0, 0, 0.419608)
 self_modulate = Color(1, 0, 0, 1)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_1qxde")
-animation = &"fly"
+animation = &"death"
 autoplay = "fly"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
@@ -87,8 +92,7 @@ scale_amount_max = 1.6
 
 [node name="chase_timer" type="Timer" parent="."]
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="tracker_timer" to="." method="_on_tracker_timer_timeout"]
 [connection signal="timeout" from="chase_timer" to="." method="_on_chase_timer_timeout"]

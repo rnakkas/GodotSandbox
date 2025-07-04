@@ -83,6 +83,7 @@ script = ExtResource("1_coak3")
 collision_layer = 8
 collision_mask = 67
 script = ExtResource("2_bh4jk")
+max_hp = 20
 dot_timer = NodePath("dot_timer")
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
 
@@ -132,7 +133,6 @@ scale_amount_max = 2.5
 [connection signal="damage_taken" from="DamageTakerComponent" to="." method="_on_damage_taker_component_damage_taken"]
 [connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
 [connection signal="low_health" from="DamageTakerComponent" to="." method="_on_damage_taker_component_low_health"]
-[connection signal="timeout" from="DamageTakerComponent/dot_timer" to="DamageTakerComponent" method="_on_dot_timer_timeout"]
 [connection signal="screen_entered" from="screen_notifier" to="." method="_on_screen_notifier_screen_entered"]
 [connection signal="screen_exited" from="screen_notifier" to="." method="_on_screen_notifier_screen_exited"]
 [connection signal="timeout" from="onscreen_timer" to="." method="_on_onscreen_timer_timeout"]
