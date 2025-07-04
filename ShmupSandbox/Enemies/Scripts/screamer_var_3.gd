@@ -1,5 +1,4 @@
-extends Area2D
-class_name ScreamerVar3
+class_name ScreamerVar3 extends Node2D
 
 @onready var sprite : AnimatedSprite2D = $sprite
 @onready var particles : CPUParticles2D = $CPUParticles2D
@@ -88,23 +87,11 @@ func _on_shoot_timer_timeout() -> void:
 
 
 ################################################
-# NOTE: Hit by player's bullets, bombs or player
+# NOTE: Getting hit by player attacks logic:
+	# Signal connections from damage taker component
 ################################################
-func _on_area_entered(_area:Area2D) -> void:
-    _handle_death()
-
-
-func _on_body_entered(body:Node2D) -> void:
-    if body is PlayerCat:
-        if body.is_dead:
-            return
-        _handle_death()
-
-func _handle_death():
+func _on_damage_taker_component_health_depleted() -> void:
     shoot_timer.stop()
-
-    set_deferred("monitorable", false)
-    set_deferred("monitoring", false)
 
     speed = speed/2
 
@@ -117,4 +104,3 @@ func _handle_death():
     await sprite.animation_finished
 
     call_deferred("queue_free")
-

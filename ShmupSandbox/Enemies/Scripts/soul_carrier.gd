@@ -1,4 +1,4 @@
-class_name SoulCarrier extends Area2D
+class_name SoulCarrier extends Node2D
 
 @onready var sprite : AnimatedSprite2D = $sprite
 @onready var particles : CPUParticles2D = $CPUParticles2D
@@ -76,25 +76,10 @@ func _on_move_timer_timeout() -> void:
 
 
 ################################################
-# NOTE: Hit by player's bullets, bombs or player
+# NOTE: Getting hit by player attacks logic:
+	# Signal connections from damage taker component
 ################################################
-func _on_area_entered(_area:Area2D) -> void:
-	if self.is_dead: # To prevent simultaneous coliisions with player's bullets
-		return
-	self.is_dead = true
-	_handle_death()
-
-func _on_body_entered(body:Node2D) -> void:
-	if body is PlayerCat:
-		if body.is_dead || self.is_dead: # To prevent colliding with dead player and simultaneous collisions
-			return
-		self.is_dead = true
-		_handle_death()
-
-func _handle_death():
-	set_deferred("monitorable", false)
-	set_deferred("monitoring", false)
-
+func _on_damage_taker_component_health_depleted() -> void:
 	speed = speed/4
 
 	sprite.play("death")

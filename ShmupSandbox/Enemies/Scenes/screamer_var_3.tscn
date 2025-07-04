@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://coy1q1l1nkimg"]
+[gd_scene load_steps=6 format=3 uid="uid://coy1q1l1nkimg"]
 
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_aj1v5"]
 [ext_resource type="Script" uid="uid://b2fgakpvprrjh" path="res://ShmupSandbox/Enemies/Scripts/screamer_var_3.gd" id="1_nl2lu"]
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_omj5e"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nl2lu"]
 radius = 27.7308
@@ -43,12 +44,14 @@ animations = [{
 "speed": 15.15
 }]
 
-[node name="screamer_var_3" type="Area2D"]
-collision_layer = 8
-collision_mask = 67
+[node name="screamer_var_3" type="Node2D"]
 script = ExtResource("1_nl2lu")
 
-[node name="collider" type="CollisionShape2D" parent="."]
+[node name="DamageTakerComponent" type="Area2D" parent="."]
+script = ExtResource("2_omj5e")
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
 shape = SubResource("CircleShape2D_nl2lu")
 debug_color = Color(0.306551, 0.275169, 1, 0.419608)
 
@@ -86,8 +89,7 @@ scale_amount_max = 2.5
 
 [node name="shoot_timer" type="Timer" parent="."]
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
 [connection signal="screen_entered" from="screen_notifier" to="." method="_on_screen_notifier_screen_entered"]
 [connection signal="screen_exited" from="screen_notifier" to="." method="_on_screen_notifier_screen_exited"]
 [connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]
