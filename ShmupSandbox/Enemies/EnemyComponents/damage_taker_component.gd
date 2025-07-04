@@ -38,9 +38,11 @@ func _connect_to_own_signals() -> void:
 
 func _on_area_entered(area:Area2D) -> void:
 	if area is PlayerBullet: 
+		if hp <= 0: # Do nothing if hp is already zero
+			return
 		hp -= area.damage
 		damage_taken.emit()
-	
+
 	elif area is BombFuzz:
 		damage_from_bomb = area.damage
 		hp -= damage_from_bomb
@@ -66,6 +68,8 @@ func _on_dot_timer_timeout() -> void:
 
 func _on_body_entered(body:Node2D) -> void:
 	if body is PlayerCat:
+		if body.is_dead: # Don't collide with dead player
+			return
 		hp -= body.damage
 		damage_taken.emit()
 	
