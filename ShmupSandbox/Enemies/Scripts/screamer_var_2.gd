@@ -22,7 +22,7 @@ class_name ScreamerVar2 extends PathFollow2D
 ################################################
 func _ready() -> void:
 	progress_ratio = 0.0
-	Helper.set_timer_properties(shooting_timer, true, shoot_time)
+	# Helper.set_timer_properties(shooting_timer, true, shoot_time)
 
 
 ################################################
@@ -50,16 +50,16 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 ################################################
 # NOTE: Shooting
 ################################################
-func _on_shooting_timer_timeout() -> void:
-	_handle_shooting()
+# func _on_shooting_timer_timeout() -> void:
+# 	_handle_shooting()
 
-func _handle_shooting() -> void:
-	var bullets_list : Array[Area2D]
-	var bullet : EnemyBulletBasic = SceneManager.screamer_bullet_scene.instantiate()
-	bullet.global_position = self.global_position
-	bullets_list.append(bullet)
+# func _handle_shooting() -> void:
+# 	var bullets_list : Array[Area2D]
+# 	var bullet : EnemyBulletBasic = SceneManager.screamer_bullet_scene.instantiate()
+# 	bullet.global_position = self.global_position
+# 	bullets_list.append(bullet)
 	
-	SignalsBus.enemy_shooting_event.emit(bullets_list)
+# 	SignalsBus.enemy_shooting_event.emit(bullets_list)
 	
 
 ################################################

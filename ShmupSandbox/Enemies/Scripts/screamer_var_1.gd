@@ -21,6 +21,11 @@ var velocity : Vector2
 var shot_count : int
 
 ## TODO: Spritesheets
+## TODO: Screen notifier:
+	# Consolidate into 1 notifier
+	# flip the notifier's position based on the movement:
+		# On spawn, notifier is on the right
+		# When screen time runs out and moving back to the right, notifier is on the left
 
 ################################################
 # NOTE: Screamer Variant 1
@@ -82,6 +87,10 @@ func _on_shoot_timer_timeout() -> void:
 		var dir_y : float = randf_range(0, viewport_size.y)
 		direction = self.global_position.direction_to(Vector2(viewport_size.x, dir_y))
 	
+	# Don't shoot if player is dead
+	if GameManager.player.is_dead:
+		return
+
 	var player_position = self.global_position.direction_to(GameManager.player.global_position).normalized()
 	var bullet : EnemyBulletBasic = SceneManager.screamer_bullet_scene.instantiate()
 	var bullets_list : Array[Area2D]

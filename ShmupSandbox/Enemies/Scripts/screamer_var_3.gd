@@ -23,7 +23,7 @@ var direction : Vector2
 # Flies in from the right
 # Fly in straight line from right to left
 # Slow down and shoot when on screen
-# Then Accelerate to max speed when on screen
+# Then Accelerate to max speed to fly offscreen to the left
 # Shoot once when on screen
 ################################################
 
