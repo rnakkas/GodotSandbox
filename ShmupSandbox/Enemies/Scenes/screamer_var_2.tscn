@@ -59,12 +59,11 @@ metadata/_custom_type_script = "uid://bvted7bsjs0so"
 shape = SubResource("CircleShape2D_bxwr7")
 debug_color = Color(0, 0.792157, 0.858824, 0.380392)
 
-[node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer", "screen_notifier")]
+[node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("3_ia6iw")
 shoot_timer = NodePath("../shooting_timer")
 shoot_time = 0.3
 one_shot = true
-screen_notifier = NodePath("../VisibleOnScreenNotifier2D")
 bullet_scene = ExtResource("4_bxwr7")
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 

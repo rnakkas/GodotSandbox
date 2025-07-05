@@ -1,34 +1,35 @@
 class_name ScreamerVar3 extends Node2D
 
-@onready var sprite : AnimatedSprite2D = $sprite
-@onready var particles : CPUParticles2D = $CPUParticles2D
-@onready var shoot_timer : Timer = $shoot_timer
+@onready var sprite: AnimatedSprite2D = $sprite
+@onready var particles: CPUParticles2D = $CPUParticles2D
+@onready var shoot_timer: Timer = $shoot_timer
 
-@export var base_speed : float = 250.0
-@export var max_speed : float = 510.0
-@export var acceleration : float = 225.0
-@export var deceleration : float = 80.0
-@export var kill_score : int = 100
-@export var shoot_time : float = 0.6
+@export var base_speed: float = 250.0
+@export var max_speed: float = 510.0
+@export var acceleration: float = 225.0
+@export var deceleration: float = 80.0
+@export var kill_score: int = 100
+@export var shoot_time: float = 0.6
 
-var speed : float
-var velocity : Vector2
-var direction : Vector2
+var speed: float
+var velocity: Vector2
+var direction: Vector2
 
 ## TODO: Spritesheets
 
 ################################################
-# NOTE: Screamer Variant 3
+# SCREAMER VARIANT 3
 # Popcorn enemy
 # Flies in from the right
 # Fly in straight line from right to left
 # Slow down and shoot when on screen
+# Shoot at player position (targeted shooting)
 # Then Accelerate to max speed to fly offscreen to the left
 # Shoot once when on screen
 ################################################
 
 ################################################
-# NOTE: Ready
+# Ready
 ################################################
 func _ready() -> void:
 	speed = base_speed
@@ -37,7 +38,7 @@ func _ready() -> void:
 
 
 ################################################
-# NOTE: Movement logic
+# Movement logic
 ################################################
 func _physics_process(delta: float) -> void:
 	if direction == Vector2.ZERO:
@@ -48,7 +49,7 @@ func _physics_process(delta: float) -> void:
 
 
 ################################################
-# NOTE: Slow down and start timer for shooting when on screen
+# Slow down and start timer for shooting when on screen
 ################################################
 func _on_screen_notifier_screen_entered() -> void:
 	direction = Vector2.ZERO
@@ -56,44 +57,29 @@ func _on_screen_notifier_screen_entered() -> void:
 
 
 ################################################
-# NOTE: Despawn after going offscreen
+# Despawn after going offscreen
 ################################################
 func _on_screen_notifier_screen_exited() -> void:
 	call_deferred("queue_free")
 
 
 ################################################
-# NOTE: Shooting logic
+# Shooting logic
 ################################################
 func _on_shoot_timer_timeout() -> void:
-	# Set speed to max to accelerate to
+	# Set speed to max to accelerate towards once shooting is done
 	direction = Vector2.LEFT
 	speed = max_speed
 
-	# Don't shoot if player is dead
-	if GameManager.player.is_dead:
-		return
-	
-	# Main shooting logic
-	var player_position : Vector2 = self.global_position.direction_to(GameManager.player.global_position)
-	var bullets_list : Array[Area2D] = []
-	var bullet : EnemyBulletBasic = SceneManager.screamer_bullet_scene.instantiate()
-	
-	bullet.global_position = self.global_position
-	bullet.direction = player_position
-	bullets_list.append(bullet)
-	
-	SignalsBus.enemy_shooting_event.emit(bullets_list)
-
 
 ################################################
-# NOTE: Getting hit by player attacks logic:
+# Getting hit by player attacks logic:
 	# Signal connections from damage taker component
 ################################################
 func _on_damage_taker_component_health_depleted() -> void:
 	shoot_timer.stop()
 
-	speed = speed/2
+	speed = speed / 2
 
 	sprite.play("death")
 	particles.emitting = true
