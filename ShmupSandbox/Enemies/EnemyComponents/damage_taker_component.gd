@@ -1,7 +1,10 @@
 class_name DamageTakerComponent extends Area2D
 
-@export var max_hp : int = 1
-@export var dot_timer : Timer
+# Default health, change this per enemy
+@export var max_hp : int = 1 
+
+# Timer for damage over time, i.e. for player bombs. Can be null for enemies that die in one hit
+@export var dot_timer : Timer 
 
 const dot_time : float = 0.35
 
@@ -27,6 +30,7 @@ func _ready() -> void:
 		Helper.set_timer_properties(dot_timer, false, dot_time)
 
 
+# Programmatically connect to own area monitoring signals
 func _connect_to_own_signals() -> void:
 	area_entered.connect(self._on_area_entered)
 	area_exited.connect(self._on_area_exited)
@@ -36,6 +40,7 @@ func _connect_to_own_signals() -> void:
 		dot_timer.timeout.connect(self._on_dot_timer_timeout)
 
 
+# Getting hit by player's bullets or bombs
 func _on_area_entered(area:Area2D) -> void:
 	if area is PlayerBullet: 
 		if hp <= 0: # Do nothing if hp is already zero
@@ -53,12 +58,14 @@ func _on_area_entered(area:Area2D) -> void:
 	_health_based_actions()
 
 
+# When player's bomb ends
 func _on_area_exited(area:Area2D) -> void:
 	if area is BombFuzz:
 		if dot_timer:
 			dot_timer.stop()
 
 
+# Damage over time when in player bomb area
 func _on_dot_timer_timeout() -> void:
 	hp -= damage_from_bomb
 	damage_taken.emit()
@@ -66,6 +73,7 @@ func _on_dot_timer_timeout() -> void:
 	_health_based_actions()
 
 
+# Getting hit by the player
 func _on_body_entered(body:Node2D) -> void:
 	if body is PlayerCat:
 		if body.is_dead: # Don't collide with dead player
@@ -76,6 +84,7 @@ func _on_body_entered(body:Node2D) -> void:
 	_health_based_actions()
 
 
+# Helper function for various health related actions
 func _health_based_actions() -> void:
 	if hp > 0 && hp <= low_hp_threshold:
 		low_health.emit()

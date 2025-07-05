@@ -83,7 +83,7 @@ func _on_shoot_timer_timeout() -> void:
 		direction = self.global_position.direction_to(Vector2(viewport_size.x, dir_y))
 	
 	var player_position = self.global_position.direction_to(GameManager.player.global_position).normalized()
-	var bullet : ScreamerBullet = SceneManager.screamer_bullet_scene.instantiate()
+	var bullet : EnemyBulletBasic = SceneManager.screamer_bullet_scene.instantiate()
 	var bullets_list : Array[Area2D]
 
 	bullet.global_position = self.global_position

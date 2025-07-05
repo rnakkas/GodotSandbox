@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bbfhd7y4k5cbl"]
 
-[ext_resource type="Script" uid="uid://b0tnrm0yrs5h7" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.gd" id="1_fyijd"]
+[ext_resource type="Script" uid="uid://b0tnrm0yrs5h7" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scripts/enemy_bullet_basic.gd" id="1_fyijd"]
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_jabtu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fyijd"]
@@ -69,7 +69,3 @@ debug_color = Color(1, 0, 0, 0.137255)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(32, 0)
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

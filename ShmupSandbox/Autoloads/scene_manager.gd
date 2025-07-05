@@ -1,13 +1,13 @@
 extends Node
 
 ################################################
-#NOTE: Scene Manager
-# Holds and preloads all required packed scenes
-# May be extended in future to handle scene transitions etc
+# SCENE MANAGER:
+#   Holds and preloads all required packed scenes
+#   May be extended in future to handle scene transitions etc
 ################################################
 
 ################################################
-#NOTE: Packed scenes
+# Packed Scenes
 ################################################
 ## Game
 const game_scene : PackedScene = preload("res://ShmupSandbox/Main/Scenes/game.tscn")
@@ -42,3 +42,4 @@ const rumbler_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/rumb
 
 ## Enemy bullets
 const screamer_bullet_scene : PackedScene = preload("res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn")
+const rumbler_bullet_scene : PackedScene = preload("res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/rumbler_bullet.tscn")

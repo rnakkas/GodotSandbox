@@ -55,7 +55,7 @@ func _on_shooting_timer_timeout() -> void:
 
 func _handle_shooting() -> void:
 	var bullets_list : Array[Area2D]
-	var bullet : ScreamerBullet = SceneManager.screamer_bullet_scene.instantiate()
+	var bullet : EnemyBulletBasic = SceneManager.screamer_bullet_scene.instantiate()
 	bullet.global_position = self.global_position
 	bullets_list.append(bullet)
 	
