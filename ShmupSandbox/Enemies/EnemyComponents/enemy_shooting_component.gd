@@ -39,6 +39,10 @@ func _handle_non_targeted_shooting() -> void:
 
 
 func _handle_targeted_shooting() -> void:
+	# Don't shoot if there is no player
+	if not GameManager.player:
+		return
+	
 	# Don't shoot if player is dead
 	if GameManager.player.is_dead:
 		return

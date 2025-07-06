@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dt0s5ksc8jx0a"]
+[gd_scene load_steps=8 format=3 uid="uid://dt0s5ksc8jx0a"]
 
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_gc5qm"]
 [ext_resource type="Script" uid="uid://cpyx786v7e4kt" path="res://ShmupSandbox/Enemies/Scripts/screamer_var_1.gd" id="1_qtyhs"]
 [ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_gsm1g"]
+[ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="3_o6pm4"]
+[ext_resource type="PackedScene" uid="uid://bbfhd7y4k5cbl" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn" id="4_8cdg7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qtyhs"]
 radius = 27.7308
@@ -49,12 +51,19 @@ script = ExtResource("1_qtyhs")
 
 [node name="DamageTakerComponent" type="Area2D" parent="."]
 script = ExtResource("2_gsm1g")
-max_hp = 1
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
 
 [node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
 shape = SubResource("CircleShape2D_qtyhs")
 debug_color = Color(0.306551, 0.275169, 1, 0.419608)
+
+[node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("3_o6pm4")
+shoot_timer = NodePath("../shoot_timer")
+shoot_time = 1.8
+bullet_scene = ExtResource("4_8cdg7")
+targeted_shot = true
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(0.472827, 0.439253, 1, 1)
@@ -92,12 +101,12 @@ initial_velocity_min = 151.08
 initial_velocity_max = 287.77
 scale_amount_max = 2.5
 
-[node name="move_timer" type="Timer" parent="."]
+[node name="onscreen_timer" type="Timer" parent="."]
 
 [node name="shoot_timer" type="Timer" parent="."]
 
 [connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
 [connection signal="screen_entered" from="onscreen_notifier" to="." method="_on_onscreen_notifier_screen_entered"]
 [connection signal="screen_exited" from="offscreen_notifier" to="." method="_on_offscreen_notifier_screen_exited"]
-[connection signal="timeout" from="move_timer" to="." method="_on_move_timer_timeout"]
+[connection signal="timeout" from="onscreen_timer" to="." method="_on_onscreen_timer_timeout"]
 [connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]

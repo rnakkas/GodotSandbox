@@ -1,39 +1,33 @@
 class_name ScreamerVar1 extends Node2D
 
-@onready var sprite : AnimatedSprite2D = $sprite
-@onready var particles : CPUParticles2D = $CPUParticles2D
-@onready var move_timer : Timer = $move_timer
-@onready var shoot_timer : Timer = $shoot_timer
+@onready var sprite: AnimatedSprite2D = $sprite
+@onready var particles: CPUParticles2D = $CPUParticles2D
+@onready var onscreen_timer: Timer = $onscreen_timer
+@onready var shoot_timer: Timer = $shoot_timer
 
-@export var base_speed : float = 500.0
-@export var acceleration : float = 600.0
-@export var deceleration : float = 610.0
-@export var kill_score : int = 100
-@export var max_move_time : float = 0.3
-@export var min_move_time : float = 0.1
-@export var shoot_time : float = 0.8
-@export var shot_limit : int = 3
+@export var base_speed: float = 500.0
+@export var acceleration: float = 600.0
+@export var deceleration: float = 610.0
+@export var kill_score: int = 100
+@export var max_onscreen_time: float = 8.0
+@export var min_onscreen_time: float = 5.0
+@export var shoot_time: float = 1.8
 
-var speed : float
-var move_time : float
-var direction : Vector2 = Vector2.LEFT
-var velocity : Vector2
-var shot_count : int
+var speed: float
+var onscreen_time: float
+var direction: Vector2 = Vector2.LEFT
+var velocity: Vector2
 
 ## TODO: Spritesheets
-## TODO: Screen notifier:
-	# Consolidate into 1 notifier
-	# flip the notifier's position based on the movement:
-		# On spawn, notifier is on the right
-		# When screen time runs out and moving back to the right, notifier is on the left
 
 ################################################
-# NOTE: Screamer Variant 1
+# SCREAMER VARIANT 1
 # Popcorn enemy
 # Flies in from the right
-# Stops
-# Shoots 3 times at player
-# Flies off back to the right
+# Slows to a stop
+# Stays on screen for 5 - 8 seconds
+# Shoots as long as on screen
+# Flies off back to the right after screen time elapses
 ################################################
 
 ################################################
@@ -41,8 +35,8 @@ var shot_count : int
 ################################################
 func _ready() -> void:
 	speed = base_speed
-	move_time = randf_range(min_move_time, max_move_time)
-	Helper.set_timer_properties(move_timer, true, move_time)
+	onscreen_time = randf_range(min_onscreen_time, max_onscreen_time)
+	Helper.set_timer_properties(onscreen_timer, true, onscreen_time)
 	Helper.set_timer_properties(shoot_timer, false, shoot_time)
 
 
@@ -59,46 +53,24 @@ func _physics_process(delta: float) -> void:
 
 
 ################################################
-# NOTE: Start timer for moevement stop when onscreen
+# NOTE: Start timers for screen time and shooting
 ################################################
 func _on_onscreen_notifier_screen_entered() -> void:
-	move_timer.start()
-
-
-################################################
-# NOTE: When moving stops, start counter to start shooting
-################################################
-func _on_move_timer_timeout() -> void:
+	onscreen_timer.start()
+	shoot_timer.start(shoot_time / 6)
+	shoot_timer.wait_time = shoot_time
 	direction = Vector2.ZERO
-	shoot_timer.start()
-
+	deceleration = randf_range(deceleration / 2, deceleration * 1.5)
 
 
 ################################################
-# NOTE: Shooting logic
+# NOTE: Screen time elapses, fly off
 ################################################
-func _on_shoot_timer_timeout() -> void:
-	shot_count += 1
-
-	# Stop shooting and fly off if shot limit is reached or if player is dead
-	if shot_count >= shot_limit || GameManager.player.is_dead:
-		shoot_timer.stop()
-		var viewport_size : Vector2 = get_viewport_rect().size
-		var dir_y : float = randf_range(0, viewport_size.y)
-		direction = self.global_position.direction_to(Vector2(viewport_size.x, dir_y))
-	
-	# Don't shoot if player is dead
-	if GameManager.player.is_dead:
-		return
-
-	var player_position = self.global_position.direction_to(GameManager.player.global_position).normalized()
-	var bullet : EnemyBulletBasic = SceneManager.screamer_bullet_scene.instantiate()
-	var bullets_list : Array[Area2D]
-
-	bullet.global_position = self.global_position
-	bullet.direction = player_position
-	bullets_list.append(bullet)
-	SignalsBus.enemy_shooting_event.emit(bullets_list)
+func _on_onscreen_timer_timeout() -> void:
+	shoot_timer.stop()
+	var viewport_size: Vector2 = get_viewport_rect().size
+	var dir_y: float = randf_range(0, viewport_size.y)
+	direction = self.global_position.direction_to(Vector2(viewport_size.x, dir_y))
 
 
 ################################################
@@ -115,7 +87,7 @@ func _on_offscreen_notifier_screen_exited() -> void:
 func _on_damage_taker_component_health_depleted() -> void:
 	shoot_timer.stop()
 
-	speed = speed/2
+	speed = speed / 2
 
 	sprite.play("death")
 	particles.emitting = true
