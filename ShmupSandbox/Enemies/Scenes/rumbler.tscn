@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cj48h6cme32is"]
+[gd_scene load_steps=8 format=3 uid="uid://cj48h6cme32is"]
 
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_6qg21"]
 [ext_resource type="Script" uid="uid://cjgsadr8gaseh" path="res://ShmupSandbox/Enemies/Scripts/rumbler.gd" id="1_coak3"]
 [ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_bh4jk"]
 [ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="3_yl0mp"]
+[ext_resource type="PackedScene" uid="uid://bbfhd7y4k5cbl" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn" id="4_mp8x0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_coak3"]
 radius = 59.0
@@ -94,8 +95,14 @@ debug_color = Color(0.972549, 0.384314, 0, 0.580392)
 
 [node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
 
-[node name="EnemyShootingComponent" type="Node2D" parent="."]
+[node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("3_yl0mp")
+shoot_timer = NodePath("../shoot_timer")
+shoot_time = 3.3
+bullets_per_shot = 3
+shot_spread_angle = 45.0
+bullet_scene = ExtResource("4_mp8x0")
+targeted_shot = true
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]

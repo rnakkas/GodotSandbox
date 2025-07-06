@@ -1,21 +1,20 @@
 class_name Rumbler extends Node2D
 
-@onready var sprite : AnimatedSprite2D = $sprite
-@onready var particles : CPUParticles2D = $CPUParticles2D
-@onready var onscreen_timer : Timer = $onscreen_timer
-@onready var shoot_timer : Timer = $shoot_timer
+@onready var sprite: AnimatedSprite2D = $sprite
+@onready var particles: CPUParticles2D = $CPUParticles2D
+@onready var onscreen_timer: Timer = $onscreen_timer
+@onready var shoot_timer: Timer = $shoot_timer
 
-@export var offscreen_speed : float = 400.0
+@export var offscreen_speed: float = 400.0
 @export var onscreen_speed: float = 50.0
-@export var acceleration : float = 600.0
-@export var deceleration : float = 1500.0
-@export var kill_score : int = 250
-@export var screen_time : float = 10.0
-@export var shoot_time : float = 3.3
+@export var acceleration: float = 600.0
+@export var deceleration: float = 1500.0
+@export var kill_score: int = 250
+@export var screen_time: float = 10.0
 
-var direction : Vector2 = Vector2.LEFT
-var velocity : Vector2
-var activated : bool
+var direction: Vector2 = Vector2.LEFT
+var velocity: Vector2
+var activated: bool
 
 ## TODO: Spritesheets
 ## TODO: Shooting logic
@@ -37,7 +36,6 @@ var activated : bool
 func _ready() -> void:
 	velocity = offscreen_speed * direction
 	Helper.set_timer_properties(onscreen_timer, true, screen_time)
-	Helper.set_timer_properties(shoot_timer, false, shoot_time)
 
 
 ################################################
@@ -74,16 +72,6 @@ func _on_screen_notifier_screen_exited() -> void:
 func _on_onscreen_timer_timeout() -> void:
 	activated = false
 	shoot_timer.stop()
-
-
-################################################
-# NOTE: Shooting logic
-################################################
-func _on_shoot_timer_timeout() -> void:
-	if GameManager.player.is_dead:
-		return
-	print_debug("shoot at player: ", GameManager.player.global_position)
-
 
 
 ################################################

@@ -1,9 +1,26 @@
 class_name EnemyShootingComponent extends Node2D
 
+## Timer for shooting
 @export var shoot_timer: Timer
+
+## Time to wait before each shot, in seconds
 @export var shoot_time: float
+
+## Timer's one shot property
 @export var one_shot: bool
+
+## Number of bullets per shot
+@export var bullets_per_shot: int = 1
+
+## The total spread angle of each shot, in degrees
+@export var shot_spread_angle: float = 0
+
+## Specific bullet packed scene to use for the enemy
 @export var bullet_scene: PackedScene
+
+## Targeted or non targeeted shooting. 
+## False: shoots straight ahead. 
+## True: shoots at the player.
 @export var targeted_shot: bool
 
 ## TODO:
@@ -54,6 +71,7 @@ func _handle_targeted_shooting() -> void:
 	
 	bullet.global_position = self.global_position
 	bullet.direction = player_position
+	bullet.angle_deg = self.global_position.angle_to(GameManager.player.global_position)
 	bullets_list.append(bullet)
 	
 	SignalsBus.enemy_shooting_event.emit(bullets_list)

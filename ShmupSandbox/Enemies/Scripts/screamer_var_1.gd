@@ -11,7 +11,6 @@ class_name ScreamerVar1 extends Node2D
 @export var kill_score: int = 100
 @export var max_onscreen_time: float = 8.0
 @export var min_onscreen_time: float = 5.0
-@export var shoot_time: float = 1.8
 
 var speed: float
 var onscreen_time: float
@@ -37,7 +36,6 @@ func _ready() -> void:
 	speed = base_speed
 	onscreen_time = randf_range(min_onscreen_time, max_onscreen_time)
 	Helper.set_timer_properties(onscreen_timer, true, onscreen_time)
-	Helper.set_timer_properties(shoot_timer, false, shoot_time)
 
 
 ################################################
@@ -57,8 +55,7 @@ func _physics_process(delta: float) -> void:
 ################################################
 func _on_onscreen_notifier_screen_entered() -> void:
 	onscreen_timer.start()
-	shoot_timer.start(shoot_time / 6)
-	shoot_timer.wait_time = shoot_time
+	shoot_timer.start()
 	direction = Vector2.ZERO
 	deceleration = randf_range(deceleration / 2, deceleration * 1.5)
 

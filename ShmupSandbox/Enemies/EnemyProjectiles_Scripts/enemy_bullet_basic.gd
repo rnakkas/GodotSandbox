@@ -1,11 +1,12 @@
 class_name EnemyBulletBasic extends Area2D
 
-@onready var sprite : AnimatedSprite2D = $sprite
-@onready var screen_notifier : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var sprite: AnimatedSprite2D = $sprite
+@onready var screen_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
-@export var speed : float = 325.0 # Change per enenmy
+@export var speed: float = 325.0 # Change per enenmy
 
-var direction : Vector2 = Vector2.LEFT # Default direction, can be overriden by enemy shooter
+var direction: Vector2 = Vector2.LEFT # Default direction
+var angle_deg: float
 
 ## TODO: 
 	# Spritesheet
@@ -14,6 +15,7 @@ var direction : Vector2 = Vector2.LEFT # Default direction, can be overriden by 
 func _ready() -> void:
 	_connect_to_own_signals()
 	_set_collision_layer_and_mask()
+	sprite.rotate(deg_to_rad(angle_deg))
 
 
 func _connect_to_own_signals() -> void:
@@ -35,13 +37,12 @@ func _on_screen_notifier_screen_exited() -> void:
 	call_deferred("queue_free")
 
 
-func _on_area_entered(_area:Area2D) -> void:
+func _on_area_entered(_area: Area2D) -> void:
 	call_deferred("queue_free")
 
 
-func _on_body_entered(body:Node2D) -> void:
+func _on_body_entered(body: Node2D) -> void:
 	if body is PlayerCat:
 		if body.is_dead:
 			return
 		call_deferred("queue_free")
-

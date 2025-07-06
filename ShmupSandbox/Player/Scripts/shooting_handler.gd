@@ -1,54 +1,56 @@
 class_name ShootingHandler extends Node2D
 
 ## Constants
-const powerup_level_max : int = 4
+const powerup_level_max: int = 4
 
 ## Base fire rate
-@export var fire_rate : float = 8.0
+@export var fire_rate: float = 8.0
 
 ## Default: no powerups, change only when powerup is picked up
-@export var current_powerup : GameManager.powerups = GameManager.powerups.None
-@export_range(0,powerup_level_max) var powerup_level: int = 0 # Powerup level can only be between 0 to 4
+@export var current_powerup: GameManager.powerups = GameManager.powerups.None
+
+## Powerup level can only be between 0 to 4
+@export_range(0, powerup_level_max) var powerup_level: int = 0 # FIXME: Bug where powerup level persists after death
 
 ## Overdrive powerup shooting params
-@export var od_spread_angle_deg : float
-@export var od_bullets_per_shot : int		
+@export var od_spread_angle_deg: float
+@export var od_bullets_per_shot: int
 
 ## Chorus powerup shooting params
-@export var ch_convergence_angle_deg : float = 5.5
-@export var ch_lvl4_speed_multiplier : float = 0.75
+@export var ch_convergence_angle_deg: float = 5.5
+@export var ch_lvl4_speed_multiplier: float = 0.75
 
 ## Muzzles
-@onready var muzzle : Marker2D = $muzzle_base
-@onready var muzzle_ch_1 : Marker2D = %muzzle_ch_1
-@onready var muzzle_ch_2 : Marker2D = %muzzle_ch_2
+@onready var muzzle: Marker2D = $muzzle_base
+@onready var muzzle_ch_1: Marker2D = %muzzle_ch_1
+@onready var muzzle_ch_2: Marker2D = %muzzle_ch_2
 
 ## Shot limits
-@export var base_shot_limit : int = 6
+@export var base_shot_limit: int = 6
 
-@export var od_lvl_1_shot_limit : int = 21
-@export var od_lvl_2_shot_limit : int = 35
-@export var od_lvl_3_shot_limit : int = 49
-@export var od_lvl_4_shot_limit : int = 63
+@export var od_lvl_1_shot_limit: int = 21
+@export var od_lvl_2_shot_limit: int = 35
+@export var od_lvl_3_shot_limit: int = 49
+@export var od_lvl_4_shot_limit: int = 63
 
-@export var ch_lvl_1_shot_limit : int = 10
-@export var ch_lvl_2_3_shot_limit : int = 12
-@export var ch_lvl_4_shot_limit : int = 36
+@export var ch_lvl_1_shot_limit: int = 10
+@export var ch_lvl_2_3_shot_limit: int = 12
+@export var ch_lvl_4_shot_limit: int = 36
 
 ## Signals
-signal now_shooting(powerup : GameManager.powerups, level : int)
+signal now_shooting(powerup: GameManager.powerups, level: int)
 signal stopped_shooting()
 
 ## Misc variables
 var is_dead: bool
-var on_shooting_cooldown : bool
-var shooting_cooldown_time : float
-var angle_step : float
-var location_base : Vector2
-var location_ch_1 : Vector2
-var location_ch_2 : Vector2
-var bullets_list : Array[PlayerBullet] = []
-var shot_limit_reached : bool
+var on_shooting_cooldown: bool
+var shooting_cooldown_time: float
+var angle_step: float
+var location_base: Vector2
+var location_ch_1: Vector2
+var location_ch_2: Vector2
+var bullets_list: Array[PlayerBullet] = []
+var shot_limit_reached: bool
 
 
 ################################################
@@ -60,7 +62,7 @@ func _ready() -> void:
 
 func _connect_to_signals() -> void:
 	# Auto disconnects if this node is freed
-	SignalsBus.powerup_collected_event.connect(self._on_powerup_picked_up) 
+	SignalsBus.powerup_collected_event.connect(self._on_powerup_picked_up)
 	SignalsBus.shot_limit_reached_event.connect(self._on_shot_limit_reached)
 	SignalsBus.shot_limit_refreshed_event.connect(self._on_shot_limit_refreshed)
 
@@ -69,7 +71,7 @@ func _connect_to_signals() -> void:
 # NOTE: Update shooting properties based on powerup
 ################################################
 func _update_shooting_properties() -> void:
-	var shot_limit : int = base_shot_limit
+	var shot_limit: int = base_shot_limit
 	
 	match current_powerup:
 		GameManager.powerups.Overdrive:
@@ -93,7 +95,7 @@ func _update_shooting_properties() -> void:
 					od_spread_angle_deg = 30.0
 					shot_limit = od_lvl_4_shot_limit
 			
-			angle_step = od_spread_angle_deg/(od_bullets_per_shot-1)
+			angle_step = od_spread_angle_deg / (od_bullets_per_shot - 1)
 		
 		GameManager.powerups.Chorus:
 			fire_rate = 18.0
@@ -107,7 +109,7 @@ func _update_shooting_properties() -> void:
 				4:
 					shot_limit = ch_lvl_4_shot_limit
 
-	shooting_cooldown_time = 1/fire_rate
+	shooting_cooldown_time = 1 / fire_rate
 
 	SignalsBus.shot_limit_updated_event.emit(shot_limit)
 
@@ -120,7 +122,7 @@ func _update_shooting_properties() -> void:
 	# Can't go above 4 for the powerup level
 	# Switch the current powerup to the picked up powerup (casting powerup as the enum)
 	# Update shooting properties based on powerup picked up
-func _on_powerup_picked_up(powerup : int, score : int) -> void:
+func _on_powerup_picked_up(powerup: int, score: int) -> void:
 	# If powerup picked up is bomb, don't modify shooting
 	if powerup == 3: # Fuzz
 		return
@@ -198,33 +200,33 @@ func _handle_shooting() -> void:
 
 ## Base shooting
 func _base_shooting_behaviour() -> void:
-	var bullet : PlayerBullet
+	var bullet: PlayerBullet
 	bullet = SceneManager.base_bullet_scene.instantiate()
 	bullet.position = location_base
 	bullets_list.append(bullet)
 
 ## Overdrive powerup shooting
 func _od_shooting_behaviour() -> void:
-	var bullet : PlayerBullet
+	var bullet: PlayerBullet
 
 	# Create the list of instantiated bullets
-	for instance : int in range(od_bullets_per_shot):
+	for instance: int in range(od_bullets_per_shot):
 		bullet = SceneManager.od_bullet_scene.instantiate()
 		bullet.position = location_base
 		bullets_list.append(bullet)
 	
 	# First bullet's angle
-	var current_bullet_angle : float = -od_spread_angle_deg/2
+	var current_bullet_angle: float = - od_spread_angle_deg / 2
 	
-	for bullet_instance : int in range(bullets_list.size()):
+	for bullet_instance: int in range(bullets_list.size()):
 		bullets_list[bullet_instance].angle_deg = current_bullet_angle
 		current_bullet_angle += angle_step # Increase angle by the step value for use in subsequent bullets
 
 ## Chorus powerup shooting
 func _ch_shooting_behaviour() -> void:
-	var bullet : PlayerBullet
-	var bullet_ch_1 : PlayerBullet
-	var bullet_ch_2 : PlayerBullet
+	var bullet: PlayerBullet
+	var bullet_ch_1: PlayerBullet
+	var bullet_ch_2: PlayerBullet
 
 	match powerup_level:
 		0:
@@ -246,11 +248,11 @@ func _ch_shooting_behaviour() -> void:
 	if bullet_ch_1 != null:
 		bullet_ch_1.position = location_ch_1
 		bullet_ch_1.angle_deg = ch_convergence_angle_deg
-		bullet_ch_1.speed = bullet.speed*ch_lvl4_speed_multiplier
+		bullet_ch_1.speed = bullet.speed * ch_lvl4_speed_multiplier
 		bullets_list.append(bullet_ch_1)
 	
 	if bullet_ch_2 != null:
 		bullet_ch_2.position = location_ch_2
-		bullet_ch_2.angle_deg = -ch_convergence_angle_deg
-		bullet_ch_2.speed = bullet.speed*ch_lvl4_speed_multiplier
+		bullet_ch_2.angle_deg = - ch_convergence_angle_deg
+		bullet_ch_2.speed = bullet.speed * ch_lvl4_speed_multiplier
 		bullets_list.append(bullet_ch_2)
