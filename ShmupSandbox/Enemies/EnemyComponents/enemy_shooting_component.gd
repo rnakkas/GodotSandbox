@@ -18,15 +18,20 @@ class_name EnemyShootingComponent extends Node2D
 ## Specific bullet packed scene to use for the enemy
 @export var bullet_scene: PackedScene
 
-## Targeted or non targeeted shooting. 
-## False: shoots straight ahead. 
-## True: shoots at the player.
-@export var targeted_shot: bool
+enum shooting_type_enum {
+	## Shoots straight ahead
+	NON_TARGETED,
+	## Shoots at player
+	TARGETED,
+}
 
-## TODO:
-	# Build this out for targeted shooting
-	# Update the existing enemies and the new rumbler enemy to use this component
+## Shooting type
+@export var shooting_type: shooting_type_enum
 
+
+################################################
+# Ready
+################################################
 func _ready() -> void:
 	if not shoot_timer:
 		return
@@ -34,27 +39,38 @@ func _ready() -> void:
 	shoot_timer.timeout.connect(self._on_shoot_timer_timeout)
 
 
+################################################
+# Shooting logic based on shooting type
+################################################
 func _on_shoot_timer_timeout() -> void:
 	if bullet_scene == null:
 		return
 
-	match targeted_shot:
-		true:
-			_handle_targeted_shooting()
-			pass
-		false:
+	match shooting_type:
+		shooting_type_enum.NON_TARGETED:
 			_handle_non_targeted_shooting()
+		shooting_type_enum.TARGETED:
+			_handle_targeted_shooting()
 
 
+################################################
+# Non targeted shooting
+################################################
 func _handle_non_targeted_shooting() -> void:
-	var bullets_list: Array[Area2D]
-	var bullet: EnemyBulletBasic = bullet_scene.instantiate()
-	bullet.global_position = self.global_position # Can be changed later to a muzzle global position
-	bullets_list.append(bullet)
+	# Value with which to increment bullet angles
+	var angle_step_deg: float = shot_spread_angle / (bullets_per_shot - 1)
 
-	SignalsBus.enemy_shooting_event.emit(bullets_list)
+	# If only 1 bullet per shot, bullet always points straight to the left, i.e. 180.0 degrees
+	var current_bullet_angle_deg: float = 180.0
+	if bullets_per_shot > 1:
+		current_bullet_angle_deg -= (angle_step_deg * ((float(bullets_per_shot) - 1) / 2))
+
+	SignalsBus.enemy_shooting_event.emit(_populate_bullets_list(current_bullet_angle_deg, angle_step_deg))
 
 
+################################################
+# Targeted shooting
+################################################
 func _handle_targeted_shooting() -> void:
 	# Don't shoot if there is no player
 	if not GameManager.player:
@@ -63,15 +79,34 @@ func _handle_targeted_shooting() -> void:
 	# Don't shoot if player is dead
 	if GameManager.player.is_dead:
 		return
+
+	# Get angle to player
+	var angle_to_player_deg: float = rad_to_deg(self.global_position.angle_to_point(GameManager.player.global_position))
 	
-	# Main shooting logic
-	var player_position: Vector2 = self.global_position.direction_to(GameManager.player.global_position)
+	# Value with which to increment bullet angles
+	var angle_step_deg: float = shot_spread_angle / (bullets_per_shot - 1)
+	
+	# If only 1 bullet per shot, bullet always points at player
+	var current_bullet_angle_deg: float = angle_to_player_deg
+	if bullets_per_shot > 1:
+		current_bullet_angle_deg = angle_to_player_deg - angle_step_deg
+
+	SignalsBus.enemy_shooting_event.emit(_populate_bullets_list(current_bullet_angle_deg, angle_step_deg))
+
+
+################################################
+# Helper func to populate the bullets list
+#	To be used by non targeted and targeted shooting
+################################################
+func _populate_bullets_list(current_bullet_angle_deg: float, angle_step_deg: float) -> Array[Area2D]:
 	var bullets_list: Array[Area2D] = []
-	var bullet: EnemyBulletBasic = SceneManager.screamer_bullet_scene.instantiate()
+	var bullet: EnemyBulletBasic
 	
-	bullet.global_position = self.global_position
-	bullet.direction = player_position
-	bullet.angle_deg = self.global_position.angle_to(GameManager.player.global_position)
-	bullets_list.append(bullet)
+	for i: int in range(bullets_per_shot):
+		bullet = bullet_scene.instantiate()
+		bullet.global_position = self.global_position
+		bullet.angle_deg = current_bullet_angle_deg
+		bullets_list.append(bullet)
+		current_bullet_angle_deg += angle_step_deg
 	
-	SignalsBus.enemy_shooting_event.emit(bullets_list)
+	return bullets_list

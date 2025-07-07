@@ -62,7 +62,7 @@ script = ExtResource("3_o6pm4")
 shoot_timer = NodePath("../shoot_timer")
 shoot_time = 1.15
 bullet_scene = ExtResource("4_8cdg7")
-targeted_shot = true
+shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]

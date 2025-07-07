@@ -6,7 +6,7 @@ class_name EnemyBulletBasic extends Area2D
 @export var speed: float = 325.0 # Change per enenmy
 
 var direction: Vector2 = Vector2.LEFT # Default direction
-var angle_deg: float
+var angle_deg: float = 180.0 # Default angle, points to the left
 
 ## TODO: 
 	# Spritesheet
@@ -15,7 +15,8 @@ var angle_deg: float
 func _ready() -> void:
 	_connect_to_own_signals()
 	_set_collision_layer_and_mask()
-	sprite.rotate(deg_to_rad(angle_deg))
+	direction = - direction.rotated(deg_to_rad(angle_deg)) # Since its facing the left
+	self.rotate(deg_to_rad(angle_deg))
 
 
 func _connect_to_own_signals() -> void:
