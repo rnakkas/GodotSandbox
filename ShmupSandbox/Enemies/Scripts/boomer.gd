@@ -1,4 +1,4 @@
-class_name Boomer extends Area2D
+class_name Boomer extends Node2D
 
 @onready var sprite : AnimatedSprite2D = $sprite
 @onready var particles : CPUParticles2D = $CPUParticles2D
@@ -73,27 +73,16 @@ func _on_chase_timer_timeout() -> void:
 
 
 ################################################
-# NOTE: Hit by player's bullets/bombs or player
+# NOTE: Getting hit by player attacks logic:
+	# Signal connections from damage taker component
 ################################################
-func _on_area_entered(_area: Area2D) -> void:
-	_handle_death()
-
-func _on_body_entered(body:Node2D) -> void:
-	if body is PlayerCat:
-		if body.is_dead:
-			return
-		_handle_death()
-
-func _handle_death() -> void:
-	set_deferred("monitorable", false)
-	set_deferred("monitoring", false)
-
+func _on_damage_taker_component_health_depleted() -> void:
 	tracker_timer.stop()
 	chase_timer.stop()
 	
 	speed = speed/2
 
-	sprite.play("explode")
+	sprite.play("death")
 	particles.emitting = true
 
 	SignalsBus.score_increased_event.emit(kill_score)

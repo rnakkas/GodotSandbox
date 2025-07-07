@@ -7,7 +7,6 @@ class_name PickupPowerup extends Area2D
 @onready var sprite_ch : AnimatedSprite2D = %sprite_ch
 @onready var sprite_fz : AnimatedSprite2D = %sprite_fz
 @onready var powerup_label : Label = %powerup_label
-@onready var collider_area : Area2D = %powerup_area
 
 @export var base_speed_x: float = 7.5
 @export var base_speed_y : float = 50

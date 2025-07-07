@@ -1,95 +1,96 @@
-class_name ScreamerVar1 extends Node2D
+class_name Rumbler extends Node2D
 
 @onready var sprite: AnimatedSprite2D = $sprite
 @onready var particles: CPUParticles2D = $CPUParticles2D
 @onready var onscreen_timer: Timer = $onscreen_timer
 @onready var shoot_timer: Timer = $shoot_timer
 
-@export var base_speed: float = 500.0
+@export var offscreen_speed: float = 400.0
+@export var onscreen_speed: float = 50.0
 @export var acceleration: float = 600.0
-@export var deceleration: float = 610.0
-@export var kill_score: int = 100
-@export var max_onscreen_time: float = 8.0
-@export var min_onscreen_time: float = 5.0
+@export var deceleration: float = 1500.0
+@export var kill_score: int = 250
+@export var screen_time: float = 10.0
 
-var speed: float
-var onscreen_time: float
 var direction: Vector2 = Vector2.LEFT
 var velocity: Vector2
+var activated: bool
 
 ## TODO: Spritesheets
+## TODO: Shooting logic
 
 ################################################
-# SCREAMER VARIANT 1
-# Popcorn enemy
+# NOTE: Rumbler
+# Slow moving area denial enemy
 # Flies in from the right
-# Slows to a stop
-# Stays on screen for 5 - 8 seconds
-# Shoots as long as on screen
-# Flies off back to the right after screen time elapses
+# Slows down to onscreen speed
+# Shoots 3 projectiles at the player
+# Stays onscreen for about 10 seconds
+# Shoots at the player approx 3-4 times when on screen
+# After onscreen time elapses, speeds up and flies offscreen to the left
 ################################################
 
 ################################################
 # NOTE: Ready
 ################################################
 func _ready() -> void:
-	speed = base_speed
-	onscreen_time = randf_range(min_onscreen_time, max_onscreen_time)
-	Helper.set_timer_properties(onscreen_timer, true, onscreen_time)
+	velocity = offscreen_speed * direction
+	Helper.set_timer_properties(onscreen_timer, true, screen_time)
 
 
 ################################################
-# NOTE: Physics process for movement
+# NOTE: Movement logic
 ################################################
 func _physics_process(delta: float) -> void:
-	if direction != Vector2.ZERO:
-		velocity = velocity.move_toward(direction * speed, acceleration * delta)
+	if activated:
+		velocity = velocity.move_toward(onscreen_speed * direction, deceleration * delta)
 	else:
-		velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
-
+		velocity = velocity.move_toward(offscreen_speed * direction, acceleration * delta)
+	
 	global_position += velocity * delta
 
 
 ################################################
-# NOTE: Start timers for screen time and shooting
+# NOTE: Activate after appearing on screen
 ################################################
-func _on_onscreen_notifier_screen_entered() -> void:
+func _on_screen_notifier_screen_entered() -> void:
+	activated = true
 	onscreen_timer.start()
 	shoot_timer.start()
-	direction = Vector2.ZERO
-	deceleration = randf_range(deceleration / 2, deceleration * 1.5)
-
-
-################################################
-# NOTE: Screen time elapses, fly off
-################################################
-func _on_onscreen_timer_timeout() -> void:
-	shoot_timer.stop()
-	var viewport_size: Vector2 = get_viewport_rect().size
-	var dir_y: float = randf_range(0, viewport_size.y)
-	direction = self.global_position.direction_to(Vector2(viewport_size.x, dir_y))
 
 
 ################################################
 # NOTE: Despawn after going offscreen
 ################################################
-func _on_offscreen_notifier_screen_exited() -> void:
+func _on_screen_notifier_screen_exited() -> void:
 	call_deferred("queue_free")
+
+
+################################################
+# NOTE: Deactivate after on screen time elapses
+################################################
+func _on_onscreen_timer_timeout() -> void:
+	activated = false
+	shoot_timer.stop()
 
 
 ################################################
 # NOTE: Getting hit by player attacks logic:
 	# Signal connections from damage taker component
 ################################################
+func _on_damage_taker_component_damage_taken() -> void:
+	SignalsBus.score_increased_event.emit(GameManager.attack_hit_score)
+
+func _on_damage_taker_component_low_health() -> void:
+	sprite.play("damaged")
+
 func _on_damage_taker_component_health_depleted() -> void:
-	shoot_timer.stop()
-
-	speed = speed / 2
-
 	sprite.play("death")
 	particles.emitting = true
 
 	SignalsBus.score_increased_event.emit(kill_score)
+	
+	# Signal to spawn score fragments on death
 	SignalsBus.spawn_score_fragment_event.emit(self.global_position)
 
 	await sprite.animation_finished

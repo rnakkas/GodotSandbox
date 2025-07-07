@@ -1,13 +1,13 @@
 extends Node
 
 ################################################
-#NOTE: Scene Manager
-# Holds and preloads all required packed scenes
-# May be extended in future to handle scene transitions etc
+# SCENE MANAGER:
+#   Holds and preloads all required packed scenes
+#   May be extended in future to handle scene transitions etc
 ################################################
 
 ################################################
-#NOTE: Packed scenes
+# Packed Scenes
 ################################################
 ## Game
 const game_scene : PackedScene = preload("res://ShmupSandbox/Main/Scenes/game.tscn")
@@ -38,6 +38,8 @@ const screamer_1_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/s
 const screamer_2_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_2.tscn")
 const screamer_3_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_3.tscn")
 const soul_carrier_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/soul_carrier.tscn")
+const rumbler_PS : PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/rumbler.tscn")
 
 ## Enemy bullets
 const screamer_bullet_scene : PackedScene = preload("res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn")
+const rumbler_bullet_scene : PackedScene = preload("res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/rumbler_bullet.tscn")

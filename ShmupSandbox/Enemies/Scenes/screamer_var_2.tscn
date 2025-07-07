@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3afq3v72lc0a"]
+[gd_scene load_steps=8 format=3 uid="uid://d3afq3v72lc0a"]
 
 [ext_resource type="Script" uid="uid://b860kkv38ilk7" path="res://ShmupSandbox/Enemies/Scripts/screamer_var_2.gd" id="1_patts"]
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_ia6iw"]
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="2_ronh6"]
+[ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="3_ia6iw"]
+[ext_resource type="PackedScene" uid="uid://bbfhd7y4k5cbl" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn" id="4_bxwr7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxwr7"]
 radius = 27.7308
@@ -48,13 +51,21 @@ rotates = false
 loop = false
 script = ExtResource("1_patts")
 
-[node name="hurtbox" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 67
+[node name="DamageTakerComponent" type="Area2D" parent="."]
+script = ExtResource("2_ia6iw")
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
 
-[node name="collider" type="CollisionShape2D" parent="hurtbox"]
+[node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
 shape = SubResource("CircleShape2D_bxwr7")
 debug_color = Color(0, 0.792157, 0.858824, 0.380392)
+
+[node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("3_ia6iw")
+shoot_timer = NodePath("../shooting_timer")
+shoot_time = 0.3
+one_shot = true
+bullet_scene = ExtResource("4_bxwr7")
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -94,8 +105,6 @@ self_modulate = Color(1, 0.124572, 0.0864938, 1)
 
 [node name="shooting_timer" type="Timer" parent="."]
 
-[connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
-[connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
-[connection signal="timeout" from="shooting_timer" to="." method="_on_shooting_timer_timeout"]

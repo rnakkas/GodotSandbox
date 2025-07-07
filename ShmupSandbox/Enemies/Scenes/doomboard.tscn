@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://l4m3k6e05qvm"]
+[gd_scene load_steps=6 format=3 uid="uid://l4m3k6e05qvm"]
 
 [ext_resource type="Script" uid="uid://c145dl75kkwr6" path="res://ShmupSandbox/Enemies/Scripts/doomboard.gd" id="1_oipf2"]
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_wu6fn"]
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_1uky2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wu6fn"]
 radius = 39.0
@@ -76,15 +77,23 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="doomboard" type="Area2D"]
-collision_layer = 8
-collision_mask = 67
+[node name="doomboard" type="Node2D"]
 script = ExtResource("1_oipf2")
 
-[node name="collider" type="CollisionShape2D" parent="."]
+[node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
+collision_layer = 8
+collision_mask = 67
+script = ExtResource("2_1uky2")
+max_hp = 28
+dot_timer = NodePath("dot_timer")
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_wu6fn")
-debug_color = Color(0.913725, 0, 0.823529, 0.419608)
+debug_color = Color(0.913725, 0, 0.823529, 0.113725)
+
+[node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(0.950488, 0, 0.458181, 1)
@@ -122,12 +131,9 @@ position = Vector2(171, 0)
 [node name="VisibleOnScreenNotifier2D_left" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-254, 0)
 
-[node name="dot_timer" type="Timer" parent="."]
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_area_exited"]
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="damage_taken" from="DamageTakerComponent" to="." method="_on_damage_taker_component_damage_taken"]
+[connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
+[connection signal="low_health" from="DamageTakerComponent" to="." method="_on_damage_taker_component_low_health"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D_right" to="." method="_on_visible_on_screen_notifier_2d_right_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D_right" to="." method="_on_visible_on_screen_notifier_2d_right_screen_exited"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D_left" to="." method="_on_visible_on_screen_notifier_2d_left_screen_exited"]
-[connection signal="timeout" from="dot_timer" to="." method="_on_dot_timer_timeout"]

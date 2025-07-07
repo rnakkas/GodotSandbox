@@ -1,0 +1,151 @@
+[gd_scene load_steps=8 format=3 uid="uid://cj48h6cme32is"]
+
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_6qg21"]
+[ext_resource type="Script" uid="uid://cjgsadr8gaseh" path="res://ShmupSandbox/Enemies/Scripts/rumbler.gd" id="1_coak3"]
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_bh4jk"]
+[ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="3_yl0mp"]
+[ext_resource type="PackedScene" uid="uid://wcsck3gxd727" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/rumbler_bullet.tscn" id="4_mp8x0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_coak3"]
+radius = 59.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bh4jk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}],
+"loop": false,
+"name": &"death",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6qg21")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.15
+}]
+
+[node name="rumbler" type="Node2D"]
+script = ExtResource("1_coak3")
+
+[node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
+collision_layer = 8
+collision_mask = 67
+script = ExtResource("2_bh4jk")
+max_hp = 20
+dot_timer = NodePath("dot_timer")
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
+shape = SubResource("CircleShape2D_coak3")
+debug_color = Color(0.972549, 0.384314, 0, 0.580392)
+
+[node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
+
+[node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("3_yl0mp")
+shoot_timer = NodePath("../shoot_timer")
+shoot_time = 3.3
+bullets_per_shot = 3
+shot_spread_angle = 35.0
+bullet_scene = ExtResource("4_mp8x0")
+shooting_type = 1
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 0.843137, 0, 1)
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_bh4jk")
+animation = &"death"
+autoplay = "fly"
+
+[node name="screen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(86, 0)
+
+[node name="debug_label" type="Label" parent="."]
+offset_left = -62.0
+offset_top = -68.0
+offset_right = 76.0
+offset_bottom = -19.0
+text = "Enemy - Rumbler
+"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 25
+lifetime = 0.41
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 151.08
+initial_velocity_max = 287.77
+scale_amount_max = 2.5
+
+[node name="onscreen_timer" type="Timer" parent="."]
+
+[node name="shoot_timer" type="Timer" parent="."]
+
+[connection signal="damage_taken" from="DamageTakerComponent" to="." method="_on_damage_taker_component_damage_taken"]
+[connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
+[connection signal="low_health" from="DamageTakerComponent" to="." method="_on_damage_taker_component_low_health"]
+[connection signal="screen_entered" from="screen_notifier" to="." method="_on_screen_notifier_screen_entered"]
+[connection signal="screen_exited" from="screen_notifier" to="." method="_on_screen_notifier_screen_exited"]
+[connection signal="timeout" from="onscreen_timer" to="." method="_on_onscreen_timer_timeout"]
+[connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]

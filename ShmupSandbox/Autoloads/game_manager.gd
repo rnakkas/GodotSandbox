@@ -34,6 +34,9 @@ const offset_x : float = 60.0
 const offset_y_screen_bottom : float = 60.0
 const offset_y_screen_top : float = 100.0
 
+## Hit scores
+const attack_hit_score : int = 10
+
 enum powerups {
 	None,			## 0
 

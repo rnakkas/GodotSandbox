@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://wcsck3gxd727"]
+
+[ext_resource type="Script" uid="uid://b0tnrm0yrs5h7" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scripts/enemy_bullet_basic.gd" id="1_582te"]
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_hru3k"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_582te"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hru3k")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hru3k")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_hru3k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_hru3k")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_hru3k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_hru3k")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"hit",
+"speed": 15.15
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lit42"]
+radius = 9.0
+height = 58.0
+
+[node name="rumbler_bullet" type="Area2D"]
+script = ExtResource("1_582te")
+speed = 285.0
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 0, 0, 1)
+rotation = 0.383972
+scale = Vector2(0.25, 0.25)
+skew = 0.785398
+sprite_frames = SubResource("SpriteFrames_582te")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="collider" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_lit42")
+debug_color = Color(1, 0, 0, 0.137255)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(49, 0)
