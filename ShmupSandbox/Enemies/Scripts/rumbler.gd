@@ -17,7 +17,6 @@ var velocity: Vector2
 var activated: bool
 
 ## TODO: Spritesheets
-## TODO: Shooting logic
 
 ################################################
 # NOTE: Rumbler
