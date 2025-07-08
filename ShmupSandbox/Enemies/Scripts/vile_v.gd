@@ -31,3 +31,10 @@ var activated: bool
 # When flying off shoot from the rear muzzles, non targeted spread shots towards Vector2.RIGHT
 # Despawn when offscreen
 ################################################
+
+func _ready() -> void:
+	velocity = offscreen_speed * direction
+
+
+func _physics_process(delta: float) -> void:
+	global_position += velocity * delta
