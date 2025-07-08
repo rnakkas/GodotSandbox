@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjij448af1vbi"]
+[gd_scene load_steps=6 format=3 uid="uid://bjij448af1vbi"]
 
+[ext_resource type="Script" uid="uid://cwoyimqqushro" path="res://ShmupSandbox/Enemies/Scripts/vile_v.gd" id="1_cb8hp"]
 [ext_resource type="Texture2D" uid="uid://cvw65kocrrlwt" path="res://ShmupSandbox/Assets/Enemy/vile_v-placeholder.png" id="1_ft12s"]
 [ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="2_tjetp"]
 
@@ -98,6 +99,7 @@ animations = [{
 }]
 
 [node name="vile_v" type="Area2D"]
+script = ExtResource("1_cb8hp")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-75, -24, -75, 14, -54, 28, -47, 4, -7, 6, 52, 48, 85, 34, 58, -2, 84, -46, 53, -56, -10, -13, -46, -11, -53, -36)
