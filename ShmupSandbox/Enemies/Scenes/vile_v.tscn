@@ -99,6 +99,8 @@ animations = [{
 }]
 
 [node name="vile_v" type="Area2D"]
+collision_layer = 8
+collision_mask = 67
 script = ExtResource("1_cb8hp")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -192,3 +194,9 @@ position = Vector2(71, 25)
 [node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_8"]
 script = ExtResource("2_tjetp")
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="screen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
+self_modulate = Color(0.852048, 0.0388045, 1.92523e-07, 1)
+position = Vector2(48, 0)
+
+[node name="onscreen_timer" type="Timer" parent="."]

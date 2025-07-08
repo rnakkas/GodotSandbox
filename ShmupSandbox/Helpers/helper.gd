@@ -30,6 +30,18 @@ static func clamp_movement_to_screen_bounds(viewport_size: Vector2, position: Ve
 
 
 ################################################
+# Switch y direction on hitting screen bounds
+################################################
+static func change_direction_on_hitting_screen_bounds(viewport_size, position, direction: Vector2) -> Vector2:
+	if position.y <= GameManager.offset_y_screen_top:
+		direction = Vector2.DOWN
+	elif position.y >= viewport_size.y - GameManager.offset_y_screen_bottom:
+		direction = Vector2.UP
+	
+	return direction
+
+
+################################################
 # Setting timer properties
 ################################################
 static func set_timer_properties(timer: Timer, one_shot: bool, wait_time: float) -> void:

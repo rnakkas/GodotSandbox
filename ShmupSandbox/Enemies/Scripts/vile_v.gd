@@ -2,23 +2,33 @@ class_name VileV extends Area2D
 
 @onready var sprite: AnimatedSprite2D = $sprite
 @onready var particles: CPUParticles2D = $CPUParticles2D
+@onready var screen_notifier: VisibleOnScreenNotifier2D = $screen_notifier
+
 @onready var onscreen_timer: Timer = $onscreen_timer
 @onready var shoot_timer: Timer = $shoot_timer
 
-@export var offscreen_speed: float = 400.0
+@export var offscreen_speed: float = 700.0
 @export var onscreen_speed: float = 100.0
-@export var acceleration: float = 600.0
-@export var deceleration: float = 1500.0
+@export var acceleration: float = 900.0
+@export var deceleration: float = 1600.0
 @export var kill_score: int = 350
-@export var screen_time: float = 10.0
+@export var screen_time: float = 3.0
 
 var direction: Vector2 = Vector2.LEFT
 var velocity: Vector2
-var activated: bool
+var onscreen: bool
+var attacking: bool
 
 ## TODO: Spritesheets
+
 ## TODO: Shooting logic
 ## TODO: Movement logic
+	# - comes on screen
+	# - slows to a stop
+	# - when first shooting timer timesout, shooting starts
+	# - when shooting starts, moves up and down
+	# - when onscreen time elapses, fly towards left at player y pos
+	# - this starts the tail shooting timers
 
 ################################################
 # NOTE: Vile V
@@ -33,8 +43,33 @@ var activated: bool
 ################################################
 
 func _ready() -> void:
+	_connect_to_signals()
 	velocity = offscreen_speed * direction
+	Helper.set_timer_properties(onscreen_timer, true, screen_time)
+
+
+func _connect_to_signals() -> void:
+	screen_notifier.screen_entered.connect(self._on_screen_entered)
+	screen_notifier.screen_exited.connect(self._on_screen_exited)
+	onscreen_timer.timeout.connect(self._on_onscreen_timer_timeout)
+
+
+func _on_screen_entered() -> void:
+	onscreen = true
+	onscreen_timer.start()
+	# direction = Vector2.DOWN
+
+
+func _on_screen_exited() -> void:
+	call_deferred("queue_free")
+
+
+func _on_onscreen_timer_timeout() -> void:
+	direction = Vector2.LEFT
+	onscreen = false
 
 
 func _physics_process(delta: float) -> void:
+	if onscreen:
+		velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
 	global_position += velocity * delta
