@@ -12,6 +12,12 @@ class_name EnemyShootingComponent extends Node2D
 ## Number of bullets per shot
 @export var bullets_per_shot: int = 1
 
+## Direction of the bullets. Only used for Non Targeted shooting type. Ignored if value is Vector2(0,0)
+@export var bullet_direction: Vector2
+
+## Bullet speed. Used to override the default speed of instantiated bullets. Ignored if value is zero
+@export var bullet_speed: float
+
 ## The total spread angle of each shot, in degrees
 @export var shot_spread_angle: float = 0
 
@@ -98,7 +104,7 @@ func _handle_targeted_shooting() -> void:
 # Helper func to populate the bullets list
 #	To be used by non targeted and targeted shooting
 ################################################
-func _populate_bullets_list(current_bullet_angle_deg: float, angle_step_deg: float) -> Array[Area2D]:
+func _populate_bullets_list(current_bullet_angle_deg, angle_step_deg: float) -> Array[Area2D]:
 	var bullets_list: Array[Area2D] = []
 	var bullet: EnemyBulletBasic
 	
@@ -106,6 +112,15 @@ func _populate_bullets_list(current_bullet_angle_deg: float, angle_step_deg: flo
 		bullet = bullet_scene.instantiate()
 		bullet.global_position = self.global_position
 		bullet.angle_deg = current_bullet_angle_deg
+		
+		# Override bullet direction if one is provided for non targeted shooting
+		if shooting_type == shooting_type_enum.NON_TARGETED && bullet_direction != Vector2.ZERO:
+			bullet.direction = bullet_direction
+		
+		# Override bullet speed if one is provided
+		if bullet_speed != 0:
+			bullet.speed = bullet_speed
+		
 		bullets_list.append(bullet)
 		current_bullet_angle_deg += angle_step_deg
 	
