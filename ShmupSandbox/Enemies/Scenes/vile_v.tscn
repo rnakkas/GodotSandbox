@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjij448af1vbi"]
+[gd_scene load_steps=8 format=3 uid="uid://bjij448af1vbi"]
 
 [ext_resource type="Script" uid="uid://cwoyimqqushro" path="res://ShmupSandbox/Enemies/Scripts/vile_v.gd" id="1_cb8hp"]
 [ext_resource type="Texture2D" uid="uid://cvw65kocrrlwt" path="res://ShmupSandbox/Assets/Enemy/vile_v-placeholder.png" id="1_ft12s"]
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_6vcer"]
 [ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="2_tjetp"]
 [ext_resource type="PackedScene" uid="uid://bbfhd7y4k5cbl" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn" id="4_hrwxo"]
 
@@ -99,13 +100,19 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="vile_v" type="Area2D"]
-collision_layer = 8
-collision_mask = 67
+[node name="vile_v" type="Node2D"]
 script = ExtResource("1_cb8hp")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
+script = ExtResource("2_6vcer")
+max_hp = 40
+dot_timer = NodePath("dot_timer")
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DamageTakerComponent"]
 polygon = PackedVector2Array(-75, -24, -75, 14, -54, 28, -47, 4, -7, 6, 52, 48, 85, 34, 58, -2, 84, -46, 53, -56, -10, -13, -46, -11, -53, -36)
+
+[node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(2, -3)
@@ -140,7 +147,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_1")
 shoot_time = 0.05
 one_shot = true
-bullet_speed = 550.0
+bullet_speed = 250.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -154,7 +161,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_2")
 shoot_time = 0.05
 one_shot = true
-bullet_speed = 550.0
+bullet_speed = 250.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -168,7 +175,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_3")
 shoot_time = 0.05
 one_shot = true
-bullet_speed = 550.0
+bullet_speed = 250.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -182,7 +189,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_4")
 shoot_time = 0.05
 one_shot = true
-bullet_speed = 550.0
+bullet_speed = 250.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -196,7 +203,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_5")
 shoot_time = 0.05
 one_shot = true
-bullet_speed = 550.0
+bullet_speed = 250.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -210,7 +217,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_6")
 shoot_time = 0.05
 one_shot = true
-bullet_speed = 550.0
+bullet_speed = 250.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -273,6 +280,6 @@ position = Vector2(86, 0)
 
 [node name="move_timer" type="Timer" parent="."]
 
-[node name="overlord_shoot_timer" type="Timer" parent="."]
+[node name="shooting_control_timer" type="Timer" parent="."]
 
 [node name="attack_rest_timer" type="Timer" parent="."]
