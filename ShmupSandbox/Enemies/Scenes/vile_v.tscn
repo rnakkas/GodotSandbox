@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjij448af1vbi"]
+[gd_scene load_steps=7 format=3 uid="uid://bjij448af1vbi"]
 
 [ext_resource type="Script" uid="uid://cwoyimqqushro" path="res://ShmupSandbox/Enemies/Scripts/vile_v.gd" id="1_cb8hp"]
 [ext_resource type="Texture2D" uid="uid://cvw65kocrrlwt" path="res://ShmupSandbox/Assets/Enemy/vile_v-placeholder.png" id="1_ft12s"]
 [ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="2_tjetp"]
+[ext_resource type="PackedScene" uid="uid://bbfhd7y4k5cbl" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn" id="4_hrwxo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tjetp"]
 atlas = ExtResource("1_ft12s")
@@ -113,90 +114,143 @@ sprite_frames = SubResource("SpriteFrames_cb8hp")
 animation = &"death"
 autoplay = "fly"
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 25
+lifetime = 0.41
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 151.08
+initial_velocity_max = 287.77
+scale_amount_max = 2.5
+
 [node name="muzzles_container" type="Node2D" parent="."]
 
 [node name="muzzle_1" type="Marker2D" parent="muzzles_container"]
 self_modulate = Color(0.0646965, 0.0646965, 0.0646965, 1)
 position = Vector2(-75, -25)
 
-[node name="shoot_timer_1" type="Timer" parent="muzzles_container/muzzle_1"]
-
-[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_1"]
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_1" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("2_tjetp")
+shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_1")
+shoot_time = 1.0
+bullet_scene = ExtResource("4_hrwxo")
+shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="muzzle_2" type="Marker2D" parent="muzzles_container"]
 self_modulate = Color(0.0646965, 0.0646965, 0.0646965, 1)
 position = Vector2(-73, 18)
 
-[node name="shoot_timer_2" type="Timer" parent="muzzles_container/muzzle_2"]
-
-[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_2"]
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_2" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("2_tjetp")
+shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_2")
+shoot_time = 0.9
+bullet_scene = ExtResource("4_hrwxo")
+shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="muzzle_3" type="Marker2D" parent="muzzles_container"]
 self_modulate = Color(0.0646965, 0.0646965, 0.0646965, 1)
 position = Vector2(-65, -30)
 
-[node name="shoot_timer_3" type="Timer" parent="muzzles_container/muzzle_3"]
-
-[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_3"]
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_3" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("2_tjetp")
+shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_3")
+shoot_time = 1.1
+bullet_scene = ExtResource("4_hrwxo")
+shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="muzzle_4" type="Marker2D" parent="muzzles_container"]
 self_modulate = Color(0.0646965, 0.0646965, 0.0646965, 1)
 position = Vector2(-64, 24)
 
-[node name="shoot_timer_4" type="Timer" parent="muzzles_container/muzzle_4"]
-
-[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_4"]
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_4" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("2_tjetp")
+shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_4")
+shoot_time = 1.3
+bullet_scene = ExtResource("4_hrwxo")
+shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="muzzle_5" type="Marker2D" parent="muzzles_container"]
 self_modulate = Color(0.0646965, 0.0646965, 0.0646965, 1)
 position = Vector2(-55, -35)
 
-[node name="shoot_timer_5" type="Timer" parent="muzzles_container/muzzle_5"]
-
-[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_5"]
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_5" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("2_tjetp")
+shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_5")
+shoot_time = 1.5
+bullet_scene = ExtResource("4_hrwxo")
+shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="muzzle_6" type="Marker2D" parent="muzzles_container"]
 self_modulate = Color(0.0646965, 0.0646965, 0.0646965, 1)
 position = Vector2(-55, 28)
 
-[node name="shoot_timer_6" type="Timer" parent="muzzles_container/muzzle_6"]
-
-[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_6"]
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_6" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("2_tjetp")
+shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_6")
+shoot_time = 1.7
+bullet_scene = ExtResource("4_hrwxo")
+shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="muzzle_7" type="Marker2D" parent="muzzles_container"]
 self_modulate = Color(0.0646965, 0.0646965, 0.0646965, 1)
 position = Vector2(71, -31)
 
-[node name="shoot_timer_7" type="Timer" parent="muzzles_container/muzzle_7"]
-
-[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_7"]
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_7" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("2_tjetp")
+shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_7")
+shoot_time = 3.0
+bullets_per_shot = 2
+shot_spread_angle = 20.0
+bullet_scene = ExtResource("4_hrwxo")
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="muzzle_8" type="Marker2D" parent="muzzles_container"]
 self_modulate = Color(0.0646965, 0.0646965, 0.0646965, 1)
 position = Vector2(71, 25)
 
-[node name="shoot_timer_8" type="Timer" parent="muzzles_container/muzzle_8"]
-
-[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_8"]
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_8" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("2_tjetp")
+shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_8")
+shoot_time = 3.0
+bullets_per_shot = 2
+shot_spread_angle = 20.0
+bullet_scene = ExtResource("4_hrwxo")
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="shoot_timers_container" type="Node2D" parent="."]
+
+[node name="shoot_timer_1" type="Timer" parent="shoot_timers_container"]
+
+[node name="shoot_timer_2" type="Timer" parent="shoot_timers_container"]
+
+[node name="shoot_timer_3" type="Timer" parent="shoot_timers_container"]
+
+[node name="shoot_timer_4" type="Timer" parent="shoot_timers_container"]
+
+[node name="shoot_timer_5" type="Timer" parent="shoot_timers_container"]
+
+[node name="shoot_timer_6" type="Timer" parent="shoot_timers_container"]
+
+[node name="shoot_timer_7" type="Timer" parent="shoot_timers_container"]
+
+[node name="shoot_timer_8" type="Timer" parent="shoot_timers_container"]
 
 [node name="screen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
 self_modulate = Color(0.852048, 0.0388045, 1.92523e-07, 1)
 position = Vector2(48, 0)
 
 [node name="onscreen_timer" type="Timer" parent="."]
+
+[node name="move_timer" type="Timer" parent="."]
