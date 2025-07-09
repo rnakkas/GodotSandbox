@@ -140,6 +140,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_1")
 shoot_time = 0.05
 one_shot = true
+bullet_speed = 550.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -153,6 +154,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_2")
 shoot_time = 0.05
 one_shot = true
+bullet_speed = 550.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -166,6 +168,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_3")
 shoot_time = 0.05
 one_shot = true
+bullet_speed = 550.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -179,6 +182,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_4")
 shoot_time = 0.05
 one_shot = true
+bullet_speed = 550.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -192,6 +196,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_5")
 shoot_time = 0.05
 one_shot = true
+bullet_speed = 550.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -205,6 +210,7 @@ script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../shoot_timers_container/shoot_timer_6")
 shoot_time = 0.05
 one_shot = true
+bullet_speed = 550.0
 bullet_scene = ExtResource("4_hrwxo")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -218,9 +224,10 @@ position = Vector2(71, -31)
 [node name="EnemyShootingComponent" type="Node2D" parent="tail_muzzles_container/tail_muzzle_1" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../tail_shoot_timers_container/shoot_timer_tail_muzzle_1")
-shoot_time = 0.8
+shoot_time = 0.3
 bullets_per_shot = 2
-shot_spread_angle = 20.0
+bullet_direction = Vector2(1, 0)
+shot_spread_angle = 40.0
 bullet_scene = ExtResource("4_hrwxo")
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
@@ -231,9 +238,10 @@ position = Vector2(71, 25)
 [node name="EnemyShootingComponent" type="Node2D" parent="tail_muzzles_container/tail_muzzle_2" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("2_tjetp")
 shoot_timer = NodePath("../../../tail_shoot_timers_container/shoot_timer_tail_muzzle_2")
-shoot_time = 0.8
+shoot_time = 0.3
 bullets_per_shot = 2
-shot_spread_angle = 20.0
+bullet_direction = Vector2(1, 0)
+shot_spread_angle = 40.0
 bullet_scene = ExtResource("4_hrwxo")
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
@@ -266,3 +274,5 @@ position = Vector2(86, 0)
 [node name="move_timer" type="Timer" parent="."]
 
 [node name="overlord_shoot_timer" type="Timer" parent="."]
+
+[node name="attack_rest_timer" type="Timer" parent="."]

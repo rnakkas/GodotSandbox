@@ -11,13 +11,13 @@ class_name VileV extends Area2D
 
 @export var offscreen_speed: float = 500.0
 @export var fly_off_speed: float = 850.0
-@export var onscreen_speed: float = 150.0
+@export var onscreen_speed: float = 75.0
 @export var acceleration: float = 1300.0
 @export var deceleration: float = 1200.0
 @export var kill_score: int = 350
 @export var screen_time: float = 10.0
-@export var move_time: float = 1.2
-@export var overlord_shoot_time: float = 0.5
+@export var move_time: float = 2.7
+@export var overlord_shoot_time: float = 0.32
 
 var direction: Vector2 = Vector2.LEFT
 var velocity: Vector2
@@ -46,7 +46,8 @@ var current_state: state
 	# - when shooting starts, moves up and down - done
 	# - when onscreen time elapses, fly towards left - done
 	# - this starts the tail shooting timers - done
-	# - set the direction of shots for tail shots
+	# - set the direction of shots for tail shots- done
+	# - getting hurt and dying logic
 
 ################################################
 # NOTE: Vile V
@@ -55,7 +56,7 @@ var current_state: state
 # Slows down to a stop at the right edge of the screen
 # Flies up and down in the y direction
 # Shoots continuously at player with targeted shots while flying up and down
-# After onscreen time is elapsed, fly off towards the right at player's y position
+# After onscreen time is elapsed, fly off towards the center of y coordinates on left of screen
 # When flying off shoot from the rear muzzles, non targeted spread shots towards Vector2.RIGHT
 # Despawn when offscreen
 ################################################
@@ -97,24 +98,25 @@ func _on_screen_entered() -> void:
 	move_timer.start()
 
 
-func _on_screen_exited() -> void:
-	for shoot_timer: Node in tail_shoot_timers_list:
-		if shoot_timer is Timer:
-			shoot_timer.stop()
-	
-	call_deferred("queue_free")
-
-
 func _on_move_timer_timeout() -> void:
 	direction = Vector2.DOWN
 	current_state = state.ATTACK
+
+	# Hang around a bit after shooting before attacking
+	await get_tree().create_timer(2.5).timeout
+
 	overlord_shoot_timer.start()
 
 
 func _on_onscreen_timer_timeout() -> void:
-	direction = Vector2.LEFT
-	current_state = state.FLY_OFF
 	overlord_shoot_timer.stop()
+	
+	# Hang around a bit after shooting before flying off
+	await get_tree().create_timer(2.5).timeout
+	
+	# Fly off towards center of left of screen
+	direction = self.global_position.direction_to(Vector2(0, viewport_size.y/2))
+	current_state = state.FLY_OFF
 
 	for shoot_timer: Node in tail_shoot_timers_list:
 		if shoot_timer is Timer:
@@ -125,8 +127,17 @@ func _on_overlord_shoot_timer_timeout() -> void:
 	for i: int in range(shoot_timers_list.size()):
 		if shoot_timers_list[i] is Timer && i == current_muzzle:
 			shoot_timers_list[i].start()
-			current_muzzle = (i + 1) % shoot_timers_list.size()
+			current_muzzle = (i + 1) % shoot_timers_list.size() # To wrap around to the first shot timer
 			break
+
+
+func _on_screen_exited() -> void:
+	for shoot_timer: Node in tail_shoot_timers_list:
+		if shoot_timer is Timer:
+			shoot_timer.stop()
+	
+	call_deferred("queue_free")
+
 
 
 func _process(_delta: float) -> void:
