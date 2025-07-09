@@ -4,7 +4,13 @@ class_name ShootingHandler extends Node2D
 const powerup_level_max: int = 4
 
 ## Base fire rate
-@export var fire_rate: float = 8.0
+@export var base_fire_rate: float = 5.5
+
+## OD fire rate
+@export var od_fire_rate: float = 6.25
+
+## Chorus fire rate
+@export var ch_fire_rate: float = 16.5
 
 ## Default: no powerups, change only when powerup is picked up
 @export var current_powerup: GameManager.powerups = GameManager.powerups.None
@@ -26,7 +32,7 @@ const powerup_level_max: int = 4
 @onready var muzzle_ch_2: Marker2D = %muzzle_ch_2
 
 ## Shot limits
-@export var base_shot_limit: int = 6
+@export var base_shot_limit: int = 10
 
 @export var od_lvl_1_shot_limit: int = 21
 @export var od_lvl_2_shot_limit: int = 35
@@ -36,6 +42,16 @@ const powerup_level_max: int = 4
 @export var ch_lvl_1_shot_limit: int = 10
 @export var ch_lvl_2_3_shot_limit: int = 12
 @export var ch_lvl_4_shot_limit: int = 36
+
+## Base bullet damage
+@export var base_bullet_damage: int = 2
+
+## OD bullet damage
+@export var od_bullet_damage: int = 1
+
+## Chorus bullet damage
+@export var ch_bullet_damage: int = 2
+
 
 ## Signals
 signal now_shooting(powerup: GameManager.powerups, level: int)
@@ -51,6 +67,7 @@ var location_ch_1: Vector2
 var location_ch_2: Vector2
 var bullets_list: Array[PlayerBullet] = []
 var shot_limit_reached: bool
+var fire_rate: float
 
 
 ################################################
@@ -72,9 +89,11 @@ func _connect_to_signals() -> void:
 ################################################
 func _update_shooting_properties() -> void:
 	var shot_limit: int = base_shot_limit
+	fire_rate = base_fire_rate
 	
 	match current_powerup:
 		GameManager.powerups.Overdrive:
+			fire_rate = od_fire_rate
 			match powerup_level:
 				0:
 					pass
@@ -98,7 +117,7 @@ func _update_shooting_properties() -> void:
 			angle_step = od_spread_angle_deg / (od_bullets_per_shot - 1)
 		
 		GameManager.powerups.Chorus:
-			fire_rate = 18.0
+			fire_rate = ch_fire_rate
 			match powerup_level:
 				0:
 					pass
@@ -203,6 +222,7 @@ func _base_shooting_behaviour() -> void:
 	var bullet: PlayerBullet
 	bullet = SceneManager.base_bullet_scene.instantiate()
 	bullet.position = location_base
+	bullet.damage = base_bullet_damage
 	bullets_list.append(bullet)
 
 ## Overdrive powerup shooting
@@ -213,6 +233,7 @@ func _od_shooting_behaviour() -> void:
 	for instance: int in range(od_bullets_per_shot):
 		bullet = SceneManager.od_bullet_scene.instantiate()
 		bullet.position = location_base
+		bullet.damage = od_bullet_damage
 		bullets_list.append(bullet)
 	
 	# First bullet's angle
@@ -243,6 +264,7 @@ func _ch_shooting_behaviour() -> void:
 			bullet_ch_2 = SceneManager.ch_lvl_1_bullet_scene.instantiate()
 
 	bullet.position = location_base
+	bullet.damage = ch_bullet_damage
 	bullets_list.append(bullet)
 	
 	if bullet_ch_1 != null:
