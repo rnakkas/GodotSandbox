@@ -18,9 +18,9 @@ class_name VileV extends Node2D
 @export var kill_score: int = 350
 @export var screen_time: float = 10.0
 @export var move_time: float = 2.7
-@export var shooting_control_time: float = 0.25
+@export var shooting_control_time: float = 0.4
 @export var pre_attack_time: float = 0.8
-@export var post_attack_time: float = 2.5
+@export var post_attack_time: float = 1.2
 @export var attack_limit: int = 2
 
 var direction: Vector2 = Vector2.LEFT
@@ -42,7 +42,7 @@ enum state {
 
 var current_state: state
 
-## TODO: Spritesheets
+## TODO: Spritesheets and animations
 
 ################################################
 # NOTE: Vile V
@@ -56,6 +56,9 @@ var current_state: state
 # Despawn when offscreen
 ################################################
 
+################################################
+# Ready
+################################################
 func _ready() -> void:
 	current_state = state.SPAWN
 
@@ -139,9 +142,10 @@ func _on_onscreen_timer_timeout() -> void:
 
 		# Hang around a bit after shooting before flying off
 		await get_tree().create_timer(post_attack_time).timeout
+		direction = self.global_position.direction_to(Vector2(0, viewport_size.y / 2))
+		await get_tree().create_timer(post_attack_time).timeout
 		
 		# Fly off towards center of left of screen
-		direction = self.global_position.direction_to(Vector2(0, viewport_size.y / 2))
 		current_state = state.FLY_OFF
 
 		for shoot_timer: Node in tail_shoot_timers_list:
@@ -151,14 +155,13 @@ func _on_onscreen_timer_timeout() -> void:
 
 ################################################
 # Shooting control timer:
-	# Starts each of the headstock shooting timers in sequence
+	# Shoots all muzzles at once
 ################################################
 func _on_shooting_control_timer_timeout() -> void:
-	for i: int in range(shoot_timers_list.size()):
-		if shoot_timers_list[i] is Timer && i == current_muzzle:
-			shoot_timers_list[i].start()
-			current_muzzle = (i + 1) % shoot_timers_list.size() # To wrap around to the first shot timer
-			break
+	## Shooting all muzzles at once
+	for shoot_timer: Node in shoot_timers_list:
+		if shoot_timer is Timer:
+			shoot_timer.start()
 
 
 ################################################

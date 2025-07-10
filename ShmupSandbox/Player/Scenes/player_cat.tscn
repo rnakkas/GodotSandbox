@@ -397,11 +397,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_63x5m"]
-radius = 4.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_uobwy"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_63x5m"]
 radius = 9.0
+height = 24.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_la8cv"]
+height = 26.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dguo2"]
 atlas = ExtResource("2_4ua8s")
@@ -693,14 +694,14 @@ autoplay = "none"
 
 [node name="collider_body" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)
-shape = SubResource("CircleShape2D_63x5m")
+shape = SubResource("CapsuleShape2D_63x5m")
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_mask = 24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(0, -10)
-shape = SubResource("CircleShape2D_uobwy")
+shape = SubResource("CapsuleShape2D_la8cv")
 debug_color = Color(0.994007, 0, 0.228904, 0.42)
 
 [node name="invincibility_timer" type="Timer" parent="."]
