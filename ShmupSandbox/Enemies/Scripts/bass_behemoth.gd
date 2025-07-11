@@ -1,4 +1,4 @@
-class_name Axecutioner extends Node2D
+class_name BassBehemoth extends Node2D
 
 @onready var sprite: AnimatedSprite2D = $sprite
 @onready var particles: CPUParticles2D = $CPUParticles2D
@@ -6,25 +6,27 @@ class_name Axecutioner extends Node2D
 @onready var screen_notifier: VisibleOnScreenNotifier2D = $screen_notifier
 @onready var onscreen_timer: Timer = $onscreen_timer
 @onready var move_timer: Timer = $move_timer
-@onready var head_shot_timer: Timer = $head_shot_timer
-@onready var body_shot_timer: Timer = $body_shot_timer
+@onready var head_shot_timer_1: Timer = $head_shot_timer_1
+@onready var head_shot_timer_2: Timer = $head_shot_timer_2
+@onready var body_shot_timers_container: Node = $body_shot_timers_container
 
-@export var offscreen_speed: float = 500.0
-@export var fly_off_speed: float = 850.0
-@export var onscreen_speed: float = 100.0
-@export var acceleration: float = 1300.0
-@export var deceleration: float = 1200.0
+@export var offscreen_speed: float = 400.0
+@export var fly_off_speed: float = 600.0
+@export var onscreen_speed: float = 75.0
+@export var acceleration: float = 1100.0
+@export var deceleration: float = 1000.0
 @export var kill_score: int = 350
-@export var screen_time: float = 10.0
-@export var move_time: float = 2.7
+@export var screen_time: float = 7.5
+@export var move_time: float = 1.8
 @export var pre_attack_time: float = 0.8
-@export var post_attack_time: float = 1.2
-@export var attack_limit: int = 2
+@export var post_attack_time: float = 1.0
+@export var attack_limit: int = 3
 
 var direction: Vector2 = Vector2.LEFT
 var velocity: Vector2
 var viewport_size: Vector2
 var attack_count: int
+var body_shot_times_list: Array[Node] = []
 
 enum state {
 	SPAWN,
@@ -40,20 +42,23 @@ var current_state: state
 ## TODO: Spritesheets and animations
 
 ################################################
-# ENEMY: Axecutioner
+# ENEMY: Bass Behemoth
 # High pressure enemy
 # Flies in from the right
 # Slows down to a stop at the right edge of the screen
 # Flies up and down in the y direction
-# Shoots continuously towards -x direction with non targeted shots while flying up and down - does this for 2 cycles
-# Non targeted shots 2 bullets per muzzle spread over a 10 degree angle
+# Shoots continuously towards -x direction with non targeted shots while flying up and down - does this for 4 cycles
+# Non targeted shots 1 bullet per muzzle
 # After onscreen time is elapsed, fly off towards the center of y coordinates on left of screen
-# When flying off shoot 9 bullets spread over 360 degrees (circle)
+# When flying off shoot 9 bullets shoot from neck muzzles in + and - y directions
 # Despawn when offscreen
 ################################################
 
 func _ready() -> void:
 	current_state = state.SPAWN
+
+	body_shot_times_list = body_shot_timers_container.get_children()
+	body_shot_times_list.sort()
 
 	_connect_to_signals()
 	_set_timer_properties()
@@ -102,7 +107,8 @@ func _on_move_timer_timeout() -> void:
 	# Hang around a bit after starting to move and before attacking
 	await get_tree().create_timer(pre_attack_time).timeout
 
-	head_shot_timer.start()
+	head_shot_timer_1.start()
+	head_shot_timer_2.start()
 
 
 ################################################
@@ -117,14 +123,16 @@ func _on_onscreen_timer_timeout() -> void:
 
 	# Attack cycle logic
 	if attack_count < attack_limit: # Restart cycle
-		head_shot_timer.stop()
+		head_shot_timer_1.stop()
+		head_shot_timer_2.stop()
 		deceleration = deceleration * 0.05 # Smoother stopping for up/down movement
 		current_state = state.IDLE
 		onscreen_timer.start()
 		move_timer.start()
 
 	elif attack_count >= attack_limit: # End cycle
-		head_shot_timer.stop()
+		head_shot_timer_1.stop()
+		head_shot_timer_2.stop()
 
 		# Hang around a bit after shooting before flying off
 		await get_tree().create_timer(post_attack_time).timeout
@@ -135,7 +143,9 @@ func _on_onscreen_timer_timeout() -> void:
 		current_state = state.FLY_OFF
 
 		# Start the body shooting timer
-		body_shot_timer.start()
+		for timer: Node in body_shot_times_list:
+			if timer is Timer:
+				timer.start()
 
 
 ################################################
@@ -143,8 +153,13 @@ func _on_onscreen_timer_timeout() -> void:
 	# Also stop all shooting timers
 ################################################
 func _on_screen_exited() -> void:
-	head_shot_timer.stop()
-	body_shot_timer.stop()
+	head_shot_timer_1.stop()
+	head_shot_timer_2.stop()
+	
+	for timer: Node in body_shot_times_list:
+		if timer is Timer:
+			timer.stop()
+	
 	call_deferred("queue_free")
 
 
@@ -193,8 +208,12 @@ func _on_damage_taker_component_health_depleted() -> void:
 	particles.emitting = true
 
 	# Stop all shooting timers
-	head_shot_timer.stop()
-	body_shot_timer.stop()
+	head_shot_timer_1.stop()
+	head_shot_timer_2.stop()
+
+	for timer: Node in body_shot_times_list:
+		if timer is Timer:
+			timer.stop()
 	
 	current_state = state.DEATH
 	direction = Vector2.DOWN

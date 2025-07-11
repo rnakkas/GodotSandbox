@@ -65,6 +65,8 @@ signal spawn_enemy_vile_v_event(sp: Vector2)
 
 signal spawn_enemy_axecutioner_event(sp: Vector2)
 
+signal spawn_enemy_bass_behemoth_event(sp: Vector2)
+
 ################################################
 #NOTE:Enemy stuff
 ################################################
