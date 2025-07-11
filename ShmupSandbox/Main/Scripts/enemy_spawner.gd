@@ -52,6 +52,7 @@ func _connect_to_signals() -> void:
 	SignalsBus.spawn_enemy_soul_carrier_event.connect(self._on_spawn_soul_carrier_event)
 	SignalsBus.spawn_enemy_rumbler_event.connect(self._on_spawn_rumbler_event)
 	SignalsBus.spawn_enemy_vile_v_event.connect(self._on_spawn_vile_v_event)
+	SignalsBus.spawn_enemy_axecutioner_event.connect(self._on_spawn_axecutioner_event)
 
 
 func _on_spawn_doomboard_event(sp: Vector2) -> void:
@@ -78,6 +79,8 @@ func _on_spawn_rumbler_event(sp: Vector2) -> void:
 func _on_spawn_vile_v_event(sp: Vector2) -> void:
 	_instantiate_enemy(SceneManager.vile_v_PS, sp)
 
+func _on_spawn_axecutioner_event(sp: Vector2) -> void:
+	_instantiate_enemy(SceneManager.axecutioner_PS, sp)
 
 func _instantiate_enemy(enemy_scene: PackedScene, sp: Vector2) -> void:
 	var enemy_instance: Node2D = enemy_scene.instantiate()

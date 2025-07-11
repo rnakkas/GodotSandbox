@@ -1,0 +1,143 @@
+[gd_scene load_steps=6 format=3 uid="uid://djftkos1iupef"]
+
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="1_0hty6"]
+[ext_resource type="Script" uid="uid://cqmmu6t2cm0i7" path="res://ShmupSandbox/Enemies/Scripts/axecutioner.gd" id="1_qaalj"]
+[ext_resource type="Texture2D" uid="uid://cvw65kocrrlwt" path="res://ShmupSandbox/Assets/Enemy/vile_v-placeholder.png" id="2_qaalj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tjetp"]
+atlas = ExtResource("2_qaalj")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3if7d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"death",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.0
+}]
+
+[node name="axecutioner" type="Node2D"]
+script = ExtResource("1_qaalj")
+
+[node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
+script = ExtResource("1_0hty6")
+max_hp = 40
+dot_timer = NodePath("dot_timer")
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DamageTakerComponent"]
+polygon = PackedVector2Array(-75, -24, -75, 14, -54, 28, -47, 4, -7, 6, 52, 48, 85, 34, 58, -2, 84, -46, 53, -56, -10, -13, -46, -11, -53, -36)
+
+[node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 0.335514, 0.269596, 1)
+position = Vector2(2, -3)
+scale = Vector2(1.75, 1.75)
+sprite_frames = SubResource("SpriteFrames_3if7d")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="Label" type="Label" parent="sprite"]
+offset_left = -58.2857
+offset_top = -48.0
+offset_right = 101.714
+offset_bottom = -25.0
+text = "Enemy - Axecutioner"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 25
+lifetime = 0.41
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 151.08
+initial_velocity_max = 287.77
+scale_amount_max = 2.5

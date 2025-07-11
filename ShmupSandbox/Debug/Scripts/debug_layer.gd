@@ -199,6 +199,9 @@ func _enemy_spawn_actions() -> void:
 		
 		8: # Spawn Vile V
 			SignalsBus.spawn_enemy_vile_v_event.emit(pos)
+		
+		9: # Spawn Axecutioner
+			SignalsBus.spawn_enemy_axecutioner_event.emit(pos)
 
 
 ################################################
