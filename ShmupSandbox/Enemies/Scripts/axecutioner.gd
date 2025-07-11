@@ -24,7 +24,6 @@ class_name Axecutioner extends Node2D
 
 var direction: Vector2 = Vector2.LEFT
 var velocity: Vector2
-var shoot_timers_list: Array[Node] = []
 var viewport_size: Vector2
 var attack_count: int
 

@@ -5,10 +5,9 @@ class_name VileV extends Node2D
 @onready var screen_notifier: VisibleOnScreenNotifier2D = $screen_notifier
 @onready var onscreen_timer: Timer = $onscreen_timer
 @onready var move_timer: Timer = $move_timer
-@onready var shooting_control_timer: Timer = $shooting_control_timer
-@onready var shoot_timers_container: Node = $shoot_timers_container
-@onready var tail_shoot_timers_container: Node = $tail_shoot_timers_container
 @onready var damage_taker_component: DamageTakerComponent = $DamageTakerComponent
+@onready var head_shot_timer: Timer = $head_shot_timer
+@onready var body_shot_timer: Timer = $body_shot_timer
 
 @export var offscreen_speed: float = 500.0
 @export var fly_off_speed: float = 850.0
@@ -18,15 +17,12 @@ class_name VileV extends Node2D
 @export var kill_score: int = 350
 @export var screen_time: float = 10.0
 @export var move_time: float = 2.7
-@export var shooting_control_time: float = 0.4
 @export var pre_attack_time: float = 0.8
 @export var post_attack_time: float = 1.2
 @export var attack_limit: int = 2
 
 var direction: Vector2 = Vector2.LEFT
 var velocity: Vector2
-var shoot_timers_list: Array[Node] = []
-var tail_shoot_timers_list: Array[Node] = []
 var viewport_size: Vector2
 var attack_count: int
 
@@ -60,14 +56,6 @@ var current_state: state
 func _ready() -> void:
 	current_state = state.SPAWN
 
-	# Create the shooting timers list for the headstock muzzles
-	shoot_timers_list = shoot_timers_container.get_children()
-	shoot_timers_list.sort()
-
-	# Create the shooting timers list for the tail muzzles
-	tail_shoot_timers_list = tail_shoot_timers_container.get_children()
-	tail_shoot_timers_list.sort()
-
 	_connect_to_signals()
 	_set_timer_properties()
 	
@@ -83,8 +71,6 @@ func _connect_to_signals() -> void:
 	
 	move_timer.timeout.connect(self._on_move_timer_timeout)
 	
-	shooting_control_timer.timeout.connect(self._on_shooting_control_timer_timeout)
-	
 	damage_taker_component.damage_taken.connect(self._on_damage_taker_component_damage_taken)
 	damage_taker_component.low_health.connect(self._on_damage_taker_component_low_health)
 	damage_taker_component.health_depleted.connect(self._on_damage_taker_component_health_depleted)
@@ -93,7 +79,6 @@ func _connect_to_signals() -> void:
 func _set_timer_properties() -> void:
 	Helper.set_timer_properties(onscreen_timer, true, screen_time)
 	Helper.set_timer_properties(move_timer, true, move_time)
-	Helper.set_timer_properties(shooting_control_timer, false, shooting_control_time)
 
 
 ################################################
@@ -118,7 +103,7 @@ func _on_move_timer_timeout() -> void:
 	# Hang around a bit after starting to move and before attacking
 	await get_tree().create_timer(pre_attack_time).timeout
 
-	shooting_control_timer.start()
+	head_shot_timer.start()
 
 
 ################################################
@@ -133,14 +118,14 @@ func _on_onscreen_timer_timeout() -> void:
 
 	# Attack cycle logic
 	if attack_count < attack_limit: # Restart cycle
-		shooting_control_timer.stop()
+		head_shot_timer.stop()
 		deceleration = deceleration * 0.05 # Smoother stopping for up/down movement
 		current_state = state.IDLE
 		onscreen_timer.start()
 		move_timer.start()
 
 	elif attack_count >= attack_limit: # End cycle
-		shooting_control_timer.stop()
+		head_shot_timer.stop()
 
 		# Hang around a bit after shooting before flying off
 		await get_tree().create_timer(post_attack_time).timeout
@@ -149,31 +134,15 @@ func _on_onscreen_timer_timeout() -> void:
 		
 		# Fly off towards center of left of screen
 		current_state = state.FLY_OFF
-
-		for shoot_timer: Node in tail_shoot_timers_list:
-			if shoot_timer is Timer:
-				shoot_timer.start()
+		body_shot_timer.start()
 	
-
-################################################
-# Shooting control timer:
-	# Shoots all muzzles at once
-################################################
-func _on_shooting_control_timer_timeout() -> void:
-	## Shooting all muzzles at once
-	for shoot_timer: Node in shoot_timers_list:
-		if shoot_timer is Timer:
-			shoot_timer.start()
-
-
+	
 ################################################
 # Despawn on leaving the screen
 ################################################
 func _on_screen_exited() -> void:
-	for shoot_timer: Node in tail_shoot_timers_list:
-		if shoot_timer is Timer:
-			shoot_timer.stop()
-	
+	head_shot_timer.stop()
+	body_shot_timer.stop()
 	call_deferred("queue_free")
 
 
@@ -222,10 +191,8 @@ func _on_damage_taker_component_health_depleted() -> void:
 	particles.emitting = true
 
 	# Stop all shooting timers
-	shooting_control_timer.stop()
-	for shoot_timer: Node in tail_shoot_timers_list:
-		if shoot_timer is Timer:
-			shoot_timer.stop()
+	head_shot_timer.stop()
+	body_shot_timer.stop()
 	
 	current_state = state.DEATH
 	direction = Vector2.DOWN
