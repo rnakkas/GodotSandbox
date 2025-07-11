@@ -17,7 +17,6 @@ class_name Axecutioner extends Node2D
 @export var kill_score: int = 350
 @export var screen_time: float = 10.0
 @export var move_time: float = 2.7
-@export var shooting_control_time: float = 0.4
 @export var pre_attack_time: float = 0.8
 @export var post_attack_time: float = 1.2
 @export var attack_limit: int = 2
