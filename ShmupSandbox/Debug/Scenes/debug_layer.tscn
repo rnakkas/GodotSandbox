@@ -116,7 +116,7 @@ offset_bottom = 144.0
 theme_override_font_sizes/font_size = 12
 selected = 0
 allow_reselect = true
-item_count = 10
+item_count = 11
 popup/item_0/id = 4
 popup/item_1/text = "spawn: doomboard"
 popup/item_1/id = 0
@@ -136,6 +136,8 @@ popup/item_8/text = "spawn: vile v"
 popup/item_8/id = 8
 popup/item_9/text = "spawn: axecutioner"
 popup/item_9/id = 9
+popup/item_10/text = "spawn: bass behemoth"
+popup/item_10/id = 10
 
 [node name="player_debugs5" type="Label" parent="." groups=["DEBUG_ui_group"]]
 offset_left = 425.0

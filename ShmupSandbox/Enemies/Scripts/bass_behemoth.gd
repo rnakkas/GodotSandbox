@@ -1,0 +1,1 @@
+class_name BassBehemoth extends Node2D

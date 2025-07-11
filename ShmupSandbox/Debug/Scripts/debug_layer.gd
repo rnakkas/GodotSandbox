@@ -202,6 +202,9 @@ func _enemy_spawn_actions() -> void:
 		
 		9: # Spawn Axecutioner
 			SignalsBus.spawn_enemy_axecutioner_event.emit(pos)
+		
+		10: # Spawn Bass Behemoth
+			SignalsBus.spawn_enemy_bass_behemoth_event.emit(pos)
 
 
 ################################################

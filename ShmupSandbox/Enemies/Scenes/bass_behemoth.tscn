@@ -1,0 +1,217 @@
+[gd_scene load_steps=6 format=3 uid="uid://ce0j17rfkpet6"]
+
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="1_7uejj"]
+[ext_resource type="Script" uid="uid://n344cpvgwomh" path="res://ShmupSandbox/Enemies/Scripts/bass_behemoth.gd" id="1_hehvr"]
+[ext_resource type="Texture2D" uid="uid://cvw65kocrrlwt" path="res://ShmupSandbox/Assets/Enemy/vile_v-placeholder.png" id="2_hehvr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tjetp"]
+atlas = ExtResource("2_hehvr")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iqbkt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"death",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjetp")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.0
+}]
+
+[node name="bass_behemoth" type="Node2D"]
+script = ExtResource("1_hehvr")
+
+[node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
+script = ExtResource("1_7uejj")
+max_hp = 60
+dot_timer = NodePath("dot_timer")
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DamageTakerComponent"]
+position = Vector2(-3, 4)
+polygon = PackedVector2Array(-75, -24, -75, 14, -54, 28, -47, 4, -7, 6, 52, 48, 85, 34, 58, -2, 84, -46, 53, -56, -10, -13, -21.3401, -12.37, -46, -11, -53, -36)
+
+[node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 0.335514, 0.269596, 1)
+scale = Vector2(1.75, 1.75)
+sprite_frames = SubResource("SpriteFrames_iqbkt")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="Label" type="Label" parent="sprite"]
+offset_left = -84.0
+offset_top = -48.0
+offset_right = 102.0
+offset_bottom = -25.0
+text = "Enemy - Bass Behemoth"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 25
+lifetime = 0.41
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 151.08
+initial_velocity_max = 287.77
+scale_amount_max = 2.5
+
+[node name="screen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
+self_modulate = Color(0.852048, 0.0388045, 1.92523e-07, 1)
+position = Vector2(86, 0)
+
+[node name="muzzles_container" type="Node2D" parent="."]
+
+[node name="muzzle_1" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-76, -24)
+gizmo_extents = 91.1
+
+[node name="muzzle_3" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-76, 24)
+gizmo_extents = 91.1
+
+[node name="muzzle_2" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-57, -34)
+gizmo_extents = 91.1
+
+[node name="muzzle_4" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-57, 34)
+gizmo_extents = 91.1
+
+[node name="muzzle_5_neck" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-46, -9)
+gizmo_extents = 91.1
+
+[node name="muzzle_5_neck2" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-46, 9)
+gizmo_extents = 91.1
+
+[node name="muzzle_6_neck" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-36, -9)
+gizmo_extents = 91.1
+
+[node name="muzzle_6_neck2" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-36, 9)
+gizmo_extents = 91.1
+
+[node name="muzzle_7_neck" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-26, -9)
+gizmo_extents = 91.1
+
+[node name="muzzle_7_neck2" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-26, 9)
+gizmo_extents = 91.1
+
+[node name="muzzle_8_neck" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-16, -9)
+gizmo_extents = 91.1
+
+[node name="muzzle_8_neck2" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-16, 9)
+gizmo_extents = 91.1
+
+[node name="onscreen_timer" type="Timer" parent="."]
+
+[node name="move_timer" type="Timer" parent="."]
+
+[node name="body_shot_timer" type="Timer" parent="."]
+
+[node name="head_shot_timer" type="Timer" parent="."]
