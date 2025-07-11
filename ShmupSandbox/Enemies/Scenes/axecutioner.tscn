@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://djftkos1iupef"]
+[gd_scene load_steps=8 format=3 uid="uid://djftkos1iupef"]
 
 [ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="1_0hty6"]
 [ext_resource type="Script" uid="uid://cqmmu6t2cm0i7" path="res://ShmupSandbox/Enemies/Scripts/axecutioner.gd" id="1_qaalj"]
 [ext_resource type="Texture2D" uid="uid://cvw65kocrrlwt" path="res://ShmupSandbox/Assets/Enemy/vile_v-placeholder.png" id="2_qaalj"]
+[ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="4_k7wfx"]
+[ext_resource type="PackedScene" uid="uid://bbfhd7y4k5cbl" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn" id="5_5wymr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tjetp"]
 atlas = ExtResource("2_qaalj")
@@ -108,13 +110,13 @@ dot_timer = NodePath("dot_timer")
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DamageTakerComponent"]
-polygon = PackedVector2Array(-75, -24, -75, 14, -54, 28, -47, 4, -7, 6, 52, 48, 85, 34, 58, -2, 84, -46, 53, -56, -10, -13, -46, -11, -53, -36)
+position = Vector2(-3, 4)
+polygon = PackedVector2Array(-75, -24, -75, 14, -54, 28, -47, 4, -7, 6, 52, 48, 85, 34, 58, -2, 84, -46, 53, -56, -10, -13, -21.3401, -12.37, -46, -11, -53, -36)
 
 [node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(1, 0.335514, 0.269596, 1)
-position = Vector2(2, -3)
 scale = Vector2(1.75, 1.75)
 sprite_frames = SubResource("SpriteFrames_3if7d")
 animation = &"fly"
@@ -141,3 +143,129 @@ gravity = Vector2(0, 0)
 initial_velocity_min = 151.08
 initial_velocity_max = 287.77
 scale_amount_max = 2.5
+
+[node name="screen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
+self_modulate = Color(0.852048, 0.0388045, 1.92523e-07, 1)
+position = Vector2(86, 0)
+
+[node name="muzzles_container" type="Node2D" parent="."]
+
+[node name="muzzle_1" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-77, -23)
+gizmo_extents = 15.0
+
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_1" node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("4_k7wfx")
+shoot_timer = NodePath("../../../head_shot_timer")
+shoot_time = 0.9
+bullets_per_shot = 2
+bullet_direction = Vector2(-1, 0)
+bullet_speed = 230.0
+shot_spread_angle = 30.0
+bullet_scene = ExtResource("5_5wymr")
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="muzzle_2" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-67, -27)
+gizmo_extents = 15.0
+
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_2" node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("4_k7wfx")
+shoot_timer = NodePath("../../../head_shot_timer")
+shoot_time = 0.9
+bullets_per_shot = 2
+bullet_direction = Vector2(-1, 0)
+bullet_speed = 230.0
+shot_spread_angle = 12.0
+bullet_scene = ExtResource("5_5wymr")
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="muzzle_3" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-58, -31)
+gizmo_extents = 15.0
+
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_3" node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("4_k7wfx")
+shoot_timer = NodePath("../../../head_shot_timer")
+shoot_time = 0.9
+bullets_per_shot = 2
+bullet_direction = Vector2(-1, 0)
+bullet_speed = 230.0
+shot_spread_angle = 10.0
+bullet_scene = ExtResource("5_5wymr")
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="muzzle_4" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-76, 23)
+gizmo_extents = 15.0
+
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_4" node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("4_k7wfx")
+shoot_timer = NodePath("../../../head_shot_timer")
+shoot_time = 0.9
+bullets_per_shot = 2
+bullet_direction = Vector2(-1, 0)
+bullet_speed = 230.0
+shot_spread_angle = 30.0
+bullet_scene = ExtResource("5_5wymr")
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="muzzle_5" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-65, 27)
+gizmo_extents = 15.0
+
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_5" node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("4_k7wfx")
+shoot_timer = NodePath("../../../head_shot_timer")
+shoot_time = 0.9
+bullets_per_shot = 2
+bullet_direction = Vector2(-1, 0)
+bullet_speed = 230.0
+shot_spread_angle = 12.0
+bullet_scene = ExtResource("5_5wymr")
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="muzzle_6" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-58, 31)
+gizmo_extents = 15.0
+
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_6" node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("4_k7wfx")
+shoot_timer = NodePath("../../../head_shot_timer")
+shoot_time = 0.9
+bullets_per_shot = 2
+bullet_direction = Vector2(-1, 0)
+bullet_speed = 230.0
+shot_spread_angle = 10.0
+bullet_scene = ExtResource("5_5wymr")
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="muzzle_7_body" type="Marker2D" parent="muzzles_container"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(25, 0)
+gizmo_extents = 50.5
+
+[node name="EnemyShootingComponent" type="Node2D" parent="muzzles_container/muzzle_7_body" node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("4_k7wfx")
+shoot_timer = NodePath("../../../body_shot_timer")
+shoot_time = 0.4
+bullets_per_shot = 12
+bullet_direction = Vector2(1, 0)
+bullet_speed = 230.0
+shot_spread_angle = 360.0
+bullet_scene = ExtResource("5_5wymr")
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="onscreen_timer" type="Timer" parent="."]
+
+[node name="move_timer" type="Timer" parent="."]
+
+[node name="body_shot_timer" type="Timer" parent="."]
+
+[node name="head_shot_timer" type="Timer" parent="."]

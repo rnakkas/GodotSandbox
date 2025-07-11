@@ -28,8 +28,6 @@ var velocity: Vector2
 var shoot_timers_list: Array[Node] = []
 var tail_shoot_timers_list: Array[Node] = []
 var viewport_size: Vector2
-var can_attack: bool
-var current_muzzle: int = 0
 var attack_count: int
 
 enum state {
@@ -45,7 +43,7 @@ var current_state: state
 ## TODO: Spritesheets and animations
 
 ################################################
-# NOTE: Vile V
+# ENEMY: Vile V
 # High pressure enemy
 # Flies in from the right
 # Slows down to a stop at the right edge of the screen
@@ -80,9 +78,13 @@ func _ready() -> void:
 func _connect_to_signals() -> void:
 	screen_notifier.screen_entered.connect(self._on_screen_entered)
 	screen_notifier.screen_exited.connect(self._on_screen_exited)
+
 	onscreen_timer.timeout.connect(self._on_onscreen_timer_timeout)
+	
 	move_timer.timeout.connect(self._on_move_timer_timeout)
+	
 	shooting_control_timer.timeout.connect(self._on_shooting_control_timer_timeout)
+	
 	damage_taker_component.damage_taken.connect(self._on_damage_taker_component_damage_taken)
 	damage_taker_component.low_health.connect(self._on_damage_taker_component_low_health)
 	damage_taker_component.health_depleted.connect(self._on_damage_taker_component_health_depleted)

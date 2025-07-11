@@ -281,5 +281,3 @@ position = Vector2(86, 0)
 [node name="move_timer" type="Timer" parent="."]
 
 [node name="shooting_control_timer" type="Timer" parent="."]
-
-[node name="attack_rest_timer" type="Timer" parent="."]
