@@ -1,11 +1,11 @@
-class_name VileV extends Node2D
+class_name Axecutioner extends Node2D
 
 @onready var sprite: AnimatedSprite2D = $sprite
 @onready var particles: CPUParticles2D = $CPUParticles2D
+@onready var damage_taker_component: DamageTakerComponent = $DamageTakerComponent
 @onready var screen_notifier: VisibleOnScreenNotifier2D = $screen_notifier
 @onready var onscreen_timer: Timer = $onscreen_timer
 @onready var move_timer: Timer = $move_timer
-@onready var damage_taker_component: DamageTakerComponent = $DamageTakerComponent
 @onready var head_shot_timer: Timer = $head_shot_timer
 @onready var body_shot_timer: Timer = $body_shot_timer
 
@@ -17,6 +17,7 @@ class_name VileV extends Node2D
 @export var kill_score: int = 350
 @export var screen_time: float = 10.0
 @export var move_time: float = 2.7
+@export var shooting_control_time: float = 0.4
 @export var pre_attack_time: float = 0.8
 @export var post_attack_time: float = 1.2
 @export var attack_limit: int = 2
@@ -36,23 +37,22 @@ enum state {
 
 var current_state: state
 
+
 ## TODO: Spritesheets and animations
 
 ################################################
-# ENEMY: Vile V
+# ENEMY: Axecutioner
 # High pressure enemy
 # Flies in from the right
 # Slows down to a stop at the right edge of the screen
 # Flies up and down in the y direction
-# Shoots continuously at player with targeted shots while flying up and down - does this for 2 cycles
+# Shoots continuously towards -x direction with non targeted shots while flying up and down - does this for 2 cycles
+# Non targeted shots 2 bullets per muzzle spread over a 10 degree angle
 # After onscreen time is elapsed, fly off towards the center of y coordinates on left of screen
-# When flying off shoot from the rear muzzles, non targeted spread shots towards Vector2.RIGHT
+# When flying off shoot 9 bullets spread over 360 degrees (circle)
 # Despawn when offscreen
 ################################################
 
-################################################
-# Ready
-################################################
 func _ready() -> void:
 	current_state = state.SPAWN
 
@@ -68,13 +68,13 @@ func _connect_to_signals() -> void:
 	screen_notifier.screen_exited.connect(self._on_screen_exited)
 
 	onscreen_timer.timeout.connect(self._on_onscreen_timer_timeout)
-	
+
 	move_timer.timeout.connect(self._on_move_timer_timeout)
-	
+
 	damage_taker_component.damage_taken.connect(self._on_damage_taker_component_damage_taken)
 	damage_taker_component.low_health.connect(self._on_damage_taker_component_low_health)
 	damage_taker_component.health_depleted.connect(self._on_damage_taker_component_health_depleted)
-	
+
 
 func _set_timer_properties() -> void:
 	Helper.set_timer_properties(onscreen_timer, true, screen_time)
@@ -97,7 +97,7 @@ func _on_screen_entered() -> void:
 	# When moving, waits a little bit before actually shooting
 ################################################
 func _on_move_timer_timeout() -> void:
-	direction = Vector2.DOWN
+	direction = Vector2.UP
 	current_state = state.ATTACK
 
 	# Hang around a bit after starting to move and before attacking
@@ -134,11 +134,14 @@ func _on_onscreen_timer_timeout() -> void:
 		
 		# Fly off towards center of left of screen
 		current_state = state.FLY_OFF
+
+		# Start the body shooting timer
 		body_shot_timer.start()
-	
-	
+
+
 ################################################
 # Despawn on leaving the screen
+	# Also stop all shooting timers
 ################################################
 func _on_screen_exited() -> void:
 	head_shot_timer.stop()
