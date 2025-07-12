@@ -83,7 +83,7 @@ script = ExtResource("1_3n0uw")
 
 [node name="DamageTakerComponent" type="Area2D" parent="."]
 script = ExtResource("2_ckrxg")
-max_hp = 10
+max_hp = 5
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
 
 [node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
@@ -120,9 +120,9 @@ position = Vector2(-21, -26)
 [node name="EnemyShootingComponent" type="Node2D" parent="muzzle_1" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("4_sdkbo")
 shoot_timer = NodePath("../../shoot_timer")
-shoot_time = 0.4
+shoot_time = 0.35
 bullet_direction = Vector2(0, -1)
-bullet_speed = 200.0
+bullet_speed = 150.0
 bullet_scene = ExtResource("5_wp61u")
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
@@ -132,12 +132,19 @@ position = Vector2(-21, 26)
 [node name="EnemyShootingComponent" type="Node2D" parent="muzzle_2" node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("4_sdkbo")
 shoot_timer = NodePath("../../shoot_timer")
-shoot_time = 0.4
+shoot_time = 0.3
 bullet_direction = Vector2(0, 1)
-bullet_speed = 200.0
+bullet_speed = 150.0
 bullet_scene = ExtResource("5_wp61u")
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="onscreen_timer" type="Timer" parent="."]
 
 [node name="shoot_timer" type="Timer" parent="."]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -61.0
+offset_top = -51.0
+offset_right = 69.0
+offset_bottom = -28.0
+text = "Enemy - Rimshot"
