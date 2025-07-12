@@ -58,6 +58,6 @@ static func set_direction(viewport_size: Vector2, origin: Vector2, target: Vecto
 		var rand_y: float = randf_range(0, viewport_size.y)
 		target = Vector2(rand_x, rand_y)
 	
-	var direction: Vector2 = origin.direction_to(target).normalized()
+	var direction: Vector2 = origin.direction_to(target)
 	
 	return direction

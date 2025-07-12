@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cj48h6cme32is"]
+[gd_scene load_steps=8 format=3 uid="uid://bp800omhtog1"]
 
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_6qg21"]
 [ext_resource type="Script" uid="uid://cjgsadr8gaseh" path="res://ShmupSandbox/Enemies/Scripts/rumbler.gd" id="1_coak3"]

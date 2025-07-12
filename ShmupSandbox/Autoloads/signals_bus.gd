@@ -97,6 +97,9 @@ signal spawn_enemy_axecutioner_event(sp: Vector2)
 @warning_ignore("unused_signal")
 signal spawn_enemy_bass_behemoth_event(sp: Vector2)
 
+@warning_ignore("unused_signal")
+signal spawn_enemy_rimshot_event(sp: Vector2)
+
 ################################################
 #NOTE:Enemy stuff
 ################################################
