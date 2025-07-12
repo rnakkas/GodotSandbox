@@ -209,6 +209,8 @@ func _enemy_spawn_actions() -> void:
 		11: # Spawn Rimshot
 			SignalsBus.spawn_enemy_rimshot_event.emit(pos)
 
+		12: # Spawn Tomblaster
+			SignalsBus.spawn_enemy_tomblaster_event.emit(pos)
 
 ################################################
 #NOTE: Helper to get the enemy path value
