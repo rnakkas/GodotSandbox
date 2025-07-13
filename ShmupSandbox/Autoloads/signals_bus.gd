@@ -65,7 +65,7 @@ signal shot_limit_updated_event(shot_limit: int)
 
 
 ################################################
-#NOTE:Spawning enemies
+# Spawning enemies
 ################################################
 @warning_ignore("unused_signal")
 signal spawn_enemy_doomboard_event(sp: Vector2)
@@ -100,8 +100,11 @@ signal spawn_enemy_bass_behemoth_event(sp: Vector2)
 @warning_ignore("unused_signal")
 signal spawn_enemy_rimshot_event(sp: Vector2)
 
+@warning_ignore("unused_signal")
+signal spawn_enemy_tomblaster_event(sp: Vector2)
+
 ################################################
-#NOTE:Enemy stuff
+# Enemy stuff
 ################################################
 @warning_ignore("unused_signal")
 signal enemy_shooting_event(bullets_list: Array[Area2D])

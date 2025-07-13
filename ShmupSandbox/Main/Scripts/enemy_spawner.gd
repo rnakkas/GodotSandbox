@@ -55,6 +55,7 @@ func _connect_to_signals() -> void:
 	SignalsBus.spawn_enemy_axecutioner_event.connect(self._on_spawn_axecutioner_event)
 	SignalsBus.spawn_enemy_bass_behemoth_event.connect(self._on_spawn_bass_behemoth_event)
 	SignalsBus.spawn_enemy_rimshot_event.connect(self._on_spawn_rimshot_event)
+	SignalsBus.spawn_enemy_tomblaster_event.connect(self._on_spawn_tomblaster_event)
 
 
 func _on_spawn_doomboard_event(sp: Vector2) -> void:
@@ -89,6 +90,9 @@ func _on_spawn_bass_behemoth_event(sp: Vector2) -> void:
 
 func _on_spawn_rimshot_event(sp: Vector2) -> void:
 	_instantiate_enemy(SceneManager.rimshot_PS, sp)
+
+func _on_spawn_tomblaster_event(sp: Vector2) -> void:
+	_instantiate_enemy(SceneManager.tomblaster_PS, sp)
 
 
 func _instantiate_enemy(enemy_scene: PackedScene, sp: Vector2) -> void:

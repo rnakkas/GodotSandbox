@@ -18,6 +18,9 @@ class_name EnemyShootingComponent extends Node2D
 ## Bullet speed. Used to override the default speed of instantiated bullets. Ignored if value is zero
 @export var bullet_speed: float
 
+## Angle of shot bullet. Defaults to 180 (points to Vector2.LEFT)
+@export var default_bullet_angle: float = 180.0
+
 ## The total spread angle of each shot, in degrees
 @export var shot_spread_angle: float = 0
 
@@ -64,11 +67,13 @@ func _on_shoot_timer_timeout() -> void:
 ################################################
 func _handle_non_targeted_shooting() -> void:
 	# Value with which to increment bullet angles
-	var angle_step_deg: float = shot_spread_angle / (bullets_per_shot - 1)
+	var angle_step_deg: float
+	var current_bullet_angle_deg: float = default_bullet_angle
 
 	# If only 1 bullet per shot, bullet always points straight to the left, i.e. 180.0 degrees
-	var current_bullet_angle_deg: float = 180.0
+	# Otherwise set the first bullet's angle to be minimum angle value in the spread
 	if bullets_per_shot > 1:
+		angle_step_deg = shot_spread_angle / (bullets_per_shot - 1)
 		current_bullet_angle_deg -= (angle_step_deg * ((float(bullets_per_shot) - 1) / 2))
 
 	SignalsBus.enemy_shooting_event.emit(_populate_bullets_list(current_bullet_angle_deg, angle_step_deg))
@@ -90,11 +95,12 @@ func _handle_targeted_shooting() -> void:
 	var angle_to_player_deg: float = rad_to_deg(self.global_position.angle_to_point(GameManager.player.global_position))
 	
 	# Value with which to increment bullet angles
-	var angle_step_deg: float = shot_spread_angle / (bullets_per_shot - 1)
+	var angle_step_deg: float
 	
 	# If only 1 bullet per shot, bullet always points at player
 	var current_bullet_angle_deg: float = angle_to_player_deg
 	if bullets_per_shot > 1:
+		angle_step_deg = shot_spread_angle / (bullets_per_shot - 1)
 		current_bullet_angle_deg = angle_to_player_deg - angle_step_deg
 
 	SignalsBus.enemy_shooting_event.emit(_populate_bullets_list(current_bullet_angle_deg, angle_step_deg))
