@@ -5,104 +5,104 @@ extends Node
 # To be accessed by enemies
 # Used to track player location for attacks
 ################################################
-var player : PlayerCat
+var player: PlayerCat
 
 
 ################################################
 #NOTE: Enemy paths
 ################################################
-const enemy_path_sine_wave_1 : String = "enemy_path_sine_wave_1"
-const enemy_path_sine_wave_2 : String = "enemy_path_sine_wave_2"
-const enemy_path_sine_wave_3 : String = "enemy_path_sine_wave_3"
-const enemy_path_sine_wave_4 : String = "enemy_path_sine_wave_4"
+const enemy_path_sine_wave_1: String = "enemy_path_sine_wave_1"
+const enemy_path_sine_wave_2: String = "enemy_path_sine_wave_2"
+const enemy_path_sine_wave_3: String = "enemy_path_sine_wave_3"
+const enemy_path_sine_wave_4: String = "enemy_path_sine_wave_4"
 
-var enemy_paths_list : Array[Path2D] = []
+var enemy_paths_list: Array[Path2D] = []
 
 
 ################################################
 #NOTE: Constant game settings, will NOT be changed at runtime
 ################################################
-const life_extend_score_1 : int = 100000
-const life_extend_score_2 : int = 250000
-const score_penallty_multiplier : float = 0.9
-const player_default_bombs : int = 3
-const player_max_bombs : int = 9
-const min_bounds : Vector2 = Vector2(0, 0)
+const life_extend_score_1: int = 100000
+const life_extend_score_2: int = 250000
+const score_penallty_multiplier: float = 0.9
+const player_default_bombs: int = 3
+const player_max_bombs: int = 9
+const min_bounds: Vector2 = Vector2(0, 0)
 
 ## Offsets for screen bounds
-const offset_x : float = 60.0
-const offset_y_screen_bottom : float = 60.0
-const offset_y_screen_top : float = 100.0
+const offset_x: float = 60.0
+const offset_y_screen_bottom: float = 60.0
+const offset_y_screen_top: float = 100.0
 
 ## Hit scores
-const attack_hit_score : int = 10
+const attack_hit_score: int = 10
 
 enum powerups {
-	None,			## 0
+	None, ## 0
 
 	# Shooting powerup
-	Overdrive, 		## 1
-	Chorus, 		## 2
+	Overdrive, ## 1
+	Chorus, ## 2
 	
 	# Bombs
-	Fuzz			## 3
+	Fuzz ## 3
 }
 
 
 ################################################
 #NOTE: Default game settings
 ################################################
-var _player_max_lives : int = 3
-var _player_max_credits : int = 3
+var _player_max_lives: int = 3
+var _player_max_credits: int = 3
 
-var game_settings_dictionary : Dictionary = {
-	"player_max_lives" : _player_max_lives,
-	"player_max_credits" : _player_max_credits
+var game_settings_dictionary: Dictionary = {
+	"player_max_lives": _player_max_lives,
+	"player_max_credits": _player_max_credits
 }
 
 
 ################################################
 #NOTE: Default display settings
 ################################################
-var window_mode : int = DisplayServer.WINDOW_MODE_FULLSCREEN
-var crt_filter : bool = false
+var window_mode: int = DisplayServer.WINDOW_MODE_FULLSCREEN
+var crt_filter: bool = false
 
-var display_settings_dictionary : Dictionary = {
-	"window_mode" : window_mode,
-	"crt_filter" : crt_filter
+var display_settings_dictionary: Dictionary = {
+	"window_mode": window_mode,
+	"crt_filter": crt_filter
 }
 
 
 ################################################
 #NOTE: Default audio settings
 ################################################
-const volume_max : int = 100
-const volume_min : int = 0
-var master_volume : int = 100
-var sound_volume : int = 75
-var music_volume : int = 75
+const volume_max: int = 100
+const volume_min: int = 0
+var master_volume: int = 100
+var sound_volume: int = 75
+var music_volume: int = 75
 
-var audio_settings_dictionary : Dictionary = {
-	"master_volume" : master_volume,
-	"sound_volume" : sound_volume,
-	"music_volume" : music_volume
+var audio_settings_dictionary: Dictionary = {
+	"master_volume": master_volume,
+	"sound_volume": sound_volume,
+	"music_volume": music_volume
 }
 
 
 ################################################
 #NOTE: Game states, variable and data
 ################################################
-var life_extend_1_reached : bool
-var life_extend_2_reached : bool
+var life_extend_1_reached: bool
+var life_extend_2_reached: bool
 
-var player_lives : int
-var player_credits : int
-var player_bombs : int = player_default_bombs
+var player_lives: int
+var player_credits: int
+var player_bombs: int = player_default_bombs
 
 var player_score: int
 
-var current_powerup : powerups
-var powerup_max_reached : bool
+var current_powerup: powerups
+var powerup_max_reached: bool
 
 var enemies_killed: int
 
@@ -112,17 +112,17 @@ var is_game_running: bool
 ################################################
 #NOTE: Default list of player high scores
 ################################################
-var player_hi_scores_dictionaries : Array[Dictionary] = [
-	{"score" : 200, "name" : "APE"},
-	{"score" : 300, "name" : "YAN"},
-	{"score" : 420, "name" : "HIT"},
-	{"score" : 500, "name" : "IAN"},
-	{"score" : 600, "name" : "FAN"},
-	{"score" : 700, "name" : "GIT"},
-	{"score" : 800, "name" : "GAT"},
-	{"score" : 900, "name" : "APE"},
-	{"score" : 1111, "name" : "BAD"},
-	{"score" : 1100, "name" : "BAT"}
+var player_hi_scores_dictionaries: Array[Dictionary] = [
+	{"score": 200, "name": "APE"},
+	{"score": 300, "name": "YAN"},
+	{"score": 420, "name": "HIT"},
+	{"score": 500, "name": "IAN"},
+	{"score": 600, "name": "FAN"},
+	{"score": 700, "name": "GIT"},
+	{"score": 800, "name": "GAT"},
+	{"score": 900, "name": "APE"},
+	{"score": 1111, "name": "BAD"},
+	{"score": 1100, "name": "BAT"}
 ]
 
 
@@ -159,8 +159,7 @@ func sort_high_scores() -> void:
 		return a["name"] < b["name"]
 	)
 
-	player_hi_scores_dictionaries = player_hi_scores_dictionaries.slice(0,10) # Only keep the top 10 scores
-
+	player_hi_scores_dictionaries = player_hi_scores_dictionaries.slice(0, 10) # Only keep the top 10 scores
 
 
 ################################################
@@ -170,7 +169,6 @@ func sort_high_scores() -> void:
 func _save_high_scores() -> void:
 	SaveManager.contents_to_save["player_high_scores"] = player_hi_scores_dictionaries # Update with latest score data
 	SaveManager.save_game()
-
 
 
 ################################################
@@ -192,11 +190,10 @@ func reset_all_player_data_on_start() -> void:
 	SignalsBus.player_credits_updated_event.emit()
 
 
-
 ################################################
 #NOTE: Signal connection: current score updated
 ################################################
-func _on_update_current_score(score : int) -> void:
+func _on_update_current_score(score: int) -> void:
 	player_score += score
 	_handle_life_extension()
 
@@ -237,7 +234,7 @@ func _on_continue_refresh_player_data() -> void:
 ################################################
 func _on_player_death() -> void:
 	# Extend life before decreasing life on death if the score is higher than extension threshold
-	_handle_life_extension() 
+	_handle_life_extension()
 	player_lives -= 1
 
 	SignalsBus.player_lives_updated_event.emit()
@@ -246,24 +243,26 @@ func _on_player_death() -> void:
 	if player_lives >= 0:
 		player_bombs = player_default_bombs
 		SignalsBus.player_bombs_updated_event.emit()
+	
+	# Reset current powerup
+	current_powerup = powerups.None
 
 
 ################################################
 #NOTE: Signal connection: player respawn event
 ################################################
-func _on_player_respawn(_pos : Vector2, _can_be_invincible : bool) -> void:
+func _on_player_respawn(_pos: Vector2, _can_be_invincible: bool) -> void:
 	# Reset player bombs to default when respawning after continue screen
 	player_bombs = player_default_bombs
 	SignalsBus.player_bombs_updated_event.emit()
 
 
-
 ################################################
 #NOTE: Signal connection: player entered name for high score
 ################################################
-func _on_player_hi_score_name_entered(player_name : String) -> void:
+func _on_player_hi_score_name_entered(player_name: String) -> void:
 	player_hi_scores_dictionaries.append(
-		{"score" : player_score, "name" : player_name}
+		{"score": player_score, "name": player_name}
 	)
 	sort_high_scores()
 	_save_high_scores()
@@ -272,7 +271,7 @@ func _on_player_hi_score_name_entered(player_name : String) -> void:
 ################################################
 #NOTE: Signal connection: for when player picks up bomb
 ################################################
-func _on_powerup_bomb_collected(powerup : int, score : int) -> void:
+func _on_powerup_bomb_collected(powerup: int, score: int) -> void:
 	# Only increase bomb count if the collected powerup is a bomb
 	if powerup == 3: # Fuzz
 		# If max bombs in stock, add score instead
@@ -289,7 +288,7 @@ func _on_powerup_bomb_collected(powerup : int, score : int) -> void:
 ################################################
 #NOTE: Signal connection: for when a powerup is maxed out
 ################################################
-func _on_powerup_max_reached(powerup : int) -> void:
+func _on_powerup_max_reached(powerup: int) -> void:
 	current_powerup = powerup as powerups
 	powerup_max_reached = true
 

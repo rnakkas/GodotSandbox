@@ -1,48 +1,47 @@
-[gd_scene load_steps=15 format=3 uid="uid://ccxlo8k2rfb80"]
+[gd_scene load_steps=14 format=3 uid="uid://ccxlo8k2rfb80"]
 
 [ext_resource type="Script" uid="uid://dmwv3jrlakeyp" path="res://ShmupSandbox/Player/Scripts/player_bullet.gd" id="1_g6xsm"]
 [ext_resource type="Texture2D" uid="uid://djdvabue3wp61" path="res://ShmupSandbox/Assets/Player/bullet-v3.png" id="2_g6xsm"]
-[ext_resource type="Texture2D" uid="uid://ic3u5r3ara6l" path="res://ShmupSandbox/Assets/Player/bullet_hit-v1.png" id="3_juwxc"]
+[ext_resource type="Texture2D" uid="uid://bykysl5evst2w" path="res://ShmupSandbox/Assets/PlayerPowerupShots/overdrive_hit-v1.png" id="3_g6xsm"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_onw0m"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6xsm"]
 atlas = ExtResource("2_g6xsm")
 region = Rect2(0, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_juwxc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_onw0m"]
 atlas = ExtResource("2_g6xsm")
 region = Rect2(32, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_odxa4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_juwxc"]
 atlas = ExtResource("2_g6xsm")
 region = Rect2(64, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8fbh0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_odxa4"]
 atlas = ExtResource("2_g6xsm")
 region = Rect2(96, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sahxb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fbh0"]
 atlas = ExtResource("2_g6xsm")
 region = Rect2(128, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eymk2"]
-atlas = ExtResource("3_juwxc")
-region = Rect2(0, 0, 28, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sahxb"]
+atlas = ExtResource("3_g6xsm")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_87slm"]
-atlas = ExtResource("3_juwxc")
-region = Rect2(28, 0, 28, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_03a3t"]
+atlas = ExtResource("3_g6xsm")
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_58yh3"]
-atlas = ExtResource("3_juwxc")
-region = Rect2(56, 0, 28, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y3584"]
-atlas = ExtResource("3_juwxc")
-region = Rect2(84, 0, 28, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5qdp"]
+atlas = ExtResource("3_g6xsm")
+region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eymk2"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6xsm")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_onw0m")
 }, {
@@ -54,9 +53,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8fbh0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sahxb")
 }],
 "loop": true,
 "name": &"fly",
@@ -64,16 +60,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eymk2")
+"texture": SubResource("AtlasTexture_sahxb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_87slm")
+"texture": SubResource("AtlasTexture_03a3t")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_58yh3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_y3584")
+"texture": SubResource("AtlasTexture_t5qdp")
 }, {
 "duration": 1.0,
 "texture": null
@@ -84,8 +77,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_whoyt"]
-radius = 8.0
-height = 34.0
+radius = 9.0
+height = 40.0
 
 [node name="base_bullet" type="Area2D"]
 z_index = 1
@@ -94,17 +87,20 @@ collision_mask = 12
 script = ExtResource("1_g6xsm")
 
 [node name="bullet_sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(8, 0)
+scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_eymk2")
 animation = &"fly"
 autoplay = "fly"
 
 [node name="bullet_collider" type="CollisionShape2D" parent="."]
+position = Vector2(8, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_whoyt")
 debug_color = Color(0.585341, 0.548007, 0.119147, 0.42)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(-20, 0)
+position = Vector2(-24, 0)
 scale = Vector2(0.25, 0.25)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

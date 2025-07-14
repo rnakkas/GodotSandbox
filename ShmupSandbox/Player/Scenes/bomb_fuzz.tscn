@@ -210,7 +210,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"spawn",
-"speed": 15.0
+"speed": 30.0
 }]
 
 [node name="bomb_fuzz" type="Area2D"]

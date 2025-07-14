@@ -4,23 +4,34 @@ class_name ShootingHandler extends Node2D
 const powerup_level_max: int = 4
 
 ## Base fire rate
-@export var base_fire_rate: float = 5.5
+@export var base_fire_rate: float = 10.0
 
 ## OD fire rate
-@export var od_fire_rate: float = 6.25
+@export var od_fire_rate: float = 10.0
 
 ## Chorus fire rate
-@export var ch_fire_rate: float = 16.5
+@export var ch_lvl_1_fire_rate: float = 20.0
+@export var ch_lvl_2_fire_rate: float = 22.5
+@export var ch_lvl_3_fire_rate: float = 25.0
+@export var ch_lvl_4_fire_rate: float = 28.0
 
 ## Default: no powerups, change only when powerup is picked up
 @export var current_powerup: GameManager.powerups = GameManager.powerups.None
 
 ## Powerup level can only be between 0 to 4
-@export_range(0, powerup_level_max) var powerup_level: int = 0 # FIXME: Bug where powerup level persists after death
+@export_range(0, powerup_level_max) var powerup_level: int = 0
 
 ## Overdrive powerup shooting params
-@export var od_spread_angle_deg: float
-@export var od_bullets_per_shot: int
+@export var od_lvl_1_spread_angle_deg: float = 20.0
+@export var od_lvl_2_spread_angle_deg: float = 25.0
+@export var od_lvl_3_spread_angle_deg: float = 25.0
+@export var od_lvl_4_spread_angle_deg: float = 30.0
+
+@export var od_lvl_1_bullets_per_shot: int = 3
+@export var od_lvl_2_bullets_per_shot: int = 5
+@export var od_lvl_3_bullets_per_shot: int = 7
+@export var od_lvl_4_bullets_per_shot: int = 9
+
 
 ## Chorus powerup shooting params
 @export var ch_convergence_angle_deg: float = 5.5
@@ -32,16 +43,16 @@ const powerup_level_max: int = 4
 @onready var muzzle_ch_2: Marker2D = %muzzle_ch_2
 
 ## Shot limits
-@export var base_shot_limit: int = 10
+@export var base_shot_limit: int = 50
 
-@export var od_lvl_1_shot_limit: int = 21
-@export var od_lvl_2_shot_limit: int = 35
-@export var od_lvl_3_shot_limit: int = 49
-@export var od_lvl_4_shot_limit: int = 63
+@export var od_lvl_1_shot_limit: int = 100
+@export var od_lvl_2_shot_limit: int = 150
+@export var od_lvl_3_shot_limit: int = 200
+@export var od_lvl_4_shot_limit: int = 300
 
-@export var ch_lvl_1_shot_limit: int = 10
-@export var ch_lvl_2_3_shot_limit: int = 12
-@export var ch_lvl_4_shot_limit: int = 36
+@export var ch_lvl_1_shot_limit: int = 150
+@export var ch_lvl_2_3_shot_limit: int = 150
+@export var ch_lvl_4_shot_limit: int = 300
 
 ## Base bullet damage
 @export var base_bullet_damage: int = 2
@@ -68,6 +79,8 @@ var location_ch_2: Vector2
 var bullets_list: Array[PlayerBullet] = []
 var shot_limit_reached: bool
 var fire_rate: float
+var od_spread_angle_deg: float
+var od_bullets_per_shot: int
 
 
 ################################################
@@ -98,35 +111,40 @@ func _update_shooting_properties() -> void:
 				0:
 					pass
 				1:
-					od_bullets_per_shot = 3
-					od_spread_angle_deg = 8.0
+					od_bullets_per_shot = od_lvl_1_bullets_per_shot
+					od_spread_angle_deg = od_lvl_1_spread_angle_deg
 					shot_limit = od_lvl_1_shot_limit
 				2:
-					od_bullets_per_shot = 5
-					od_spread_angle_deg = 15.0
+					od_bullets_per_shot = od_lvl_2_bullets_per_shot
+					od_spread_angle_deg = od_lvl_2_spread_angle_deg
 					shot_limit = od_lvl_2_shot_limit
 				3:
-					od_bullets_per_shot = 7
-					od_spread_angle_deg = 25.0
+					od_bullets_per_shot = od_lvl_3_bullets_per_shot
+					od_spread_angle_deg = od_lvl_3_spread_angle_deg
 					shot_limit = od_lvl_3_shot_limit
 				4:
-					od_bullets_per_shot = 9
-					od_spread_angle_deg = 30.0
+					od_bullets_per_shot = od_lvl_4_bullets_per_shot
+					od_spread_angle_deg = od_lvl_4_spread_angle_deg
 					shot_limit = od_lvl_4_shot_limit
 			
 			angle_step = od_spread_angle_deg / (od_bullets_per_shot - 1)
 		
 		GameManager.powerups.Chorus:
-			fire_rate = ch_fire_rate
 			match powerup_level:
 				0:
 					pass
 				1:
 					shot_limit = ch_lvl_1_shot_limit
-				2, 3:
+					fire_rate = ch_lvl_1_fire_rate
+				2:
 					shot_limit = ch_lvl_2_3_shot_limit
+					fire_rate = ch_lvl_2_fire_rate
+				3:
+					shot_limit = ch_lvl_2_3_shot_limit
+					fire_rate = ch_lvl_3_fire_rate
 				4:
 					shot_limit = ch_lvl_4_shot_limit
+					fire_rate = ch_lvl_4_fire_rate
 
 	shooting_cooldown_time = 1 / fire_rate
 
@@ -231,7 +249,11 @@ func _od_shooting_behaviour() -> void:
 
 	# Create the list of instantiated bullets
 	for instance: int in range(od_bullets_per_shot):
-		bullet = SceneManager.od_bullet_scene.instantiate()
+		# Middle shot is the base bullet
+		if instance == round(od_bullets_per_shot / 2):
+			bullet = SceneManager.base_bullet_scene.instantiate()
+		else:
+			bullet = SceneManager.od_bullet_scene.instantiate()
 		bullet.position = location_base
 		bullet.damage = od_bullet_damage
 		bullets_list.append(bullet)

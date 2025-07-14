@@ -506,7 +506,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shoot",
-"speed": 30.0
+"speed": 45.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d4l0q"]
@@ -553,7 +553,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shoot",
-"speed": 25.0
+"speed": 20.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5i5oq"]
@@ -600,7 +600,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shoot",
-"speed": 50.0
+"speed": 35.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dmaj2"]
@@ -647,7 +647,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shoot",
-"speed": 50.0
+"speed": 35.0
 }]
 
 [node name="player_cat" type="CharacterBody2D"]
@@ -712,27 +712,27 @@ script = ExtResource("8_w8q8f")
 
 [node name="muzzle_base" type="Marker2D" parent="shooting_handler"]
 z_index = 1
-position = Vector2(16, -14)
+position = Vector2(3, -14)
 
 [node name="base_muzzle_flash" type="AnimatedSprite2D" parent="shooting_handler/muzzle_base"]
 unique_name_in_owner = true
-position = Vector2(8, 1)
+position = Vector2(18, 1)
 scale = Vector2(1.8, 1.8)
 sprite_frames = SubResource("SpriteFrames_gdjmk")
-animation = &"none"
+animation = &"shoot"
 autoplay = "none"
 
 [node name="od_muzzle_flash" type="AnimatedSprite2D" parent="shooting_handler/muzzle_base"]
 unique_name_in_owner = true
+position = Vector2(16, 0)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_d4l0q")
 animation = &"shoot"
 autoplay = "none"
-frame = 3
-frame_progress = 1.0
 
 [node name="ch_muzzle_flash" type="AnimatedSprite2D" parent="shooting_handler/muzzle_base"]
 unique_name_in_owner = true
+position = Vector2(11, 0)
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_5i5oq")
 animation = &"shoot"
@@ -745,7 +745,7 @@ position = Vector2(48, -24)
 [node name="ch_muzzle_flash_1" type="AnimatedSprite2D" parent="shooting_handler/muzzle_base/muzzle_ch_1"]
 unique_name_in_owner = true
 position = Vector2(-13, 0)
-scale = Vector2(2, 2)
+scale = Vector2(2.2, 2.2)
 sprite_frames = SubResource("SpriteFrames_dmaj2")
 animation = &"shoot"
 autoplay = "none"
@@ -757,7 +757,7 @@ position = Vector2(48, 24)
 [node name="ch_muzzle_flash_2" type="AnimatedSprite2D" parent="shooting_handler/muzzle_base/muzzle_ch_2"]
 unique_name_in_owner = true
 position = Vector2(-13, 0)
-scale = Vector2(2, 2)
+scale = Vector2(2.2, 2.2)
 sprite_frames = SubResource("SpriteFrames_63x5m")
 animation = &"shoot"
 autoplay = "none"
