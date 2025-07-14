@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://clwkif4mo5wnw"]
+[gd_scene load_steps=8 format=3 uid="uid://clwkif4mo5wnw"]
 
 [ext_resource type="Script" uid="uid://shxqdam08e5m" path="res://ShmupSandbox/Enemies/Scripts/thumper.gd" id="1_loy25"]
 [ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="1_n6sxd"]
 [ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="2_4u5jc"]
+[ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="3_texb0"]
+[ext_resource type="PackedScene" uid="uid://bbfhd7y4k5cbl" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn" id="4_1xmrt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7wdn6"]
 radius = 49.0102
@@ -95,8 +97,11 @@ sprite_frames = SubResource("SpriteFrames_qkjk8")
 animation = &"damaged"
 autoplay = "fly"
 
-[node name="screen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(45, 0)
+[node name="screen_notifier_right" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(64, 0)
+
+[node name="screen_notifier_left" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-60, 0)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 emitting = false
@@ -119,3 +124,16 @@ offset_top = -51.0
 offset_right = 69.0
 offset_bottom = -28.0
 text = "Enemy - Thumper"
+
+[node name="shoot_timer" type="Timer" parent="."]
+
+[node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("3_texb0")
+shoot_timer = NodePath("../shoot_timer")
+shoot_time = 1.1
+bullets_per_shot = 4
+bullet_direction = Vector2(0, 1)
+bullet_speed = 175.0
+shot_spread_angle = 75.0
+bullet_scene = ExtResource("4_1xmrt")
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
