@@ -116,7 +116,7 @@ offset_bottom = 144.0
 theme_override_font_sizes/font_size = 12
 selected = 0
 allow_reselect = true
-item_count = 13
+item_count = 14
 popup/item_0/id = 4
 popup/item_1/text = "spawn: doomboard"
 popup/item_1/id = 0
@@ -142,6 +142,8 @@ popup/item_11/text = "spawn: rimshot"
 popup/item_11/id = 11
 popup/item_12/text = "spawn: tomblaster"
 popup/item_12/id = 12
+popup/item_13/text = "enemy: thumper"
+popup/item_13/id = 13
 
 [node name="player_debugs5" type="Label" parent="." groups=["DEBUG_ui_group"]]
 offset_left = 425.0

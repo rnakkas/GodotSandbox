@@ -44,6 +44,7 @@ const axecutioner_PS: PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/a
 const bass_behemoth_PS: PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/bass_behemoth.tscn")
 const rimshot_PS: PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/rimshot.tscn")
 const tomblaster_PS: PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/tomblaster.tscn")
+const thumper_PS: PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/thumper.tscn")
 
 ## Enemy bullets
 const screamer_bullet_scene: PackedScene = preload("res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn")

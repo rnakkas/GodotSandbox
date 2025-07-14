@@ -71,7 +71,6 @@ func _connect_to_signals() -> void:
 	damage_taker_component.damage_taken.connect(self._on_damage_taker_component_damage_taken)
 	damage_taker_component.low_health.connect(self._on_damage_taker_component_low_health)
 	damage_taker_component.health_depleted.connect(self._on_damage_taker_component_health_depleted)
-	pass
 
 
 ################################################
