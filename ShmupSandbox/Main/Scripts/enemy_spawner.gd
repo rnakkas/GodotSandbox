@@ -57,6 +57,7 @@ func _connect_to_signals() -> void:
 	SignalsBus.spawn_enemy_rimshot_event.connect(self._on_spawn_rimshot_event)
 	SignalsBus.spawn_enemy_tomblaster_event.connect(self._on_spawn_tomblaster_event)
 	SignalsBus.spawn_enemy_thumper_event.connect(self._on_spawn_thumper_event)
+	SignalsBus.spawn_enemy_crasher_1_event.connect(self._on_crasher_1_event)
 
 
 func _on_spawn_doomboard_event(sp: Vector2) -> void:
@@ -97,6 +98,9 @@ func _on_spawn_tomblaster_event(sp: Vector2) -> void:
 
 func _on_spawn_thumper_event(sp: Vector2) -> void:
 	_instantiate_enemy(SceneManager.thumper_PS, sp)
+
+func _on_crasher_1_event(path: Path2D) -> void:
+	_instantiate_pathfollow_enemy(SceneManager.crasher_1_PS, path)
 
 
 func _instantiate_enemy(enemy_scene: PackedScene, sp: Vector2) -> void:
