@@ -1,0 +1,90 @@
+[gd_scene load_steps=6 format=3 uid="uid://b40jhv4mie25j"]
+
+[ext_resource type="Texture2D" uid="uid://b0t3vogr3x06f" path="res://icon.svg" id="1_b5ign"]
+[ext_resource type="Script" uid="uid://b860kkv38ilk7" path="res://ShmupSandbox/Enemies/Scripts/pathed_enemy.gd" id="1_xe8bk"]
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_83ifa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_83ifa"]
+radius = 37.108
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cpgdb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_b5ign")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_b5ign")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_b5ign")
+}],
+"loop": false,
+"name": &"death",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_b5ign")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 15.15
+}]
+
+[node name="crasher_var_1" type="PathFollow2D"]
+loop = false
+script = ExtResource("1_xe8bk")
+
+[node name="DamageTakerComponent" type="Area2D" parent="."]
+script = ExtResource("2_83ifa")
+max_hp = 5
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
+shape = SubResource("CircleShape2D_83ifa")
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0.85098, 0.784314, 0, 1)
+scale = Vector2(0.45, 0.45)
+sprite_frames = SubResource("SpriteFrames_cpgdb")
+animation = &"death"
+autoplay = "fly"
+flip_h = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 25
+lifetime = 0.41
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 151.08
+initial_velocity_max = 287.77
+scale_amount_max = 2.5
+
+[node name="debug_label" type="Label" parent="."]
+offset_left = -73.0
+offset_top = -49.0
+offset_right = 109.0
+text = "Enemy - Crasher Var 1
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="screen_notifier" type="VisibleOnScreenNotifier2D" parent="."]

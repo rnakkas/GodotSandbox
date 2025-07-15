@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsi7wp3gwvnns"]
+
+[ext_resource type="PackedScene" uid="uid://b40jhv4mie25j" path="res://ShmupSandbox/Enemies/Scenes/crasher_var_1.tscn" id="1_i7qg3"]
+[ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="2_h34n4"]
+[ext_resource type="PackedScene" uid="uid://bbfhd7y4k5cbl" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn" id="3_h34n4"]
+
+[node name="crasher_var_2" instance=ExtResource("1_i7qg3")]
+
+[node name="DamageTakerComponent" parent="." index="0"]
+max_hp = 3
+
+[node name="sprite" parent="." index="1"]
+self_modulate = Color(0.790775, 0.569601, 0, 1)
+
+[node name="debug_label" parent="." index="3"]
+text = "Enemy - Crasher Var 2
+"
+
+[node name="EnemyShootingComponent" type="Node2D" parent="." index="5" node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("2_h34n4")
+shoot_timer = NodePath("../shoot_timer")
+shoot_time = 1.2
+one_shot = true
+bullets_per_shot = 4
+bullet_speed = 175.0
+shot_spread_angle = 60.0
+bullet_scene = ExtResource("3_h34n4")
+shooting_type = 1
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="shoot_timer" type="Timer" parent="." index="6"]
