@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0ndt0kisoyg3"]
+[gd_scene load_steps=9 format=3 uid="uid://b0ndt0kisoyg3"]
 
 [ext_resource type="Script" uid="uid://cj0ffr545wyhi" path="res://ShmupSandbox/Main/Scripts/game.gd" id="1_f5mi8"]
 [ext_resource type="PackedScene" uid="uid://bxfke2pw5vqm1" path="res://ShmupSandbox/Main/Scenes/enemy_spawner.tscn" id="2_f46ya"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cd36pie1fwh40" path="res://ShmupSandbox/Main/Scenes/player_spawner.tscn" id="5_qwfjg"]
 [ext_resource type="PackedScene" uid="uid://d2sig773kfqx0" path="res://ShmupSandbox/Enemies/EnemyPaths/enemy_path_sine_wave.tscn" id="6_8njv8"]
 [ext_resource type="PackedScene" uid="uid://dsqmf788ebfyk" path="res://ShmupSandbox/Enemies/EnemyPaths/enemy_path_swirl_1.tscn" id="7_8njv8"]
+[ext_resource type="PackedScene" uid="uid://yerfubbfucky" path="res://ShmupSandbox/Enemies/EnemyPaths/enemy_path_swirl_2.tscn" id="8_8w0s0"]
 
 [node name="Game" type="Node2D"]
 process_mode = 1
@@ -38,26 +39,35 @@ unique_name_in_owner = true
 
 [node name="enemy_path_sine_wave_1" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
 unique_name_in_owner = true
-position = Vector2(0, 160)
+position = Vector2(0, 120)
 
 [node name="enemy_path_sine_wave_2" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
 unique_name_in_owner = true
-position = Vector2(0, 240)
+position = Vector2(0, 200)
 
 [node name="enemy_path_sine_wave_3" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
 unique_name_in_owner = true
-position = Vector2(0, 320)
+position = Vector2(0, 280)
 
 [node name="enemy_path_sine_wave_4" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
 unique_name_in_owner = true
-position = Vector2(0, 400)
+position = Vector2(0, 360)
+
+[node name="enemy_path_sine_wave_5" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("6_8njv8")]
+unique_name_in_owner = true
+position = Vector2(0, 440)
 
 [node name="enemy_path_swirl_1" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("7_8njv8")]
-position = Vector2(21, 121)
+position = Vector2(21, -8)
 
 [node name="enemy_path_swirl_2" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("7_8njv8")]
-position = Vector2(21, 418)
-scale = Vector2(1, -1)
+position = Vector2(21, 75)
+
+[node name="enemy_path_swirl_3" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("8_8w0s0")]
+position = Vector2(1, 268)
+
+[node name="enemy_path_swirl_4" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("8_8w0s0")]
+position = Vector2(1, 378)
 
 [node name="EnemyProjectilesContainer" type="Node2D" parent="."]
 

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://yerfubbfucky"]
+
+[sub_resource type="Curve2D" id="Curve2D_elpms"]
+_data = {
+"points": PackedVector2Array(-155.953, 20.3447, 155.953, -20.3447, -120, 0, -215.572, 8.74244, 215.572, -8.74244, 357, 101, -5.8795, 89.4121, 5.8795, -89.4121, 680, -66, 83.7632, 0.360527, -83.7632, -0.360527, 544, -207, -1.77813, -72.5519, 1.77813, 72.5519, 408, -79, -298.294, -9.91667, 298.294, 9.91667, 755, 100, 0, 0, 0, 0, 1100, 60)
+}
+point_count = 7
+
+[node name="enemy_path_swirl_1" type="Path2D"]
+position = Vector2(-26, 366)
+curve = SubResource("Curve2D_elpms")

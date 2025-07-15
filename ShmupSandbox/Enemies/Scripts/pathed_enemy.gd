@@ -4,17 +4,19 @@ class_name PathedEnemy extends PathFollow2D
 @onready var particles: CPUParticles2D = $CPUParticles2D
 @onready var damage_taker_component: DamageTakerComponent = $DamageTakerComponent
 @onready var screen_notifier: VisibleOnScreenNotifier2D = $screen_notifier
-@onready var shoot_timer: Timer = $shoot_timer
 
 @export var kill_score: int = 100
 @export var pathfollow_speed: float = 320.0
+
+var shoot_timer: Timer
 
 ## TODO: Spritesheets
 
 ################################################
 # PATHED ENEMIES:
 	# Screamer Var 2
-	# Crasher Vars 1 and 2
+	# Crasher Var 1 - doesn't shoot
+	# Crasher Var 2 - can shoot
 	# Hatter Vars 1 and 2
 	# Rider
 # Popcorn enemy
@@ -26,8 +28,9 @@ class_name PathedEnemy extends PathFollow2D
 # Ready
 ################################################
 func _ready() -> void:
+	shoot_timer = get_node_or_null("shoot_timer")
 	_connect_to_signals()
-	progress = 0.0
+	progress_ratio = 1.0 # Start at the right side of screen
 
 
 func _connect_to_signals() -> void:
@@ -41,21 +44,23 @@ func _connect_to_signals() -> void:
 # Physics process for moving in path
 ################################################
 func _physics_process(delta: float) -> void:
-	progress += pathfollow_speed * delta
+	progress -= pathfollow_speed * delta
 
 
 ################################################
 # Start shooting timer when onscreen
 ################################################
 func _on_screen_entered() -> void:
-	shoot_timer.start()
+	if shoot_timer != null:
+		shoot_timer.start()
 
 
 ################################################
 # Despawn after going offscreen
 ################################################
 func _on_screen_exited() -> void:
-	shoot_timer.stop()
+	if shoot_timer != null:
+		shoot_timer.stop()
 	call_deferred("queue_free")
 
 

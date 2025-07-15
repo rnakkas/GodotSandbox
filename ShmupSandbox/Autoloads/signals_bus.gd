@@ -109,6 +109,9 @@ signal spawn_enemy_thumper_event(sp: Vector2)
 @warning_ignore("unused_signal")
 signal spawn_enemy_crasher_1_event(path: Path2D)
 
+@warning_ignore("unused_signal")
+signal spawn_enemy_crasher_2_event(path: Path2D)
+
 ################################################
 # Enemy stuff
 ################################################

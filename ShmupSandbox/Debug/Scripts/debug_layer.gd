@@ -217,6 +217,9 @@ func _enemy_spawn_actions() -> void:
 		
 		14: # Spawn Crasher Var 1
 			SignalsBus.spawn_enemy_crasher_1_event.emit(_get_enemy_path())
+		
+		15: # Spawn Crasher Var 2
+			SignalsBus.spawn_enemy_crasher_2_event.emit(_get_enemy_path())
 
 ################################################
 #NOTE: Helper to get the enemy path value
@@ -238,11 +241,20 @@ func _get_enemy_path() -> Path2D:
 		4: # Sine wave 4
 			return _get_path_from_list(GameManager.enemy_path_sine_wave_4)
 		
-		5: # Swirl 1
+		5: # SIne wave 5
+			return _get_path_from_list(GameManager.enemy_path_sine_wave_5)
+		
+		6: # Swirl 1
 			return _get_path_from_list(GameManager.enemy_path_swirl_1)
 		
-		6: # Swirl 2
+		7: # Swirl 2
 			return _get_path_from_list(GameManager.enemy_path_swirl_2)
+		
+		8: # Swirl 3
+			return _get_path_from_list(GameManager.enemy_path_swirl_3)
+		
+		9: # Swirl 4
+			return _get_path_from_list(GameManager.enemy_path_swirl_4)
 
 		_:
 			return
