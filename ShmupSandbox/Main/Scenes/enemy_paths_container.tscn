@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhk8hfuh2uvyj"]
+
+[sub_resource type="Curve2D" id="Curve2D_uj4bj"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -120, 0, -245.729, 41.2619, 245.729, -41.2619, 480, 0, 0, 0, 0, 0, 1200, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_elpms"]
+_data = {
+"points": PackedVector2Array(-147.907, -18.2459, 147.907, 18.2459, -118, 109, -208.134, 36.9603, 208.134, -36.9603, 382, 66, 0.454476, -67.9785, -0.454476, 67.9785, 660, 195, 84.3277, -0.768421, -84.3277, 0.768421, 527, 326, -0.18093, 70.529, 0.18093, -70.529, 387, 186, -263.087, -38.1811, 263.087, 38.1811, 727, 62, 0, 0, 0, 0, 1133, 119)
+}
+point_count = 7
+
+[sub_resource type="Curve2D" id="Curve2D_e7f2q"]
+_data = {
+"points": PackedVector2Array(-155.953, 20.3447, 155.953, -20.3447, -120, 0, -215.572, 8.74244, 215.572, -8.74244, 357, 101, -5.8795, 89.4121, 5.8795, -89.4121, 680, -66, 83.7632, 0.360527, -83.7632, -0.360527, 544, -207, -1.77813, -72.5519, 1.77813, 72.5519, 408, -79, -298.294, -9.91667, 298.294, 9.91667, 755, 100, 0, 0, 0, 0, 1100, 60)
+}
+point_count = 7
+
+[node name="EnemyPathsContainer" type="Node2D"]
+
+[node name="enemy_path_sine_wave_1" type="Path2D" parent="."]
+position = Vector2(0, 120)
+curve = SubResource("Curve2D_uj4bj")
+
+[node name="enemy_path_sine_wave_2" type="Path2D" parent="."]
+position = Vector2(0, 200)
+curve = SubResource("Curve2D_uj4bj")
+
+[node name="enemy_path_sine_wave_3" type="Path2D" parent="."]
+position = Vector2(0, 280)
+curve = SubResource("Curve2D_uj4bj")
+
+[node name="enemy_path_sine_wave_4" type="Path2D" parent="."]
+position = Vector2(0, 360)
+curve = SubResource("Curve2D_uj4bj")
+
+[node name="enemy_path_sine_wave_5" type="Path2D" parent="."]
+position = Vector2(0, 440)
+curve = SubResource("Curve2D_uj4bj")
+
+[node name="enemy_path_swirl_1" type="Path2D" parent="."]
+position = Vector2(21, -8)
+curve = SubResource("Curve2D_elpms")
+
+[node name="enemy_path_swirl_2" type="Path2D" parent="."]
+position = Vector2(21, 75)
+curve = SubResource("Curve2D_elpms")
+
+[node name="enemy_path_swirl_3" type="Path2D" parent="."]
+position = Vector2(1, 268)
+curve = SubResource("Curve2D_e7f2q")
+
+[node name="enemy_path_swirl_4" type="Path2D" parent="."]
+position = Vector2(1, 378)
+curve = SubResource("Curve2D_e7f2q")
