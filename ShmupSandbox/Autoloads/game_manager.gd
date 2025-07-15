@@ -16,6 +16,7 @@ const enemy_path_sine_wave_2: String = "enemy_path_sine_wave_2"
 const enemy_path_sine_wave_3: String = "enemy_path_sine_wave_3"
 const enemy_path_sine_wave_4: String = "enemy_path_sine_wave_4"
 const enemy_path_swirl_1: String = "enemy_path_swirl_1"
+const enemy_path_swirl_2: String = "enemy_path_swirl_2"
 
 var enemy_paths_list: Array[Path2D] = []
 

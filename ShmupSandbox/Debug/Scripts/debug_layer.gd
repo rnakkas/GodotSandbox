@@ -240,6 +240,9 @@ func _get_enemy_path() -> Path2D:
 		
 		5: # Swirl 1
 			return _get_path_from_list(GameManager.enemy_path_swirl_1)
+		
+		6: # Swirl 2
+			return _get_path_from_list(GameManager.enemy_path_swirl_2)
 
 		_:
 			return

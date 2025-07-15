@@ -55,6 +55,10 @@ position = Vector2(0, 400)
 [node name="enemy_path_swirl_1" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("7_8njv8")]
 position = Vector2(21, 121)
 
+[node name="enemy_path_swirl_2" parent="EnemiesContainer/EnemyPathsContainer" instance=ExtResource("7_8njv8")]
+position = Vector2(21, 418)
+scale = Vector2(1, -1)
+
 [node name="EnemyProjectilesContainer" type="Node2D" parent="."]
 
 [node name="PowerupsContainer" type="Node2D" parent="."]
