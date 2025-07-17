@@ -11,15 +11,23 @@ var player: PlayerCat
 ################################################
 #NOTE: Enemy paths
 ################################################
-const enemy_path_sine_wave_1: String = "enemy_path_sine_wave_1"
-const enemy_path_sine_wave_2: String = "enemy_path_sine_wave_2"
-const enemy_path_sine_wave_3: String = "enemy_path_sine_wave_3"
-const enemy_path_sine_wave_4: String = "enemy_path_sine_wave_4"
-const enemy_path_sine_wave_5: String = "enemy_path_sine_wave_5"
-const enemy_path_swirl_1: String = "enemy_path_swirl_1"
-const enemy_path_swirl_2: String = "enemy_path_swirl_2"
-const enemy_path_swirl_3: String = "enemy_path_swirl_3"
-const enemy_path_swirl_4: String = "enemy_path_swirl_4"
+const enemy_path_sine_wave_1: String = "1_enemy_path_sine_wave_1"
+const enemy_path_sine_wave_2: String = "2_enemy_path_sine_wave_2"
+const enemy_path_sine_wave_3: String = "3_enemy_path_sine_wave_3"
+const enemy_path_sine_wave_4: String = "4_enemy_path_sine_wave_4"
+const enemy_path_sine_wave_5: String = "5_enemy_path_sine_wave_5"
+const enemy_path_swirl_1: String = "6_enemy_path_swirl_1"
+const enemy_path_swirl_2: String = "7_enemy_path_swirl_2"
+const enemy_path_swirl_3: String = "8_enemy_path_swirl_3"
+const enemy_path_swirl_4: String = "9_enemy_path_swirl_4"
+const enemy_path_step_down_1: String = "10_enemy_path_step_down_1"
+const enemy_path_step_down_2: String = "11_enemy_path_step_down_2"
+const enemy_path_step_down_3: String = "12_enemy_path_step_down_3"
+const enemy_path_step_down_4: String = "13_enemy_path_step_down_4"
+const enemy_path_step_up_1: String = "14_enemy_path_step_up_1"
+const enemy_path_step_up_2: String = "15_enemy_path_step_up_2"
+const enemy_path_step_up_3: String = "16_enemy_path_step_up_3"
+const enemy_path_step_up_4: String = "17_enemy_path_step_up_4"
 
 var enemy_paths_list: Array[Path2D] = []
 
