@@ -82,16 +82,6 @@ func _input(_event: InputEvent) -> void:
 
 
 func _create_enemy_paths_list() -> void:
-	# enemy_paths_list = [
-	# 	GameManager.enemy_path_sine_wave_1,
-	# 	GameManager.enemy_path_sine_wave_2,
-	# 	GameManager.enemy_path_sine_wave_3,
-	# 	GameManager.enemy_path_sine_wave_4,
-	# 	GameManager.enemy_path_sine_wave_5,
-	# 	GameManager.enemy_path_sine_wave_6,
-	# 	GameManager.enemy_path_sine_wave_v2_1,
-	# ]
-	# enemy_paths_list.sort()
 	GameManager.enemy_paths_list.sort()
 
 	if enemy_paths_options.item_count == (GameManager.enemy_paths_list.size() + 1):
@@ -229,32 +219,56 @@ func _get_enemy_path() -> Path2D:
 		0: # None
 			return
 		
-		1: # Sine wave 1
+		17: # Sine wave 1
 			return _get_path_from_list(GameManager.enemy_path_sine_wave_1)
 		
-		2: # Sine wave 2
+		16: # Sine wave 2
 			return _get_path_from_list(GameManager.enemy_path_sine_wave_2)
 
-		3: # Sine wave 3
+		15: # Sine wave 3
 			return _get_path_from_list(GameManager.enemy_path_sine_wave_3)
 		
-		4: # Sine wave 4
+		14: # Sine wave 4
 			return _get_path_from_list(GameManager.enemy_path_sine_wave_4)
 		
-		5: # SIne wave 5
+		13: # SIne wave 5
 			return _get_path_from_list(GameManager.enemy_path_sine_wave_5)
 		
-		6: # Swirl 1
+		12: # Swirl 1
 			return _get_path_from_list(GameManager.enemy_path_swirl_1)
 		
-		7: # Swirl 2
+		11: # Swirl 2
 			return _get_path_from_list(GameManager.enemy_path_swirl_2)
 		
-		8: # Swirl 3
+		10: # Swirl 3
 			return _get_path_from_list(GameManager.enemy_path_swirl_3)
 		
 		9: # Swirl 4
 			return _get_path_from_list(GameManager.enemy_path_swirl_4)
+		
+		8: # Step down 1
+			return _get_path_from_list(GameManager.enemy_path_step_down_1)
+		
+		7: # Step down 2
+			return _get_path_from_list(GameManager.enemy_path_step_down_2)
+		
+		6: # Step down 3
+			return _get_path_from_list(GameManager.enemy_path_step_down_3)
+		
+		5: # Step down 4
+			return _get_path_from_list(GameManager.enemy_path_step_down_4)
+		
+		4: # Step up 1
+			return _get_path_from_list(GameManager.enemy_path_step_up_1)
+		
+		3: # Step up 2
+			return _get_path_from_list(GameManager.enemy_path_step_up_2)
+		
+		2: # Step up 3
+			return _get_path_from_list(GameManager.enemy_path_step_up_3)
+		
+		1: # Step up 4
+			return _get_path_from_list(GameManager.enemy_path_step_up_4)
 
 		_:
 			return
