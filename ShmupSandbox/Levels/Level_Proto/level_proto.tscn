@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cyx1s0ty7lwer"]
 
-[ext_resource type="Script" uid="uid://7dxa0k2egnyl" path="res://ShmupSandbox/Levels/level_proto.gd" id="1_wv8l1"]
+[ext_resource type="Script" uid="uid://7dxa0k2egnyl" path="res://ShmupSandbox/Levels/Level_Proto/level_proto.gd" id="1_wv8l1"]
 
 [node name="level_proto" type="Node"]
 script = ExtResource("1_wv8l1")

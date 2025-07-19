@@ -1,16 +1,23 @@
 class_name LevelProto extends Node
 
-static var spawn_schedule: Array[SpawnEvent] = [
-	SpawnEvent.new(3.2, SceneManager.boomer_PS, Vector2(1100, 120)),
-	SpawnEvent.new(4.5, SceneManager.doomboard_PS, Vector2(1200, 100)),
-	SpawnEvent.new(8.7, SceneManager.screamer_1_PS, Vector2(1100, 200)),
-	SpawnEvent.new(8.7, SceneManager.screamer_1_PS, Vector2(1200, 220)),
-	SpawnEvent.new(8.7, SceneManager.screamer_1_PS, Vector2(1200, 160)),
-	SpawnEvent.new(12.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1)
-]
+@export var spawn_schedule: Array[SpawnEvent] = []
 
 var elapsed_time: float = 0.0
 var events_queue: Array[SpawnEvent]
+
+func _init() -> void:
+	_create_spawn_schedule()
+
+func _create_spawn_schedule() -> void:
+	spawn_schedule = [
+		SpawnEvent.new(3.2, SceneManager.boomer_PS, Vector2(1100, 120)),
+		SpawnEvent.new(4.5, SceneManager.doomboard_PS, Vector2(1200, 100)),
+		SpawnEvent.new(8.7, SceneManager.screamer_1_PS, Vector2(1100, 200)),
+		SpawnEvent.new(8.7, SceneManager.screamer_1_PS, Vector2(1200, 220)),
+		SpawnEvent.new(8.7, SceneManager.screamer_1_PS, Vector2(1200, 160)),
+		SpawnEvent.new(12.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1)
+]
+
 
 func _ready() -> void:
 	events_queue = spawn_schedule.duplicate(true)

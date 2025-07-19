@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SpawnEvent" load_steps=2 format=3 uid="uid://d4ajyfgkgj1jr"]
+
+[ext_resource type="Script" uid="uid://c5gtnonf8csiw" path="res://ShmupSandbox/Levels/spawn_event.gd" id="1_jhb3x"]
+
+[resource]
+script = ExtResource("1_jhb3x")
+time = 0.0
+pos = Vector2(0, 0)
+path_name = ""
+metadata/_custom_type_script = "uid://c5gtnonf8csiw"

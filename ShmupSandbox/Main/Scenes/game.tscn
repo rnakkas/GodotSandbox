@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://boi3x6qa21wtr" path="res://ShmupSandbox/Main/Scenes/pickups_spawner.tscn" id="4_f46ya"]
 [ext_resource type="PackedScene" uid="uid://cd36pie1fwh40" path="res://ShmupSandbox/Main/Scenes/player_spawner.tscn" id="5_qwfjg"]
 [ext_resource type="PackedScene" uid="uid://bhk8hfuh2uvyj" path="res://ShmupSandbox/Main/Scenes/enemy_paths_container.tscn" id="6_qwfjg"]
-[ext_resource type="PackedScene" uid="uid://cyx1s0ty7lwer" path="res://ShmupSandbox/Levels/level_proto.tscn" id="7_8njv8"]
+[ext_resource type="PackedScene" uid="uid://cyx1s0ty7lwer" path="res://ShmupSandbox/Levels/Level_Proto/level_proto.tscn" id="7_8njv8"]
 
 [node name="Game" type="Node2D"]
 process_mode = 1
