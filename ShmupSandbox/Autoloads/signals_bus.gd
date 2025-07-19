@@ -67,6 +67,11 @@ signal shot_limit_updated_event(shot_limit: int)
 ################################################
 # Spawning enemies
 ################################################
+# Use for general enemy spawning
+@warning_ignore("unused_signal")
+signal spawn_enemy_event(enemy_scene: PackedScene, sp: Vector2, path_name: String)
+
+# Use the following for specific enemy spawning
 @warning_ignore("unused_signal")
 signal spawn_enemy_doomboard_event(sp: Vector2)
 

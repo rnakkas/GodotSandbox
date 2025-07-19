@@ -11,6 +11,7 @@ var player: PlayerCat
 ################################################
 #NOTE: Enemy paths
 ################################################
+# Path names
 const enemy_path_sine_wave_1: String = "1_enemy_path_sine_wave_1"
 const enemy_path_sine_wave_2: String = "2_enemy_path_sine_wave_2"
 const enemy_path_sine_wave_3: String = "3_enemy_path_sine_wave_3"
@@ -29,6 +30,7 @@ const enemy_path_step_up_2: String = "15_enemy_path_step_up_2"
 const enemy_path_step_up_3: String = "16_enemy_path_step_up_3"
 const enemy_path_step_up_4: String = "17_enemy_path_step_up_4"
 
+# Paths list
 var enemy_paths_list: Array[Path2D] = []
 
 

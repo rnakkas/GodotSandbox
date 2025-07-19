@@ -1,7 +1,7 @@
 class_name Helper extends Object
 
 ################################################
-# Helpfer function class:
+# Helper function class:
 	# Holds all common helper functions
 ################################################
 
@@ -61,3 +61,19 @@ static func set_direction(viewport_size: Vector2, origin: Vector2, target: Vecto
 	var direction: Vector2 = origin.direction_to(target)
 	
 	return direction
+
+
+################################################
+# Get path using name
+################################################
+static func get_path_using_name(path_name: String) -> Path2D:
+	var enemy_path: Path2D
+	
+	if GameManager.enemy_paths_list.size() == 0:
+		return
+	
+	for path: Path2D in GameManager.enemy_paths_list:
+		if path.name == path_name:
+			enemy_path = path
+			break
+	return enemy_path

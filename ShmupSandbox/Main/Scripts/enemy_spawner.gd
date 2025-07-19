@@ -35,6 +35,9 @@ var prev_sp_list: Array[float] = []
 
 var viewport_size: Vector2
 
+####################################
+# Ready
+####################################
 func _ready() -> void:
 	_connect_to_signals()
 
@@ -43,7 +46,11 @@ func _ready() -> void:
 	sp_x = viewport_size.x + 50.0
 
 
+####################################
+# Connect to global signals for enemy spawning
+####################################
 func _connect_to_signals() -> void:
+	SignalsBus.spawn_enemy_event.connect(self._on_spawn_enemy_event)
 	SignalsBus.spawn_enemy_doomboard_event.connect(self._on_spawn_doomboard_event)
 	SignalsBus.spawn_enemy_boomer_event.connect(self._on_spawn_boomer_event)
 	SignalsBus.spawn_enemy_screamer_1_event.connect(self._on_spawn_screamer_1_event)
@@ -60,6 +67,15 @@ func _connect_to_signals() -> void:
 	SignalsBus.spawn_enemy_crasher_1_event.connect(self._on_spawn_crasher_1_event)
 	SignalsBus.spawn_enemy_crasher_2_event.connect(self._on_spawn_crasher_2_event)
 
+
+####################################
+# Signal connection functions
+####################################
+func _on_spawn_enemy_event(enemy_scene: PackedScene, sp: Vector2, path_name: String) -> void:
+	if path_name == "":
+		_instantiate_enemy(enemy_scene, sp)
+	else:
+		_instantiate_pathfollow_enemy_v2(enemy_scene, path_name)
 
 func _on_spawn_doomboard_event(sp: Vector2) -> void:
 	_instantiate_enemy(SceneManager.doomboard_PS, sp)
@@ -107,12 +123,20 @@ func _on_spawn_crasher_2_event(path: Path2D) -> void:
 	_instantiate_pathfollow_enemy(SceneManager.crasher_2_PS, path)
 
 
+####################################
+# Helper functions to spawn enemies
+####################################
 func _instantiate_enemy(enemy_scene: PackedScene, sp: Vector2) -> void:
 	var enemy_instance: Node2D = enemy_scene.instantiate()
 	enemy_instance.global_position = sp
 	add_enemy_to_game.emit(enemy_instance)
 
 func _instantiate_pathfollow_enemy(enemy_scene: PackedScene, path: Path2D) -> void:
+	var enemy_instance: PathFollow2D = enemy_scene.instantiate()
+	add_pathfollow_enemy_to_game.emit(enemy_instance, path)
+
+func _instantiate_pathfollow_enemy_v2(enemy_scene: PackedScene, path_name: String) -> void:
+	var path = Helper.get_path_using_name(path_name)
 	var enemy_instance: PathFollow2D = enemy_scene.instantiate()
 	add_pathfollow_enemy_to_game.emit(enemy_instance, path)
 
@@ -150,4 +174,4 @@ func _generate_spawn_point() -> Vector2:
 
 ## Spawn enemies on timeout
 func _on_enemy_spawn_timer_timeout() -> void:
-	spawn_enemy()
+	pass
