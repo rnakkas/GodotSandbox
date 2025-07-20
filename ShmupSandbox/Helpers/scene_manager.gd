@@ -32,6 +32,7 @@ static var ch_lvl_3_bullet_scene: PackedScene = preload("res://ShmupSandbox/Play
 static var bomb_fuzz_scene: PackedScene = preload("res://ShmupSandbox/Player/Scenes/bomb_fuzz.tscn")
 
 ## Enemies
+static var skulljack_PS: PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/skulljack.tscn")
 static var doomboard_PS: PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/doomboard.tscn")
 static var boomer_PS: PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/boomer.tscn")
 static var screamer_1_PS: PackedScene = preload("res://ShmupSandbox/Enemies/Scenes/screamer_var_1.tscn")
