@@ -22,7 +22,7 @@ const powerup_level_max: int = 4
 @export_range(0, powerup_level_max) var powerup_level: int = 0
 
 ## Overdrive powerup shooting params
-@export var od_lvl_1_spread_angle_deg: float = 10.0
+@export var od_lvl_1_spread_angle_deg: float = 6.5
 @export var od_lvl_2_spread_angle_deg: float = 12.5
 @export var od_lvl_3_spread_angle_deg: float = 15.0
 @export var od_lvl_4_spread_angle_deg: float = 20.0
