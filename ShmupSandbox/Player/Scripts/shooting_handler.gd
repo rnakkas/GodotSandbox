@@ -4,10 +4,10 @@ class_name ShootingHandler extends Node2D
 const powerup_level_max: int = 4
 
 ## Base fire rate
-@export var base_fire_rate: float = 10.0
+@export var base_fire_rate: float = 6.0
 
 ## OD fire rate
-@export var od_fire_rate: float = 10.0
+@export var od_fire_rate: float = 7.75
 
 ## Chorus fire rate
 @export var ch_lvl_1_fire_rate: float = 20.0
@@ -22,10 +22,10 @@ const powerup_level_max: int = 4
 @export_range(0, powerup_level_max) var powerup_level: int = 0
 
 ## Overdrive powerup shooting params
-@export var od_lvl_1_spread_angle_deg: float = 20.0
-@export var od_lvl_2_spread_angle_deg: float = 25.0
-@export var od_lvl_3_spread_angle_deg: float = 25.0
-@export var od_lvl_4_spread_angle_deg: float = 30.0
+@export var od_lvl_1_spread_angle_deg: float = 10.0
+@export var od_lvl_2_spread_angle_deg: float = 12.5
+@export var od_lvl_3_spread_angle_deg: float = 15.0
+@export var od_lvl_4_spread_angle_deg: float = 20.0
 
 @export var od_lvl_1_bullets_per_shot: int = 3
 @export var od_lvl_2_bullets_per_shot: int = 5
@@ -61,7 +61,7 @@ const powerup_level_max: int = 4
 @export var od_bullet_damage: int = 1
 
 ## Chorus bullet damage
-@export var ch_bullet_damage: int = 2
+@export var ch_bullet_damage: int = 1
 
 
 ## Signals

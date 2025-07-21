@@ -53,6 +53,7 @@ script = ExtResource("1_bxwr7")
 
 [node name="DamageTakerComponent" type="Area2D" parent="."]
 script = ExtResource("2_ia6iw")
+max_hp = 3
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
 
 [node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]

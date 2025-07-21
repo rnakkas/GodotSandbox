@@ -77,3 +77,12 @@ static func get_path_using_name(path_name: String) -> Path2D:
 			enemy_path = path
 			break
 	return enemy_path
+
+
+################################################
+# Run the enemy spawn schedule
+################################################
+static func run_spawn_schedule(elapsed_time: float, events_queue: Array[SpawnEvent]) -> void:
+	while events_queue.size() > 0 && events_queue[0].time <= elapsed_time:
+		SignalsBus.spawn_enemy_event.emit(events_queue[0].enemy_scene, events_queue[0].pos, events_queue[0].path_name)
+		events_queue.pop_front()

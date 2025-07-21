@@ -15,16 +15,16 @@ func _create_spawn_schedule() -> void:
 		SpawnEvent.new(4.4, SceneManager.skulljack_PS, Vector2(1100, 300)),
 		SpawnEvent.new(6.4, SceneManager.doomboard_PS, Vector2(1050, 100)),
 		
-		SpawnEvent.new(9.4, SceneManager.screamer_1_PS, Vector2(1100, 200)),
-		SpawnEvent.new(9.5, SceneManager.screamer_1_PS, Vector2(1200, 220)),
-		SpawnEvent.new(9.7, SceneManager.screamer_1_PS, Vector2(1200, 400)),
+		SpawnEvent.new(9.4, SceneManager.screamer_1_PS, Vector2(1100, 160)),
+		SpawnEvent.new(9.5, SceneManager.screamer_1_PS, Vector2(1100, 220)),
+		SpawnEvent.new(9.7, SceneManager.screamer_1_PS, Vector2(1100, 460)),
 		
-		SpawnEvent.new(10.1, SceneManager.screamer_1_PS, Vector2(1100, 320)),
-		SpawnEvent.new(10.2, SceneManager.screamer_1_PS, Vector2(1150, 330)),
-		SpawnEvent.new(10.3, SceneManager.screamer_1_PS, Vector2(1150, 220)),
-		SpawnEvent.new(10.4, SceneManager.screamer_1_PS, Vector2(1000, 450)),
-		SpawnEvent.new(10.7, SceneManager.screamer_1_PS, Vector2(1000, 475)),
-		SpawnEvent.new(10.4, SceneManager.screamer_1_PS, Vector2(1000, 355)),
+		SpawnEvent.new(10.1, SceneManager.screamer_1_PS, Vector2(1100, 500)),
+		SpawnEvent.new(10.2, SceneManager.screamer_1_PS, Vector2(1150, 490)),
+		SpawnEvent.new(10.3, SceneManager.screamer_1_PS, Vector2(1150, 480)),
+		SpawnEvent.new(10.4, SceneManager.screamer_1_PS, Vector2(1000, 300)),
+		SpawnEvent.new(10.7, SceneManager.screamer_1_PS, Vector2(1000, 275)),
+		SpawnEvent.new(10.4, SceneManager.screamer_1_PS, Vector2(1000, 200)),
 
 		SpawnEvent.new(10.6, SceneManager.screamer_1_PS, Vector2(1100, 320)),
 		SpawnEvent.new(11.0, SceneManager.screamer_1_PS, Vector2(1150, 330)),
@@ -58,11 +58,4 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	elapsed_time += delta
-	while events_queue.size() > 0 && events_queue[0].time <= elapsed_time:
-		# print_debug(
-		# 	"time: ", events_queue[0].time,
-		# 	" | spawn enemy: ", events_queue[0].enemy_scene,
-		# 	" | pos: ", events_queue[0].pos,
-		# 	" | path name: ", events_queue[0].path_name)
-		SignalsBus.spawn_enemy_event.emit(events_queue[0].enemy_scene, events_queue[0].pos, events_queue[0].path_name)
-		events_queue.pop_front()
+	Helper.run_spawn_schedule(elapsed_time, events_queue)
