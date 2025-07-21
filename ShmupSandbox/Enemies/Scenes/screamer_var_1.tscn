@@ -51,6 +51,7 @@ script = ExtResource("1_qtyhs")
 
 [node name="DamageTakerComponent" type="Area2D" parent="."]
 script = ExtResource("2_gsm1g")
+max_hp = 5
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
 
 [node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
@@ -105,7 +106,6 @@ scale_amount_max = 2.5
 
 [node name="shoot_timer" type="Timer" parent="."]
 
-[connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
 [connection signal="screen_entered" from="onscreen_notifier" to="." method="_on_onscreen_notifier_screen_entered"]
 [connection signal="screen_exited" from="offscreen_notifier" to="." method="_on_offscreen_notifier_screen_exited"]
 [connection signal="timeout" from="onscreen_timer" to="." method="_on_onscreen_timer_timeout"]

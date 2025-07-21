@@ -4,6 +4,7 @@ class_name ScreamerVar1 extends Node2D
 @onready var particles: CPUParticles2D = $CPUParticles2D
 @onready var onscreen_timer: Timer = $onscreen_timer
 @onready var shoot_timer: Timer = $shoot_timer
+@onready var damage_taker_component: DamageTakerComponent = $DamageTakerComponent
 
 @export var base_speed: float = 500.0
 @export var acceleration: float = 600.0
@@ -36,6 +37,12 @@ func _ready() -> void:
 	speed = base_speed
 	onscreen_time = randf_range(min_onscreen_time, max_onscreen_time)
 	Helper.set_timer_properties(onscreen_timer, true, onscreen_time)
+	_connect_to_signals()
+
+
+func _connect_to_signals() -> void:
+	damage_taker_component.damage_taken.connect(self._on_damage_taker_component_damage_taken)
+	damage_taker_component.health_depleted.connect(self._on_damage_taker_component_health_depleted)
 
 
 ################################################
@@ -81,6 +88,9 @@ func _on_offscreen_notifier_screen_exited() -> void:
 # NOTE: Getting hit by player attacks logic:
 	# Signal connections from damage taker component
 ################################################
+func _on_damage_taker_component_damage_taken() -> void:
+	SignalsBus.score_increased_event.emit(GameManager.attack_hit_score)
+
 func _on_damage_taker_component_health_depleted() -> void:
 	shoot_timer.stop()
 

@@ -100,7 +100,6 @@ scale_amount_max = 2.5
 
 [node name="shoot_timer" type="Timer" parent="."]
 
-[connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
 [connection signal="screen_entered" from="screen_notifier" to="." method="_on_screen_notifier_screen_entered"]
 [connection signal="screen_exited" from="screen_notifier" to="." method="_on_screen_notifier_screen_exited"]
 [connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]

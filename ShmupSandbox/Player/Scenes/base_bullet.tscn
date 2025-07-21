@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ccxlo8k2rfb80"]
+[gd_scene load_steps=10 format=3 uid="uid://ccxlo8k2rfb80"]
 
 [ext_resource type="Script" uid="uid://dmwv3jrlakeyp" path="res://ShmupSandbox/Player/Scripts/player_bullet.gd" id="1_g6xsm"]
 [ext_resource type="Texture2D" uid="uid://djdvabue3wp61" path="res://ShmupSandbox/Assets/Player/bullet-v3.png" id="2_g6xsm"]
@@ -7,22 +7,6 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_g6xsm"]
 atlas = ExtResource("2_g6xsm")
 region = Rect2(0, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_onw0m"]
-atlas = ExtResource("2_g6xsm")
-region = Rect2(32, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_juwxc"]
-atlas = ExtResource("2_g6xsm")
-region = Rect2(64, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_odxa4"]
-atlas = ExtResource("2_g6xsm")
-region = Rect2(96, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8fbh0"]
-atlas = ExtResource("2_g6xsm")
-region = Rect2(128, 0, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sahxb"]
 atlas = ExtResource("3_g6xsm")
@@ -41,18 +25,6 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g6xsm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_onw0m")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_juwxc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_odxa4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8fbh0")
 }],
 "loop": true,
 "name": &"fly",
@@ -77,8 +49,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_whoyt"]
-radius = 9.0
-height = 40.0
+radius = 6.0
+height = 32.0
 
 [node name="base_bullet" type="Area2D"]
 z_index = 1
@@ -88,7 +60,6 @@ script = ExtResource("1_g6xsm")
 
 [node name="bullet_sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(8, 0)
-scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_eymk2")
 animation = &"fly"
 autoplay = "fly"
