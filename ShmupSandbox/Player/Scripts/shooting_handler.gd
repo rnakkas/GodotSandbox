@@ -4,16 +4,16 @@ class_name ShootingHandler extends Node2D
 const powerup_level_max: int = 4
 
 ## Base fire rate
-@export var base_fire_rate: float = 6.0
+@export var base_fire_rate: float = 6.7
 
 ## OD fire rate
 @export var od_fire_rate: float = 7.75
 
 ## Chorus fire rate
-@export var ch_lvl_1_fire_rate: float = 20.0
-@export var ch_lvl_2_fire_rate: float = 22.5
-@export var ch_lvl_3_fire_rate: float = 25.0
-@export var ch_lvl_4_fire_rate: float = 28.0
+@export var ch_lvl_1_fire_rate: float = 10.0
+@export var ch_lvl_2_fire_rate: float = 12.5
+@export var ch_lvl_3_fire_rate: float = 13.0
+@export var ch_lvl_4_fire_rate: float = 13.0
 
 ## Default: no powerups, change only when powerup is picked up
 @export var current_powerup: GameManager.powerups = GameManager.powerups.None
@@ -34,7 +34,7 @@ const powerup_level_max: int = 4
 
 
 ## Chorus powerup shooting params
-@export var ch_convergence_angle_deg: float = 5.5
+@export var ch_convergence_angle_deg: float = 1.5
 @export var ch_lvl4_speed_multiplier: float = 0.75
 
 ## Muzzles

@@ -51,6 +51,7 @@ script = ExtResource("1_yjgq2")
 collision_layer = 8
 collision_mask = 67
 script = ExtResource("2_uaepe")
+max_hp = 2
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
 
 [node name="collider" type="CollisionShape2D" parent="DamageTakerComponent"]
@@ -89,10 +90,3 @@ initial_velocity_max = 287.77
 scale_amount_max = 1.6
 
 [node name="tracker_timer" type="Timer" parent="."]
-
-[node name="chase_timer" type="Timer" parent="."]
-
-[connection signal="health_depleted" from="DamageTakerComponent" to="." method="_on_damage_taker_component_health_depleted"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
-[connection signal="timeout" from="tracker_timer" to="." method="_on_tracker_timer_timeout"]
-[connection signal="timeout" from="chase_timer" to="." method="_on_chase_timer_timeout"]

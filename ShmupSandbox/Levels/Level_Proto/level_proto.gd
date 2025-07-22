@@ -10,46 +10,86 @@ func _init() -> void:
 
 func _create_spawn_schedule() -> void:
 	spawn_schedule = [
+		# Wave 1
 		SpawnEvent.new(3.2, SceneManager.skulljack_PS, Vector2(1100, 120)),
-		SpawnEvent.new(3.8, SceneManager.skulljack_PS, Vector2(1100, 200)),
-		SpawnEvent.new(4.4, SceneManager.skulljack_PS, Vector2(1100, 300)),
-		SpawnEvent.new(6.4, SceneManager.doomboard_PS, Vector2(1050, 100)),
+		SpawnEvent.new(5.0, SceneManager.skulljack_PS, Vector2(1100, 400)),
+		SpawnEvent.new(6.0, SceneManager.skulljack_PS, Vector2(1100, 300)),
+
+		# Wave 2
+		SpawnEvent.new(7.2, SceneManager.skulljack_formation_alpha_PS, Vector2(1100, 120)),
 		
-		SpawnEvent.new(9.4, SceneManager.screamer_1_PS, Vector2(1100, 160)),
-		SpawnEvent.new(9.5, SceneManager.screamer_1_PS, Vector2(1100, 220)),
-		SpawnEvent.new(9.7, SceneManager.screamer_1_PS, Vector2(1100, 460)),
+		# Wave 3
+		SpawnEvent.new(8.4, SceneManager.doomboard_PS, Vector2(1100, 270)),
+
+		# Wave 4
+		SpawnEvent.new(15.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
+		SpawnEvent.new(16.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(16.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		SpawnEvent.new(17.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
 		
-		SpawnEvent.new(10.1, SceneManager.screamer_1_PS, Vector2(1100, 500)),
-		SpawnEvent.new(10.2, SceneManager.screamer_1_PS, Vector2(1150, 490)),
-		SpawnEvent.new(10.3, SceneManager.screamer_1_PS, Vector2(1150, 480)),
-		SpawnEvent.new(10.4, SceneManager.screamer_1_PS, Vector2(1000, 300)),
-		SpawnEvent.new(10.7, SceneManager.screamer_1_PS, Vector2(1000, 275)),
-		SpawnEvent.new(10.4, SceneManager.screamer_1_PS, Vector2(1000, 200)),
+		# Wave 5
+		SpawnEvent.new(19.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		SpawnEvent.new(19.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(20.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
+		SpawnEvent.new(20.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_5),
 
-		SpawnEvent.new(10.6, SceneManager.screamer_1_PS, Vector2(1100, 320)),
-		SpawnEvent.new(11.0, SceneManager.screamer_1_PS, Vector2(1150, 330)),
-		SpawnEvent.new(11.1, SceneManager.screamer_1_PS, Vector2(1150, 220)),
-		SpawnEvent.new(11.3, SceneManager.screamer_1_PS, Vector2(1000, 450)),
+		# Wave 6
+		SpawnEvent.new(22.0, SceneManager.soul_carrier_PS, Vector2(1000, 320)),
+		SpawnEvent.new(22.5, SceneManager.soul_carrier_PS, Vector2(1000, 160)),
 
-		SpawnEvent.new(11.5, SceneManager.screamer_1_PS, Vector2(1100, 200)),
-		SpawnEvent.new(11.5, SceneManager.screamer_1_PS, Vector2(1200, 220)),
-		SpawnEvent.new(11.7, SceneManager.screamer_1_PS, Vector2(1200, 400)),
-		SpawnEvent.new(12.1, SceneManager.screamer_1_PS, Vector2(1100, 320)),
+		# Wave 7
+		SpawnEvent.new(25.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_5),
+		SpawnEvent.new(25.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(26.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
+		SpawnEvent.new(26.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		SpawnEvent.new(26.5, SceneManager.boomer_PS, Vector2(1100, 400)),
+		SpawnEvent.new(27.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(28.5, SceneManager.boomer_PS, Vector2(1100, 0)),
+		SpawnEvent.new(29.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
+		SpawnEvent.new(30.5, SceneManager.boomer_PS, Vector2(1100, 180)),
+		SpawnEvent.new(31.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		SpawnEvent.new(31.5, SceneManager.boomer_PS, Vector2(1100, 500)),
+		SpawnEvent.new(32.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
 
-		SpawnEvent.new(12.5, SceneManager.screamer_3_PS, Vector2(1100, 320)),
-		SpawnEvent.new(12.8, SceneManager.screamer_3_PS, Vector2(1150, 330)),
-		SpawnEvent.new(13.1, SceneManager.screamer_3_PS, Vector2(1150, 220)),
-		SpawnEvent.new(13.6, SceneManager.screamer_3_PS, Vector2(1000, 450)),
-		SpawnEvent.new(14.0, SceneManager.screamer_3_PS, Vector2(1000, 475)),
-		SpawnEvent.new(14.4, SceneManager.screamer_3_PS, Vector2(1000, 355)),
 
-		SpawnEvent.new(15.1, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
-		SpawnEvent.new(15.3, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
-		SpawnEvent.new(15.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
-		SpawnEvent.new(15.7, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
-		SpawnEvent.new(18.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
-		SpawnEvent.new(18.3, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
-		SpawnEvent.new(18.6, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		# Wave 8
+		SpawnEvent.new(33.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_5),
+		SpawnEvent.new(33.5, SceneManager.boomer_PS, Vector2(1100, 100)),
+		SpawnEvent.new(33.8, SceneManager.boomer_PS, Vector2(1100, 300)),
+		SpawnEvent.new(34.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(35.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
+		SpawnEvent.new(35.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		SpawnEvent.new(35.8, SceneManager.boomer_PS, Vector2(1100, 200)),
+		SpawnEvent.new(36.3, SceneManager.boomer_PS, Vector2(1100, 400)),
+		SpawnEvent.new(37.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(37.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_5),
+		SpawnEvent.new(38.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(38.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
+		SpawnEvent.new(38.8, SceneManager.boomer_PS, Vector2(1100, 100)),
+		SpawnEvent.new(39.8, SceneManager.boomer_PS, Vector2(1100, 400)),
+		SpawnEvent.new(40.8, SceneManager.boomer_PS, Vector2(1100, 480)),
+		SpawnEvent.new(41.8, SceneManager.boomer_PS, Vector2(1100, 300)),
+		SpawnEvent.new(43.0, SceneManager.boomer_PS, Vector2(1100, 100)),
+		SpawnEvent.new(44.0, SceneManager.boomer_PS, Vector2(1100, 260)),
+
+		# Wave 9
+		SpawnEvent.new(45.2, SceneManager.soul_carrier_PS, Vector2(1100, 380)),
+		SpawnEvent.new(47.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_5),
+		SpawnEvent.new(47.3, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(47.6, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
+		SpawnEvent.new(47.9, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		SpawnEvent.new(48.2, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(48.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
+		SpawnEvent.new(49.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		SpawnEvent.new(50.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
+
+		# Wave 10
+		SpawnEvent.new(51.0, SceneManager.doomboard_PS, Vector2(1200, 270)),
+		SpawnEvent.new(54.5, SceneManager.skulljack_formation_alpha_PS, Vector2(1000, 180)),
+		SpawnEvent.new(58.2, SceneManager.soul_carrier_PS, Vector2(1100, 175)),
+		SpawnEvent.new(62.0, SceneManager.skulljack_formation_bravo_PS, Vector2(1000, 400)),
+		SpawnEvent.new(63.2, SceneManager.soul_carrier_PS, Vector2(1100, 380)),
+		SpawnEvent.new(65.0, SceneManager.skulljack_formation_charlie_PS, Vector2(1000, 270))
 ]
 
 

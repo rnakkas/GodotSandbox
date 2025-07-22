@@ -65,6 +65,7 @@ script = ExtResource("3_ia6iw")
 shoot_timer = NodePath("../shoot_timer")
 shoot_time = 0.3
 one_shot = true
+bullet_speed = 280.0
 bullet_scene = ExtResource("4_bxwr7")
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 

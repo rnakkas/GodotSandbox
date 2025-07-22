@@ -1,39 +1,39 @@
 class_name PlayerCat extends CharacterBody2D
 
 ## Velocity
-@export var _max_speed : float = 450.0
+@export var _max_speed: float = 330.0
 
 ## Shooting handler
-@onready var shooting_handler : ShootingHandler = $shooting_handler
+@onready var shooting_handler: ShootingHandler = $shooting_handler
 
 ## Bomb handler
-@onready var bomb_handler : BombHandler = $bomb_handler
+@onready var bomb_handler: BombHandler = $bomb_handler
 
 ## Sprites
 @onready var body: AnimatedSprite2D = %body
-@onready var rocket : AnimatedSprite2D = %rocket
-@onready var thruster : AnimatedSprite2D = %thruster
+@onready var rocket: AnimatedSprite2D = %rocket
+@onready var thruster: AnimatedSprite2D = %thruster
 @onready var base_muzzle_flash: AnimatedSprite2D = %base_muzzle_flash
-@onready var od_muzzle_flash : AnimatedSprite2D = %od_muzzle_flash
-@onready var ch_muzzle_flash : AnimatedSprite2D = %ch_muzzle_flash
-@onready var ch_muzzle_flash_1 : AnimatedSprite2D = %ch_muzzle_flash_1
-@onready var ch_muzzle_flash_2 : AnimatedSprite2D = %ch_muzzle_flash_2
-@onready var death : AnimatedSprite2D = %death
-@onready var invincible : AnimatedSprite2D = %invincible
+@onready var od_muzzle_flash: AnimatedSprite2D = %od_muzzle_flash
+@onready var ch_muzzle_flash: AnimatedSprite2D = %ch_muzzle_flash
+@onready var ch_muzzle_flash_1: AnimatedSprite2D = %ch_muzzle_flash_1
+@onready var ch_muzzle_flash_2: AnimatedSprite2D = %ch_muzzle_flash_2
+@onready var death: AnimatedSprite2D = %death
+@onready var invincible: AnimatedSprite2D = %invincible
 
 ## Hurtbox
-@onready var hurtbox : Area2D = $hurtbox
+@onready var hurtbox: Area2D = $hurtbox
 
 ## Timers
-@export var invincibility_time : float = 2.0
-@onready var invincibility_timer : Timer = $invincibility_timer
+@export var invincibility_time: float = 2.0
+@onready var invincibility_timer: Timer = $invincibility_timer
 
 ## Damage
-@export var damage : int = 25
+@export var damage: int = 25
 
-var viewport_size : Vector2
-var is_dead : bool
-var can_be_invincible : bool
+var viewport_size: Vector2
+var is_dead: bool
+var can_be_invincible: bool
 
 
 ################################################
@@ -59,7 +59,7 @@ func _handle_movement() -> void:
 	# Get input direction
 	input_dir.x = Input.get_axis("move_left", "move_right")
 	input_dir.y = Input.get_axis("move_up", "move_down")
-	input_dir = input_dir.normalized()  # Normalize for diagonal movement
+	input_dir = input_dir.normalized() # Normalize for diagonal movement
 	
 	# Velocity calcs
 	if input_dir != Vector2.ZERO:
@@ -89,7 +89,7 @@ func _handle_invincibility() -> void:
 ################################################
 # NOTE: Game pause handler
 ################################################
-func _unhandled_input(event: InputEvent) -> void: 
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		SignalsBus.player_pressed_pause_game_event.emit()
 
@@ -111,12 +111,12 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	rocket.visible = false # Contains body and thruster sprites
 	death.play("death")
 
-	SignalsBus.spawn_powerup_event.emit(self.global_position)	
+	SignalsBus.spawn_powerup_event.emit(self.global_position)
 	
 	await death.animation_finished
 	
 	## wait 0.5 seconds before sending signal to player spawner
-	await get_tree().create_timer(0.5).timeout 
+	await get_tree().create_timer(0.5).timeout
 	
 	SignalsBus.player_death_event.emit()
 	
@@ -139,7 +139,7 @@ func _on_invincibility_timer_timeout() -> void:
 ################################################
 #NOTE: Handle shooting signals, used for animations
 ################################################
-func _on_shooting_handler_now_shooting(powerup : GameManager.powerups, level : int) -> void:
+func _on_shooting_handler_now_shooting(powerup: GameManager.powerups, level: int) -> void:
 	if is_dead:
 		return
 	body.play("shoot")
@@ -164,4 +164,3 @@ func _on_shooting_handler_stopped_shooting() -> void:
 	ch_muzzle_flash_2.play("none")
 	body.play("idle")
 	body.frame = rocket.frame
-	

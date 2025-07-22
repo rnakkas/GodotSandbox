@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://wasicn0rso5p"]
+
+[ext_resource type="PackedScene" uid="uid://0pabuti51c45" path="res://ShmupSandbox/Enemies/Scenes/skulljack.tscn" id="1_jb15r"]
+
+[node name="skulljack_formation_bravo" type="Node2D"]
+
+[node name="skulljack" parent="." instance=ExtResource("1_jb15r")]
+position = Vector2(0, 1)
+
+[node name="skulljack2" parent="." instance=ExtResource("1_jb15r")]
+position = Vector2(130, -61)
+
+[node name="skulljack3" parent="." instance=ExtResource("1_jb15r")]
+position = Vector2(252, -129)
+
+[node name="skulljack4" parent="." instance=ExtResource("1_jb15r")]
+position = Vector2(385, -193)

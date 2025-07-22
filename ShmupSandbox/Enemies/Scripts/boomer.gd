@@ -1,30 +1,33 @@
 class_name Boomer extends Node2D
 
-@onready var sprite : AnimatedSprite2D = $sprite
-@onready var particles : CPUParticles2D = $CPUParticles2D
-@onready var tracker_timer : Timer = $tracker_timer
-@onready var chase_timer : Timer = $chase_timer
-@onready var screen_notifier : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var sprite: AnimatedSprite2D = $sprite
+@onready var particles: CPUParticles2D = $CPUParticles2D
+@onready var tracker_timer: Timer = $tracker_timer
+@onready var screen_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var damage_taker_component: DamageTakerComponent = $DamageTakerComponent
 
-@export var speed : float = 250.0
-@export var tracking_time : float = 0.13
-@export var chase_time : float = 2.0
-@export var kill_score : int = 100
+@export var speed: float = 350.0
+@export var tracking_time: float = 0.13
+@export var chase_time: float = 2.0
+@export var kill_score: int = 100
 
-var direction : Vector2 = Vector2.LEFT
+var direction: Vector2 = Vector2.LEFT
 
 
 ################################################
-# NOTE: Ready
+# Ready
 ################################################
 func _ready() -> void:
+	_connect_to_signals()
 	_get_direction_to_player()
-
 	Helper.set_timer_properties(tracker_timer, false, tracking_time)
-	Helper.set_timer_properties(chase_timer, true, chase_time)
-
 	tracker_timer.start()
-	chase_timer.start()
+
+func _connect_to_signals() -> void:
+	screen_notifier.screen_exited.connect(self._on_screen_notifier_screen_exited)
+	tracker_timer.timeout.connect(self._on_tracker_timer_timeout)
+	damage_taker_component.damage_taken.connect(self._on_damage_taker_component_damage_taken)
+	damage_taker_component.health_depleted.connect(self._on_damage_taker_component_health_depleted)
 
 func _get_direction_to_player() -> void:
 	if GameManager.player == null:
@@ -35,7 +38,7 @@ func _get_direction_to_player() -> void:
 
 
 ################################################
-# NOTE: Process, flip sprite based on movement direction 
+# Process, flip sprite based on movement direction 
 ################################################
 func _process(_delta: float) -> void:
 	if direction.x < 0:
@@ -45,42 +48,38 @@ func _process(_delta: float) -> void:
 
 
 ################################################
-# NOTE: Physics process, movement
+# Physics process, movement
 ################################################
 func _physics_process(delta: float) -> void:
 	global_position += speed * delta * direction
 
 
 ################################################
-# NOTE: Despawn when offscreen
+# Despawn when offscreen
 ################################################
-func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+func _on_screen_notifier_screen_exited() -> void:
+	await get_tree().create_timer(0.5).timeout
 	call_deferred("queue_free")
 
 
 ################################################
-# NOTE: Player tracking logic
+# Player tracking logic
 ################################################
 func _on_tracker_timer_timeout() -> void:
 	_get_direction_to_player()
 
 
 ################################################
-# NOTE: Stop tracking/chasing player
-################################################
-func _on_chase_timer_timeout() -> void:
-	tracker_timer.stop()
-
-
-################################################
-# NOTE: Getting hit by player attacks logic:
+# Getting hit by player attacks logic:
 	# Signal connections from damage taker component
 ################################################
+func _on_damage_taker_component_damage_taken() -> void:
+	SignalsBus.score_increased_event.emit(GameManager.attack_hit_score)
+
 func _on_damage_taker_component_health_depleted() -> void:
 	tracker_timer.stop()
-	chase_timer.stop()
 	
-	speed = speed/2
+	speed = speed / 2
 
 	sprite.play("death")
 	particles.emitting = true
