@@ -1,6 +1,104 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0c0rh8erx7or"]
+[gd_scene load_steps=8 format=3 uid="uid://c0c0rh8erx7or"]
 
 [ext_resource type="Script" uid="uid://cqnjxj4cv25vw" path="res://ShmupSandbox/Enemies/Bosses/Scripts/tourmageddon.gd" id="1_h5e13"]
+[ext_resource type="Texture2D" uid="uid://cg168axtflwsl" path="res://ShmupSandbox/Assets/Bosses/tourmageddon-placeholder.png" id="2_0eoy5"]
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_ott6q"]
+[ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="4_rydc2"]
+[ext_resource type="PackedScene" uid="uid://wcsck3gxd727" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/rumbler_bullet.tscn" id="5_wvdgt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cx0fg"]
+atlas = ExtResource("2_0eoy5")
+region = Rect2(0, 0, 608, 288)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0eoy5"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"damaged",
+"speed": 15.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"death",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 15.0
+}]
 
 [node name="tourmageddon" type="Node2D"]
 script = ExtResource("1_h5e13")
+
+[node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
+collision_layer = 8
+collision_mask = 67
+script = ExtResource("2_ott6q")
+max_hp = 2000
+dot_timer = NodePath("dot_timer")
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DamageTakerComponent"]
+polygon = PackedVector2Array(297, 29, 280, 122, 173, 138, 104, 121, -4, 145, -91, 135, -117, 85, -159, 83, -163, -19, -114, -12, -111, -63, -89, -75, -86, -111, -12, -112, -12, -147, 83, -134, 107, -84, 135, -84, 122, -116, 217, -124, 232, -70, 283, -59)
+
+[node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0eoy5")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="muzzle_cannon_1" type="Marker2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-70, -90)
+gizmo_extents = 108.5
+
+[node name="muzzle_cannon_2" type="Marker2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(11, -123)
+gizmo_extents = 108.5
+
+[node name="muzzle_cannon_3" type="Marker2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(148, -98)
+gizmo_extents = 108.5
+
+[node name="muzzle_door" type="Marker2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(101, 19)
+gizmo_extents = 108.5
+
+[node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("4_rydc2")
+shoot_timer = NodePath("../shoot_timer")
+shoot_time = 0.74
+one_shot = true
+bullets_per_shot = 5
+shot_spread_angle = 30.0
+bullet_scene = ExtResource("5_wvdgt")
+shooting_type = 1
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="shoot_timer" type="Timer" parent="."]
+
+[node name="screen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(338, -35)
+scale = Vector2(2.05, 15.7)
+
+[node name="debug_label_state" type="Label" parent="."]
+offset_left = -40.0
+offset_top = -242.0
+offset_right = 86.0
+offset_bottom = -207.0
+theme_override_font_sizes/font_size = 25
+
+[node name="debug_label_health" type="Label" parent="."]
+offset_left = -40.0
+offset_top = -185.0
+offset_right = 86.0
+offset_bottom = -150.0
+theme_override_font_sizes/font_size = 25

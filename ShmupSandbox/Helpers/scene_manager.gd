@@ -61,6 +61,11 @@ static var skulljack_formation_alpha_PS: PackedScene = preload("res://ShmupSandb
 static var skulljack_formation_bravo_PS: PackedScene = preload("res://ShmupSandbox/Enemies/EnemyFormations/skulljack_formation_bravo.tscn")
 static var skulljack_formation_charlie_PS: PackedScene = preload("res://ShmupSandbox/Enemies/EnemyFormations/skulljack_formation_charlie.tscn")
 
+## Bosses
+
+static var boss_tourmageddon_PS: PackedScene = preload("res://ShmupSandbox/Enemies/Bosses/Scenes/tourmageddon.tscn")
+
+
 ## Enemy bullets
 
 static var screamer_bullet_scene: PackedScene = preload("res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/screamer_bullet.tscn")
