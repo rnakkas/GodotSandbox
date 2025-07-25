@@ -127,7 +127,7 @@ signal enemy_shooting_event(bullets_list: Array[Area2D])
 # Bosses
 ################################################
 @warning_ignore("unused_signal")
-signal boss_sequence_started_event()
+signal boss_sequence_started_event(boss: Node)
 
 @warning_ignore("unused_signal")
 signal boss_sequence_ended_event(boss_killed: bool)

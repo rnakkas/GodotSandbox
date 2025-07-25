@@ -28,34 +28,43 @@ class_name BossTourmageddon extends Node2D
 	# Once boss is killed or flies off screen, send a global signal that boss sequence has ended.
 #
 # Signals:
-	# When boss spawns, send a global signal that boss sequence has started
+	# When boss spawns, send a global signal that boss sequence has started - DONE
 	# When boss dies or has fled, send a global signal that boss sequesnce has ended
-	# Boss will be spawned as part of enemy schedule, using the spawn_enemy_event() signal
+	# Boss will be spawned as part of enemy schedule, using the spawn_enemy_event() signal - DONE
 
 @onready var damage_taker_component: DamageTakerComponent = $DamageTakerComponent
 @onready var sprite: AnimatedSprite2D = $sprite
 @onready var enemy_shooting_component: EnemyShootingComponent = $EnemyShootingComponent
 @onready var shoot_timer: Timer = $shoot_timer
-@onready var screen_notifier: VisibleOnScreenNotifier2D = $screen_notifier
+
+# Screen notifiers
+@onready var initial_onscreen_notifier: VisibleOnScreenNotifier2D = %initial_onscreen_notifier
+@onready var screen_notifier_bottom: VisibleOnScreenNotifier2D = %screen_notifier_bottom
+@onready var screen_notifier_top: VisibleOnScreenNotifier2D = %screen_notifier_top
+@onready var screen_notifier_left: VisibleOnScreenNotifier2D = %screen_notifier_left
+@onready var screen_notifier_right: VisibleOnScreenNotifier2D = %screen_notifier_right
+
 @onready var debug_label_state: Label = $debug_label_state
 @onready var debug_label_health: Label = $debug_label_health
 
-@export var offscreen_speed: float = 500.0
-@export var onscreen_speed: float = 100.0
-@export var acceleration: float = 600.0
-@export var deceleration: float = 900.0
+@export var offscreen_speed: float = 400.0
+@export var onscreen_speed_y: float = 100.0
+@export var onscreen_speed_x: float = 400.0
+@export var acceleration: float = 350.0
+@export var deceleration: float = 1200.0
 @export var kill_score: int = 60000
 @export var screen_time: float = 600.0 # 10 minute screen time
-@export var move_time: float = 2.7
-@export var pre_attack_time: float = 0.8
-@export var post_attack_time: float = 1.2
+@export var hang_time: float = 2.75
+@export var move_time: float = 1.8
 
+var speed: float
 var direction: Vector2 = Vector2.LEFT
 var velocity: Vector2
 var viewport_size: Vector2
 
 enum state {
 	SPAWN,
+	PRE_PHASE_1,
 	PHASE_1,
 	PHASE_2,
 	DEATH,
@@ -66,13 +75,12 @@ var current_state: state
 
 func _ready() -> void:
 	_connect_to_signals()
-
 	current_state = state.SPAWN
+	speed = offscreen_speed
+	SignalsBus.boss_sequence_started_event.emit(self)
 
-	velocity = offscreen_speed * direction
-
-	# DEBUG: Debug related stuff, remove when done
-	_debug_init()
+	# DEBUG: Debug related stuff
+	_debug_update()
 
 
 func _connect_to_signals() -> void:
@@ -80,24 +88,110 @@ func _connect_to_signals() -> void:
 	damage_taker_component.low_health.connect(self._on_damage_taker_component_low_health)
 	damage_taker_component.health_depleted.connect(self._on_damage_taker_component_health_depleted)
 
-	screen_notifier.screen_entered.connect(self._on_screen_notifier_screen_entered)
+	# Screen notifiers
+	initial_onscreen_notifier.screen_entered.connect(self._initial_onscreen_notifier_screen_entered)
+	screen_notifier_bottom.screen_exited.connect(self._screen_bottom_reached)
+	screen_notifier_top.screen_exited.connect(self._screen_top_reached)
+	screen_notifier_left.screen_exited.connect(self._screen_left_reached)
+	screen_notifier_right.screen_exited.connect(self._screen_right_reached)
 
+
+func _initial_onscreen_notifier_screen_entered() -> void:
+	current_state = state.PRE_PHASE_1
+	await get_tree().create_timer(hang_time).timeout
+	
+	_debug_update()
+	
+	speed = onscreen_speed_y
+	direction = Vector2.DOWN
+	current_state = state.PHASE_1
+	
+	_debug_update()
+	
+
+func _screen_bottom_reached() -> void:
+	match current_state:
+		state.PHASE_1:
+			direction = Vector2.ZERO
+			await get_tree().create_timer(hang_time).timeout
+			speed = onscreen_speed_x
+			direction = Vector2.LEFT
+
+func _screen_top_reached() -> void:
+	pass
+
+func _screen_left_reached() -> void:
+	match current_state:
+		state.PHASE_1:
+			direction = Vector2.ZERO
+			await get_tree().create_timer(hang_time * 0.5).timeout
+			speed = onscreen_speed_x * 0.6
+			direction = Vector2.RIGHT
+
+func _screen_right_reached() -> void:
+	match current_state:
+		state.PHASE_1:
+			direction = Vector2.ZERO
+			await get_tree().create_timer(hang_time).timeout
+			speed = onscreen_speed_y
+			direction = Vector2.UP
+
+
+func _physics_process(delta: float) -> void:
+	match current_state:
+		state.SPAWN:
+			velocity = speed * direction
+		state.PRE_PHASE_1:
+			velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
+		state.PHASE_1:
+			if direction != Vector2.ZERO:
+				velocity = velocity.move_toward(speed * direction, acceleration * delta)
+			else:
+				velocity = velocity.move_toward(speed * direction, deceleration * delta)
+	
+	global_position += velocity * delta
+
+
+################################################
+# Getting hit by player attacks logic:
+	# Signal connections from damage taker component
+################################################
+func _on_damage_taker_component_damage_taken() -> void:
+	SignalsBus.score_increased_event.emit(GameManager.attack_hit_score)
+	_debug_update()
+
+func _on_damage_taker_component_low_health() -> void:
+	sprite.play("damaged")
+
+func _on_damage_taker_component_health_depleted() -> void:
+	sprite.play("death")
+	
+	current_state = state.DEATH
+	direction = Vector2.DOWN
+
+	SignalsBus.score_increased_event.emit(kill_score)
+	
+	# Signal to spawn score fragments on death
+	SignalsBus.spawn_score_fragment_event.emit(self.global_position)
+
+	await sprite.animation_finished
+
+	call_deferred("queue_free")
+
+
+######################################################
+
+######################################################
+# DEBUG
+######################################################
 
 # DEBUG: Debug related stuff, remove when done
-func _debug_init() -> void:
+func _debug_update() -> void:
 	if OS.is_debug_build():
 		debug_label_state.visible = true
-		debug_label_state.text = "Current State " + str(state.find_key(state.SPAWN))
+		debug_label_state.text = "Current State " + str(state.find_key(current_state))
 		debug_label_health.visible = true
 		debug_label_health.text = "Current Health: " + str(damage_taker_component.hp)
 	else:
 		debug_label_state.visible = false
 		debug_label_health.visible = false
-
-
-func _on_screen_notifier_screen_entered() -> void:
-	current_state = state.PHASE_1
-	
-
-func _physics_process(delta: float) -> void:
-	global_position += velocity * delta

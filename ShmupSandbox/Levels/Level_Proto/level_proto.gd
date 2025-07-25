@@ -12,7 +12,7 @@ func _init() -> void:
 
 func _create_spawn_schedule() -> void:
 	spawn_schedule = [
-		SpawnEvent.new(3.0, SceneManager.boss_tourmageddon_PS, Vector2(1300, 300))
+		SpawnEvent.new(1.5, SceneManager.boss_tourmageddon_PS, Vector2(1300, 200))
 		# # Wave 1
 		# SpawnEvent.new(3.2, SceneManager.skulljack_PS, Vector2(1100, 120)),
 		# SpawnEvent.new(5.0, SceneManager.skulljack_PS, Vector2(1100, 400)),

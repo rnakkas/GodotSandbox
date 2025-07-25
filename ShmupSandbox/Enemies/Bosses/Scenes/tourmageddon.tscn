@@ -32,6 +32,7 @@ animations = [{
 }]
 
 [node name="tourmageddon" type="Node2D"]
+position = Vector2(200, 180)
 script = ExtResource("1_h5e13")
 
 [node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
@@ -40,36 +41,38 @@ collision_mask = 67
 script = ExtResource("2_ott6q")
 max_hp = 2000
 dot_timer = NodePath("dot_timer")
+low_hp_mod = 0.5
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DamageTakerComponent"]
-polygon = PackedVector2Array(297, 29, 280, 122, 173, 138, 104, 121, -4, 145, -91, 135, -117, 85, -159, 83, -163, -19, -114, -12, -111, -63, -89, -75, -86, -111, -12, -112, -12, -147, 83, -134, 107, -84, 135, -84, 122, -116, 217, -124, 232, -70, 283, -59)
+polygon = PackedVector2Array(252, 11, 247, 75, 221, 108, 137, 115, 92, 95, 39, 119, -33, 121, -54, 112, -86, 88, -98, 67, -135, 69, -136, -13, -97, -10, -96, -33, -87, -46, -38, -49, -67, -64, -76, -73, -78, -90, 4, -90, -13, -106, 7, -119, 36, -119, 65, -104, 88, -55, 119, -70, 112, -90, 128, -99, 161, -101, 185, -94, 188, -54, 216, -52, 238, -41)
 
 [node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.85, 0.85)
 sprite_frames = SubResource("SpriteFrames_0eoy5")
 animation = &"idle"
 autoplay = "idle"
 
 [node name="muzzle_cannon_1" type="Marker2D" parent="."]
 self_modulate = Color(0, 0, 0, 1)
-position = Vector2(-70, -90)
+position = Vector2(-62, -76)
 gizmo_extents = 108.5
 
 [node name="muzzle_cannon_2" type="Marker2D" parent="."]
 self_modulate = Color(0, 0, 0, 1)
-position = Vector2(11, -123)
+position = Vector2(9, -104)
 gizmo_extents = 108.5
 
 [node name="muzzle_cannon_3" type="Marker2D" parent="."]
 self_modulate = Color(0, 0, 0, 1)
-position = Vector2(148, -98)
+position = Vector2(125, -82)
 gizmo_extents = 108.5
 
 [node name="muzzle_door" type="Marker2D" parent="."]
 self_modulate = Color(0, 0, 0, 1)
-position = Vector2(101, 19)
+position = Vector2(85, 18)
 gizmo_extents = 108.5
 
 [node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
@@ -85,20 +88,44 @@ metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="shoot_timer" type="Timer" parent="."]
 
-[node name="screen_notifier" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(338, -35)
-scale = Vector2(2.05, 15.7)
-
 [node name="debug_label_state" type="Label" parent="."]
-offset_left = -40.0
-offset_top = -242.0
-offset_right = 86.0
-offset_bottom = -207.0
-theme_override_font_sizes/font_size = 25
+offset_left = -37.0
+offset_top = -177.0
+offset_right = 89.0
+offset_bottom = -142.0
+theme_override_font_sizes/font_size = 16
 
 [node name="debug_label_health" type="Label" parent="."]
-offset_left = -40.0
-offset_top = -185.0
-offset_right = 86.0
-offset_bottom = -150.0
-theme_override_font_sizes/font_size = 25
+offset_left = -38.0
+offset_top = -152.0
+offset_right = 88.0
+offset_bottom = -117.0
+theme_override_font_sizes/font_size = 16
+
+[node name="ScreenNotifierContainer" type="Node2D" parent="."]
+
+[node name="initial_onscreen_notifier" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0.188235, 1, 1, 1)
+position = Vector2(275, 18.5)
+scale = Vector2(2.05, 10.25)
+
+[node name="screen_notifier_bottom" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
+unique_name_in_owner = true
+position = Vector2(39.5, 192)
+scale = Vector2(31.15, 1)
+
+[node name="screen_notifier_top" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
+unique_name_in_owner = true
+position = Vector2(44, -183)
+scale = Vector2(30.4, 1)
+
+[node name="screen_notifier_left" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
+unique_name_in_owner = true
+position = Vector2(-199, 8)
+scale = Vector2(1, 21.9)
+
+[node name="screen_notifier_right" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
+unique_name_in_owner = true
+position = Vector2(311, 4.49998)
+scale = Vector2(1.1, 20.55)
