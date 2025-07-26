@@ -30,7 +30,7 @@ static func clamp_movement_to_screen_bounds(viewport_size: Vector2, position: Ve
 
 
 ################################################
-# Switch y direction on hitting screen bounds
+# Switch y direction on hitting screen bounds, usually run in _process()
 ################################################
 static func change_direction_on_hitting_screen_bounds(viewport_size, position, direction: Vector2) -> Vector2:
 	if position.y <= GameManager.offset_y_screen_top:

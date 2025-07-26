@@ -55,38 +55,18 @@ sprite_frames = SubResource("SpriteFrames_0eoy5")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="muzzle_cannon_1" type="Marker2D" parent="."]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(-62, -76)
-gizmo_extents = 108.5
-
-[node name="muzzle_cannon_2" type="Marker2D" parent="."]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(9, -104)
-gizmo_extents = 108.5
-
-[node name="muzzle_cannon_3" type="Marker2D" parent="."]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(125, -82)
-gizmo_extents = 108.5
-
-[node name="muzzle_door" type="Marker2D" parent="."]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(85, 18)
-gizmo_extents = 108.5
-
 [node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("4_rydc2")
-shoot_timer = NodePath("../shoot_timer")
-shoot_time = 0.74
-one_shot = true
-bullets_per_shot = 5
-shot_spread_angle = 30.0
+shoot_timer = NodePath("shoot_timer")
+shoot_time = 0.9
+bullets_per_shot = 20
+bullet_speed = 80.0
+shot_spread_angle = 200.0
 bullet_scene = ExtResource("5_wvdgt")
-shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
-[node name="shoot_timer" type="Timer" parent="."]
+[node name="shoot_timer" type="Timer" parent="EnemyShootingComponent"]
+unique_name_in_owner = true
 
 [node name="debug_label_state" type="Label" parent="."]
 offset_left = -37.0
@@ -129,3 +109,29 @@ scale = Vector2(1, 21.9)
 unique_name_in_owner = true
 position = Vector2(311, 4.49998)
 scale = Vector2(1.1, 20.55)
+
+[node name="MarkersContainer" type="Node2D" parent="."]
+
+[node name="marker_cannon_1" type="Marker2D" parent="MarkersContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-62, -76)
+gizmo_extents = 108.5
+
+[node name="marker_cannon_2" type="Marker2D" parent="MarkersContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(9, -104)
+gizmo_extents = 108.5
+
+[node name="marker_cannon_3" type="Marker2D" parent="MarkersContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(125, -82)
+gizmo_extents = 108.5
+
+[node name="marker_door" type="Marker2D" parent="MarkersContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(85, 18)
+gizmo_extents = 108.5

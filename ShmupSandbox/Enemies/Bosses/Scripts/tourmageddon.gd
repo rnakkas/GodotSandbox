@@ -35,7 +35,7 @@ class_name BossTourmageddon extends Node2D
 @onready var damage_taker_component: DamageTakerComponent = $DamageTakerComponent
 @onready var sprite: AnimatedSprite2D = $sprite
 @onready var enemy_shooting_component: EnemyShootingComponent = $EnemyShootingComponent
-@onready var shoot_timer: Timer = $shoot_timer
+@onready var shoot_timer: Timer = %shoot_timer
 
 # Screen notifiers
 @onready var initial_onscreen_notifier: VisibleOnScreenNotifier2D = %initial_onscreen_notifier
@@ -44,9 +44,20 @@ class_name BossTourmageddon extends Node2D
 @onready var screen_notifier_left: VisibleOnScreenNotifier2D = %screen_notifier_left
 @onready var screen_notifier_right: VisibleOnScreenNotifier2D = %screen_notifier_right
 
+# Muzzles
+@onready var marker_cannon_1: Marker2D = %marker_cannon_1
+@onready var marker_cannon_2: Marker2D = %marker_cannon_2
+@onready var marker_cannon_3: Marker2D = %marker_cannon_3
+@onready var marker_door: Marker2D = %marker_door
+
+# DEBUG
 @onready var debug_label_state: Label = $debug_label_state
 @onready var debug_label_health: Label = $debug_label_health
 
+
+######################################################
+# Exported vars
+######################################################
 @export var offscreen_speed: float = 400.0
 @export var onscreen_speed_y: float = 100.0
 @export var onscreen_speed_x: float = 400.0
@@ -57,14 +68,8 @@ class_name BossTourmageddon extends Node2D
 @export var hang_time: float = 2.75
 @export var move_time: float = 1.8
 
-var speed: float
-var direction: Vector2 = Vector2.LEFT
-var velocity: Vector2
-var viewport_size: Vector2
-
 enum state {
 	SPAWN,
-	PRE_PHASE_1,
 	PHASE_1,
 	PHASE_2,
 	DEATH,
@@ -72,11 +77,21 @@ enum state {
 }
 
 var current_state: state
+var speed: float
+var direction: Vector2 = Vector2.LEFT
+var velocity: Vector2
+var viewport_size: Vector2
+var shot_count: int
 
 func _ready() -> void:
 	_connect_to_signals()
+	
 	current_state = state.SPAWN
 	speed = offscreen_speed
+	viewport_size = get_viewport_rect().size
+
+	enemy_shooting_component.position = marker_cannon_1.position
+	
 	SignalsBus.boss_sequence_started_event.emit(self)
 
 	# DEBUG: Debug related stuff
@@ -95,16 +110,18 @@ func _connect_to_signals() -> void:
 	screen_notifier_left.screen_exited.connect(self._screen_left_reached)
 	screen_notifier_right.screen_exited.connect(self._screen_right_reached)
 
+	# Timer
+	shoot_timer.timeout.connect(self._on_shoot_timer_timeout)
+
 
 func _initial_onscreen_notifier_screen_entered() -> void:
-	current_state = state.PRE_PHASE_1
-	await get_tree().create_timer(hang_time).timeout
-	
-	_debug_update()
-	
-	speed = onscreen_speed_y
-	direction = Vector2.DOWN
 	current_state = state.PHASE_1
+	speed = onscreen_speed_y
+	direction = Vector2.ZERO
+
+	await get_tree().create_timer(hang_time).timeout
+	shoot_timer.start()
+	direction = Vector2.DOWN
 	
 	_debug_update()
 	
@@ -117,9 +134,6 @@ func _screen_bottom_reached() -> void:
 			speed = onscreen_speed_x
 			direction = Vector2.LEFT
 
-func _screen_top_reached() -> void:
-	pass
-
 func _screen_left_reached() -> void:
 	match current_state:
 		state.PHASE_1:
@@ -129,20 +143,54 @@ func _screen_left_reached() -> void:
 			direction = Vector2.RIGHT
 
 func _screen_right_reached() -> void:
+	var dist_to_top: float = self.global_position.y
+	var dist_to_bot: float = viewport_size.y - self.global_position.y
+	
+	match current_state:
+		state.PHASE_1:
+			direction = Vector2.ZERO
+			
+			if dist_to_top > dist_to_bot:
+				shoot_timer.start() # Shoot
+			
+			await get_tree().create_timer(hang_time).timeout
+			speed = onscreen_speed_y
+
+			if dist_to_top <= dist_to_bot:
+				direction = Vector2.DOWN
+				shoot_timer.start() # Shoot
+			elif dist_to_top > dist_to_bot:
+				direction = Vector2.UP
+	
+func _screen_top_reached() -> void:
 	match current_state:
 		state.PHASE_1:
 			direction = Vector2.ZERO
 			await get_tree().create_timer(hang_time).timeout
-			speed = onscreen_speed_y
-			direction = Vector2.UP
+			speed = onscreen_speed_x
+			direction = Vector2.LEFT
 
 
+func _on_shoot_timer_timeout() -> void:
+	shot_count += 1
+	if shot_count >= 3:
+		shoot_timer.stop()
+		shot_count = 0
+		enemy_shooting_component.position = marker_cannon_1.position
+		return
+
+	# Logic to move the shooting component to next muzzle
+	match shot_count:
+		1:
+			enemy_shooting_component.position = marker_cannon_2.position
+		2:
+			enemy_shooting_component.position = marker_cannon_3.position
+	
+	
 func _physics_process(delta: float) -> void:
 	match current_state:
 		state.SPAWN:
 			velocity = speed * direction
-		state.PRE_PHASE_1:
-			velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
 		state.PHASE_1:
 			if direction != Vector2.ZERO:
 				velocity = velocity.move_toward(speed * direction, acceleration * delta)
