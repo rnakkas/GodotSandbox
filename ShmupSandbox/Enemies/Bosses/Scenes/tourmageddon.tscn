@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0c0rh8erx7or"]
+[gd_scene load_steps=12 format=3 uid="uid://c0c0rh8erx7or"]
 
 [ext_resource type="Script" uid="uid://cqnjxj4cv25vw" path="res://ShmupSandbox/Enemies/Bosses/Scripts/tourmageddon.gd" id="1_h5e13"]
 [ext_resource type="Texture2D" uid="uid://cg168axtflwsl" path="res://ShmupSandbox/Assets/Bosses/tourmageddon-placeholder.png" id="2_0eoy5"]
 [ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_ott6q"]
 [ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="4_rydc2"]
 [ext_resource type="PackedScene" uid="uid://wcsck3gxd727" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/rumbler_bullet.tscn" id="5_wvdgt"]
+[ext_resource type="Texture2D" uid="uid://jjhjuqoiahdo" path="res://ShmupSandbox/Assets/Bosses/tourmageddon_thruster_attack-placeholder.png" id="6_wvdgt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cx0fg"]
 atlas = ExtResource("2_0eoy5")
@@ -31,8 +32,57 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jp6xq"]
+atlas = ExtResource("6_wvdgt")
+region = Rect2(0, 0, 960, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rydc2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"none",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wvdgt"]
+size = Vector2(969, 75)
+
 [node name="tourmageddon" type="Node2D"]
-position = Vector2(200, 180)
 script = ExtResource("1_h5e13")
 
 [node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
@@ -58,11 +108,12 @@ autoplay = "idle"
 [node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("4_rydc2")
 shoot_timer = NodePath("shoot_timer")
-shoot_time = 0.9
-bullets_per_shot = 20
-bullet_speed = 80.0
-shot_spread_angle = 200.0
+shoot_time = 0.11
+bullets_per_shot = 5
+bullet_speed = 250.0
+shot_spread_angle = 50.0
 bullet_scene = ExtResource("5_wvdgt")
+shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
 
 [node name="shoot_timer" type="Timer" parent="EnemyShootingComponent"]
@@ -135,3 +186,20 @@ unique_name_in_owner = true
 self_modulate = Color(0, 0, 0, 1)
 position = Vector2(85, 18)
 gizmo_extents = 108.5
+
+[node name="thruster_attack_area" type="Area2D" parent="."]
+collision_layer = 16
+
+[node name="thruster_sprite" type="AnimatedSprite2D" parent="thruster_attack_area"]
+unique_name_in_owner = true
+position = Vector2(-611, 28)
+sprite_frames = SubResource("SpriteFrames_rydc2")
+animation = &"attack"
+autoplay = "none"
+frame = 2
+frame_progress = 0.712638
+
+[node name="thruster_collider" type="CollisionShape2D" parent="thruster_attack_area"]
+position = Vector2(-618.5, 25.5)
+shape = SubResource("RectangleShape2D_wvdgt")
+debug_color = Color(0.903406, 0.267478, 0.395717, 0.42)

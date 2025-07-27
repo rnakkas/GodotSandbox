@@ -50,6 +50,10 @@ class_name BossTourmageddon extends Node2D
 @onready var marker_cannon_3: Marker2D = %marker_cannon_3
 @onready var marker_door: Marker2D = %marker_door
 
+# Thruster
+@onready var thruster_attack_area: Area2D = $thruster_attack_area
+@onready var thruster_sprite: AnimatedSprite2D = %thruster_sprite
+
 # DEBUG
 @onready var debug_label_state: Label = $debug_label_state
 @onready var debug_label_health: Label = $debug_label_health
@@ -60,13 +64,13 @@ class_name BossTourmageddon extends Node2D
 ######################################################
 @export var offscreen_speed: float = 400.0
 @export var onscreen_speed_y: float = 100.0
-@export var onscreen_speed_x: float = 400.0
-@export var acceleration: float = 350.0
-@export var deceleration: float = 1200.0
+@export var onscreen_speed_x: float = 450.0
+@export var acceleration: float = 1000.0
+@export var deceleration: float = 2000.0
 @export var kill_score: int = 60000
 @export var screen_time: float = 600.0 # 10 minute screen time
 @export var hang_time: float = 2.75
-@export var move_time: float = 1.8
+@export var shot_limit: int = 6
 
 enum state {
 	SPAWN,
@@ -91,6 +95,8 @@ func _ready() -> void:
 	viewport_size = get_viewport_rect().size
 
 	enemy_shooting_component.position = marker_cannon_1.position
+
+	_thruster_attack(false)
 	
 	SignalsBus.boss_sequence_started_event.emit(self)
 
@@ -138,8 +144,11 @@ func _screen_left_reached() -> void:
 	match current_state:
 		state.PHASE_1:
 			direction = Vector2.ZERO
+
+			_thruster_attack(true)
+
 			await get_tree().create_timer(hang_time * 0.5).timeout
-			speed = onscreen_speed_x * 0.6
+			speed = onscreen_speed_x * 0.3
 			direction = Vector2.RIGHT
 
 func _screen_right_reached() -> void:
@@ -149,18 +158,23 @@ func _screen_right_reached() -> void:
 	match current_state:
 		state.PHASE_1:
 			direction = Vector2.ZERO
+
+			await get_tree().create_timer(hang_time * 0.5).timeout
+			_thruster_attack(false)
+			await get_tree().create_timer(hang_time * 0.5).timeout
 			
-			if dist_to_top > dist_to_bot:
-				shoot_timer.start() # Shoot
+			shoot_timer.start()
+
 			
 			await get_tree().create_timer(hang_time).timeout
 			speed = onscreen_speed_y
 
 			if dist_to_top <= dist_to_bot:
 				direction = Vector2.DOWN
-				shoot_timer.start() # Shoot
 			elif dist_to_top > dist_to_bot:
 				direction = Vector2.UP
+			
+			shoot_timer.start()
 	
 func _screen_top_reached() -> void:
 	match current_state:
@@ -173,7 +187,7 @@ func _screen_top_reached() -> void:
 
 func _on_shoot_timer_timeout() -> void:
 	shot_count += 1
-	if shot_count >= 3:
+	if shot_count >= shot_limit:
 		shoot_timer.stop()
 		shot_count = 0
 		enemy_shooting_component.position = marker_cannon_1.position
@@ -181,11 +195,24 @@ func _on_shoot_timer_timeout() -> void:
 
 	# Logic to move the shooting component to next muzzle
 	match shot_count:
-		1:
+		1, 4:
 			enemy_shooting_component.position = marker_cannon_2.position
-		2:
+		2, 5:
 			enemy_shooting_component.position = marker_cannon_3.position
+		3, 6:
+			enemy_shooting_component.position = marker_cannon_1.position
 	
+
+func _thruster_attack(can_attack: bool) -> void:
+	if can_attack:
+		thruster_sprite.play("attack")
+	else:
+		thruster_sprite.play("none")
+		
+	thruster_attack_area.visible = can_attack
+	thruster_attack_area.set_deferred("monitorable", can_attack)
+	thruster_attack_area.set_deferred("monitoring", can_attack)
+
 	
 func _physics_process(delta: float) -> void:
 	match current_state:
