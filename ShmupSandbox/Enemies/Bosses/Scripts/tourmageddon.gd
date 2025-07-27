@@ -36,6 +36,7 @@ class_name BossTourmageddon extends Node2D
 @onready var sprite: AnimatedSprite2D = $sprite
 @onready var enemy_shooting_component: EnemyShootingComponent = $EnemyShootingComponent
 @onready var shoot_timer: Timer = %shoot_timer
+@onready var groupie_timer: Timer = $groupie_timer
 
 # Screen notifiers
 @onready var initial_onscreen_notifier: VisibleOnScreenNotifier2D = %initial_onscreen_notifier
@@ -71,6 +72,11 @@ class_name BossTourmageddon extends Node2D
 @export var screen_time: float = 600.0 # 10 minute screen time
 @export var hang_time: float = 2.75
 @export var shot_limit: int = 6
+@export var phase_2_bullets_per_shot: int = 5
+@export var phase_2_bullet_spread: float = 55.0
+@export var phase_2_shot_time: float = 4.5
+@export var phase_2_groupie_time: float = 4.0
+@export var groupie_list: Array[PackedScene] = []
 
 enum state {
 	SPAWN,
@@ -97,6 +103,15 @@ func _ready() -> void:
 	enemy_shooting_component.position = marker_cannon_1.position
 
 	_thruster_attack(false)
+
+	Helper.set_timer_properties(groupie_timer, false, phase_2_groupie_time)
+
+	groupie_list = [
+		SceneManager.skulljack_PS,
+		SceneManager.boomer_PS,
+		SceneManager.skulljack_PS,
+		SceneManager.boomer_PS
+	]
 	
 	SignalsBus.boss_sequence_started_event.emit(self)
 
@@ -118,6 +133,7 @@ func _connect_to_signals() -> void:
 
 	# Timer
 	shoot_timer.timeout.connect(self._on_shoot_timer_timeout)
+	groupie_timer.timeout.connect(self._on_groupie_timer_timeout)
 
 
 func _initial_onscreen_notifier_screen_entered() -> void:
@@ -139,10 +155,14 @@ func _screen_bottom_reached() -> void:
 			await get_tree().create_timer(hang_time).timeout
 			speed = onscreen_speed_x
 			direction = Vector2.LEFT
+		state.PHASE_2:
+			direction = Vector2.UP
+			if groupie_timer.is_stopped():
+				groupie_timer.start()
 
 func _screen_left_reached() -> void:
 	match current_state:
-		state.PHASE_1:
+		state.PHASE_1, state.PHASE_2:
 			direction = Vector2.ZERO
 
 			_thruster_attack(true)
@@ -156,7 +176,7 @@ func _screen_right_reached() -> void:
 	var dist_to_bot: float = viewport_size.y - self.global_position.y
 	
 	match current_state:
-		state.PHASE_1:
+		state.PHASE_1, state.PHASE_2:
 			direction = Vector2.ZERO
 
 			await get_tree().create_timer(hang_time * 0.5).timeout
@@ -175,6 +195,10 @@ func _screen_right_reached() -> void:
 				direction = Vector2.UP
 			
 			shoot_timer.start()
+
+			if current_state == state.PHASE_2:
+				if groupie_timer.is_stopped():
+					groupie_timer.start()
 	
 func _screen_top_reached() -> void:
 	match current_state:
@@ -183,6 +207,10 @@ func _screen_top_reached() -> void:
 			await get_tree().create_timer(hang_time).timeout
 			speed = onscreen_speed_x
 			direction = Vector2.LEFT
+		state.PHASE_2:
+			direction = Vector2.DOWN
+			if groupie_timer.is_stopped():
+				groupie_timer.start()
 
 
 func _on_shoot_timer_timeout() -> void:
@@ -191,6 +219,9 @@ func _on_shoot_timer_timeout() -> void:
 		shoot_timer.stop()
 		shot_count = 0
 		enemy_shooting_component.position = marker_cannon_1.position
+		if current_state == state.PHASE_2:
+			await get_tree().create_timer(phase_2_shot_time).timeout
+			shoot_timer.start()
 		return
 
 	# Logic to move the shooting component to next muzzle
@@ -213,12 +244,18 @@ func _thruster_attack(can_attack: bool) -> void:
 	thruster_attack_area.set_deferred("monitorable", can_attack)
 	thruster_attack_area.set_deferred("monitoring", can_attack)
 
+
+func _on_groupie_timer_timeout() -> void:
+	for groupie: PackedScene in groupie_list:
+		await get_tree().create_timer(0.5).timeout
+		SignalsBus.spawn_enemy_event.emit(groupie, marker_door.global_position, "")
+
 	
 func _physics_process(delta: float) -> void:
 	match current_state:
 		state.SPAWN:
 			velocity = speed * direction
-		state.PHASE_1:
+		state.PHASE_1, state.PHASE_2:
 			if direction != Vector2.ZERO:
 				velocity = velocity.move_toward(speed * direction, acceleration * delta)
 			else:
@@ -237,6 +274,12 @@ func _on_damage_taker_component_damage_taken() -> void:
 
 func _on_damage_taker_component_low_health() -> void:
 	sprite.play("damaged")
+	current_state = state.PHASE_2
+	
+	enemy_shooting_component.bullets_per_shot = phase_2_bullets_per_shot
+	enemy_shooting_component.shot_spread_angle = phase_2_bullet_spread
+
+	_debug_update()
 
 func _on_damage_taker_component_health_depleted() -> void:
 	sprite.play("death")

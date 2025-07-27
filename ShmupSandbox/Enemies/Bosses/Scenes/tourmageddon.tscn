@@ -13,12 +13,66 @@ region = Rect2(0, 0, 608, 288)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0eoy5"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
 "loop": true,
 "name": &"damaged",
 "speed": 15.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}],
 "loop": false,
 "name": &"death",
 "speed": 15.0
@@ -89,7 +143,7 @@ script = ExtResource("1_h5e13")
 collision_layer = 8
 collision_mask = 67
 script = ExtResource("2_ott6q")
-max_hp = 2000
+max_hp = 30
 dot_timer = NodePath("dot_timer")
 low_hp_mod = 0.5
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
@@ -102,16 +156,16 @@ polygon = PackedVector2Array(252, 11, 247, 75, 221, 108, 137, 115, 92, 95, 39, 1
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.85, 0.85)
 sprite_frames = SubResource("SpriteFrames_0eoy5")
-animation = &"idle"
+animation = &"death"
 autoplay = "idle"
 
 [node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
 script = ExtResource("4_rydc2")
 shoot_timer = NodePath("shoot_timer")
 shoot_time = 0.11
-bullets_per_shot = 5
+bullets_per_shot = 3
 bullet_speed = 250.0
-shot_spread_angle = 50.0
+shot_spread_angle = 30.0
 bullet_scene = ExtResource("5_wvdgt")
 shooting_type = 1
 metadata/_custom_type_script = "uid://ciqomtl00c0ad"
@@ -153,7 +207,7 @@ scale = Vector2(30.4, 1)
 
 [node name="screen_notifier_left" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
 unique_name_in_owner = true
-position = Vector2(-199, 8)
+position = Vector2(-269, 8)
 scale = Vector2(1, 21.9)
 
 [node name="screen_notifier_right" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
@@ -203,3 +257,5 @@ frame_progress = 0.712638
 position = Vector2(-618.5, 25.5)
 shape = SubResource("RectangleShape2D_wvdgt")
 debug_color = Color(0.903406, 0.267478, 0.395717, 0.42)
+
+[node name="groupie_timer" type="Timer" parent="."]
