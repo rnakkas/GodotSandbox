@@ -1,0 +1,287 @@
+[gd_scene load_steps=12 format=3 uid="uid://c0c0rh8erx7or"]
+
+[ext_resource type="Script" uid="uid://cqnjxj4cv25vw" path="res://ShmupSandbox/Enemies/Bosses/Scripts/tourmageddon.gd" id="1_h5e13"]
+[ext_resource type="Texture2D" uid="uid://cg168axtflwsl" path="res://ShmupSandbox/Assets/Bosses/tourmageddon-placeholder.png" id="2_0eoy5"]
+[ext_resource type="Script" uid="uid://bvted7bsjs0so" path="res://ShmupSandbox/Enemies/EnemyComponents/damage_taker_component.gd" id="2_ott6q"]
+[ext_resource type="Script" uid="uid://ciqomtl00c0ad" path="res://ShmupSandbox/Enemies/EnemyComponents/enemy_shooting_component.gd" id="4_rydc2"]
+[ext_resource type="PackedScene" uid="uid://wcsck3gxd727" path="res://ShmupSandbox/Enemies/EnemyProjectiles_Scenes/rumbler_bullet.tscn" id="5_wvdgt"]
+[ext_resource type="Texture2D" uid="uid://jjhjuqoiahdo" path="res://ShmupSandbox/Assets/Bosses/tourmageddon_thruster_attack-placeholder.png" id="6_wvdgt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cx0fg"]
+atlas = ExtResource("2_0eoy5")
+region = Rect2(0, 0, 608, 288)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0eoy5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"death",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 15.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jp6xq"]
+atlas = ExtResource("6_wvdgt")
+region = Rect2(0, 0, 960, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rydc2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp6xq")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"none",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wvdgt"]
+size = Vector2(969, 75)
+
+[node name="tourmageddon" type="Node2D"]
+script = ExtResource("1_h5e13")
+shot_limit = 8
+phase_2_bullets_per_shot = 4
+phase_2_bullet_spread = 40.0
+
+[node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
+collision_layer = 8
+collision_mask = 67
+script = ExtResource("2_ott6q")
+max_hp = 2000
+dot_timer = NodePath("dot_timer")
+low_hp_mod = 0.5
+metadata/_custom_type_script = "uid://bvted7bsjs0so"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DamageTakerComponent"]
+scale = Vector2(0.9, 0.9)
+polygon = PackedVector2Array(252, 11, 247, 75, 221, 108, 137, 115, 92, 95, 39, 119, -33, 121, -54, 112, -86, 88, -98, 67, -135, 69, -136, -13, -97, -10, -96, -33, -87, -46, -38, -49, -67, -64, -76, -73, -78, -90, 4, -90, -13, -106, 7, -119, 36, -119, 65, -104, 88, -55, 119, -70, 112, -90, 128, -99, 161, -101, 185, -94, 188, -54, 216, -52, 238, -41)
+
+[node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_0eoy5")
+animation = &"death"
+autoplay = "idle"
+
+[node name="EnemyShootingComponent" type="Node2D" parent="." node_paths=PackedStringArray("shoot_timer")]
+script = ExtResource("4_rydc2")
+shoot_timer = NodePath("shoot_timer")
+shoot_time = 0.11
+bullets_per_shot = 3
+bullet_speed = 250.0
+shot_spread_angle = 30.0
+bullet_scene = ExtResource("5_wvdgt")
+shooting_type = 1
+metadata/_custom_type_script = "uid://ciqomtl00c0ad"
+
+[node name="shoot_timer" type="Timer" parent="EnemyShootingComponent"]
+unique_name_in_owner = true
+
+[node name="debug_label_state" type="Label" parent="."]
+offset_left = -37.0
+offset_top = -177.0
+offset_right = 89.0
+offset_bottom = -142.0
+theme_override_font_sizes/font_size = 16
+metadata/_edit_use_anchors_ = true
+
+[node name="debug_label_health" type="Label" parent="."]
+offset_left = -38.0
+offset_top = -152.0
+offset_right = 88.0
+offset_bottom = -117.0
+theme_override_font_sizes/font_size = 16
+metadata/_edit_use_anchors_ = true
+
+[node name="ScreenNotifierContainer" type="Node2D" parent="."]
+
+[node name="initial_onscreen_notifier" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0.188235, 1, 1, 1)
+position = Vector2(256, 18.5)
+scale = Vector2(2.05, 10.25)
+
+[node name="screen_notifier_bottom" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
+unique_name_in_owner = true
+position = Vector2(39.5, 192)
+scale = Vector2(31.15, 1)
+
+[node name="screen_notifier_top" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
+unique_name_in_owner = true
+position = Vector2(44, -183)
+scale = Vector2(30.4, 1)
+
+[node name="screen_notifier_left" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
+unique_name_in_owner = true
+position = Vector2(-269, 8)
+scale = Vector2(1, 21.9)
+
+[node name="screen_notifier_right" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
+unique_name_in_owner = true
+position = Vector2(296, 4.49998)
+scale = Vector2(1.1, 20.55)
+
+[node name="MarkersContainer" type="Node2D" parent="."]
+
+[node name="marker_cannon_1" type="Marker2D" parent="MarkersContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-52, -69)
+gizmo_extents = 108.5
+
+[node name="marker_cannon_2" type="Marker2D" parent="MarkersContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(10, -94)
+gizmo_extents = 108.5
+
+[node name="marker_cannon_3" type="Marker2D" parent="MarkersContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(110, -73)
+gizmo_extents = 108.5
+
+[node name="marker_door" type="Marker2D" parent="MarkersContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(82, 18)
+gizmo_extents = 108.5
+
+[node name="thruster_attack_area" type="Area2D" parent="."]
+collision_layer = 16
+
+[node name="thruster_sprite" type="AnimatedSprite2D" parent="thruster_attack_area"]
+unique_name_in_owner = true
+position = Vector2(-597, 28)
+sprite_frames = SubResource("SpriteFrames_rydc2")
+animation = &"attack"
+autoplay = "none"
+frame = 2
+frame_progress = 0.712638
+
+[node name="thruster_collider" type="CollisionShape2D" parent="thruster_attack_area"]
+position = Vector2(-618.5, 25.5)
+shape = SubResource("RectangleShape2D_wvdgt")
+debug_color = Color(0.903406, 0.267478, 0.395717, 0.42)
+
+[node name="groupie_timer" type="Timer" parent="."]
+
+[node name="screen_timer" type="Timer" parent="."]

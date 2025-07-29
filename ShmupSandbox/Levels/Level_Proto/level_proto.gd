@@ -8,6 +8,8 @@ var events_queue: Array[SpawnEvent]
 func _init() -> void:
 	_create_spawn_schedule()
 
+###### NOTE: Use this to test different enemy spawn scheduling
+
 func _create_spawn_schedule() -> void:
 	spawn_schedule = [
 		# Wave 1
@@ -89,7 +91,14 @@ func _create_spawn_schedule() -> void:
 		SpawnEvent.new(58.2, SceneManager.soul_carrier_PS, Vector2(1100, 175)),
 		SpawnEvent.new(62.0, SceneManager.skulljack_formation_bravo_PS, Vector2(1000, 400)),
 		SpawnEvent.new(63.2, SceneManager.soul_carrier_PS, Vector2(1100, 380)),
-		SpawnEvent.new(65.0, SceneManager.skulljack_formation_charlie_PS, Vector2(1000, 270))
+		SpawnEvent.new(65.0, SceneManager.skulljack_formation_charlie_PS, Vector2(1000, 270)),
+
+		## Boss leadup
+		SpawnEvent.new(70.0, SceneManager.doomboard_PS, Vector2(1100, 350)),
+		SpawnEvent.new(75.0, SceneManager.doomboard_PS, Vector2(1100, 120)),
+
+		## Boss!
+		SpawnEvent.new(82.0, SceneManager.boss_tourmageddon_PS, Vector2(1300, 200))
 ]
 
 

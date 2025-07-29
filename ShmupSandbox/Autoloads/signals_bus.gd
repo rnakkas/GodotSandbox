@@ -67,7 +67,7 @@ signal shot_limit_updated_event(shot_limit: int)
 ################################################
 # Spawning enemies
 ################################################
-# Use for general enemy spawning
+## Use for general enemy spawning
 @warning_ignore("unused_signal")
 signal spawn_enemy_event(enemy_scene: PackedScene, sp: Vector2, path_name: String)
 
@@ -122,3 +122,12 @@ signal spawn_enemy_crasher_2_event(path: Path2D)
 ################################################
 @warning_ignore("unused_signal")
 signal enemy_shooting_event(bullets_list: Array[Area2D])
+
+################################################
+# Bosses
+################################################
+@warning_ignore("unused_signal")
+signal boss_sequence_started_event(boss: Node)
+
+@warning_ignore("unused_signal")
+signal boss_sequence_ended_event(boss: Node, boss_killed: bool, kill_score: int)

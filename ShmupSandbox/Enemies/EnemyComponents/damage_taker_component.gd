@@ -1,15 +1,18 @@
 class_name DamageTakerComponent extends Area2D
 
-# Default health, change this per enemy
-@export var max_hp : int = 1 
+## Default health, change this per enemy
+@export var max_hp: int = 1
 
-# Timer for damage over time, i.e. for player bombs. Can be null for enemies that die in one hit
-@export var dot_timer : Timer 
+## Timer for damage over time, i.e. for player bombs. Can be null for enemies that die in one hit
+@export var dot_timer: Timer
 
-const dot_time : float = 0.35
+## Low hp modifier. Multiplier which determines the low hp threshold for cetain animations and behaviours
+@export var low_hp_mod: float = 0.333
 
-var hp : int
-var low_hp_threshold : int
+const dot_time: float = 0.35
+
+var hp: int
+var low_hp_threshold: int
 var damage_from_bomb: int
 
 signal damage_taken()
@@ -20,7 +23,7 @@ func _ready() -> void:
 	_connect_to_own_signals()
 	
 	hp = max_hp
-	low_hp_threshold = round((max_hp as float)/3)
+	low_hp_threshold = round((max_hp as float) * low_hp_mod)
 
 	# Default collision layer and mask values
 	collision_layer = 8 # Layer name: enemy
@@ -41,8 +44,8 @@ func _connect_to_own_signals() -> void:
 
 
 # Getting hit by player's bullets or bombs
-func _on_area_entered(area:Area2D) -> void:
-	if area is PlayerBullet: 
+func _on_area_entered(area: Area2D) -> void:
+	if area is PlayerBullet:
 		if hp <= 0: # Do nothing if hp is already zero
 			return
 		hp -= area.damage
@@ -59,7 +62,7 @@ func _on_area_entered(area:Area2D) -> void:
 
 
 # When player's bomb ends
-func _on_area_exited(area:Area2D) -> void:
+func _on_area_exited(area: Area2D) -> void:
 	if area is BombFuzz:
 		if dot_timer:
 			dot_timer.stop()
@@ -74,7 +77,7 @@ func _on_dot_timer_timeout() -> void:
 
 
 # Getting hit by the player
-func _on_body_entered(body:Node2D) -> void:
+func _on_body_entered(body: Node2D) -> void:
 	if body is PlayerCat:
 		if body.is_dead: # Don't collide with dead player
 			return
