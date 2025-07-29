@@ -1,53 +1,60 @@
 class_name PickupScore extends Area2D
 
-@onready var collider_level_1 : CollisionShape2D = $collider_level_1
-@onready var collider_level_2 : CollisionShape2D = $collider_level_2
-@onready var collider_level_3 : CollisionShape2D = $collider_level_3
-@onready var collider_level_4 : CollisionShape2D = $collider_level_4
+@onready var collider_level_1: CollisionShape2D = $collider_level_1
+@onready var collider_level_2: CollisionShape2D = $collider_level_2
+@onready var collider_level_3: CollisionShape2D = $collider_level_3
 
-@onready var items_container : Node2D = $sprites_container
+@onready var level_3_bullet_clear_area: Area2D = $level_3_bullet_clear_area
 
-@onready var item_level_1 : AnimatedSprite2D = %sprite_level_1
-@onready var item_level_2 : AnimatedSprite2D = %sprite_level_2
-@onready var item_level_3 : AnimatedSprite2D = %sprite_level_3
-@onready var item_level_4 : AnimatedSprite2D = %sprite_level_4
+@onready var items_container: Node2D = $sprites_container
 
-@onready var score_label : Label = %score_label
+@onready var item_level_1: AnimatedSprite2D = %sprite_level_1
+@onready var item_level_2: AnimatedSprite2D = %sprite_level_2
+@onready var item_level_3: AnimatedSprite2D = %sprite_level_3
 
-@onready var move_timer : Timer = $move_timer
+@onready var score_label: Label = %score_label
 
-const min_level : int = 1
-const max_level : int = 4
-const score_level_1 : int = 500
-const score_level_2 : int = 1000
-const score_level_3 : int = 2000
-const score_level_4 : int = 4000
+@onready var move_timer: Timer = $move_timer
 
-@export var base_speed : float = 55.0
-@export var spawn_speed : float = 350.0
-@export var deceleration : float = 900.0
-@export_range(min_level,max_level) var level : int = 1
-@export var move_time : float = 0.1
+const min_level: int = 1
+const max_level: int = 3
+const score_level_1: int = 500
+const score_level_2: int = 1000
+const score_level_3: int = 3000
 
-var current_item : AnimatedSprite2D
-var current_score : int
-var item_collider_map : Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
-var viewport_size : Vector2
-var direction : Vector2
-var speed : float
-var velocity : Vector2
+@export var base_speed: float = 25.0
+@export var spawn_speed: float = 350.0
+@export var deceleration: float = 900.0
+@export_range(min_level, max_level) var level: int = 1
+@export var move_time: float = 0.1
+@export var level_2_fragment_thresh: int = 3
+@export var level_3_fragment_thresh: int = 10
+
+var current_item: AnimatedSprite2D
+var current_score: int
+var item_collider_map: Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
+var viewport_size: Vector2
+var direction: Vector2
+var speed: float
+var velocity: Vector2
+var fragment_count: int
+var has_upgraded: bool
 
 
-## TODO Score item pickup:
-	# Need spritesheets for score item levels 1-4
+## TODO: Score item pickup:
+	# Need spritesheets for score item levels 1-3
 
 ################################################
-#NOTE: Ready and its helper funcs
+# Ready and its helper funcs
 ################################################
 func _ready() -> void:
 	viewport_size = get_viewport_rect().size
 	score_label.visible = false
 	speed = spawn_speed
+
+	# Disable bullet clear area when initially on screen
+	level_3_bullet_clear_area.set_deferred("monitorable", false)
+	level_3_bullet_clear_area.set_deferred("monitoring", false)
 
 	_create_item_collider_map()
 	_set_current_item()
@@ -56,11 +63,6 @@ func _ready() -> void:
 	
 	Helper.set_timer_properties(move_timer, true, move_time)
 	move_timer.start()
-	
-	# Play spawn animation then play idle
-	current_item.play("spawn")
-	await current_item.animation_finished
-	current_item.play("idle")
 
 
 ################################################
@@ -68,10 +70,9 @@ func _ready() -> void:
 ################################################
 func _create_item_collider_map() -> void:
 	item_collider_map = {
-	item_level_1 : collider_level_1,
-	item_level_2 : collider_level_2,
-	item_level_3 : collider_level_3,
-	item_level_4 : collider_level_4,
+	item_level_1: collider_level_1,
+	item_level_2: collider_level_2,
+	item_level_3: collider_level_3
 }
 
 
@@ -90,14 +91,11 @@ func _set_current_item() -> void:
 		3:
 			current_item = item_level_3
 			current_score = score_level_3
-		4:
-			current_item = item_level_4
-			current_score = score_level_4
 		_:
 			push_error("invalid item level, level should be between 1 to 4")
 
 	# Enable sprite and collider for current item level, disable all others
-	for item : AnimatedSprite2D in item_collider_map.keys():
+	for item: AnimatedSprite2D in item_collider_map.keys():
 		if item == current_item:
 			item.visible = true
 			item_collider_map[item].set_deferred("disabled", false)
@@ -105,6 +103,11 @@ func _set_current_item() -> void:
 			item.visible = false
 			item.stop()
 			item_collider_map[item].set_deferred("disabled", true)
+	
+	if level != 1:
+		current_item.play("upgrade")
+		await current_item.animation_finished
+		current_item.play("idle")
 
 
 ################################################
@@ -114,20 +117,37 @@ func _connect_to_signals() -> void:
 	SignalsBus.player_death_event.connect(_on_player_death_event)
 
 func _on_player_death_event() -> void:
-	# Despawn on player death
-	# TODO: Despawn animations
+	# Turn off collision detectino
+	set_deferred("monitorable", false)
+	set_deferred("monitoring", false)
+	
+	# Despawn animation
+	current_item.play("despawn")
+	await current_item.animation_finished
+
 	call_deferred("queue_free")
 
 
 ################################################
-#NOTE: Process, limit movement to screen bounds
+# Process, limit movement to screen bounds
 ################################################
 func _process(_delta: float) -> void:
+	_upgrade_item()
 	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position, false, true)
-
+	
+func _upgrade_item() -> void:
+	if fragment_count >= level_2_fragment_thresh && fragment_count < level_3_fragment_thresh:
+		if level == 1:
+			level = clamp(level + 1, min_level, max_level)
+			_set_current_item()
+	elif fragment_count >= level_3_fragment_thresh:
+		if level == 2:
+			level = clamp(level + 1, min_level, max_level)
+			_set_current_item()
+		
 
 ################################################
-#NOTE: Physics process
+# Movement and velocity logic
 ################################################
 func _physics_process(delta: float) -> void:
 	if direction == Vector2.LEFT:
@@ -139,7 +159,7 @@ func _physics_process(delta: float) -> void:
 
 
 ################################################
-#NOTE: Signal connection, when item leaves screen, it's despawned
+# Signal connection, when item leaves screen, it's despawned
 ################################################
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	call_deferred("queue_free")
@@ -163,7 +183,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 		# Play collect animations for sprite and label (tween)
 		current_item.play("collect")
-		var tween : Tween = _play_collect_animation_for_label()
+		var tween: Tween = _play_collect_animation_for_label()
 
 		# Send global signal that item was picked up
 		SignalsBus.score_increased_event.emit(current_score)
@@ -183,7 +203,7 @@ func _play_collect_animation_for_label() -> Tween:
 
 	# Tween the label when powerup collected
 	var tween = get_tree().create_tween()
-	var final_position : Vector2 = Vector2(score_label.position.x, score_label.position.y - 35.0)
+	var final_position: Vector2 = Vector2(score_label.position.x, score_label.position.y - 35.0)
 
 	tween.set_parallel(true)
 
@@ -210,13 +230,11 @@ func _play_collect_animation_for_label() -> Tween:
 #NOTE: Signal connection:
 	# logic for when soul fragment hits the score item
 ################################################
-func _on_area_entered(area:Area2D) -> void:
+func _on_area_entered(area: Area2D) -> void:
 	if area is ScoreFragment:
 		# Only accept soul fragment that is meant for this instance of score item
 		if area.nearest_non_maxed_score_item == self && level < max_level:
-			# Clamp level between 1 and 4
-			level = clamp(level+1, min_level, max_level)
-			_set_current_item()
+			fragment_count += 1
 
 
 ################################################
