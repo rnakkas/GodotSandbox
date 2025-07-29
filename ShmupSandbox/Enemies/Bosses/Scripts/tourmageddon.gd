@@ -1,6 +1,5 @@
 class_name BossTourmageddon extends Node2D
 
-##TODO:
 # Boss behaviour:
 	# Has very high health (similar to other bosses) -> max_hp: 2000
 	# Slowly fly in from the right
@@ -29,10 +28,12 @@ class_name BossTourmageddon extends Node2D
 #
 # Signals:
 	# When boss spawns, send a global signal that boss sequence has started - DONE
-	# When boss dies or has fled, send a global signal that boss sequence has ended, true for boss killed, false for boss not killed, and kill score
-	# Use kill_score for stage clear boss kill bonus
-		# Kill bonus will display the boss name, for example "Tourmageddon Kill Bonus: 60,000"
-	# Boss will be spawned as part of enemy schedule, using the spawn_enemy_event() signal - DONE
+	# When boss dies or has fled, send a global signal that boss sequence has ended, 
+	# 	true for boss killed, false for boss not killed, and kill score - DONE
+#
+# Use kill_score for stage clear boss kill bonus
+# Kill bonus will display the boss name, for example "Tourmageddon Kill Bonus: 60,000"
+# Boss will be spawned as part of enemy schedule, using the spawn_enemy_event() signal - DONE
 
 @onready var damage_taker_component: DamageTakerComponent = $DamageTakerComponent
 @onready var sprite: AnimatedSprite2D = $sprite
@@ -83,6 +84,7 @@ class_name BossTourmageddon extends Node2D
 @export var phase_2_groupie_time: float = 4.0
 @export var groupie_list: Array[PackedScene] = []
 
+## Boss phases
 enum state {
 	SPAWN,
 	PHASE_1,
@@ -99,21 +101,26 @@ var viewport_size: Vector2
 var shot_count: int
 var dir_to_offscreen: Vector2
 
+######################################################
+# Ready
+######################################################
 func _ready() -> void:
 	_connect_to_signals()
-	
 	current_state = state.SPAWN
 	speed = offscreen_speed
 	viewport_size = get_viewport_rect().size
-	
-
 	enemy_shooting_component.position = marker_cannon_1.position
 
+	# Don't do thruster attack
 	_thruster_attack(false)
 
+	# Set timer properties
 	Helper.set_timer_properties(groupie_timer, false, phase_2_groupie_time)
 	Helper.set_timer_properties(screen_timer, true, screen_time)
 
+	# List of enemies that fly out to attack the player in phase 2
+	# TODO: Currently using existing enemies:
+		# Create resprites of skulljack and boomer enemies
 	groupie_list = [
 		SceneManager.skulljack_PS,
 		SceneManager.boomer_PS,
@@ -127,6 +134,9 @@ func _ready() -> void:
 	_debug_update()
 
 
+######################################################
+# Connect to all the signals
+######################################################
 func _connect_to_signals() -> void:
 	damage_taker_component.damage_taken.connect(self._on_damage_taker_component_damage_taken)
 	damage_taker_component.low_health.connect(self._on_damage_taker_component_low_health)
@@ -145,7 +155,15 @@ func _connect_to_signals() -> void:
 	groupie_timer.timeout.connect(self._on_groupie_timer_timeout)
 	screen_timer.timeout.connect(self._on_screen_timer_timeout)
 
+#
+#
+######################################################
+# Main behaviour logic for different phases
+######################################################
+#
+#
 
+## When boss first comes onto the screen
 func _initial_onscreen_notifier_screen_entered() -> void:
 	current_state = state.PHASE_1
 	speed = onscreen_speed_y
@@ -158,11 +176,14 @@ func _initial_onscreen_notifier_screen_entered() -> void:
 	
 	_debug_update()
 
+## When boss exits the screen after fleeing
 func _initial_onscreen_notifier_screen_exited() -> void:
 	SignalsBus.boss_sequence_ended_event.emit(false, 0)
 	call_deferred("queue_free")
 
-
+## When boss reaches the bottom of the screen.
+	## For phase 1, stop for a bit, then rapidly move left to crush player.
+	## For phase 2. no stopping, keep moving up and down
 func _screen_bottom_reached() -> void:
 	match current_state:
 		state.PHASE_1:
@@ -175,6 +196,9 @@ func _screen_bottom_reached() -> void:
 			if groupie_timer.is_stopped():
 				groupie_timer.start()
 
+## When boss reaches the left of the screen.
+	## For phase 1, stop for a bit, play the thruster attack, then move back to the right.
+	## For phase 2, if the phase transition happens during this phase, complete this behaviour then go to phase 2 behaviour.
 func _screen_left_reached() -> void:
 	match current_state:
 		state.PHASE_1, state.PHASE_2:
@@ -186,6 +210,9 @@ func _screen_left_reached() -> void:
 			speed = onscreen_speed_x * 0.3
 			direction = Vector2.RIGHT
 
+## When boss reaches the right of the screen.
+	## For phase 1, stop for a bit, stop the thruster attack, shoot,  then fly either up or down based on screen position
+	## If phase transition to phase 2 happens here, complete this behaviour and then go to phase 2. Also start the groupie timer.
 func _screen_right_reached() -> void:
 	var dist_to_top: float = self.global_position.y
 	var dist_to_bot: float = viewport_size.y - self.global_position.y
@@ -215,6 +242,9 @@ func _screen_right_reached() -> void:
 				if groupie_timer.is_stopped():
 					groupie_timer.start()
 	
+## When boss reaches top of the screen.
+	## If phase 1, stop for a bit, then move left to crush player
+	## If phase 2, keep moving up and down
 func _screen_top_reached() -> void:
 	match current_state:
 		state.PHASE_1:
@@ -228,6 +258,8 @@ func _screen_top_reached() -> void:
 				groupie_timer.start()
 
 
+## Shooting behaviour.
+	## Shoot from each of the muzzles in sequence
 func _on_shoot_timer_timeout() -> void:
 	shot_count += 1
 	if shot_count >= shot_limit:
@@ -248,7 +280,24 @@ func _on_shoot_timer_timeout() -> void:
 		3, 6:
 			enemy_shooting_component.position = marker_cannon_1.position
 	
+## For phase 2, groupies will fly out from the door towards player
+func _on_groupie_timer_timeout() -> void:
+	for groupie: PackedScene in groupie_list:
+		await get_tree().create_timer(0.5).timeout
+		SignalsBus.spawn_enemy_event.emit(groupie, marker_door.global_position, "")
 
+## When boss timer runs out, boss will flee
+func _on_screen_timer_timeout() -> void:
+	current_state = state.FLEE
+	dir_to_offscreen = self.global_position.direction_to(Vector2(0, viewport_size.y / 2))
+	direction = dir_to_offscreen
+	shoot_timer.stop()
+	groupie_timer.stop()
+
+	_debug_update()
+
+
+## Helper function for thruster attack
 func _thruster_attack(can_attack: bool) -> void:
 	if can_attack:
 		thruster_sprite.play("attack")
@@ -259,28 +308,12 @@ func _thruster_attack(can_attack: bool) -> void:
 	thruster_attack_area.set_deferred("monitorable", can_attack)
 	thruster_attack_area.set_deferred("monitoring", can_attack)
 
-
-func _on_groupie_timer_timeout() -> void:
-	for groupie: PackedScene in groupie_list:
-		await get_tree().create_timer(0.5).timeout
-		SignalsBus.spawn_enemy_event.emit(groupie, marker_door.global_position, "")
-
-
-func _on_screen_timer_timeout() -> void:
-	current_state = state.FLEE
-	dir_to_offscreen = self.global_position.direction_to(Vector2(0, viewport_size.y/2))
-	direction = dir_to_offscreen
-	shoot_timer.stop()
-	groupie_timer.stop()
-
-	_debug_update()
-
-
-
+## When the boss is fleeing, set the direction to the offscreen towards left of screen
 func _process(_delta: float) -> void:
 	if current_state == state.FLEE:
 		direction = dir_to_offscreen
-	
+
+## Movement and velocity logic
 func _physics_process(delta: float) -> void:
 	match current_state:
 		state.SPAWN:
@@ -312,16 +345,20 @@ func _on_damage_taker_component_low_health() -> void:
 	_debug_update()
 
 func _on_damage_taker_component_health_depleted() -> void:
-	sprite.play("death")
+	shoot_timer.stop()
+	groupie_timer.stop()
 	
+	sprite.play("death")
+
 	current_state = state.DEATH
 	direction = Vector2.DOWN
+	speed = onscreen_speed_x * 0.5
 	
 	# Signal to spawn score fragments on death
 	SignalsBus.spawn_score_fragment_event.emit(self.global_position)
 
 	# Signal that boss was killed
-	SignalsBus.boss_sequence_ended_event.emit(true, kill_score)
+	SignalsBus.boss_sequence_ended_event.emit(self, true, kill_score)
 
 	await sprite.animation_finished
 

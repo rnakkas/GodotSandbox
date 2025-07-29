@@ -72,6 +72,24 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx0fg")
+}, {
+"duration": 1.0,
+"texture": null
 }],
 "loop": false,
 "name": &"death",
@@ -152,12 +170,13 @@ low_hp_mod = 0.5
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DamageTakerComponent"]
+scale = Vector2(0.9, 0.9)
 polygon = PackedVector2Array(252, 11, 247, 75, 221, 108, 137, 115, 92, 95, 39, 119, -33, 121, -54, 112, -86, 88, -98, 67, -135, 69, -136, -13, -97, -10, -96, -33, -87, -46, -38, -49, -67, -64, -76, -73, -78, -90, 4, -90, -13, -106, 7, -119, 36, -119, 65, -104, 88, -55, 119, -70, 112, -90, 128, -99, 161, -101, 185, -94, 188, -54, 216, -52, 238, -41)
 
 [node name="dot_timer" type="Timer" parent="DamageTakerComponent"]
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.85, 0.85)
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_0eoy5")
 animation = &"death"
 autoplay = "idle"
@@ -197,7 +216,7 @@ metadata/_edit_use_anchors_ = true
 [node name="initial_onscreen_notifier" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
 unique_name_in_owner = true
 self_modulate = Color(0.188235, 1, 1, 1)
-position = Vector2(275, 18.5)
+position = Vector2(256, 18.5)
 scale = Vector2(2.05, 10.25)
 
 [node name="screen_notifier_bottom" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
@@ -217,7 +236,7 @@ scale = Vector2(1, 21.9)
 
 [node name="screen_notifier_right" type="VisibleOnScreenNotifier2D" parent="ScreenNotifierContainer"]
 unique_name_in_owner = true
-position = Vector2(311, 4.49998)
+position = Vector2(296, 4.49998)
 scale = Vector2(1.1, 20.55)
 
 [node name="MarkersContainer" type="Node2D" parent="."]
@@ -225,25 +244,25 @@ scale = Vector2(1.1, 20.55)
 [node name="marker_cannon_1" type="Marker2D" parent="MarkersContainer"]
 unique_name_in_owner = true
 self_modulate = Color(0, 0, 0, 1)
-position = Vector2(-62, -76)
+position = Vector2(-52, -69)
 gizmo_extents = 108.5
 
 [node name="marker_cannon_2" type="Marker2D" parent="MarkersContainer"]
 unique_name_in_owner = true
 self_modulate = Color(0, 0, 0, 1)
-position = Vector2(9, -104)
+position = Vector2(10, -94)
 gizmo_extents = 108.5
 
 [node name="marker_cannon_3" type="Marker2D" parent="MarkersContainer"]
 unique_name_in_owner = true
 self_modulate = Color(0, 0, 0, 1)
-position = Vector2(125, -82)
+position = Vector2(110, -73)
 gizmo_extents = 108.5
 
 [node name="marker_door" type="Marker2D" parent="MarkersContainer"]
 unique_name_in_owner = true
 self_modulate = Color(0, 0, 0, 1)
-position = Vector2(85, 18)
+position = Vector2(82, 18)
 gizmo_extents = 108.5
 
 [node name="thruster_attack_area" type="Area2D" parent="."]
@@ -251,7 +270,7 @@ collision_layer = 16
 
 [node name="thruster_sprite" type="AnimatedSprite2D" parent="thruster_attack_area"]
 unique_name_in_owner = true
-position = Vector2(-611, 28)
+position = Vector2(-597, 28)
 sprite_frames = SubResource("SpriteFrames_rydc2")
 animation = &"attack"
 autoplay = "none"
