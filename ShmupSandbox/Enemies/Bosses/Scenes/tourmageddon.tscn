@@ -138,12 +138,15 @@ size = Vector2(969, 75)
 
 [node name="tourmageddon" type="Node2D"]
 script = ExtResource("1_h5e13")
+shot_limit = 8
+phase_2_bullets_per_shot = 4
+phase_2_bullet_spread = 40.0
 
 [node name="DamageTakerComponent" type="Area2D" parent="." node_paths=PackedStringArray("dot_timer")]
 collision_layer = 8
 collision_mask = 67
 script = ExtResource("2_ott6q")
-max_hp = 30
+max_hp = 2000
 dot_timer = NodePath("dot_timer")
 low_hp_mod = 0.5
 metadata/_custom_type_script = "uid://bvted7bsjs0so"
@@ -179,6 +182,7 @@ offset_top = -177.0
 offset_right = 89.0
 offset_bottom = -142.0
 theme_override_font_sizes/font_size = 16
+metadata/_edit_use_anchors_ = true
 
 [node name="debug_label_health" type="Label" parent="."]
 offset_left = -38.0
@@ -186,6 +190,7 @@ offset_top = -152.0
 offset_right = 88.0
 offset_bottom = -117.0
 theme_override_font_sizes/font_size = 16
+metadata/_edit_use_anchors_ = true
 
 [node name="ScreenNotifierContainer" type="Node2D" parent="."]
 
@@ -259,3 +264,5 @@ shape = SubResource("RectangleShape2D_wvdgt")
 debug_color = Color(0.903406, 0.267478, 0.395717, 0.42)
 
 [node name="groupie_timer" type="Timer" parent="."]
+
+[node name="screen_timer" type="Timer" parent="."]

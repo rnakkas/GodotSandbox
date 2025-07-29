@@ -2,10 +2,10 @@ class_name BossTourmageddon extends Node2D
 
 ##TODO:
 # Boss behaviour:
-	# Has very high health (similar to other bosses)
+	# Has very high health (similar to other bosses) -> max_hp: 2000
 	# Slowly fly in from the right
 	# Stay on the right side of the screen
-	# Behaviour 1:
+	# Behaviour 1: -> PHASE_1
 		# Move vertically down
 		# Slow to a stop near bottom of screen
 		# Shoot from the roof cannons for a set amount of time
@@ -15,28 +15,33 @@ class_name BossTourmageddon extends Node2D
 		# Shoot from the roof cannons for a set amount of time
 		# Rapidly move to the right of the screen to try and crush the player, then fly back to right of screen
 		# Repeat
-	# Behaviour 2:
+	# Behaviour 2: -> PHASE_2
 		# Similar movements as behaviour 1 but no stopping at the top and bottom, constant moving up and down
 		# Shoot from the roof cannons at a steady pace
 		# Also spawn skulljacks, screamers and boomers from the door
 		# No rapid move to the left to try and crush the player
-	# Spawn, play behaviour 1
-	# After health drops below a certain percentage, start behaviour 2
-	# Behaviour 2 can also start after a certain amount of time has passed
+	# Spawn, then go to PHASE_1
+	# After health drops below a certain percentage, go to PHASE_2
+	# PHASE_2 can also start after a certain amount of time has passed
 	# Fly off to the left of the screen to go off screen and despawn after screen time (~10 mins) has elapsed
 		# This is to keep the game going even if the player fails to kill the boss
 	# Once boss is killed or flies off screen, send a global signal that boss sequence has ended.
 #
 # Signals:
 	# When boss spawns, send a global signal that boss sequence has started - DONE
-	# When boss dies or has fled, send a global signal that boss sequesnce has ended
+	# When boss dies or has fled, send a global signal that boss sequence has ended, true for boss killed, false for boss not killed, and kill score
+	# Use kill_score for stage clear boss kill bonus
+		# Kill bonus will display the boss name, for example "Tourmageddon Kill Bonus: 60,000"
 	# Boss will be spawned as part of enemy schedule, using the spawn_enemy_event() signal - DONE
 
 @onready var damage_taker_component: DamageTakerComponent = $DamageTakerComponent
 @onready var sprite: AnimatedSprite2D = $sprite
 @onready var enemy_shooting_component: EnemyShootingComponent = $EnemyShootingComponent
+
+# Timers
 @onready var shoot_timer: Timer = %shoot_timer
 @onready var groupie_timer: Timer = $groupie_timer
+@onready var screen_timer: Timer = $screen_timer
 
 # Screen notifiers
 @onready var initial_onscreen_notifier: VisibleOnScreenNotifier2D = %initial_onscreen_notifier
@@ -92,6 +97,7 @@ var direction: Vector2 = Vector2.LEFT
 var velocity: Vector2
 var viewport_size: Vector2
 var shot_count: int
+var dir_to_offscreen: Vector2
 
 func _ready() -> void:
 	_connect_to_signals()
@@ -99,12 +105,14 @@ func _ready() -> void:
 	current_state = state.SPAWN
 	speed = offscreen_speed
 	viewport_size = get_viewport_rect().size
+	
 
 	enemy_shooting_component.position = marker_cannon_1.position
 
 	_thruster_attack(false)
 
 	Helper.set_timer_properties(groupie_timer, false, phase_2_groupie_time)
+	Helper.set_timer_properties(screen_timer, true, screen_time)
 
 	groupie_list = [
 		SceneManager.skulljack_PS,
@@ -126,6 +134,7 @@ func _connect_to_signals() -> void:
 
 	# Screen notifiers
 	initial_onscreen_notifier.screen_entered.connect(self._initial_onscreen_notifier_screen_entered)
+	initial_onscreen_notifier.screen_exited.connect(self._initial_onscreen_notifier_screen_exited)
 	screen_notifier_bottom.screen_exited.connect(self._screen_bottom_reached)
 	screen_notifier_top.screen_exited.connect(self._screen_top_reached)
 	screen_notifier_left.screen_exited.connect(self._screen_left_reached)
@@ -134,6 +143,7 @@ func _connect_to_signals() -> void:
 	# Timer
 	shoot_timer.timeout.connect(self._on_shoot_timer_timeout)
 	groupie_timer.timeout.connect(self._on_groupie_timer_timeout)
+	screen_timer.timeout.connect(self._on_screen_timer_timeout)
 
 
 func _initial_onscreen_notifier_screen_entered() -> void:
@@ -143,10 +153,15 @@ func _initial_onscreen_notifier_screen_entered() -> void:
 
 	await get_tree().create_timer(hang_time).timeout
 	shoot_timer.start()
+	screen_timer.start()
 	direction = Vector2.DOWN
 	
 	_debug_update()
-	
+
+func _initial_onscreen_notifier_screen_exited() -> void:
+	SignalsBus.boss_sequence_ended_event.emit(false, 0)
+	call_deferred("queue_free")
+
 
 func _screen_bottom_reached() -> void:
 	match current_state:
@@ -250,12 +265,27 @@ func _on_groupie_timer_timeout() -> void:
 		await get_tree().create_timer(0.5).timeout
 		SignalsBus.spawn_enemy_event.emit(groupie, marker_door.global_position, "")
 
+
+func _on_screen_timer_timeout() -> void:
+	current_state = state.FLEE
+	dir_to_offscreen = self.global_position.direction_to(Vector2(0, viewport_size.y/2))
+	direction = dir_to_offscreen
+	shoot_timer.stop()
+	groupie_timer.stop()
+
+	_debug_update()
+
+
+
+func _process(_delta: float) -> void:
+	if current_state == state.FLEE:
+		direction = dir_to_offscreen
 	
 func _physics_process(delta: float) -> void:
 	match current_state:
 		state.SPAWN:
 			velocity = speed * direction
-		state.PHASE_1, state.PHASE_2:
+		state.PHASE_1, state.PHASE_2, state.FLEE:
 			if direction != Vector2.ZERO:
 				velocity = velocity.move_toward(speed * direction, acceleration * delta)
 			else:
@@ -286,11 +316,12 @@ func _on_damage_taker_component_health_depleted() -> void:
 	
 	current_state = state.DEATH
 	direction = Vector2.DOWN
-
-	SignalsBus.score_increased_event.emit(kill_score)
 	
 	# Signal to spawn score fragments on death
 	SignalsBus.spawn_score_fragment_event.emit(self.global_position)
+
+	# Signal that boss was killed
+	SignalsBus.boss_sequence_ended_event.emit(true, kill_score)
 
 	await sprite.animation_finished
 
