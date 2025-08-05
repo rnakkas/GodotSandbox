@@ -28,7 +28,7 @@ const score_level_3: int = 3000
 @export_range(min_level, max_level) var level: int = 1
 @export var move_time: float = 0.1
 @export var level_2_fragment_thresh: int = 3
-@export var level_3_fragment_thresh: int = 10
+@export var level_3_fragment_thresh: int = 9
 
 var current_item: AnimatedSprite2D
 var current_score: int
@@ -42,7 +42,7 @@ var has_upgraded: bool
 
 
 ## TODO: Score item pickup:
-	# Need spritesheets for score item levels 1-3
+	# Create the bullet clear zone on level 3 pickup
 
 ################################################
 # Ready and its helper funcs
@@ -106,12 +106,23 @@ func _set_current_item() -> void:
 	
 	if level != 1:
 		current_item.play("upgrade")
-		await current_item.animation_finished
-		current_item.play("idle")
+		await get_tree().create_timer(0.5).timeout
+		if current_item.animation != "collect":
+			current_item.play("idle")
+
+func _upgrade_item() -> void:
+	if fragment_count >= level_2_fragment_thresh && fragment_count < level_3_fragment_thresh:
+		if level == 1:
+			level = clamp(level + 1, min_level, max_level)
+			_set_current_item()
+	elif fragment_count >= level_3_fragment_thresh:
+		if level == 2:
+			level = clamp(level + 1, min_level, max_level)
+			_set_current_item()
 
 
 ################################################
-#NOTE: Signal connections and funcs
+# Signal connections and funcs
 ################################################
 func _connect_to_signals() -> void:
 	SignalsBus.player_death_event.connect(_on_player_death_event)
@@ -132,19 +143,8 @@ func _on_player_death_event() -> void:
 # Process, limit movement to screen bounds
 ################################################
 func _process(_delta: float) -> void:
-	_upgrade_item()
 	position = Helper.clamp_movement_to_screen_bounds(viewport_size, position, false, true)
 	
-func _upgrade_item() -> void:
-	if fragment_count >= level_2_fragment_thresh && fragment_count < level_3_fragment_thresh:
-		if level == 1:
-			level = clamp(level + 1, min_level, max_level)
-			_set_current_item()
-	elif fragment_count >= level_3_fragment_thresh:
-		if level == 2:
-			level = clamp(level + 1, min_level, max_level)
-			_set_current_item()
-		
 
 ################################################
 # Movement and velocity logic
@@ -175,7 +175,7 @@ func _on_body_entered(body: Node2D) -> void:
 			return
 
 		# Disable area to prevent further pickups
-		# Keep monitorable as true to prevent weird bouny behaviour with score fragments
+		# Keep monitorable as true to prevent weird bouncy behaviour with score fragments
 		set_deferred("monitoring", false)
 
 		# Stop moving
@@ -235,8 +235,10 @@ func _on_area_entered(area: Area2D) -> void:
 		# Only accept soul fragment that is meant for this instance of score item
 		if area.nearest_non_maxed_score_item == self && level < max_level:
 			fragment_count += 1
+		
+		_upgrade_item()
 
-
+		
 ################################################
 #NOTE: Signal connection, logic for setting movement vars after initial spawn
 ################################################

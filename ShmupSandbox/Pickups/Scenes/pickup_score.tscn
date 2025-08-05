@@ -14,17 +14,19 @@
 [ext_resource type="Texture2D" uid="uid://dpjp0fnx72b4x" path="res://ShmupSandbox/Assets/Pickups/ScoreItems/level_3_despawn.png" id="10_f46el"]
 [ext_resource type="Texture2D" uid="uid://kd6lvov50rl4" path="res://ShmupSandbox/Assets/Pickups/ScoreItems/level_3_idle.png" id="11_cta8y"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_yvjqo"]
-radius = 28.0179
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_1ijbi"]
-radius = 36.6742
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_3pego"]
-radius = 46.2709
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_meonw"]
-radius = 80.0062
+radius = 100.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yvjqo"]
+radius = 21.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_meonw"]
+radius = 24.7487
+height = 82.0244
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6s83n"]
+radius = 33.0
+height = 114.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ce8cb"]
 atlas = ExtResource("2_aixns")
@@ -1590,25 +1592,29 @@ collision_layer = 32
 collision_mask = 129
 script = ExtResource("1_8a424")
 
-[node name="collider_level_1" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_yvjqo")
-debug_color = Color(0, 0.649289, 0.149823, 0.42)
-
-[node name="collider_level_2" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1ijbi")
-debug_color = Color(0.495094, 0.582855, 0, 0.42)
-
-[node name="collider_level_3" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_3pego")
-debug_color = Color(0.831448, 0.392105, 0, 0.42)
-
 [node name="level_3_bullet_clear_area" type="Area2D" parent="."]
 collision_layer = 64
 collision_mask = 16
 
 [node name="bullet_clear_collider" type="CollisionShape2D" parent="level_3_bullet_clear_area"]
-position = Vector2(0, 8)
+position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_meonw")
+
+[node name="collider_level_1" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yvjqo")
+debug_color = Color(0, 0.649289, 0.149823, 0.42)
+
+[node name="collider_level_2" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -2)
+rotation = -0.785398
+shape = SubResource("CapsuleShape2D_meonw")
+debug_color = Color(0.495094, 0.582855, 0, 0.42)
+
+[node name="collider_level_3" type="CollisionShape2D" parent="."]
+position = Vector2(-7, -7)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_6s83n")
+debug_color = Color(0.831448, 0.392105, 0, 0.42)
 
 [node name="sprites_container" type="Node2D" parent="."]
 
@@ -1618,6 +1624,8 @@ scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_3pego")
 animation = &"idle"
 autoplay = "idle"
+frame = 1
+frame_progress = 0.148943
 
 [node name="sprite_level_2" type="AnimatedSprite2D" parent="sprites_container"]
 unique_name_in_owner = true
@@ -1632,8 +1640,6 @@ scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_ky1jo")
 animation = &"upgrade"
 autoplay = "upgrade"
-frame = 27
-frame_progress = 1.0
 
 [node name="score_label" type="Label" parent="sprites_container"]
 unique_name_in_owner = true
