@@ -1593,12 +1593,14 @@ collision_mask = 129
 script = ExtResource("1_8a424")
 
 [node name="level_3_bullet_clear_area" type="Area2D" parent="."]
-collision_layer = 64
+collision_layer = 256
 collision_mask = 16
 
 [node name="bullet_clear_collider" type="CollisionShape2D" parent="level_3_bullet_clear_area"]
+unique_name_in_owner = true
 position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_meonw")
+debug_color = Color(0, 0.6, 0.701961, 0.121569)
 
 [node name="collider_level_1" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_yvjqo")

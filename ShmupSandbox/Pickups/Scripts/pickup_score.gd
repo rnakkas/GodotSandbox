@@ -1,27 +1,35 @@
 class_name PickupScore extends Area2D
 
+# Collection colliders
 @onready var collider_level_1: CollisionShape2D = $collider_level_1
 @onready var collider_level_2: CollisionShape2D = $collider_level_2
 @onready var collider_level_3: CollisionShape2D = $collider_level_3
 
-@onready var level_3_bullet_clear_area: Area2D = $level_3_bullet_clear_area
+# Bullet clear collider
+@onready var bullet_clear_collider: CollisionShape2D = %bullet_clear_collider
 
+# Item sprites container
 @onready var items_container: Node2D = $sprites_container
 
+# Item sprites
 @onready var item_level_1: AnimatedSprite2D = %sprite_level_1
 @onready var item_level_2: AnimatedSprite2D = %sprite_level_2
 @onready var item_level_3: AnimatedSprite2D = %sprite_level_3
 
+# Score value label
 @onready var score_label: Label = %score_label
 
+# Timers
 @onready var move_timer: Timer = $move_timer
 
+# Constants
 const min_level: int = 1
 const max_level: int = 3
 const score_level_1: int = 500
 const score_level_2: int = 1000
 const score_level_3: int = 3000
 
+# Export vars
 @export var base_speed: float = 25.0
 @export var spawn_speed: float = 350.0
 @export var deceleration: float = 900.0
@@ -30,6 +38,7 @@ const score_level_3: int = 3000
 @export var level_2_fragment_thresh: int = 3
 @export var level_3_fragment_thresh: int = 9
 
+# Misc vars
 var current_item: AnimatedSprite2D
 var current_score: int
 var item_collider_map: Dictionary[AnimatedSprite2D, CollisionShape2D] = {}
@@ -41,9 +50,6 @@ var fragment_count: int
 var has_upgraded: bool
 
 
-## TODO: Score item pickup:
-	# Create the bullet clear zone on level 3 pickup
-
 ################################################
 # Ready and its helper funcs
 ################################################
@@ -52,21 +58,20 @@ func _ready() -> void:
 	score_label.visible = false
 	speed = spawn_speed
 
-	# Disable bullet clear area when initially on screen
-	level_3_bullet_clear_area.set_deferred("monitorable", false)
-	level_3_bullet_clear_area.set_deferred("monitoring", false)
+	# Disable bullet clear collider when initially on screen
+	bullet_clear_collider.set_deferred("disabled", true)
 
 	_create_item_collider_map()
 	_set_current_item()
 	_connect_to_signals()
+	
 	direction = Helper.set_direction(viewport_size, self.global_position)
 	
 	Helper.set_timer_properties(move_timer, true, move_time)
 	move_timer.start()
 
-
 ################################################
-#NOTE: Helper func to create item and collider map
+# Helper func to create item and collider map
 ################################################
 func _create_item_collider_map() -> void:
 	item_collider_map = {
@@ -75,9 +80,8 @@ func _create_item_collider_map() -> void:
 	item_level_3: collider_level_3
 }
 
-
 ################################################
-#NOTE: Helper func to set current item sprite, score and collider
+# Helper func to set current item sprite, score and collider
 ################################################
 func _set_current_item() -> void:
 	# Set current item sprite and score as per level
@@ -92,7 +96,7 @@ func _set_current_item() -> void:
 			current_item = item_level_3
 			current_score = score_level_3
 		_:
-			push_error("invalid item level, level should be between 1 to 4")
+			push_error("invalid item level, level should be between 1 to 3")
 
 	# Enable sprite and collider for current item level, disable all others
 	for item: AnimatedSprite2D in item_collider_map.keys():
@@ -104,7 +108,7 @@ func _set_current_item() -> void:
 			item.stop()
 			item_collider_map[item].set_deferred("disabled", true)
 	
-	if level != 1:
+	if level != min_level:
 		current_item.play("upgrade")
 		await get_tree().create_timer(0.5).timeout
 		if current_item.animation != "collect":
@@ -128,7 +132,7 @@ func _connect_to_signals() -> void:
 	SignalsBus.player_death_event.connect(_on_player_death_event)
 
 func _on_player_death_event() -> void:
-	# Turn off collision detectino
+	# Turn off collision detection
 	set_deferred("monitorable", false)
 	set_deferred("monitoring", false)
 	
@@ -166,7 +170,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 ################################################
-#NOTE: Signal connection, logic for player picking up item
+# Signal connection, logic for player picking up item
 ################################################
 func _on_body_entered(body: Node2D) -> void:
 	if body is PlayerCat:
@@ -187,6 +191,9 @@ func _on_body_entered(body: Node2D) -> void:
 
 		# Send global signal that item was picked up
 		SignalsBus.score_increased_event.emit(current_score)
+
+		# Bullet clear if item level is max
+		_clear_bullets()
 
 		# Despawn pickup
 		await current_item.animation_finished
@@ -225,9 +232,14 @@ func _play_collect_animation_for_label() -> Tween:
 
 	return tween
 
+func _clear_bullets() -> void:
+	if level != max_level:
+		return
+	bullet_clear_collider.set_deferred("disabled", false)
+
 
 ################################################
-#NOTE: Signal connection:
+# Signal connection:
 	# logic for when soul fragment hits the score item
 ################################################
 func _on_area_entered(area: Area2D) -> void:
@@ -238,9 +250,9 @@ func _on_area_entered(area: Area2D) -> void:
 		
 		_upgrade_item()
 
-		
+
 ################################################
-#NOTE: Signal connection, logic for setting movement vars after initial spawn
+# Signal connection, logic for setting movement vars after initial spawn
 ################################################
 func _on_move_timer_timeout() -> void:
 	speed = base_speed

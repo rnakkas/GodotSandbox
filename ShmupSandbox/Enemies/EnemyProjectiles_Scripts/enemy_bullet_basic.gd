@@ -27,7 +27,7 @@ func _connect_to_own_signals() -> void:
 
 func _set_collision_layer_and_mask() -> void:
 	collision_layer = 16 # Layer name: enemy_bullet
-	collision_mask = 65 # Mask names: player, player_bomb
+	collision_mask = 1 + 64 + 256 # Mask names: player, player_bomb, score_bullet_clear_area
 
 
 func _physics_process(delta: float) -> void:
