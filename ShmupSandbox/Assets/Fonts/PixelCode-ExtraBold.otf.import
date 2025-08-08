@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://biycie4kaffui"
-path="res://.godot/imported/SPLCF.ttf-426ab203d9dae2debdc3c84804f49057.fontdata"
+uid="uid://bqxmc05dmv15h"
+path="res://.godot/imported/PixelCode-ExtraBold.otf-eb6992e88e80c8a65a082de5f25ad6ec.fontdata"
 
 [deps]
 
-source_file="res://ShmupSandbox/Assets/Fonts/SPLCF.ttf"
-dest_files=["res://.godot/imported/SPLCF.ttf-426ab203d9dae2debdc3c84804f49057.fontdata"]
+source_file="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf"
+dest_files=["res://.godot/imported/PixelCode-ExtraBold.otf-eb6992e88e80c8a65a082de5f25ad6ec.fontdata"]
 
 [params]
 

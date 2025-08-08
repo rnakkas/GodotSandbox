@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dn51megt1rye4"]
+[gd_scene load_steps=5 format=3 uid="uid://dn51megt1rye4"]
 
 [ext_resource type="Script" uid="uid://ds1o34bueiily" path="res://ShmupSandbox/UI/Scripts/continue_screen.gd" id="1_8fmy5"]
-[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_0myxd"]
+[ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="3_7hgfk"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_hvxj0"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_7hgfk"]
 
 [node name="continue_screen" type="Control"]
 layout_mode = 3
@@ -27,6 +29,11 @@ theme_override_constants/margin_top = 70
 theme_override_constants/margin_right = 70
 theme_override_constants/margin_bottom = 70
 
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+self_modulate = Color(0.133333, 0.137255, 0.137255, 0.72549)
+layout_mode = 2
+texture = SubResource("CanvasTexture_7hgfk")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -37,15 +44,15 @@ layout_mode = 2
 
 [node name="continue_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_0myxd")
-theme_override_font_sizes/font_size = 75
-text = "Death Awaits in:"
+theme_override_fonts/font = ExtResource("3_hvxj0")
+theme_override_font_sizes/font_size = 55
+text = "Rise from the ashes?"
 
 [node name="time_left_label" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_hvxj0")
+theme_override_fonts/font = ExtResource("3_7hgfk")
 theme_override_font_sizes/font_size = 70
 text = "10"
 
@@ -61,9 +68,9 @@ layout_mode = 2
 
 [node name="score_penalty_label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_hvxj0")
+theme_override_fonts/font = ExtResource("3_7hgfk")
 theme_override_font_sizes/font_size = 25
-text = "Score Penalty:"
+text = "SCORE PENALTY: "
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -71,7 +78,7 @@ layout_mode = 2
 [node name="score_penalty_value" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_hvxj0")
+theme_override_fonts/font = ExtResource("3_7hgfk")
 theme_override_font_sizes/font_size = 25
 text = "200"
 
@@ -94,7 +101,7 @@ focus_neighbor_right = NodePath("../no_button")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
-theme_override_fonts/font = ExtResource("3_hvxj0")
+theme_override_fonts/font = ExtResource("3_7hgfk")
 theme_override_font_sizes/font_size = 30
 action_mode = 0
 text = "YES"
@@ -110,7 +117,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
-theme_override_fonts/font = ExtResource("3_hvxj0")
+theme_override_fonts/font = ExtResource("3_7hgfk")
 theme_override_font_sizes/font_size = 30
 action_mode = 0
 text = "NO"

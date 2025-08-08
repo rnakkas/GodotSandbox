@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cfb4oxvkojkrw"]
 
 [ext_resource type="Script" uid="uid://cc4cakfuy8gq1" path="res://ShmupSandbox/UI/Scripts/display_settings.gd" id="1_1adna"]
-[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_y6iv1"]
+[ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="3_ae0s4"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_y6iv1"]
 [ext_resource type="Texture2D" uid="uid://qusud1dgnpui" path="res://ShmupSandbox/Assets/Icons/ui_arrow_normal-v2.png" id="4_ae0s4"]
 [ext_resource type="Texture2D" uid="uid://dto7f70dxk21" path="res://ShmupSandbox/Assets/Icons/ui_arrow_pressed-v2.png" id="5_2moy2"]
@@ -46,7 +46,7 @@ theme_override_constants/separation = 10
 
 [node name="display_settings_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_y6iv1")
+theme_override_fonts/font = ExtResource("3_y6iv1")
 theme_override_font_sizes/font_size = 75
 text = "Display Settings"
 horizontal_alignment = 1
@@ -87,9 +87,9 @@ focus_neighbor_bottom = NodePath("../../HBoxContainer_crt/crt_label")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
-theme_override_fonts/font = ExtResource("3_y6iv1")
-theme_override_font_sizes/font_size = 30
-text = "Mode"
+theme_override_fonts/font = ExtResource("3_ae0s4")
+theme_override_font_sizes/font_size = 25
+text = "MODE"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_mode"]
 layout_mode = 2
@@ -142,9 +142,9 @@ texture_focused = ExtResource("6_o3s6m")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_y6iv1")
-theme_override_font_sizes/font_size = 30
-text = "Fullscreen"
+theme_override_fonts/font = ExtResource("3_ae0s4")
+theme_override_font_sizes/font_size = 25
+text = "FULLSCREEN"
 horizontal_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_mode/HBoxContainer_mode_value"]
@@ -197,9 +197,9 @@ focus_neighbor_bottom = NodePath("../../HBoxContainer_back/back_button")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
-theme_override_fonts/font = ExtResource("3_y6iv1")
-theme_override_font_sizes/font_size = 30
-text = "CRT Filter"
+theme_override_fonts/font = ExtResource("3_ae0s4")
+theme_override_font_sizes/font_size = 25
+text = "CRT FILTER"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_crt"]
 layout_mode = 2
@@ -214,6 +214,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="separator5" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_crt"]
+visible = false
 layout_mode = 2
 
 [node name="HBoxContainer_crt_value" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_crt" groups=["display_settings_ui_nodes"]]
@@ -254,8 +255,8 @@ texture_focused = ExtResource("6_o3s6m")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_y6iv1")
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = ExtResource("3_ae0s4")
+theme_override_font_sizes/font_size = 25
 text = "OFF"
 horizontal_alignment = 1
 
@@ -322,10 +323,10 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
-theme_override_fonts/font = ExtResource("3_y6iv1")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_ae0s4")
+theme_override_font_sizes/font_size = 30
 action_mode = 0
-text = "Back"
+text = "BACK"
 flat = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

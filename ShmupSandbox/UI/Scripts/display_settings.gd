@@ -1,26 +1,26 @@
 class_name DisplaySettings extends Control
 
-@onready var mode_label : Label = %mode_label
-@onready var mode_value_hbox : HBoxContainer = %HBoxContainer_mode_value
-@onready var mode_left_button : TextureButton = %mode_left_button
-@onready var mode_value : Label = %mode_value
-@onready var mode_right_button : TextureButton = %mode_right_button
+@onready var mode_label: Label = %mode_label
+@onready var mode_value_hbox: HBoxContainer = %HBoxContainer_mode_value
+@onready var mode_left_button: TextureButton = %mode_left_button
+@onready var mode_value: Label = %mode_value
+@onready var mode_right_button: TextureButton = %mode_right_button
 
-@onready var crt_label : Label = %crt_label
-@onready var crt_value_hbox : HBoxContainer = %HBoxContainer_crt_value
-@onready var crt_left_button : TextureButton = %crt_left_button
-@onready var crt_value : Label = %crt_value
-@onready var crt_right_button : TextureButton = %crt_right_button
+@onready var crt_label: Label = %crt_label
+@onready var crt_value_hbox: HBoxContainer = %HBoxContainer_crt_value
+@onready var crt_left_button: TextureButton = %crt_left_button
+@onready var crt_value: Label = %crt_value
+@onready var crt_right_button: TextureButton = %crt_right_button
 
-@onready var back_button : Button = %back_button
+@onready var back_button: Button = %back_button
 
 
-var ui_elements_list : Array[Control] = []
-var allowed_values_mode : Array[String] = ["Fullscreen", "Windowed"]
-var allowed_values_crt : Array[String] = ["Off", "On"]
+var ui_elements_list: Array[Control] = []
+var allowed_values_mode: Array[String] = ["FULLSCREEN", "WINDOWED"]
+var allowed_values_crt: Array[String] = ["OFF", "ON"]
 
 signal back_button_pressed()
-signal crt_filter_changed(crt_value : bool)
+signal crt_filter_changed(crt_value: bool)
 
 
 ################################################
@@ -30,13 +30,13 @@ func _ready() -> void:
     _create_ui_elements_list()
 
 func _create_ui_elements_list() -> void:
-    for node : Control in get_tree().get_nodes_in_group(UiUtility.display_settings_ui_nodes):
+    for node: Control in get_tree().get_nodes_in_group(UiUtility.display_settings_ui_nodes):
         ui_elements_list.append(node)
         _connect_to_group_signals(node)
     ui_elements_list.sort() # Sort in alphabetical order
 
 
-func _connect_to_group_signals(node : Control) -> void:
+func _connect_to_group_signals(node: Control) -> void:
     if node.has_signal(UiUtility.signal_focus_entered):
         node.focus_entered.connect(self._on_element_focused)
     if node.has_signal(UiUtility.signal_mouse_entered):
@@ -111,7 +111,7 @@ func _toggle_arrow_button_visibility() -> void:
         mode_left_button.visible = true
 
     # Lives right button
-    if mode_value.text == allowed_values_mode[allowed_values_mode.size()-1]:
+    if mode_value.text == allowed_values_mode[allowed_values_mode.size() - 1]:
         mode_right_button.visible = false
     else:
         mode_right_button.visible = true
@@ -123,11 +123,10 @@ func _toggle_arrow_button_visibility() -> void:
         crt_left_button.visible = true
 
     # Credits right button
-    if crt_value.text == allowed_values_crt[allowed_values_crt.size()-1]:
+    if crt_value.text == allowed_values_crt[allowed_values_crt.size() - 1]:
         crt_right_button.visible = false
-    else: 
+    else:
         crt_right_button.visible = true
-
 
 
 ################################################
@@ -151,7 +150,6 @@ func _change_crt_filter() -> void:
         crt_filter_changed.emit(true)
 
 
-
 ################################################
 #NOTE: Element focused signal connection
 ################################################
@@ -164,7 +162,7 @@ func _on_element_focused() -> void:
 ################################################
 #NOTE: Mouse hovered signal connection
 ################################################
-func _on_element_focused_with_mouse(node : Control) -> void:
+func _on_element_focused_with_mouse(node: Control) -> void:
     if node == mode_left_button || node == mode_right_button || node == mode_value_hbox:
         mode_label.grab_focus()
     elif node == crt_left_button || node == crt_right_button || node == crt_value_hbox:
@@ -217,18 +215,17 @@ func _on_button_pressed(node: Control) -> void:
 ################################################
 #NOTE: Helper func to update settings values on ui
 ################################################
-func _update_value(value_to_change : Label, allowed_values : Array[String], direction : int):
-    var current_value : String = value_to_change.text
-    var index : int = allowed_values.find(current_value)
+func _update_value(value_to_change: Label, allowed_values: Array[String], direction: int):
+    var current_value: String = value_to_change.text
+    var index: int = allowed_values.find(current_value)
 
     if index == -1:
         push_warning("invalid value, not in allowed_values list: ", str(current_value))
         return
 
-    var new_index : int = index + direction
+    var new_index: int = index + direction
     if new_index >= 0 && new_index < allowed_values.size():
         value_to_change.text = str(allowed_values[new_index])
-
 
 
 ################################################
@@ -244,7 +241,6 @@ func _save_display_settings() -> void:
     
     SaveManager.contents_to_save["settings"]["display_settings"] = GameManager.display_settings_dictionary
     SaveManager.save_game()
-
 
 
 ################################################

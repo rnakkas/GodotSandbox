@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://g4pwoynin2x4" path="res://ShmupSandbox/UI/Scripts/start_screen.gd" id="1_bbtnf"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="2_bbtnf"]
-[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_yycc1"]
+[ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="3_yycc1"]
 
 [node name="start_screen" type="Control"]
 layout_mode = 3
@@ -31,9 +31,9 @@ theme_override_constants/separation = 10
 
 [node name="title" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_yycc1")
-theme_override_font_sizes/font_size = 90
-text = "C A T A K L YZ M"
+theme_override_fonts/font = ExtResource("2_bbtnf")
+theme_override_font_sizes/font_size = 120
+text = "Cataclyzm"
 horizontal_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
@@ -45,9 +45,9 @@ theme_override_constants/separation = 15
 [node name="press_start_label" type="Label" parent="MarginContainer/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_bbtnf")
-theme_override_font_sizes/font_size = 30
-text = "Press any button"
+theme_override_fonts/font = ExtResource("3_yycc1")
+theme_override_font_sizes/font_size = 25
+text = "PRESS ANY BUTTON"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer2"]
 layout_mode = 2

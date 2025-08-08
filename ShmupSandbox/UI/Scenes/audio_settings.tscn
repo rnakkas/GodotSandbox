@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b0td5yoxb431c"]
 
 [ext_resource type="Script" uid="uid://c43ig0gykkvm8" path="res://ShmupSandbox/UI/Scripts/audio_settings.gd" id="1_8stjm"]
-[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_wywn7"]
+[ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="3_p2v0w"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_w8yk6"]
 [ext_resource type="Texture2D" uid="uid://qusud1dgnpui" path="res://ShmupSandbox/Assets/Icons/ui_arrow_normal-v2.png" id="4_p2v0w"]
 [ext_resource type="Texture2D" uid="uid://dto7f70dxk21" path="res://ShmupSandbox/Assets/Icons/ui_arrow_pressed-v2.png" id="5_elm84"]
@@ -46,7 +46,7 @@ theme_override_constants/separation = 9
 
 [node name="audio_settings_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_wywn7")
+theme_override_fonts/font = ExtResource("3_w8yk6")
 theme_override_font_sizes/font_size = 75
 text = "Audio Settings"
 horizontal_alignment = 1
@@ -84,9 +84,9 @@ focus_neighbor_bottom = NodePath("../../HBoxContainer_sound/sound_label")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
-theme_override_fonts/font = ExtResource("3_w8yk6")
-theme_override_font_sizes/font_size = 30
-text = "Master"
+theme_override_fonts/font = ExtResource("3_p2v0w")
+theme_override_font_sizes/font_size = 25
+text = "MASTER"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_master"]
 layout_mode = 2
@@ -131,8 +131,8 @@ texture_focused = ExtResource("6_7flyk")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_w8yk6")
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = ExtResource("3_p2v0w")
+theme_override_font_sizes/font_size = 25
 text = "100"
 horizontal_alignment = 1
 
@@ -185,9 +185,9 @@ focus_neighbor_bottom = NodePath("../../HBoxContainer_music/music_label")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
-theme_override_fonts/font = ExtResource("3_w8yk6")
-theme_override_font_sizes/font_size = 30
-text = "Sound"
+theme_override_fonts/font = ExtResource("3_p2v0w")
+theme_override_font_sizes/font_size = 25
+text = "SOUND"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_sound"]
 layout_mode = 2
@@ -232,8 +232,8 @@ texture_focused = ExtResource("6_7flyk")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_w8yk6")
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = ExtResource("3_p2v0w")
+theme_override_font_sizes/font_size = 25
 text = "100"
 horizontal_alignment = 1
 
@@ -286,9 +286,9 @@ focus_neighbor_bottom = NodePath("../../HBoxContainer_back/back_button")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
-theme_override_fonts/font = ExtResource("3_w8yk6")
-theme_override_font_sizes/font_size = 30
-text = "Music"
+theme_override_fonts/font = ExtResource("3_p2v0w")
+theme_override_font_sizes/font_size = 25
+text = "MUSIC"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_music"]
 layout_mode = 2
@@ -333,8 +333,8 @@ texture_focused = ExtResource("6_7flyk")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_w8yk6")
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = ExtResource("3_p2v0w")
+theme_override_font_sizes/font_size = 25
 text = "100"
 horizontal_alignment = 1
 
@@ -396,10 +396,10 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
-theme_override_fonts/font = ExtResource("3_w8yk6")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_p2v0w")
+theme_override_font_sizes/font_size = 30
 action_mode = 0
-text = "Back"
+text = "BACK"
 flat = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

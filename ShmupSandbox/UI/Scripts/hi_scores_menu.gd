@@ -1,10 +1,10 @@
 class_name HiScoresMenu extends Control
 
-@onready var back_button : Button = %back_button
+@onready var back_button: Button = %back_button
 
-var player_hi_scores_list : Array[int] = []
-var score_label_list : Array[Label] = []
-var name_label_list : Array[Label] = []
+var player_hi_scores_list: Array[int] = []
+var score_label_list: Array[Label] = []
+var name_label_list: Array[Label] = []
 
 signal back_button_pressed()
 
@@ -37,12 +37,12 @@ func populate_high_scores_screen() -> void:
 ################################################
 func _initialize_label_lists() -> void:
 	# Get all the score labels, score labels are in the named group
-	for node : Node in get_tree().get_nodes_in_group("hi_score_score_label"):
+	for node: Node in get_tree().get_nodes_in_group("hi_score_score_label"):
 		if node is Label:
 			score_label_list.append(node)
 	
 	# Get the name labels from the group
-	for node : Node in get_tree().get_nodes_in_group("hi_score_name_label"):
+	for node: Node in get_tree().get_nodes_in_group("hi_score_name_label"):
 		if node is Label:
 			name_label_list.append(node)
 
@@ -61,10 +61,9 @@ func _sort_label_lists() -> void:
 
 func _update_high_score_ui() -> void:
 	## Add the scores and names to the high scores screen
-	for i : int in score_label_list.size():
+	for i: int in score_label_list.size():
 		score_label_list[i].text = str(GameManager.player_hi_scores_dictionaries[i]["score"])
 		name_label_list[i].text = GameManager.player_hi_scores_dictionaries[i]["name"]
-
 
 
 ################################################
@@ -79,7 +78,6 @@ func _on_back_button_mouse_entered() -> void:
 
 func _on_back_button_focus_entered() -> void:
 	UiUtility.highlight_selected_element([back_button], back_button)
-
 
 
 ################################################

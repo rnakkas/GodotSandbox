@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dvex6ouhoh1ev"]
 
 [ext_resource type="Script" uid="uid://72tq75cibxj6" path="res://ShmupSandbox/UI/Scripts/confirm_dialog.gd" id="1_aq2ro"]
-[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_h1ire"]
+[ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="3_h1ire"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_sfbu7"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_gng12"]
@@ -58,16 +58,16 @@ theme_override_constants/separation = 10
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("2_h1ire")
-theme_override_font_sizes/font_size = 47
+theme_override_fonts/font = ExtResource("3_sfbu7")
+theme_override_font_sizes/font_size = 40
 text = "Return to Main Menu?"
 
 [node name="dialog_label2" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_sfbu7")
-theme_override_font_sizes/font_size = 20
-text = "[ score will NOT be saved ]"
+theme_override_fonts/font = ExtResource("3_h1ire")
+theme_override_font_sizes/font_size = 15
+text = "[SCORE WILL NOT BE SAVED]"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -85,7 +85,7 @@ theme_override_constants/separation = 80
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_sfbu7")
+theme_override_fonts/font = ExtResource("3_h1ire")
 theme_override_font_sizes/font_size = 25
 action_mode = 0
 text = "YES"
@@ -96,7 +96,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_sfbu7")
+theme_override_fonts/font = ExtResource("3_h1ire")
 theme_override_font_sizes/font_size = 25
 action_mode = 0
 text = "NO"

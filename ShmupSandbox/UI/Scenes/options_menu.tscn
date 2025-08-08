@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ny01qnyexpg2"]
 
 [ext_resource type="Script" uid="uid://cvsyjssmvhl4m" path="res://ShmupSandbox/UI/Scripts/options_menu.gd" id="1_unpda"]
-[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_unpda"]
+[ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="3_6upo5"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_ce2tu"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_unpda"]
@@ -43,7 +43,7 @@ theme_override_constants/separation = 12
 
 [node name="options_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_unpda")
+theme_override_fonts/font = ExtResource("3_ce2tu")
 theme_override_font_sizes/font_size = 75
 text = "Settings"
 horizontal_alignment = 1
@@ -61,27 +61,27 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_ce2tu")
-theme_override_font_sizes/font_size = 30
-text = "Game Settings"
+theme_override_fonts/font = ExtResource("3_6upo5")
+theme_override_font_sizes/font_size = 25
+text = "GAME SETTINGS"
 flat = true
 
 [node name="display_settings_button" type="Button" parent="MarginContainer/VBoxContainer" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_ce2tu")
-theme_override_font_sizes/font_size = 30
-text = "Display Settings"
+theme_override_fonts/font = ExtResource("3_6upo5")
+theme_override_font_sizes/font_size = 25
+text = "DISPLAY SETTINGS"
 flat = true
 
 [node name="audio_settings_button" type="Button" parent="MarginContainer/VBoxContainer" groups=["options_ui_nodes"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_ce2tu")
-theme_override_font_sizes/font_size = 30
-text = "Audio Settings"
+theme_override_fonts/font = ExtResource("3_6upo5")
+theme_override_font_sizes/font_size = 25
+text = "AUDIO SETTINGS"
 flat = true
 
 [node name="separator4" type="Control" parent="MarginContainer/VBoxContainer"]
@@ -97,10 +97,10 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_ce2tu")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_6upo5")
+theme_override_font_sizes/font_size = 30
 action_mode = 0
-text = "Back"
+text = "BACK"
 flat = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

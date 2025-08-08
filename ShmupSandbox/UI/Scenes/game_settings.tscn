@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://d4ccnuy1t5mki"]
 
 [ext_resource type="Script" uid="uid://c0kdhjvb8mxvo" path="res://ShmupSandbox/UI/Scripts/game_settings.gd" id="1_4inky"]
-[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_sw84t"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="3_41a6c"]
+[ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="3_sw84t"]
 [ext_resource type="Texture2D" uid="uid://qusud1dgnpui" path="res://ShmupSandbox/Assets/Icons/ui_arrow_normal-v2.png" id="4_8kblw"]
 [ext_resource type="Texture2D" uid="uid://dto7f70dxk21" path="res://ShmupSandbox/Assets/Icons/ui_arrow_pressed-v2.png" id="5_6nnrp"]
 [ext_resource type="Texture2D" uid="uid://ulo54d8qyr7o" path="res://ShmupSandbox/Assets/Icons/ui_arrow_hover-v2.png" id="6_6nnrp"]
@@ -46,7 +46,7 @@ theme_override_constants/separation = 10
 
 [node name="gameplay_settings_label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_sw84t")
+theme_override_fonts/font = ExtResource("3_41a6c")
 theme_override_font_sizes/font_size = 75
 text = "Game Settings"
 horizontal_alignment = 1
@@ -86,9 +86,9 @@ focus_neighbor_bottom = NodePath("../../HBoxContainer_credits/credits_label")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
-theme_override_fonts/font = ExtResource("3_41a6c")
-theme_override_font_sizes/font_size = 30
-text = "Lives"
+theme_override_fonts/font = ExtResource("3_sw84t")
+theme_override_font_sizes/font_size = 25
+text = "LIVES"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_lives"]
 layout_mode = 2
@@ -139,8 +139,8 @@ texture_focused = ExtResource("6_6nnrp")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_41a6c")
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = ExtResource("3_sw84t")
+theme_override_font_sizes/font_size = 25
 text = "3"
 horizontal_alignment = 1
 
@@ -192,9 +192,9 @@ focus_neighbor_bottom = NodePath("../../back_button")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 2
-theme_override_fonts/font = ExtResource("3_41a6c")
-theme_override_font_sizes/font_size = 30
-text = "Credits"
+theme_override_fonts/font = ExtResource("3_sw84t")
+theme_override_font_sizes/font_size = 25
+text = "CREDITS"
 
 [node name="separator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer_credits"]
 layout_mode = 2
@@ -243,8 +243,8 @@ texture_focused = ExtResource("6_6nnrp")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_41a6c")
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = ExtResource("3_sw84t")
+theme_override_font_sizes/font_size = 25
 text = "3"
 horizontal_alignment = 1
 
@@ -305,10 +305,10 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath(".")
-theme_override_fonts/font = ExtResource("3_41a6c")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("3_sw84t")
+theme_override_font_sizes/font_size = 30
 action_mode = 0
-text = "Back"
+text = "BACK"
 flat = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

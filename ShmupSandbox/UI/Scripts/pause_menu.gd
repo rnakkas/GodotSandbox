@@ -10,9 +10,10 @@ signal options_button_pressed()
 signal main_menu_button_pressed()
 signal quit_button_pressed()
 
-var selector_icons : Array[TextureRect] = []
-var ui_elements_list : Array[Control] = []
+var selector_icons: Array[TextureRect] = []
+var ui_elements_list: Array[Control] = []
 
+## TODO: Fix the issue with accept button being held on menu item, make it the same as main menu
 
 ################################################
 #NOTE: Ready
@@ -21,7 +22,7 @@ func _ready() -> void:
 	_create_ui_elements_list()
 
 func _create_ui_elements_list() -> void:
-	for node : Button in get_tree().get_nodes_in_group(UiUtility.pause_menu_ui_nodes):
+	for node: Button in get_tree().get_nodes_in_group(UiUtility.pause_menu_ui_nodes):
 		ui_elements_list.append(node)
 
 

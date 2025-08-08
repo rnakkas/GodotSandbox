@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cwdcwh6sflfw1"]
 
 [ext_resource type="Script" uid="uid://085p20o8tmyi" path="res://ShmupSandbox/UI/Scripts/game_over_screen.gd" id="1_sf477"]
-[ext_resource type="FontFile" uid="uid://bqlkxtl2tvtig" path="res://ShmupSandbox/Assets/Fonts/puree____2.ttf" id="2_sf477"]
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="2_sf477"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_sf477"]
 

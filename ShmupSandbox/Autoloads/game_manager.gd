@@ -45,9 +45,9 @@ const player_max_bombs: int = 9
 const min_bounds: Vector2 = Vector2(0, 0)
 
 ## Offsets for screen bounds
-const offset_x: float = 60.0
-const offset_y_screen_bottom: float = 60.0
-const offset_y_screen_top: float = 100.0
+const offset_x: float = 30.0
+const offset_y_screen_bottom: float = 20.0
+const offset_y_screen_top: float = 40.0
 
 ## Hit scores
 const attack_hit_score: int = 10
