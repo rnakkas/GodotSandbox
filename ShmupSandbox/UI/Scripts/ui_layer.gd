@@ -1,19 +1,20 @@
 class_name UiLayer extends CanvasLayer
 
-@onready var simple_crt_filter : SimpleCrtFilter = %SimpleCRTFilter
-@onready var start_screen : StartScreen = %start_screen
-@onready var main_menu : MainMenu = %main_menu
-@onready var options_menu : OptionsMenu = %options_menu
-@onready var game_settings : GameSettings = %game_settings
-@onready var display_settings : DisplaySettings = %display_settings
-@onready var audio_settings : AudioSettings = %audio_settings
-@onready var pause_menu : PauseMenu = %pause_menu
-@onready var player_hud : PlayerHud = %player_hud
-@onready var confirm_dialog : ConfirmDialog = %confirm_dialog
-@onready var continue_screen : ContinueScreen = %continue_screen
-@onready var game_over_screen : GameOverScreen = %game_over_screen
-@onready var hi_scores_menu : HiScoresMenu = %hi_scores_menu
-@onready var name_entry_dialog  : NameEntryDialog = %name_entry_dialog
+@onready var simple_crt_filter: SimpleCrtFilter = %SimpleCRTFilter
+@onready var start_screen: StartScreen = %start_screen
+@onready var main_menu: MainMenu = %main_menu
+@onready var options_menu: OptionsMenu = %options_menu
+@onready var game_settings: GameSettings = %game_settings
+@onready var display_settings: DisplaySettings = %display_settings
+@onready var audio_settings: AudioSettings = %audio_settings
+@onready var pause_menu: PauseMenu = %pause_menu
+@onready var player_hud: PlayerHud = %player_hud
+@onready var confirm_dialog: ConfirmDialog = %confirm_dialog
+@onready var continue_screen: ContinueScreen = %continue_screen
+@onready var game_over_screen: GameOverScreen = %game_over_screen
+@onready var hi_scores_menu: HiScoresMenu = %hi_scores_menu
+@onready var name_entry_dialog: NameEntryDialog = %name_entry_dialog
+@onready var boss_warning: BossWarningUi = %boss_warning
 
 
 signal game_started()
@@ -30,12 +31,12 @@ func _ready() -> void:
 func _initialize_ui_scenes() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	var ui_layer_nodes : Array[Control] = []
-	for node : Control in get_tree().get_nodes_in_group(UiUtility.ui_layer_nodes):
+	var ui_layer_nodes: Array[Control] = []
+	for node: Control in get_tree().get_nodes_in_group(UiUtility.ui_layer_nodes):
 		ui_layer_nodes.append(node)
 
 	# Turn visibility on for start screen and off for all other screens
-	for ui_node : Control in ui_layer_nodes:
+	for ui_node: Control in ui_layer_nodes:
 		if ui_node is StartScreen:
 			ui_node.visible = true
 		else:
@@ -45,6 +46,10 @@ func _initialize_ui_scenes() -> void:
 func _connect_to_signals() -> void:
 	SignalsBus.player_lives_updated_event.connect(self._on_player_lives_depleted)
 	SignalsBus.player_pressed_pause_game_event.connect(self._on_player_pauses_game)
+	SignalsBus.boss_incoming_warning_event.connect(self._on_boss_incoming_warning_event)
+
+	# UI signals
+	SignalsBus.boss_warning_ended_event.connect(self._on_boss_warning_ended)
 
 
 ################################################
@@ -52,7 +57,11 @@ func _connect_to_signals() -> void:
 ################################################
 func _toggle_ui(ui: Control) -> void:
 	ui.visible = !ui.visible
-	ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+	
+	if ui is BossWarningUi:
+		ui.process_mode = Node.PROCESS_MODE_PAUSABLE
+	else:
+		ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 
 
 ################################################
@@ -177,7 +186,7 @@ func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 			_toggle_ui(player_hud)
 			_toggle_ui(main_menu)
 			
-			get_tree().paused = false 
+			get_tree().paused = false
 			GameManager.is_game_running = false
 			kill_game_instance.emit()
 		
@@ -210,15 +219,15 @@ func _on_continue_screen_no_button_pressed() -> void:
 #NOTE: Helper func to check for player current score vs top 10 hi scores
 ################################################
 func _is_player_score_in_top_ten() -> bool:
-	var is_in_top_ten : bool
-	var hi_score_list_size : int = GameManager.player_hi_scores_dictionaries.size()
+	var is_in_top_ten: bool
+	var hi_score_list_size: int = GameManager.player_hi_scores_dictionaries.size()
 
-	for score_entry : int in range(hi_score_list_size):
+	for score_entry: int in range(hi_score_list_size):
 		if GameManager.player_score > GameManager.player_hi_scores_dictionaries[score_entry]["score"]:
 			is_in_top_ten = true
-			break;
+			break ;
 	
-	if GameManager.player_score <= GameManager.player_hi_scores_dictionaries[hi_score_list_size-1]["score"] :
+	if GameManager.player_score <= GameManager.player_hi_scores_dictionaries[hi_score_list_size - 1]["score"]:
 		is_in_top_ten = false
 	
 	return is_in_top_ten
@@ -269,3 +278,13 @@ func _on_hi_scores_menu_back_button_pressed() -> void:
 func _on_name_entry_dialog_ok_button_pressed() -> void:
 	_toggle_ui(name_entry_dialog)
 	_toggle_ui(game_over_screen)
+
+
+################################################
+# Boss warning ui
+################################################
+func _on_boss_incoming_warning_event(_boss_message: String) -> void:
+	_toggle_ui(boss_warning)
+
+func _on_boss_warning_ended() -> void:
+	_toggle_ui(boss_warning)

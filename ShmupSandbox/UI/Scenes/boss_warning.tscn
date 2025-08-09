@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwheccxsxmkya"]
+
+[ext_resource type="Script" uid="uid://b0qcqj6hhwekf" path="res://ShmupSandbox/UI/Scripts/boss_warning.gd" id="1_ejl2b"]
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="1_jtbh8"]
+[ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="3_8y8eg"]
+
+[node name="boss_warning" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ejl2b")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="warning_label" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_outline_color = Color(0.941176, 0.964706, 0.941176, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_jtbh8")
+theme_override_font_sizes/font_size = 85
+text = "WARNING!!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="boss_specific_label" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.886275, 0.294118, 0.0745098, 1)
+theme_override_colors/font_outline_color = Color(0.941176, 0.964706, 0.941176, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_8y8eg")
+theme_override_font_sizes/font_size = 22
+text = "Boss specific message"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="blink_timer" type="Timer" parent="."]
+
+[node name="warning_timer" type="Timer" parent="."]

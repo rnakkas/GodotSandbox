@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://wq32mri3ebiv"]
+[gd_scene load_steps=19 format=3 uid="uid://wq32mri3ebiv"]
 
 [ext_resource type="PackedScene" uid="uid://dw1uu0vpx6e46" path="res://ShmupSandbox/UI/Scenes/main_menu.tscn" id="1_ga2yo"]
 [ext_resource type="Script" uid="uid://s70ghdyj3lk3" path="res://ShmupSandbox/UI/Scripts/ui_layer.gd" id="1_hgdm0"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://b0td5yoxb431c" path="res://ShmupSandbox/UI/Scenes/audio_settings.tscn" id="8_x3d84"]
 [ext_resource type="PackedScene" uid="uid://cwajjxolnfu64" path="res://ShmupSandbox/UI/Scenes/hi_scores_menu.tscn" id="9_kbioj"]
 [ext_resource type="PackedScene" uid="uid://dmdtueiex673w" path="res://ShmupSandbox/UI/Scenes/name_entry_dialog.tscn" id="10_dlse4"]
+[ext_resource type="PackedScene" uid="uid://dwheccxsxmkya" path="res://ShmupSandbox/UI/Scenes/boss_warning.tscn" id="17_4kv3g"]
 
 [node name="UI_layer" type="CanvasLayer"]
 process_mode = 3
@@ -28,6 +29,10 @@ script = ExtResource("1_hgdm0")
 unique_name_in_owner = true
 
 [node name="player_hud" parent="." groups=["ui_layer_nodes"] instance=ExtResource("4_dqs3x")]
+unique_name_in_owner = true
+visible = false
+
+[node name="boss_warning" parent="." groups=["ui_layer_nodes"] instance=ExtResource("17_4kv3g")]
 unique_name_in_owner = true
 visible = false
 
