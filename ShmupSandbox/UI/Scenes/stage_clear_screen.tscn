@@ -1,4 +1,9 @@
-[gd_scene format=3 uid="uid://d0osb7xjckolu"]
+[gd_scene load_steps=4 format=3 uid="uid://d0osb7xjckolu"]
+
+[ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="1_bdqpk"]
+[ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="2_v7dk5"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_v7dk5"]
 
 [node name="stage_clear_screen" type="Control"]
 layout_mode = 3
@@ -15,18 +20,299 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+self_modulate = Color(0.133333, 0.137255, 0.137255, 0.72549)
 layout_mode = 2
-size_flags_horizontal = 4
+texture = SubResource("CanvasTexture_v7dk5")
+
+[node name="vbox_main" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 theme_override_constants/separation = 12
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="stage_clear_header" type="Label" parent="MarginContainer/vbox_main"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bdqpk")
+theme_override_font_sizes/font_size = 40
+text = "STAGE CLEAR!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="separator" type="Control" parent="MarginContainer/vbox_main"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="hbox_bonuses" type="HBoxContainer" parent="MarginContainer/vbox_main"]
 layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 200
+
+[node name="VBox_label_names" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="hbox_clear_bonus" type="HBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names"]
+layout_mode = 2
+theme_override_constants/separation = 67
+
+[node name="clear_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_clear_bonus"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "CLEAR BONUS"
+
+[node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_clear_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_clear_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="hbox_enemies_bonus" type="HBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="enemies_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_enemies_bonus"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "ENEMY DESTRUCTION BONUS"
+
+[node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_enemies_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_enemies_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_enemies_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="hbox_lives_bonus" type="HBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="lives_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_lives_bonus"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "LIVES BONUS"
+
+[node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_lives_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_lives_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_lives_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="hbox_credits_bonus" type="HBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="credits_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_credits_bonus"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "CREDITS BONUS"
+
+[node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_credits_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_credits_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_credits_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="hbox_bomb_bonus" type="HBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="bomb_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_bomb_bonus"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "BOMBS BONUS"
+
+[node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_bomb_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_bomb_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_bomb_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="hbox_catnip_bonus" type="HBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="catnip_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "CATNIP BONUS"
+
+[node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="hbox_boss_bonus" type="HBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="boss_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_boss_bonus"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "<BOSS NAME> BONUS"
+
+[node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_boss_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_boss_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_boss_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="vbox_label_values" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="clear_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "10000"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="enemy_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "35000"
+vertical_alignment = 1
+
+[node name="lives_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "15000"
+vertical_alignment = 1
+
+[node name="credits_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "15000"
+vertical_alignment = 1
+
+[node name="bomb_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "15000"
+vertical_alignment = 1
+
+[node name="catnip_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "15000"
+vertical_alignment = 1
+
+[node name="boss_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "15000"
+vertical_alignment = 1
+
+[node name="vbox_label_special" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="line_label" type="Label" parent="MarginContainer/vbox_main"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "<%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>"
+
+[node name="hbox_total" type="HBoxContainer" parent="MarginContainer/vbox_main"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 275
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_total"]
+layout_mode = 2
+
+[node name="total_label" type="Label" parent="MarginContainer/vbox_main/hbox_total/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "TOTAL"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_total"]
+layout_mode = 2
+
+[node name="boss_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_total/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "8000000000000"
+horizontal_alignment = 2
+
+[node name="catnip_bonus_status" type="Label" parent="."]
+layout_mode = 2
+offset_left = 551.0
+offset_top = 321.0
+offset_right = 1383.0
+offset_bottom = 341.0
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 14
+text = "<Catnip bonus name long>"
+
+[node name="boss_bonus_status" type="Label" parent="."]
+layout_mode = 2
+offset_left = 551.0
+offset_top = 348.0
+offset_right = 850.0
+offset_bottom = 368.0
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 14
+text = "<Boss bonus message can be long>"
