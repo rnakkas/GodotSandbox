@@ -63,6 +63,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("3_6upo5")
 theme_override_font_sizes/font_size = 25
+action_mode = 0
 text = "GAME SETTINGS"
 flat = true
 
@@ -72,6 +73,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("3_6upo5")
 theme_override_font_sizes/font_size = 25
+action_mode = 0
 text = "DISPLAY SETTINGS"
 flat = true
 
@@ -81,6 +83,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("3_6upo5")
 theme_override_font_sizes/font_size = 25
+action_mode = 0
 text = "AUDIO SETTINGS"
 flat = true
 

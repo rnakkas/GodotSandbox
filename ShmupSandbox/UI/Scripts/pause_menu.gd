@@ -13,7 +13,6 @@ signal quit_button_pressed()
 var selector_icons: Array[TextureRect] = []
 var ui_elements_list: Array[Control] = []
 
-## TODO: Fix the issue with accept button being held on menu item, make it the same as main menu
 
 ################################################
 #NOTE: Ready

@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://d0osb7xjckolu"]
+[gd_scene load_steps=5 format=3 uid="uid://d0osb7xjckolu"]
 
+[ext_resource type="Script" uid="uid://brf2ooxedqjk0" path="res://ShmupSandbox/UI/Scripts/stage_clear_screen.gd" id="1_aiuvu"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="1_bdqpk"]
 [ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="2_v7dk5"]
 
@@ -12,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_aiuvu")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -51,7 +53,7 @@ layout_mode = 2
 [node name="hbox_bonuses" type="HBoxContainer" parent="MarginContainer/vbox_main"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 200
+theme_override_constants/separation = 25
 
 [node name="VBox_label_names" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses"]
 layout_mode = 2
@@ -190,6 +192,7 @@ layout_mode = 2
 theme_override_constants/separation = 64
 
 [node name="boss_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_boss_bonus"]
+custom_minimum_size = Vector2(350, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 12
@@ -275,7 +278,7 @@ text = "<%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>"
 [node name="hbox_total" type="HBoxContainer" parent="MarginContainer/vbox_main"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 275
+theme_override_constants/separation = 265
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_total"]
 layout_mode = 2
@@ -305,7 +308,7 @@ offset_right = 1383.0
 offset_bottom = 341.0
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 14
-text = "<Catnip bonus name long>"
+text = "<Catnip bonus message long>"
 
 [node name="boss_bonus_status" type="Label" parent="."]
 layout_mode = 2

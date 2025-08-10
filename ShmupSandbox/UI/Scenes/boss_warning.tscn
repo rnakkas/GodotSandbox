@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dwheccxsxmkya"]
+[gd_scene load_steps=5 format=3 uid="uid://dwheccxsxmkya"]
 
 [ext_resource type="Script" uid="uid://b0qcqj6hhwekf" path="res://ShmupSandbox/UI/Scripts/boss_warning.gd" id="1_ejl2b"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="1_jtbh8"]
 [ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="3_8y8eg"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8y8eg"]
 
 [node name="boss_warning" type="Control"]
 layout_mode = 3
@@ -20,10 +22,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
+theme_override_constants/margin_top = 120
+theme_override_constants/margin_bottom = 120
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+self_modulate = Color(0.133333, 0.137255, 0.137255, 0.72549)
+layout_mode = 2
+texture = SubResource("CanvasTexture_8y8eg")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2

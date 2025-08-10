@@ -15,6 +15,7 @@ class_name UiLayer extends CanvasLayer
 @onready var hi_scores_menu: HiScoresMenu = %hi_scores_menu
 @onready var name_entry_dialog: NameEntryDialog = %name_entry_dialog
 @onready var boss_warning: BossWarningUi = %boss_warning
+@onready var stage_clear_screen: StageClearScreen = %stage_clear_screen
 
 
 signal game_started()
@@ -22,7 +23,7 @@ signal kill_game_instance()
 
 
 ################################################
-#NOTE: Ready
+# Ready
 ################################################
 func _ready() -> void:
 	_initialize_ui_scenes()
@@ -47,13 +48,12 @@ func _connect_to_signals() -> void:
 	SignalsBus.player_lives_updated_event.connect(self._on_player_lives_depleted)
 	SignalsBus.player_pressed_pause_game_event.connect(self._on_player_pauses_game)
 	SignalsBus.boss_incoming_warning_event.connect(self._on_boss_incoming_warning_event)
-
-	# UI signals
 	SignalsBus.boss_warning_ended_event.connect(self._on_boss_warning_ended)
+	SignalsBus.boss_sequence_ended_event.connect(self._on_boss_sequence_ended)
 
 
 ################################################
-#NOTE: Main function to toggle the different ui's
+# Main function to toggle the different ui's
 ################################################
 func _toggle_ui(ui: Control) -> void:
 	ui.visible = !ui.visible
@@ -288,3 +288,10 @@ func _on_boss_incoming_warning_event(_boss_message: String) -> void:
 
 func _on_boss_warning_ended() -> void:
 	_toggle_ui(boss_warning)
+
+
+################################################
+# Stage clear screen
+################################################
+func _on_boss_sequence_ended(_boss: Node, _boss_killed: bool, _kill_score: int) -> void:
+	_toggle_ui(stage_clear_screen)

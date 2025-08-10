@@ -1,16 +1,16 @@
 class_name OptionsMenu extends Control
 
-@onready var game_settings_button : Button = %game_settings_button
-@onready var display_settings_button : Button = %display_settings_button
-@onready var audio_settings_button : Button = %audio_settings_button
-@onready var back_button : Button = %back_button
+@onready var game_settings_button: Button = %game_settings_button
+@onready var display_settings_button: Button = %display_settings_button
+@onready var audio_settings_button: Button = %audio_settings_button
+@onready var back_button: Button = %back_button
 
 signal back_button_pressed()
 signal game_settings_button_pressed()
 signal display_settings_button_pressed()
 signal audio_settings_button_pressed()
 
-var ui_elements_list : Array[Control] = []
+var ui_elements_list: Array[Control] = []
 
 
 ################################################
@@ -20,16 +20,16 @@ func _ready() -> void:
 	_create_ui_elements_list()
 
 func _create_ui_elements_list() -> void:
-	for node : Control in get_tree().get_nodes_in_group(UiUtility.options_ui_nodes):
+	for node: Control in get_tree().get_nodes_in_group(UiUtility.options_ui_nodes):
 		ui_elements_list.append(node)
 		_connect_to_group_signals(node)
 
-func _connect_to_group_signals(node : Control) -> void:
+func _connect_to_group_signals(node: Control) -> void:
 	if node.has_signal(UiUtility.signal_focus_entered):
 		node.focus_entered.connect(self._on_element_focused)
 	if node.has_signal(UiUtility.signal_mouse_entered):
 		# Use 'bind' to know which node emitted the mouse_entered signal
-		node.mouse_entered.connect(self._on_element_focused_with_mouse.bind(node)) 
+		node.mouse_entered.connect(self._on_element_focused_with_mouse.bind(node))
 	if node is Button:
 		node.pressed.connect(self._on_button_pressed.bind(node))
 
@@ -51,7 +51,6 @@ func _on_visibility_changed() -> void:
 		game_settings_button.grab_focus()
 
 
-
 ################################################
 #NOTE: Signal connection: focused on element
 ################################################
@@ -64,14 +63,14 @@ func _on_element_focused() -> void:
 ################################################
 #NOTE: Signal connection: mouse entered
 ################################################
-func _on_element_focused_with_mouse(node : Control) -> void:
+func _on_element_focused_with_mouse(node: Control) -> void:
 	node.grab_focus()
 
 
 ################################################
 #NOTE: Signal connection: button pressed
 ################################################
-func _on_button_pressed(node : Button) -> void:
+func _on_button_pressed(node: Button) -> void:
 	await UiUtility.selected_button_element_press_animation(node)
 
 	match node:

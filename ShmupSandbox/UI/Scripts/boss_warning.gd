@@ -1,5 +1,5 @@
-extends Control
 class_name BossWarningUi
+extends Control
 
 @onready var blink_timer: Timer = $blink_timer
 @onready var warning_timer: Timer = $warning_timer
