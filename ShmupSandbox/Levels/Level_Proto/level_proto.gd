@@ -19,23 +19,23 @@ func _create_spawn_schedule() -> void:
 		SpawnEvent.new(5.0, SceneManager.skulljack_PS, Vector2(1100, 400)),
 		SpawnEvent.new(6.0, SceneManager.skulljack_PS, Vector2(1100, 300)),
 
-		# # Wave 2
-		# SpawnEvent.new(7.2, SceneManager.skulljack_formation_alpha_PS, Vector2(1100, 120)),
+		# Wave 2
+		SpawnEvent.new(7.2, SceneManager.skulljack_formation_alpha_PS, Vector2(1100, 120)),
 		
-		# # Wave 3
-		# SpawnEvent.new(8.4, SceneManager.doomboard_PS, Vector2(1100, 270)),
+		# Wave 3
+		SpawnEvent.new(8.4, SceneManager.doomboard_PS, Vector2(1100, 270)),
 
-		# # Wave 4
-		# SpawnEvent.new(15.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
-		# SpawnEvent.new(16.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
-		# SpawnEvent.new(16.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
-		# SpawnEvent.new(17.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
+		# Wave 4
+		SpawnEvent.new(15.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
+		SpawnEvent.new(16.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(16.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		SpawnEvent.new(17.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
 		
-		# # Wave 5
-		# SpawnEvent.new(19.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
-		# SpawnEvent.new(19.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
-		# SpawnEvent.new(20.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
-		# SpawnEvent.new(20.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_5),
+		# Wave 5
+		SpawnEvent.new(19.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		SpawnEvent.new(19.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		SpawnEvent.new(20.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
+		SpawnEvent.new(20.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_5),
 
 		# # Wave 6
 		# SpawnEvent.new(22.0, SceneManager.soul_carrier_PS, Vector2(1000, 320)),

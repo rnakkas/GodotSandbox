@@ -1,12 +1,12 @@
 class_name PlayerHud extends Control
 
-@onready var score_value : Label = %score_value
-@onready var player_lives_value : Label = %lives_value
-@onready var top_score_value : Label = %top_score_value
-@onready var credits_value : Label = %credits_value
-@onready var bombs_container : HBoxContainer = %HBoxContainer_bombs
+@onready var score_value: Label = %score_value
+@onready var player_lives_value: Label = %lives_value
+@onready var top_score_value: Label = %top_score_value
+@onready var credits_value: Label = %credits_value
+@onready var bombs_container: HBoxContainer = %HBoxContainer_bombs
 
-var bomb_icons_array : Array[Node] = []
+var bomb_icons_array: Array[Node] = []
 
 
 ################################################
@@ -25,7 +25,7 @@ func _connect_to_signals() -> void:
 func _initialize_bomb_icons_array() -> void:
 	bomb_icons_array = bombs_container.get_children()
 	bomb_icons_array.sort()
-	for icon : int in range(bomb_icons_array.size()):
+	for icon: int in range(bomb_icons_array.size()):
 		bomb_icons_array[icon].visible = false
 
 ################################################
@@ -41,12 +41,12 @@ func _set_score_values_on_hud() -> void:
 	top_score_value.text = str(GameManager.player_hi_scores_dictionaries[0]["score"])
 
 func _set_bombs_on_hud() -> void:
-	for bomb : int in range(bomb_icons_array.size()):
+	for bomb: int in range(bomb_icons_array.size()):
 		bomb_icons_array[bomb].visible = false
 
 	# Only display the number of bombs that are currently in stock
-	for bomb : int in range(0, GameManager.player_bombs):
-		var icon : TextureRect = bomb_icons_array[bomb] as TextureRect
+	for bomb: int in range(0, GameManager.player_bombs):
+		var icon: TextureRect = bomb_icons_array[bomb] as TextureRect
 		icon.visible = true
 
 ################################################

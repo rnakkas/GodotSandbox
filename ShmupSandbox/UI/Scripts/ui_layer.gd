@@ -324,7 +324,13 @@ func _on_player_lives_depleted() -> void:
 					ui.visible = true
 				_set_process_mode(ui)
 		elif GameManager.player_credits <= 0:
-			_handle_name_entry_or_game_over_logic()
+			# _handle_name_entry_or_game_over_logic()
+			for ui: Control in ui_layer_nodes:
+				if ui is PlayerHud:
+					ui.visible = false
+				if ui is GameOverScreen:
+					ui.visible = true
+				_set_process_mode(ui)
 
 
 func _on_continue_screen_yes_button_pressed() -> void:
@@ -356,7 +362,7 @@ func _handle_name_entry_or_game_over_logic() -> void:
 			_set_process_mode(ui)
 	else:
 		for ui: Control in ui_layer_nodes:
-			if ui is GameOverScreen:
+			if ui is MainMenu:
 				ui.visible = true
 			_set_process_mode(ui)
 
@@ -389,10 +395,11 @@ func _on_game_over_screen_game_over_screen_timed_out() -> void:
 	for ui: Control in ui_layer_nodes:
 		if ui is GameOverScreen:
 			ui.visible = false
-		if ui is PlayerHud:
-			ui.visible = false
-		if ui is HiScoresMenu:
-			ui.visible = true
+		# if ui is PlayerHud:
+		# 	ui.visible = false
+		# if ui is HiScoresMenu:
+		# 	ui.visible = true
+		_handle_name_entry_or_game_over_logic()
 		_set_process_mode(ui)
 
 
@@ -415,7 +422,7 @@ func _on_name_entry_dialog_ok_button_pressed() -> void:
 	for ui: Control in ui_layer_nodes:
 		if ui is NameEntryDialog:
 			ui.visible = false
-		if ui is GameOverScreen:
+		if ui is HiScoresMenu:
 			ui.visible = true
 		_set_process_mode(ui)
 
@@ -441,5 +448,6 @@ func _on_boss_warning_ended() -> void:
 func _on_boss_sequence_ended(_boss: Node, _boss_killed: bool, _kill_score: int) -> void:
 	for ui: Control in ui_layer_nodes:
 		if ui is StageClearScreen:
+			await get_tree().create_timer(3.0).timeout
 			ui.visible = true
 		_set_process_mode(ui)
