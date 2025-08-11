@@ -1,21 +1,6 @@
 class_name UiLayer extends CanvasLayer
 
 @onready var simple_crt_filter: SimpleCrtFilter = %SimpleCRTFilter
-@onready var start_screen: StartScreen = %start_screen
-@onready var main_menu: MainMenu = %main_menu
-@onready var options_menu: OptionsMenu = %options_menu
-@onready var game_settings: GameSettings = %game_settings
-@onready var display_settings: DisplaySettings = %display_settings
-@onready var audio_settings: AudioSettings = %audio_settings
-@onready var pause_menu: PauseMenu = %pause_menu
-@onready var player_hud: PlayerHud = %player_hud
-@onready var confirm_dialog: ConfirmDialog = %confirm_dialog
-@onready var continue_screen: ContinueScreen = %continue_screen
-@onready var game_over_screen: GameOverScreen = %game_over_screen
-@onready var hi_scores_menu: HiScoresMenu = %hi_scores_menu
-@onready var name_entry_dialog: NameEntryDialog = %name_entry_dialog
-@onready var boss_warning: BossWarningUi = %boss_warning
-@onready var stage_clear_screen: StageClearScreen = %stage_clear_screen
 
 var ui_layer_nodes: Array[Control] = []
 
@@ -40,15 +25,11 @@ func _initialize_ui_scenes() -> void:
 
 	# Turn visibility on for start screen and off for all other screens
 	for ui_node: Control in ui_layer_nodes:
-		if ui_node is BossWarningUi:
-			ui_node.process_mode = Node.PROCESS_MODE_PAUSABLE
-		else:
-			ui_node.process_mode = Node.PROCESS_MODE_ALWAYS if ui_node.visible else Node.PROCESS_MODE_DISABLED
-		
 		if ui_node is StartScreen:
 			ui_node.visible = true
 		else:
 			ui_node.visible = false
+		_set_process_mode(ui_node)
 
 
 func _connect_to_global_signals() -> void:
@@ -108,19 +89,16 @@ func _connect_to_ui_signals() -> void:
 		
 		if ui_node is NameEntryDialog:
 			ui_node.ok_button_pressed.connect(self._on_name_entry_dialog_ok_button_pressed)
-		
-		
-################################################
-# Main function to toggle the different ui's
-################################################
-# func _toggle_ui(ui: Control) -> void:
-# 	ui.visible = !ui.visible
-	
-# 	if ui is BossWarningUi:
-# 		ui.process_mode = Node.PROCESS_MODE_PAUSABLE
-# 	else:
-# 		ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 
+
+################################################
+# Helper func to set process mode for the ui node
+################################################
+func _set_process_mode(ui_node: Control) -> void:
+	if ui_node is BossWarningUi or ui_node is StageClearScreen:
+		ui_node.process_mode = Node.PROCESS_MODE_PAUSABLE
+	else:
+		ui_node.process_mode = Node.PROCESS_MODE_ALWAYS if ui_node.visible else Node.PROCESS_MODE_DISABLED
 
 ################################################
 #NOTE: Pausing game
@@ -131,7 +109,7 @@ func _on_player_pauses_game() -> void:
 	for ui: Control in ui_layer_nodes:
 		if ui is PauseMenu:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 ################################################
@@ -143,10 +121,9 @@ func _on_start_screen_start_pressed() -> void:
 	for ui: Control in ui_layer_nodes:
 		if ui is StartScreen:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is MainMenu:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 ################################################
@@ -155,37 +132,29 @@ func _on_start_screen_start_pressed() -> void:
 func _on_main_menu_play_button_pressed() -> void:
 	game_started.emit()
 	GameManager.is_game_running = true
-	# # _toggle_ui(main_menu)
-	# _toggle_ui(player_hud)
+
 	for ui: Control in ui_layer_nodes:
 		if ui is MainMenu:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is PlayerHud:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 func _on_main_menu_options_button_pressed() -> void:
-	# _toggle_ui(main_menu)
-	# _toggle_ui(options_menu)
 	for ui: Control in ui_layer_nodes:
 		if ui is MainMenu:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is OptionsMenu:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 func _on_main_menu_hi_scores_button_pressed() -> void:
-	# _toggle_ui(main_menu)
-	# _toggle_ui(hi_scores_menu)
 	for ui: Control in ui_layer_nodes:
 		if ui is MainMenu:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is HiScoresMenu:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 func _on_main_menu_quit_button_pressed() -> void:
 	get_tree().call_deferred("quit")
@@ -196,88 +165,67 @@ func _on_main_menu_quit_button_pressed() -> void:
 ################################################
 func _on_options_menu_back_button_pressed() -> void:
 	if !GameManager.is_game_running:
-		# _toggle_ui(options_menu)
-		# _toggle_ui(main_menu)
 		for ui: Control in ui_layer_nodes:
 			if ui is OptionsMenu:
 				ui.visible = false
-				ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 			if ui is MainMenu:
 				ui.visible = true
-				ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+			_set_process_mode(ui)
 	else:
-		# _toggle_ui(options_menu)
-		# _toggle_ui(pause_menu)
 		for ui: Control in ui_layer_nodes:
 			if ui is OptionsMenu:
 				ui.visible = false
-				ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 			if ui is PauseMenu:
 				ui.visible = true
-				ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+			_set_process_mode(ui)
 
 func _on_options_menu_game_settings_button_pressed() -> void:
-	# _toggle_ui(options_menu)
-	# _toggle_ui(game_settings)
 	for ui: Control in ui_layer_nodes:
 		if ui is OptionsMenu:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is GameSettings:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 func _on_options_menu_display_settings_button_pressed() -> void:
-	# _toggle_ui(options_menu)
-	# _toggle_ui(display_settings)
 	for ui: Control in ui_layer_nodes:
 		if ui is OptionsMenu:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is DisplaySettings:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 func _on_options_menu_audio_settings_button_pressed() -> void:
-	# _toggle_ui(options_menu)
-	# _toggle_ui(audio_settings)
 	for ui: Control in ui_layer_nodes:
 		if ui is OptionsMenu:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is AudioSettings:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 ################################################
 #NOTE: Game Settings
 ################################################
 func _on_game_settings_back_button_pressed() -> void:
-	# _toggle_ui(game_settings)
-	# _toggle_ui(options_menu)
 	for ui: Control in ui_layer_nodes:
 		if ui is GameSettings:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is OptionsMenu:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 ################################################
 #NOTE: Display Settings
 ################################################
 func _on_display_settings_back_button_pressed() -> void:
-	# _toggle_ui(display_settings)
-	# _toggle_ui(options_menu)
 	for ui: Control in ui_layer_nodes:
 		if ui is DisplaySettings:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is OptionsMenu:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 func _on_display_settings_crt_filter_changed(crt_value: bool) -> void:
 	simple_crt_filter.visible = crt_value
@@ -287,15 +235,12 @@ func _on_display_settings_crt_filter_changed(crt_value: bool) -> void:
 #NOTE: Audio settings
 ################################################
 func _on_audio_settings_back_button_pressed() -> void:
-	# _toggle_ui(audio_settings)
-	# _toggle_ui(options_menu)
 	for ui: Control in ui_layer_nodes:
 		if ui is AudioSettings:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is OptionsMenu:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 ################################################
@@ -303,43 +248,35 @@ func _on_audio_settings_back_button_pressed() -> void:
 ################################################
 func _on_pause_menu_resume_button_pressed() -> void:
 	get_tree().paused = false
-	# _toggle_ui(pause_menu)
 	for ui: Control in ui_layer_nodes:
 		if ui is PauseMenu:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 func _on_pause_menu_options_button_pressed() -> void:
-	# _toggle_ui(pause_menu)
-	# _toggle_ui(options_menu)
 	for ui: Control in ui_layer_nodes:
 		if ui is PauseMenu:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is OptionsMenu:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 func _on_pause_menu_main_menu_button_pressed() -> void:
-	# confirm_dialog.dialog_label_main.text = UiUtility.dialog_return_to_main_menu
-	# _toggle_ui(confirm_dialog)
 	for ui: Control in ui_layer_nodes:
 		if ui is ConfirmDialog:
 			ui.dialog_label_main.text = UiUtility.dialog_return_to_main_menu
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 func _on_pause_menu_quit_button_pressed() -> void:
-	# confirm_dialog.dialog_label_main.text = UiUtility.dialog_quit
-	# _toggle_ui(confirm_dialog)
 	for ui: Control in ui_layer_nodes:
 		if ui is ConfirmDialog:
 			ui.dialog_label_main.text = UiUtility.dialog_quit
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 ################################################
@@ -348,23 +285,16 @@ func _on_pause_menu_quit_button_pressed() -> void:
 func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 	match dialog_text:
 		UiUtility.dialog_return_to_main_menu:
-			# _toggle_ui(confirm_dialog)
-			# _toggle_ui(pause_menu)
-			# _toggle_ui(player_hud)
-			# _toggle_ui(main_menu)
 			for ui: Control in ui_layer_nodes:
 				if ui is ConfirmDialog:
 					ui.visible = false
-					ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 				if ui is PauseMenu:
 					ui.visible = false
-					ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 				if ui is PlayerHud:
 					ui.visible = false
-					ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 				if ui is MainMenu:
 					ui.visible = true
-					ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+				_set_process_mode(ui)
 			
 			get_tree().paused = false
 			GameManager.is_game_running = false
@@ -375,14 +305,12 @@ func _on_confirm_dialog_yes_button_pressed(dialog_text: String) -> void:
 
 
 func _on_confirm_dialog_no_button_pressed() -> void:
-	# _toggle_ui(confirm_dialog)
 	for ui: Control in ui_layer_nodes:
 		if ui is ConfirmDialog:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is PauseMenu:
 			ui.resume_button.grab_focus()
-	# pause_menu.resume_button.grab_focus()
+		_set_process_mode(ui)
 
 
 ################################################
@@ -391,34 +319,29 @@ func _on_confirm_dialog_no_button_pressed() -> void:
 func _on_player_lives_depleted() -> void:
 	if GameManager.player_lives < 0:
 		if GameManager.player_credits > 0:
-			# _toggle_ui(continue_screen)
 			for ui: Control in ui_layer_nodes:
 				if ui is ContinueScreen:
 					ui.visible = true
-					ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+				_set_process_mode(ui)
 		elif GameManager.player_credits <= 0:
 			_handle_name_entry_or_game_over_logic()
 
 
 func _on_continue_screen_yes_button_pressed() -> void:
-	# _toggle_ui(continue_screen)
 	for ui: Control in ui_layer_nodes:
 		if ui is ContinueScreen:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is PlayerHud:
 			ui.player_lives_value.text = "x " + str(GameManager._player_max_lives)
 			ui.score_value.text = str(GameManager.player_score)
-	# player_hud.player_lives_value.text = "x " + str(GameManager._player_max_lives)
-	# player_hud.score_value.text = str(GameManager.player_score)
+		_set_process_mode(ui)
 
 
 func _on_continue_screen_no_button_pressed() -> void:
-	# _toggle_ui(continue_screen)
 	for ui: Control in ui_layer_nodes:
 		if ui is ContinueScreen:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 	_handle_name_entry_or_game_over_logic()
 
 
@@ -427,17 +350,15 @@ func _on_continue_screen_no_button_pressed() -> void:
 ################################################
 func _handle_name_entry_or_game_over_logic() -> void:
 	if _is_player_score_in_top_ten():
-		# _toggle_ui(name_entry_dialog)
 		for ui: Control in ui_layer_nodes:
 			if ui is NameEntryDialog:
 				ui.visible = true
-				ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+			_set_process_mode(ui)
 	else:
-		# _toggle_ui(game_over_screen)
 		for ui: Control in ui_layer_nodes:
 			if ui is GameOverScreen:
 				ui.visible = true
-				ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+			_set_process_mode(ui)
 
 	GameManager.is_game_running = false
 	kill_game_instance.emit()
@@ -465,64 +386,50 @@ func _is_player_score_in_top_ten() -> bool:
 #NOTE: Game over screen
 ################################################
 func _on_game_over_screen_game_over_screen_timed_out() -> void:
-	# _toggle_ui(game_over_screen)
-	# _toggle_ui(player_hud)
-	# _toggle_ui(hi_scores_menu)
 	for ui: Control in ui_layer_nodes:
 		if ui is GameOverScreen:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is PlayerHud:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is HiScoresMenu:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 ################################################
 #NOTE: Hi Scores menu
 ################################################
 func _on_hi_scores_menu_back_button_pressed() -> void:
-	# _toggle_ui(hi_scores_menu)
-	# _toggle_ui(main_menu)
 	for ui: Control in ui_layer_nodes:
 		if ui is HiScoresMenu:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is MainMenu:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 ################################################
 #NOTE: Name entry dialog
 ################################################
 func _on_name_entry_dialog_ok_button_pressed() -> void:
-	# _toggle_ui(name_entry_dialog)
-	# _toggle_ui(game_over_screen)
 	for ui: Control in ui_layer_nodes:
 		if ui is NameEntryDialog:
 			ui.visible = false
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
 		if ui is GameOverScreen:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_ALWAYS if ui.visible else Node.PROCESS_MODE_DISABLED
+		_set_process_mode(ui)
 
 
 ################################################
 # Boss warning ui
 ################################################
 func _on_boss_incoming_warning_event(_boss_message: String) -> void:
-	# _toggle_ui(boss_warning)
 	for ui: Control in ui_layer_nodes:
 		if ui is BossWarningUi:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_PAUSABLE
 			
 
 func _on_boss_warning_ended() -> void:
-	# _toggle_ui(boss_warning)
 	for ui: Control in ui_layer_nodes:
 		if ui is BossWarningUi:
 			ui.visible = false
@@ -532,8 +439,7 @@ func _on_boss_warning_ended() -> void:
 # Stage clear screen
 ################################################
 func _on_boss_sequence_ended(_boss: Node, _boss_killed: bool, _kill_score: int) -> void:
-	# _toggle_ui(stage_clear_screen)
 	for ui: Control in ui_layer_nodes:
 		if ui is StageClearScreen:
 			ui.visible = true
-			ui.process_mode = Node.PROCESS_MODE_PAUSABLE
+		_set_process_mode(ui)
