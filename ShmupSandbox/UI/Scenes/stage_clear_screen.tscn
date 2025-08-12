@@ -22,9 +22,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 64
+theme_override_constants/margin_left = 120
 theme_override_constants/margin_top = 64
-theme_override_constants/margin_right = 64
+theme_override_constants/margin_right = 120
 theme_override_constants/margin_bottom = 64
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
@@ -35,7 +35,7 @@ texture = SubResource("CanvasTexture_v7dk5")
 [node name="vbox_main" type="VBoxContainer" parent="MarginContainer"]
 custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 12
 
@@ -51,9 +51,10 @@ vertical_alignment = 1
 layout_mode = 2
 
 [node name="hbox_bonuses" type="HBoxContainer" parent="MarginContainer/vbox_main"]
+custom_minimum_size = Vector2(330, 184)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 25
+theme_override_constants/separation = 100
 
 [node name="VBox_label_names" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses"]
 layout_mode = 2
@@ -192,11 +193,10 @@ layout_mode = 2
 theme_override_constants/separation = 64
 
 [node name="boss_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_boss_bonus"]
-custom_minimum_size = Vector2(350, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 12
-text = "<BOSS NAME> BONUS"
+text = "BOSS BONUS"
 
 [node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_boss_bonus"]
 visible = false
@@ -215,6 +215,7 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="clear_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 12
@@ -223,6 +224,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="enemy_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 12
@@ -230,6 +232,7 @@ text = "35000"
 vertical_alignment = 1
 
 [node name="lives_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 12
@@ -237,6 +240,7 @@ text = "15000"
 vertical_alignment = 1
 
 [node name="credits_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 12
@@ -244,6 +248,7 @@ text = "15000"
 vertical_alignment = 1
 
 [node name="bomb_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 12
@@ -251,6 +256,7 @@ text = "15000"
 vertical_alignment = 1
 
 [node name="catnip_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 12
@@ -258,16 +264,12 @@ text = "15000"
 vertical_alignment = 1
 
 [node name="boss_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 12
 text = "15000"
 vertical_alignment = 1
-
-[node name="vbox_label_special" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 10
 
 [node name="line_label" type="Label" parent="MarginContainer/vbox_main"]
 layout_mode = 2
@@ -278,7 +280,7 @@ text = "<%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>"
 [node name="hbox_total" type="HBoxContainer" parent="MarginContainer/vbox_main"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 265
+theme_override_constants/separation = 180
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_total"]
 layout_mode = 2
@@ -292,7 +294,8 @@ text = "TOTAL"
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_total"]
 layout_mode = 2
 
-[node name="boss_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_total/VBoxContainer2"]
+[node name="total_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_total/VBoxContainer2"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
@@ -301,21 +304,25 @@ text = "8000000000000"
 horizontal_alignment = 2
 
 [node name="catnip_bonus_status" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-offset_left = 551.0
+offset_left = 704.0
 offset_top = 321.0
-offset_right = 1383.0
+offset_right = 824.0
 offset_bottom = 341.0
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 14
-text = "<Catnip bonus message long>"
+text = "HALF-BAKED"
 
 [node name="boss_bonus_status" type="Label" parent="."]
+visible = false
 layout_mode = 2
-offset_left = 551.0
+offset_left = 704.0
 offset_top = 348.0
-offset_right = 850.0
+offset_right = 1003.0
 offset_bottom = 368.0
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 14
-text = "<Boss bonus message can be long>"
+
+[node name="screen_timer" type="Timer" parent="."]
