@@ -1,10 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0osb7xjckolu"]
+[gd_scene load_steps=6 format=3 uid="uid://d0osb7xjckolu"]
 
 [ext_resource type="Script" uid="uid://brf2ooxedqjk0" path="res://ShmupSandbox/UI/Scripts/stage_clear_screen.gd" id="1_aiuvu"]
 [ext_resource type="FontFile" uid="uid://chyk1vw521kif" path="res://ShmupSandbox/Assets/Fonts/Metal Lord.otf" id="1_bdqpk"]
 [ext_resource type="FontFile" uid="uid://bqxmc05dmv15h" path="res://ShmupSandbox/Assets/Fonts/PixelCode-ExtraBold.otf" id="2_v7dk5"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_v7dk5"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_aiuvu"]
 
 [node name="stage_clear_screen" type="Control"]
 layout_mode = 3
@@ -23,9 +25,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 120
-theme_override_constants/margin_top = 64
+theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 120
-theme_override_constants/margin_bottom = 64
+theme_override_constants/margin_bottom = 16
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 self_modulate = Color(0.133333, 0.137255, 0.137255, 0.72549)
@@ -166,28 +168,6 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="hbox_catnip_bonus" type="HBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names"]
-layout_mode = 2
-theme_override_constants/separation = 64
-
-[node name="catnip_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_v7dk5")
-theme_override_font_sizes/font_size = 12
-text = "CATNIP BONUS"
-
-[node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
-visible = false
-layout_mode = 2
-
-[node name="separator2" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
-visible = false
-layout_mode = 2
-
-[node name="separator3" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
-visible = false
-layout_mode = 2
-
 [node name="hbox_boss_bonus" type="HBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names"]
 layout_mode = 2
 theme_override_constants/separation = 64
@@ -207,6 +187,28 @@ visible = false
 layout_mode = 2
 
 [node name="separator3" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_boss_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="hbox_catnip_bonus" type="HBoxContainer" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="catnip_bonus_label" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "CATNIP BONUS"
+
+[node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator2" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
+visible = false
+layout_mode = 2
+
+[node name="separator3" type="Control" parent="MarginContainer/vbox_main/hbox_bonuses/VBox_label_names/hbox_catnip_bonus"]
 visible = false
 layout_mode = 2
 
@@ -255,14 +257,6 @@ theme_override_font_sizes/font_size = 12
 text = "15000"
 vertical_alignment = 1
 
-[node name="catnip_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_v7dk5")
-theme_override_font_sizes/font_size = 12
-text = "15000"
-vertical_alignment = 1
-
 [node name="boss_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -271,49 +265,82 @@ theme_override_font_sizes/font_size = 12
 text = "15000"
 vertical_alignment = 1
 
+[node name="catnip_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_bonuses/vbox_label_values"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v7dk5")
+theme_override_font_sizes/font_size = 12
+text = "15000"
+vertical_alignment = 1
+
 [node name="line_label" type="Label" parent="MarginContainer/vbox_main"]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 12
 text = "<%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>"
 
-[node name="hbox_total" type="HBoxContainer" parent="MarginContainer/vbox_main"]
+[node name="hbox_catnip_icons" type="HBoxContainer" parent="MarginContainer/vbox_main"]
+custom_minimum_size = Vector2(380, 64)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 180
+theme_override_constants/separation = 28
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_total"]
+[node name="separator" type="Control" parent="MarginContainer/vbox_main/hbox_catnip_icons"]
 layout_mode = 2
 
-[node name="total_label" type="Label" parent="MarginContainer/vbox_main/hbox_total/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_v7dk5")
-theme_override_font_sizes/font_size = 12
-text = "TOTAL"
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/vbox_main/hbox_total"]
+[node name="separator2" type="Control" parent="MarginContainer/vbox_main/hbox_catnip_icons"]
 layout_mode = 2
 
-[node name="total_bonus_value" type="Label" parent="MarginContainer/vbox_main/hbox_total/VBoxContainer2"]
+[node name="catnip_slot_1" type="TextureRect" parent="MarginContainer/vbox_main/hbox_catnip_icons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(110, 0)
+self_modulate = Color(0, 0.545098, 0.129412, 1)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_v7dk5")
-theme_override_font_sizes/font_size = 12
-text = "8000000000000"
-horizontal_alignment = 2
+size_flags_horizontal = 4
+texture = SubResource("CanvasTexture_aiuvu")
 
-[node name="catnip_bonus_status" type="Label" parent="."]
+[node name="catnip_slot_2" type="TextureRect" parent="MarginContainer/vbox_main/hbox_catnip_icons"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0.545098, 0.129412, 1)
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("CanvasTexture_aiuvu")
+
+[node name="catnip_slot_3" type="TextureRect" parent="MarginContainer/vbox_main/hbox_catnip_icons"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0.545098, 0.129412, 1)
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("CanvasTexture_aiuvu")
+
+[node name="catnip_slot_4" type="TextureRect" parent="MarginContainer/vbox_main/hbox_catnip_icons"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0.545098, 0.129412, 1)
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("CanvasTexture_aiuvu")
+
+[node name="catnip_slot_5" type="TextureRect" parent="MarginContainer/vbox_main/hbox_catnip_icons"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0.545098, 0.129412, 1)
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("CanvasTexture_aiuvu")
+
+[node name="catnip_bonus_status" type="Label" parent="MarginContainer/vbox_main"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-offset_left = 704.0
-offset_top = 321.0
-offset_right = 824.0
-offset_bottom = 341.0
+size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("2_v7dk5")
 theme_override_font_sizes/font_size = 14
-text = "HALF-BAKED"
+text = "TOASTY!"
+horizontal_alignment = 1
 
 [node name="boss_bonus_status" type="Label" parent="."]
 visible = false

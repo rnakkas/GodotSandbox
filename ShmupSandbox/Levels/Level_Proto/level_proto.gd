@@ -2,10 +2,15 @@ class_name LevelProto extends Node
 
 @export var spawn_schedule: Array[SpawnEvent] = []
 @export var boss_message: String = "TIME TO RIDE THE LIGHTNING!"
+@export var clear_bonus: int = 10_000
+@export var boss_bonus: int = 15_000
+@export var full_catnip_bonus: int = 10_000
 
 var elapsed_time: float = 0.0
 var events_queue: Array[SpawnEvent]
 var ready_for_boss: bool
+var enemies_killed: int
+
 
 func _init() -> void:
 	_create_spawn_schedule()
@@ -19,23 +24,23 @@ func _create_spawn_schedule() -> void:
 		SpawnEvent.new(5.0, SceneManager.skulljack_PS, Vector2(1100, 400)),
 		SpawnEvent.new(6.0, SceneManager.skulljack_PS, Vector2(1100, 300)),
 
-		# Wave 2
-		SpawnEvent.new(7.2, SceneManager.skulljack_formation_alpha_PS, Vector2(1100, 120)),
+		# # Wave 2
+		# SpawnEvent.new(7.2, SceneManager.skulljack_formation_alpha_PS, Vector2(1100, 120)),
 		
-		# Wave 3
-		SpawnEvent.new(8.4, SceneManager.doomboard_PS, Vector2(1100, 270)),
+		# # Wave 3
+		# SpawnEvent.new(8.4, SceneManager.doomboard_PS, Vector2(1100, 270)),
 
-		# Wave 4
-		SpawnEvent.new(15.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
-		SpawnEvent.new(16.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
-		SpawnEvent.new(16.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
-		SpawnEvent.new(17.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
+		# # Wave 4
+		# SpawnEvent.new(15.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
+		# SpawnEvent.new(16.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		# SpawnEvent.new(16.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		# SpawnEvent.new(17.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_1),
 		
-		# Wave 5
-		SpawnEvent.new(19.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
-		SpawnEvent.new(19.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
-		SpawnEvent.new(20.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
-		SpawnEvent.new(20.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_5),
+		# # Wave 5
+		# SpawnEvent.new(19.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_2),
+		# SpawnEvent.new(19.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_3),
+		# SpawnEvent.new(20.0, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_4),
+		# SpawnEvent.new(20.5, SceneManager.screamer_2_PS, Vector2(0, 0), GameManager.enemy_path_sine_wave_5),
 
 		# # Wave 6
 		# SpawnEvent.new(22.0, SceneManager.soul_carrier_PS, Vector2(1000, 320)),
@@ -103,8 +108,26 @@ func _create_spawn_schedule() -> void:
 
 func _ready() -> void:
 	events_queue = spawn_schedule.duplicate(true)
+	SignalsBus.enemy_death_event.connect(self._on_enemy_death)
 	SignalsBus.boss_warning_ended_event.connect(self._on_boss_warning_ended)
+	SignalsBus.boss_sequence_ended_event.connect(self._on_boss_sequence_ended)
+
+
+func _on_enemy_death() -> void:
+	enemies_killed += 1
+
+
+# Spawn boss
+func _on_boss_warning_ended() -> void:
+	SignalsBus.spawn_enemy_event.emit(SceneManager.boss_tourmageddon_PS, Vector2(1300, 200), "")
+
+
+func _on_boss_sequence_ended(_boss: Node, boss_killed: bool, _kill_score: int) -> void:
+	if !boss_killed:
+		boss_bonus = 0
+	SignalsBus.stage_clear_event.emit(clear_bonus, enemies_killed, boss_bonus, full_catnip_bonus)
 	
+
 func _process(delta: float) -> void:
 	elapsed_time += delta
 	Helper.run_spawn_schedule(elapsed_time, events_queue)
@@ -112,7 +135,3 @@ func _process(delta: float) -> void:
 		ready_for_boss = true
 		await get_tree().create_timer(3.0).timeout
 		SignalsBus.boss_incoming_warning_event.emit(boss_message)
-
-# Spawn boss
-func _on_boss_warning_ended() -> void:
-	SignalsBus.spawn_enemy_event.emit(SceneManager.boss_tourmageddon_PS, Vector2(1300, 200), "")

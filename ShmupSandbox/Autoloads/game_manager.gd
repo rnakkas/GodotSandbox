@@ -1,15 +1,15 @@
 extends Node
 
 ################################################
-#NOTE: Player
+# Player
 # To be accessed by enemies
-# Used to track player location for attacks
+# Used to track player position for attacks
 ################################################
 var player: PlayerCat
 
 
 ################################################
-#NOTE: Enemy paths
+# Enemy paths
 ################################################
 # Path names
 const enemy_path_sine_wave_1: String = "1_enemy_path_sine_wave_1"
@@ -35,23 +35,39 @@ var enemy_paths_list: Array[Path2D] = []
 
 
 ################################################
-#NOTE: Constant game settings, will NOT be changed at runtime
+# Constant game settings and data.
+# Will NOT be changed at runtime
 ################################################
+
+# Life extend
+const life_extend_interval: int = 100_000 # TODO: update life extend behaviour to extend every 100_000 points
 const life_extend_score_1: int = 100000
 const life_extend_score_2: int = 250000
+
+# Continue score penalty
 const score_penallty_multiplier: float = 0.9
+
+# Player bombs
 const player_default_bombs: int = 3
 const player_max_bombs: int = 9
-const min_bounds: Vector2 = Vector2(0, 0)
 
-## Offsets for screen bounds
+# Offsets for screen bounds
+const min_bounds: Vector2 = Vector2(0, 0)
 const offset_x: float = 30.0
 const offset_y_screen_bottom: float = 20.0
 const offset_y_screen_top: float = 40.0
 
-## Hit scores
+# Hit scores
 const attack_hit_score: int = 10
 
+# Multipliers for bonuses
+const enemy_kill_score_multi: int = 100
+const lives_score_multi: int = 1000
+const credits_score_mulit: int = 2000
+const bomb_score_multi: int = 3000
+const catnip_score_multi: int = 500
+
+# Powerups
 enum powerups {
 	None, ## 0
 
@@ -119,7 +135,9 @@ var player_score: int
 var current_powerup: powerups
 var powerup_max_reached: bool
 
-var enemies_killed: int
+var total_enemies_killed: int
+var total_bosses_killed: int
+var total_catnip_collected: int
 
 var is_game_running: bool
 
@@ -191,7 +209,7 @@ func _save_high_scores() -> void:
 ################################################
 func reset_all_player_data_on_start() -> void:
 	player_score = 0
-	enemies_killed = 0
+	total_enemies_killed = 0
 	player_lives = _player_max_lives - 1
 	player_credits = _player_max_credits - 1
 	life_extend_1_reached = false

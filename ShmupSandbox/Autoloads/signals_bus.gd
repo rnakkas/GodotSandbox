@@ -117,11 +117,16 @@ signal spawn_enemy_crasher_1_event(path: Path2D)
 @warning_ignore("unused_signal")
 signal spawn_enemy_crasher_2_event(path: Path2D)
 
+
 ################################################
 # Enemy stuff
 ################################################
 @warning_ignore("unused_signal")
 signal enemy_shooting_event(bullets_list: Array[Area2D])
+
+@warning_ignore("unused_signal")
+signal enemy_death_event()
+
 
 ################################################
 # Bosses
@@ -137,3 +142,10 @@ signal boss_sequence_started_event(boss: Node)
 
 @warning_ignore("unused_signal")
 signal boss_sequence_ended_event(boss: Node, boss_killed: bool, kill_score: int)
+
+
+################################################
+# Level clears
+################################################
+@warning_ignore("unused_signal")
+signal stage_clear_event(clear_bonus, enemies_killed, boss_bonus, full_catnip_bonus: int)
